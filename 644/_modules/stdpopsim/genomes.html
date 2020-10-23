@@ -269,8 +269,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TODO: docstring.</span>
 
-<span class="sd">    :ivar start_positions: The start positions (inclusive) for all genomic elements of this</span>
-<span class="sd">        type.</span>
+<span class="sd">    :ivar start_positions: The start positions (inclusive) for all genomic elements of</span>
+<span class="sd">        this type.</span>
 <span class="sd">    :vartype start_positions: numpy.array, dtype=np.int32</span>
 <span class="sd">    :ivar end_positions: The end positions (exclusive) for all genomic elements of this</span>
 <span class="sd">        type.</span>
@@ -361,12 +361,12 @@
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">mut_ids</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">mut_type_id</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">mut_type_id</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">]</span>
+            <span class="n">mtid</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">mtid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)))</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mut_ids</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The mutation type ids in the genomic elements &quot;</span>
                              <span class="s2">&quot;must match the list of mutation types.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slim_fractions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">[</span><span class="n">mut_type_id</span><span class="p">]</span><span class="o">.</span><span class="n">proportion</span> <span class="k">for</span> <span class="n">mut_type_id</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">])</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">]</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">[</span><span class="n">mtid</span><span class="p">]</span><span class="o">.</span><span class="n">proportion</span> <span class="k">for</span> <span class="n">mtid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">])</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">]</span>
         <span class="n">all_positions</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
                 <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">start_positions</span><span class="p">,</span>
