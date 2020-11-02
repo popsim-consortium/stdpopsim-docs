@@ -242,7 +242,7 @@
         <span class="c1"># map itself and not a download error. If a failure occurs reading the map</span>
         <span class="c1"># this is propagated to the user, as this indicates a corrupted map which</span>
         <span class="c1"># needs to be redownloaded.</span>
-        <span class="n">map_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+        <span class="n">map_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">map_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">read_hapmap</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">map_file</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>

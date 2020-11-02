@@ -237,7 +237,6 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if this annotation is cached locally.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># return os.path.exists(self.species_cache_dir)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Annotation.download"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -248,23 +247,21 @@
 
 <div class="viewcode-block" id="Annotation.get_chromosome_annotations"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.get_chromosome_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">get_chromosome_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the pandas dataframe for</span>
-<span class="sd">        the chromosome with the specified id.</span>
+<span class="sd">        Returns the pandas dataframe for the chromosome with the specified id.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">chrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cached</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
         <span class="n">bed</span> <span class="o">=</span> <span class="n">zarr_to_dataframe</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">))</span>
         <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">bed</span><span class="p">)</span> <span class="o">==</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">bed</span><span class="p">[</span><span class="n">bed</span><span class="o">.</span><span class="n">seqid</span> <span class="o">==</span> <span class="nb">id</span><span class="p">]</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">bed</span><span class="p">[</span><span class="n">bed</span><span class="o">.</span><span class="n">seqid</span> <span class="o">==</span> <span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No annotations found for </span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="Annotation.get_annotation_type_from_chromomosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.get_annotation_type_from_chromomosome">[docs]</a>    <span class="k">def</span> <span class="nf">get_annotation_type_from_chromomosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_type</span><span class="p">,</span> <span class="n">chrom_id</span><span class="p">,</span> <span class="n">full_table</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all elements of</span>
-<span class="sd">        type a_type from chromosome</span>
-<span class="sd">        specified</span>
+<span class="sd">        Returns all elements of type a_type from chromosome specified</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">annots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chromosome_annotations</span><span class="p">(</span><span class="n">chrom_id</span><span class="p">)</span>
         <span class="n">subset</span> <span class="o">=</span> <span class="n">annots</span><span class="p">[</span><span class="n">annots</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">a_type</span><span class="p">]</span>
@@ -278,8 +275,7 @@
 
 <div class="viewcode-block" id="Annotation.get_genes_from_chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.get_genes_from_chromosome">[docs]</a>    <span class="k">def</span> <span class="nf">get_genes_from_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom_id</span><span class="p">,</span> <span class="n">full_table</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all elements of</span>
-<span class="sd">        type gene from annotation</span>
+<span class="sd">        Returns all elements of type gene from annotation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_annotation_type_from_chromomosome</span><span class="p">(</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span> <span class="n">chrom_id</span><span class="p">,</span>
                                                           <span class="n">full_table</span><span class="p">)</span></div></div>
