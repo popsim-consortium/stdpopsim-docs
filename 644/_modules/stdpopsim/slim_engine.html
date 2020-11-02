@@ -231,7 +231,6 @@
 
 <span class="s2">    defineConstant(&quot;burn_in&quot;, $burn_in);</span>
 <span class="s2">    defineConstant(&quot;generation_time&quot;, $generation_time);</span>
-<span class="s2">    defineConstant(&quot;mutation_rate&quot;, Q * $mutation_rate);</span>
 <span class="s2">    defineConstant(&quot;trees_file&quot;, &quot;$trees_file&quot;);</span>
 <span class="s2">    defineConstant(&quot;pop_names&quot;, $pop_names);</span>
 
@@ -793,6 +792,7 @@
             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">validate_time_range</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">):</span>
+            <span class="c1"># TODO: warning if mutation type id points to a neutral mut.</span>
             <span class="n">time</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
             <span class="n">save</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">ee</span><span class="o">.</span><span class="n">save</span> <span class="k">else</span> <span class="mi">0</span>
             <span class="n">drawn_mutations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
@@ -863,7 +863,6 @@
                 <span class="n">burn_in</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">burn_in</span><span class="p">),</span>
                 <span class="n">recombination_rates</span><span class="o">=</span><span class="n">recomb_rates_str</span><span class="p">,</span>
                 <span class="n">recombination_ends</span><span class="o">=</span><span class="n">recomb_ends_str</span><span class="p">,</span>
-                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
                 <span class="n">generation_time</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
                 <span class="n">trees_file</span><span class="o">=</span><span class="n">trees_file</span><span class="p">,</span>
                 <span class="n">pop_names</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;c(</span><span class="si">{</span><span class="n">pop_names_str</span><span class="si">}</span><span class="s2">)&quot;</span>
@@ -926,8 +925,9 @@
         <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    initializeGenomicElementType(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1">, c(</span><span class="si">{</span><span class="n">mut_types</span><span class="si">}</span><span class="s1">), c(</span><span class="si">{</span><span class="n">mut_props</span><span class="si">}</span><span class="s1">));&#39;</span><span class="p">)</span>
         <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    initializeGenomicElement(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1">, c(</span><span class="si">{</span><span class="n">element_starts</span><span class="si">}</span><span class="s1">), c(</span><span class="si">{</span><span class="n">element_ends</span><span class="si">}</span><span class="s1">));&#39;</span><span class="p">)</span>
     <span class="c1"># Mutation rate map.</span>
-    <span class="n">mut_rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">slim_mutation_rate_map</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">mut_breaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">genomic_element_breaks</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rates</span><span class="p">,</span> <span class="n">breaks</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">slim_mutation_rate_map</span>
+    <span class="n">mut_rates</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rates</span><span class="p">)</span>
+    <span class="n">mut_breaks</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    initializeMutationRate(c(</span><span class="si">{</span><span class="n">mut_rates</span><span class="si">}</span><span class="s1">)*Q, c(</span><span class="si">{</span><span class="n">mut_breaks</span><span class="si">}</span><span class="s1">));&#39;</span><span class="p">)</span>
 
     <span class="c1"># Epoch times.</span>
@@ -1095,9 +1095,8 @@
 
 <div class="viewcode-block" id="_SLiMEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">demographic_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">contig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">mutation_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slim_script</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-            <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slim_script</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulate the demographic model using SLiM.</span>
 <span class="sd">        See :meth:`.Engine.simulate()` for definitions of the</span>
@@ -1141,14 +1140,6 @@
 
         <span class="n">run_slim</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">slim_script</span>
 
-        <span class="c1"># Ensure only &quot;weighted&quot; mutations are introduced by SLiM.</span>
-        <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
-        <span class="n">slim_frac</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">slim_mutation_frac</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)</span>
-        <span class="n">contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
-                <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
-                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">slim_frac</span> <span class="o">*</span> <span class="n">mutation_rate</span><span class="p">,</span>
-                <span class="n">genetic_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">genetic_map</span><span class="p">)</span>
-
         <span class="n">mktemp</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
 
         <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
@@ -1164,8 +1155,8 @@
             <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
                     <span class="n">script_file</span><span class="p">,</span> <span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">demographic_model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span>
-                    <span class="n">mutation_types</span><span class="p">,</span> <span class="n">extended_events</span><span class="p">,</span>
-                    <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">slim_burn_in</span><span class="p">)</span>
+                    <span class="n">extended_events</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span>
+                    <span class="n">slim_burn_in</span><span class="p">)</span>
 
             <span class="n">script_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
@@ -1182,7 +1173,7 @@
             <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">slim_frac</span><span class="p">,</span>
+                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span>
                 <span class="n">slim_scaling_factor</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span></div>
 
@@ -1240,8 +1231,7 @@
         <span class="k">return</span> <span class="n">ts</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="n">filter_populations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">slim_frac</span><span class="p">,</span>
-            <span class="n">slim_scaling_factor</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
 <span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
@@ -1262,34 +1252,33 @@
                     <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span>
                     <span class="n">growth_rate</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">recap_epoch</span><span class="o">.</span><span class="n">populations</span><span class="p">]</span>
-        <span class="c1"># TODO: Use the recombination map in recapitate.</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">recapitate</span><span class="p">(</span>
-                <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_recombination_rate</span><span class="p">,</span>
+                <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
                 <span class="n">population_configurations</span><span class="o">=</span><span class="n">population_configurations</span><span class="p">,</span>
                 <span class="n">migration_matrix</span><span class="o">=</span><span class="n">recap_epoch</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
                 <span class="n">random_seed</span><span class="o">=</span><span class="n">s1</span><span class="p">)</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simplify_remembered</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">slim_frac</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># Add mutations to SLiM part of trees.</span>
-            <span class="n">rate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slim_frac</span><span class="p">)</span> <span class="o">*</span> <span class="n">mutation_rate</span>
-            <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">SlimTreeSequence</span><span class="p">(</span><span class="n">msprime</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
-                <span class="n">ts</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">s2</span><span class="p">,</span>
+        <span class="c1"># Adding neutral mutations to the SLiM part</span>
+        <span class="n">breaks</span><span class="p">,</span> <span class="n">rates</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">msp_mutation_rate_map</span>
+        <span class="n">rate_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rates</span><span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">SlimTreeSequence</span><span class="p">(</span><span class="n">msprime</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
+                <span class="n">ts</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rate_map</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">s2</span><span class="p">,</span>
                 <span class="n">end_time</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">slim_generation</span><span class="p">))</span>
 
         <span class="c1"># Add mutations to recapitated part of trees.</span>
         <span class="n">s3</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">)</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">SlimTreeSequence</span><span class="p">(</span><span class="n">msprime</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
-            <span class="n">ts</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">s3</span><span class="p">,</span>
+            <span class="n">ts</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">s3</span><span class="p">,</span>
             <span class="n">start_time</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">slim_generation</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">ts</span>
 
 <div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span> <span class="nf">recap_and_rescale</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span>
-            <span class="n">mutation_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
 <span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
@@ -1313,24 +1302,15 @@
 <span class="sd">            should be consulted to determine if the behaviour is appropriate</span>
 <span class="sd">            for your case.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Only &quot;weighted&quot; mutations are introduced by SLiM.</span>
-        <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
-        <span class="n">slim_frac</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">slim_mutation_frac</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)</span>
-        <span class="n">contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
-                <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
-                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">slim_frac</span> <span class="o">*</span> <span class="n">mutation_rate</span><span class="p">,</span>
-                <span class="n">genetic_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">genetic_map</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
             <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
                     <span class="n">script_file</span><span class="p">,</span> <span class="s2">&quot;unused.trees&quot;</span><span class="p">,</span>
                     <span class="n">demographic_model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span>
-                    <span class="n">mutation_types</span><span class="p">,</span> <span class="n">extended_events</span><span class="p">,</span>
-                    <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">extended_events</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">slim_frac</span><span class="p">,</span>
-                <span class="n">slim_scaling_factor</span><span class="p">)</span>
+                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span></div></div>
 
 
