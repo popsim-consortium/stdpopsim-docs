@@ -259,7 +259,7 @@ information from Ensembl</p>
 
 <dl class="py method">
 <dt id="stdpopsim.Species.get_contig">
-<code class="sig-name descname">get_contig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chromosome</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">genetic_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">length_multiplier</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">sequence_length</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">exclude</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_contig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chromosome</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">genetic_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">length_multiplier</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">sequence_length</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">exclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
@@ -281,12 +281,8 @@ specific, and can be found in the <a class="reference internal" href="catalog.ht
 same chromosome-specific mutation and recombination rates.
 This option cannot currently be used in conjunction with the
 <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
-<li><p><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If specified, the output tree sequence includes only genomic
-regions falling within intervals specified by this bed file. This option
-cannot currently be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
-<li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, mask intervals specify regions to remove from
-the tree sequence. If False, mask intervals specify regions to keep.
-Default is False.</p></li>
+<li><p><strong>inlusion_mask</strong> – If specified, …</p></li>
+<li><p><strong>exclusion_mask</strong> – If specified, …</p></li>
 <li><p><strong>sequence_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Used with a “generic” contig, specifies the
 length of genome sequence for this contig. For a generic contig, mutation
 and recombination rates are equal to the genome-wide average across all
