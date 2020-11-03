@@ -1004,10 +1004,17 @@ which the genome is defined) as shown below:</p>
     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">url</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;https://stdpopsim.s3-us-west-2.amazonaws.com/genetic_maps/dir/filename&quot;</span><span class="p">),</span>
+    <span class="n">sha256</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;name_</span><span class="si">{id}</span><span class="s2">_more_name.txt&quot;</span><span class="p">,</span>
     <span class="n">citations</span><span class="o">=</span><span class="p">[</span><span class="n">_genetic_map_citation</span><span class="p">])</span>
 
 <span class="n">_species</span><span class="o">.</span><span class="n">add_genetic_map</span><span class="p">(</span><span class="n">_gm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The SHA256 checksum of the the genetic map tarball can be obtained using the
+<code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
+system, the following can instead be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
 </pre></div>
 </div>
 <p>Once all this is done, submit a PR containing the code changes and wait for directions
