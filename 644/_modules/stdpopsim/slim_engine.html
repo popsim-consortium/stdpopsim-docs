@@ -1137,6 +1137,10 @@
                 <span class="s2">&quot;but is not equivalent, especially in the presence of selection. &quot;</span>
                 <span class="s2">&quot;When using rescaling, you should be careful---do checks and &quot;</span>
                 <span class="s2">&quot;compare results across different values of the scaling factor.&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">contig</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Your Contig object is not compatible with the SLiM &quot;</span>
+                            <span class="s2">&quot;engine. Note you must specify a recombination map &quot;</span>
+                            <span class="s2">&quot;whose length is greater than or equal to 1.&quot;</span><span class="p">)</span>
 
         <span class="n">run_slim</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">slim_script</span>
 

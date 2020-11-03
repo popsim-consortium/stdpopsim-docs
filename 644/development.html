@@ -97,6 +97,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#github-workflow">GitHub workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pre-commit-checks">Pre-commit checks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rebasing">Rebasing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#when-rebasing-goes-wrong">When rebasing goes wrong</a></li>
 </ul>
@@ -294,6 +295,13 @@ To deactivate the virtual environment:</p>
 of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> repository on GitHub, and
 <a class="reference external" href="https://help.github.com/articles/cloning-a-repository/">clone</a>
 a local copy.</p></li>
+<li><p>Install the pre-commit hooks with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pre-commit install
+</pre></div>
+</div>
+</li>
+</ol>
+<ol class="arabic" start="2">
 <li><p>Make sure that your local repository has been configured with an
 <a class="reference external" href="https://help.github.com/articles/configuring-a-remote-for-a-fork/">upstream remote</a>.</p></li>
 <li><p>Create a “topic branch” to work on. One reliable way to do it
@@ -313,6 +321,22 @@ out of date with the main repository, we might ask you to
 see the next section on how to rebase.</p></li>
 </ol>
 </div></blockquote>
+<div class="section" id="pre-commit-checks">
+<h3>Pre-commit checks<a class="headerlink" href="#pre-commit-checks" title="Permalink to this headline">¶</a></h3>
+<p>On each commit a <a class="reference external" href="https://pre-commit.com/">pre-commit hook</a>  will run
+that checks for violations of code style and other common problems.
+Where possible, these hooks will try to fix any problems that they find (including reformatting
+your code to conform to the required style). In this case, the commit
+will <em>not complete</em> and report that “files were modified by this hook”.
+To include the changes that the hooks made, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> any
+files that were modified and run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> (or, use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-a</span></code>
+to commit all changed files.)</p>
+<p>If you would like to run the checks without committing, use <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span></code>
+(but, note that this will <em>only</em> check changes that have been <em>staged</em>;
+do <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all</span></code> to check unstaged changes as well).
+To bypass the checks (to save or get feedback on work-in-progress) use
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">--no-verify</span></code></p>
+</div>
 <div class="section" id="rebasing">
 <h3>Rebasing<a class="headerlink" href="#rebasing" title="Permalink to this headline">¶</a></h3>
 <p>Rebasing is used for two basic tasks we might ask for during review:</p>
@@ -1004,10 +1028,17 @@ which the genome is defined) as shown below:</p>
     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">url</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;https://stdpopsim.s3-us-west-2.amazonaws.com/genetic_maps/dir/filename&quot;</span><span class="p">),</span>
+    <span class="n">sha256</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;name_</span><span class="si">{id}</span><span class="s2">_more_name.txt&quot;</span><span class="p">,</span>
     <span class="n">citations</span><span class="o">=</span><span class="p">[</span><span class="n">_genetic_map_citation</span><span class="p">])</span>
 
 <span class="n">_species</span><span class="o">.</span><span class="n">add_genetic_map</span><span class="p">(</span><span class="n">_gm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The SHA256 checksum of the the genetic map tarball can be obtained using the
+<code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
+system, the following can instead be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
 </pre></div>
 </div>
 <p>Once all this is done, submit a PR containing the code changes and wait for directions
