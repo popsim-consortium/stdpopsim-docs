@@ -178,8 +178,7 @@
 
 
 <span class="k">def</span> <span class="nf">population_configurations_equal</span><span class="p">(</span>
-    <span class="n">pop_configs1</span><span class="p">,</span> <span class="n">pop_configs2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span>
-<span class="p">):</span>
+        <span class="n">pop_configs1</span><span class="p">,</span> <span class="n">pop_configs2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns True if the specified lists of msprime PopulationConfiguration</span>
 <span class="sd">    objects are equal to the specified tolerances.</span>
@@ -189,16 +188,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">verify_population_configurations_equal</span><span class="p">(</span>
-            <span class="n">pop_configs1</span><span class="p">,</span> <span class="n">pop_configs2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span>
-        <span class="p">)</span>
+            <span class="n">pop_configs1</span><span class="p">,</span> <span class="n">pop_configs2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">except</span> <span class="n">UnequalModelsError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 
 <span class="k">def</span> <span class="nf">verify_population_configurations_equal</span><span class="p">(</span>
-    <span class="n">pop_configs1</span><span class="p">,</span> <span class="n">pop_configs2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span>
-<span class="p">):</span>
+        <span class="n">pop_configs1</span><span class="p">,</span> <span class="n">pop_configs2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks if the specified lists of msprime PopulationConfiguration</span>
 <span class="sd">    objects are equal to the specified tolerances and raises an UnequalModelsError</span>
@@ -213,10 +210,10 @@
         <span class="k">if</span> <span class="n">pc1</span><span class="o">.</span><span class="n">sample_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pc2</span><span class="o">.</span><span class="n">sample_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Models defined in stdpopsim must not use the &#39;sample_size&#39; &quot;</span>
-                <span class="s2">&quot;PopulationConfiguration option&quot;</span>
-            <span class="p">)</span>
+                <span class="s2">&quot;PopulationConfiguration option&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pc1</span><span class="o">.</span><span class="n">initial_size</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pc2</span><span class="o">.</span><span class="n">initial_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Models defined in stdpopsim must set the initial_size&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Models defined in stdpopsim must set the initial_size&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pop_configs1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pop_configs2</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span><span class="s2">&quot;Different numbers of populations&quot;</span><span class="p">)</span>
     <span class="n">initial_size1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pc</span><span class="o">.</span><span class="n">initial_size</span> <span class="k">for</span> <span class="n">pc</span> <span class="ow">in</span> <span class="n">pop_configs1</span><span class="p">])</span>
@@ -230,22 +227,21 @@
 
 
 <span class="k">def</span> <span class="nf">sampling_times_equal</span><span class="p">(</span>
-    <span class="n">populations1</span><span class="p">,</span> <span class="n">populations2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span>
-<span class="p">):</span>
+        <span class="n">populations1</span><span class="p">,</span> <span class="n">populations2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns True if the sampling times for the specified lists of Populations</span>
 <span class="sd">    objects are equal to the specified tolerances.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">verify_sampling_times_equal</span><span class="p">(</span><span class="n">populations1</span><span class="p">,</span> <span class="n">populations2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
+        <span class="n">verify_sampling_times_equal</span><span class="p">(</span>
+            <span class="n">populations1</span><span class="p">,</span> <span class="n">populations2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">except</span> <span class="n">UnequalModelsError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 
 <span class="k">def</span> <span class="nf">verify_sampling_times_equal</span><span class="p">(</span>
-    <span class="n">populations1</span><span class="p">,</span> <span class="n">populations2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span>
-<span class="p">):</span>
+        <span class="n">populations1</span><span class="p">,</span> <span class="n">populations2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check the the sampling times for lists of population objects are the same</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -256,8 +252,8 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampling_times1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampling_times2</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span><span class="s2">&quot;Different numbers of populations&quot;</span><span class="p">)</span>
     <span class="c1"># Get indicies where None values present and compare</span>
-    <span class="n">s1_none</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampling_times1</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># noqa</span>
-    <span class="n">s2_none</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampling_times2</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># noqa</span>
+    <span class="n">s1_none</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampling_times1</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="c1"># noqa</span>
+    <span class="n">s2_none</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampling_times2</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span> <span class="c1"># noqa</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">s1_none</span><span class="p">,</span> <span class="n">s2_none</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span><span class="s2">&quot;None-valued sampling times differ&quot;</span><span class="p">)</span>
     <span class="c1"># Subset out only non-None values and cast to float so they can be compared</span>
@@ -268,24 +264,21 @@
 
 
 <span class="k">def</span> <span class="nf">demographic_events_equal</span><span class="p">(</span>
-    <span class="n">events1</span><span class="p">,</span> <span class="n">events2</span><span class="p">,</span> <span class="n">num_populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span>
-<span class="p">):</span>
+        <span class="n">events1</span><span class="p">,</span> <span class="n">events2</span><span class="p">,</span> <span class="n">num_populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns True if the specified list of msprime DemographicEvent objects are equal</span>
 <span class="sd">    to the specified tolerances.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">verify_demographic_events_equal</span><span class="p">(</span>
-            <span class="n">events1</span><span class="p">,</span> <span class="n">events2</span><span class="p">,</span> <span class="n">num_populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span>
-        <span class="p">)</span>
+            <span class="n">events1</span><span class="p">,</span> <span class="n">events2</span><span class="p">,</span> <span class="n">num_populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">except</span> <span class="n">UnequalModelsError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 
 <span class="k">def</span> <span class="nf">verify_demographic_events_equal</span><span class="p">(</span>
-    <span class="n">events1</span><span class="p">,</span> <span class="n">events2</span><span class="p">,</span> <span class="n">num_populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span>
-<span class="p">):</span>
+        <span class="n">events1</span><span class="p">,</span> <span class="n">events2</span><span class="p">,</span> <span class="n">num_populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks if the specified list of msprime DemographicEvent objects are equal</span>
 <span class="sd">    to the specified tolerances and raises a UnequalModelsError otherwise.</span>
@@ -303,14 +296,12 @@
             <span class="n">value2</span> <span class="o">=</span> <span class="n">d2</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span>
-                        <span class="s2">&quot;Event </span><span class="si">{}</span><span class="s2"> mismatch: </span><span class="si">{}</span><span class="s2"> != </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)</span>
-                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span><span class="s2">&quot;Event </span><span class="si">{}</span><span class="s2"> mismatch: </span><span class="si">{}</span><span class="s2"> != </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">key</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">value1</span> <span class="o">!=</span> <span class="n">value2</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span>
-                        <span class="s2">&quot;Event </span><span class="si">{}</span><span class="s2"> mismatch: </span><span class="si">{}</span><span class="s2"> != </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)</span>
-                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span><span class="s2">&quot;Event </span><span class="si">{}</span><span class="s2"> mismatch: </span><span class="si">{}</span><span class="s2"> != </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">key</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="Population"><a class="viewcode-back" href="../../api.html#stdpopsim.Population">[docs]</a><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
@@ -327,7 +318,6 @@
 <span class="sd">        population (default = 0).</span>
 <span class="sd">    :vartype sampling_time: int</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">sampling_time</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
@@ -341,11 +331,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary representing the metadata about this population.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
-            <span class="s2">&quot;sampling_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_time</span><span class="p">,</span>
-        <span class="p">}</span></div></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s2">&quot;sampling_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_time</span><span class="p">}</span></div></div>
 
 
 <div class="viewcode-block" id="DemographicModel"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -428,12 +415,12 @@
             <span class="k">if</span> <span class="s2">&quot;description&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Population </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">pops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Population</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">pops</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">pops</span><span class="p">)</span>
 
     <span class="nd">@migration_matrix</span><span class="o">.</span><span class="n">default</span>
     <span class="k">def</span> <span class="nf">_migration_matrix_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">npops</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npops</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npops</span><span class="p">)]</span>
+        <span class="k">return</span><span class="p">([[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npops</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npops</span><span class="p">)])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -449,12 +436,11 @@
 <span class="sd">        Return a model with the mandatory attributes filled out.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-            <span class="n">description</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-            <span class="n">long_description</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;long_description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-            <span class="n">populations</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;populations&quot;</span><span class="p">,</span> <span class="p">[]),</span>
-            <span class="n">generation_time</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;generation_time&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
-        <span class="p">)</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="n">long_description</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;long_description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="n">populations</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;populations&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+                <span class="n">generation_time</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;generation_time&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">DemographicModel</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DemographicModel.equals"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.equals">[docs]</a>    <span class="k">def</span> <span class="nf">equals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">DEFAULT_RTOL</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">DEFAULT_ATOL</span><span class="p">):</span>
@@ -483,21 +469,15 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">mm1</span><span class="p">,</span> <span class="n">mm2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">UnequalModelsError</span><span class="p">(</span><span class="s2">&quot;Migration matrices differ&quot;</span><span class="p">)</span>
         <span class="n">verify_population_configurations_equal</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
-            <span class="n">other</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
-            <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span>
-            <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
+            <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
         <span class="n">verify_demographic_events_equal</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">,</span>
-            <span class="n">other</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">,</span>
             <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">),</span>
-            <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span>
-            <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
         <span class="n">verify_sampling_times_equal</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">populations</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span>
-        <span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">populations</span><span class="p">,</span>
+            <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DemographicModel.register_qc"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.register_qc">[docs]</a>    <span class="k">def</span> <span class="nf">register_qc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc_model</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -505,8 +485,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">qc_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Cannot register non-DemographicModel &#39;</span><span class="si">{</span><span class="n">qc_model</span><span class="si">}</span><span class="s2">&#39; as QC model&quot;</span>
-            <span class="p">)</span>
+                    <span class="sa">f</span><span class="s2">&quot;Cannot register non-DemographicModel &#39;</span><span class="si">{</span><span class="n">qc_model</span><span class="si">}</span><span class="s2">&#39; as QC model&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QC model already registered for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span></div>
@@ -534,13 +513,12 @@
         <span class="k">for</span> <span class="n">pop_index</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">pop_index</span><span class="p">]</span><span class="o">.</span><span class="n">allow_samples</span><span class="p">:</span>
                 <span class="n">sample</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">Sample</span><span class="p">(</span>
-                    <span class="n">pop_index</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">pop_index</span><span class="p">]</span><span class="o">.</span><span class="n">sampling_time</span>
-                <span class="p">)</span>
+                                        <span class="n">pop_index</span><span class="p">,</span>
+                                        <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">pop_index</span><span class="p">]</span><span class="o">.</span><span class="n">sampling_time</span><span class="p">)</span>
                 <span class="n">samples</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">sample</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Samples requested from non-sampling population&quot;</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">pop_index</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Samples requested from non-sampling population&quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">pop_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">samples</span></div>
 
 <div class="viewcode-block" id="DemographicModel.get_demography_debugger"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_demography_debugger">[docs]</a>    <span class="k">def</span> <span class="nf">get_demography_debugger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -555,17 +533,15 @@
         <span class="n">ddb</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">DemographyDebugger</span><span class="p">(</span>
             <span class="n">population_configurations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
             <span class="n">migration_matrix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
-            <span class="n">demographic_events</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="n">demographic_events</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ddb</span></div></div>
 
 
 <span class="c1"># Reusable generic populations</span>
 <span class="n">_pop0</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;pop0&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generic population&quot;</span><span class="p">)</span>
 <span class="n">_pop1</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;pop1&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generic population&quot;</span><span class="p">)</span>
-<span class="n">_popAnc</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;popAnc&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generic ancestral population&quot;</span><span class="p">,</span> <span class="n">sampling_time</span><span class="o">=</span><span class="kc">None</span>
-<span class="p">)</span>
+<span class="n">_popAnc</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;popAnc&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generic ancestral population&quot;</span><span class="p">,</span>
+                     <span class="n">sampling_time</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="PiecewiseConstantSize"><a class="viewcode-back" href="../../api.html#stdpopsim.PiecewiseConstantSize">[docs]</a><span class="k">class</span> <span class="nc">PiecewiseConstantSize</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
@@ -582,8 +558,8 @@
 
 <span class="sd">    .. code-block:: python</span>
 
-<span class="sd">        model1 = stdpopsim.PiecewiseConstantSize(N0, (t1, N1))  # One change</span>
-<span class="sd">        model2 = stdpopsim.PiecewiseConstantSize(N0, (t1, N1), (t2, N2))  # Two changes</span>
+<span class="sd">        model1 = stdpopsim.PiecewiseConstantSize(N0, (t1, N1)) # One change</span>
+<span class="sd">        model2 = stdpopsim.PiecewiseConstantSize(N0, (t1, N1), (t2, N2)) # Two changes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;PiecewiseConstant&quot;</span>
@@ -598,17 +574,13 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
-                <span class="n">initial_size</span><span class="o">=</span><span class="n">N0</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
-            <span class="p">)</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">N0</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">())</span>
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
-                    <span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span>
-                <span class="p">)</span>
-            <span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="IsolationWithMigration"><a class="viewcode-back" href="../../api.html#stdpopsim.IsolationWithMigration">[docs]</a><span class="k">class</span> <span class="nc">IsolationWithMigration</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
@@ -634,7 +606,6 @@
 <span class="sd">        model1 = stdpopsim.IsolationWithMigration(NA, N1, N2, T, M12, M21)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;IsolationWithMigration&quot;</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        A generic isolation with migration model where a single ancestral</span>
@@ -652,19 +623,18 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">NA</span><span class="p">,</span> <span class="n">N1</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">M12</span><span class="p">,</span> <span class="n">M21</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
-                <span class="n">initial_size</span><span class="o">=</span><span class="n">N1</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
-            <span class="p">),</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">N1</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">()),</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
-                <span class="n">initial_size</span><span class="o">=</span><span class="n">N2</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
-            <span class="p">),</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">N2</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">()),</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
-                <span class="n">initial_size</span><span class="o">=</span><span class="n">NA</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
-            <span class="p">),</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">NA</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">asdict</span><span class="p">())</span>
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="n">M12</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">M21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="p">]</span></div>
 </pre></div>
 
