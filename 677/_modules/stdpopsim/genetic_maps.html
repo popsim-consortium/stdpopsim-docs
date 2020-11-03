@@ -158,34 +158,11 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Infrastructure for managing genetic maps.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">import</span> <span class="nn">tarfile</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">contextlib</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">urllib.request</span>
 
 <span class="kn">import</span> <span class="nn">msprime</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">cache</span>
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-
-<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
-<span class="k">def</span> <span class="nf">cd</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convenience function to change the current working directory in a context</span>
-<span class="sd">    manager.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">old_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">yield</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">old_dir</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">stdpopsim</span>
 
 
 <span class="c1"># TODO change this to use attrs</span>
@@ -204,35 +181,28 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">species</span><span class="p">,</span>
-        <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">file_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">long_description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">citations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sha256</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">long_description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">citations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="n">species</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sha256</span> <span class="o">=</span> <span class="n">sha256</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_pattern</span> <span class="o">=</span> <span class="n">file_pattern</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="o">=</span> <span class="n">citations</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">cache</span><span class="o">.</span><span class="n">get_cache_dir</span><span class="p">())</span> <span class="o">/</span> <span class="s2">&quot;genetic_maps&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">species_cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">CachedData</span><span class="p">(</span>
+            <span class="n">namespace</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;genetic_maps/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">sha256</span><span class="o">=</span><span class="n">sha256</span><span class="p">,</span>
+            <span class="n">extract</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">map_cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">species_cache_dir</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">cache_path</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;GeneticMap:</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -245,62 +215,15 @@
 
 <div class="viewcode-block" id="GeneticMap.is_cached"><a class="viewcode-back" href="../../api.html#stdpopsim.GeneticMap.is_cached">[docs]</a>    <span class="k">def</span> <span class="nf">is_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns True if this map is cached locally.</span>
+<span class="sd">        Returns True if this map is cached.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="GeneticMap.download"><a class="viewcode-back" href="../../api.html#stdpopsim.GeneticMap.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Downloads this genetic map from the source URL and stores it in the</span>
-<span class="sd">        cache directory. If the map directory already exists it is first</span>
-<span class="sd">        removed.</span>
+<span class="sd">        Download the genetic map to the cache.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cached</span><span class="p">():</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Clearing cache </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">species_cache_dir</span><span class="p">)</span> <span class="k">as</span> <span class="n">tempdir</span><span class="p">:</span>
-                <span class="c1"># Atomically move to a temporary directory, which will be automatically</span>
-                <span class="c1"># deleted on exit.</span>
-                <span class="n">dest</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">tempdir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;will_be_deleted&quot;</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checking species cache directory </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">species_cache_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">species_cache_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloading genetic map &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39; from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="c1"># os.rename will not work on some Unixes if the source and dest are on</span>
-        <span class="c1"># different file systems. Keep the tempdir in the same directory as</span>
-        <span class="c1"># the destination to ensure it&#39;s on the same file system.</span>
-        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">species_cache_dir</span><span class="p">)</span> <span class="k">as</span> <span class="n">tempdir</span><span class="p">:</span>
-            <span class="n">download_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir</span><span class="p">,</span> <span class="s2">&quot;downloaded&quot;</span><span class="p">)</span>
-            <span class="n">extract_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir</span><span class="p">,</span> <span class="s2">&quot;extracted&quot;</span><span class="p">)</span>
-            <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">download_file</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Extracting genetic map&quot;</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">download_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tf</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
-                    <span class="c1"># TODO test for any prefixes on the name; we should just</span>
-                    <span class="c1"># expand to a normal file. See  the warning here:</span>
-                    <span class="c1"># https://docs.python.org/3.5/library/tarfile.html#tarfile.TarFile.extractall</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">isfile</span><span class="p">():</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;Tarball format error: member </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> not a file&quot;</span>
-                        <span class="p">)</span>
-                <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">):</span>
-                    <span class="n">tf</span><span class="o">.</span><span class="n">extractall</span><span class="p">()</span>
-            <span class="c1"># If this has all gone OK up to here we can now move the</span>
-            <span class="c1"># extracted directory into the cache location. This should</span>
-            <span class="c1"># minimise the chances of having malformed maps in the cache.</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Storing map in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span><span class="p">))</span>
-            <span class="c1"># os.rename is atomic, and will raise an OSError if the directory</span>
-            <span class="c1"># already exists. Therefore, if we see the map exists we assume</span>
-            <span class="c1"># that some other thread has already dowloaded it and raise a</span>
-            <span class="c1"># warning.</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                    <span class="s2">&quot;Error occured renaming map directory. Are several threads/processes&quot;</span>
-                    <span class="s2">&quot;downloading this map at the same time?&quot;</span>
-                <span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">download</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="GeneticMap.get_chromosome_map"><a class="viewcode-back" href="../../api.html#stdpopsim.GeneticMap.get_chromosome_map">[docs]</a>    <span class="k">def</span> <span class="nf">get_chromosome_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -319,18 +242,17 @@
         <span class="c1"># map itself and not a download error. If a failure occurs reading the map</span>
         <span class="c1"># this is propagated to the user, as this indicates a corrupted map which</span>
         <span class="c1"># needs to be redownloaded.</span>
-        <span class="n">map_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">map_file</span><span class="p">):</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">read_hapmap</span><span class="p">(</span><span class="n">map_file</span><span class="p">)</span>
+        <span class="n">map_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_cache_dir</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">map_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">read_hapmap</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">map_file</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s2">&quot;Warning: recombination map not found for chromosome: &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span>
                 <span class="s2">&quot; on map: &#39;</span><span class="si">{}</span><span class="s2">&#39;, substituting a flat map with chromosome &quot;</span>
-                <span class="s2">&quot;recombination rate </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
-            <span class="p">)</span>
+                <span class="s2">&quot;recombination rate </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">))</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">uniform_map</span><span class="p">(</span>
-                <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span>
-            <span class="p">)</span>
+                    <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div></div>
 </pre></div>
 
