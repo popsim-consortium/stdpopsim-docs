@@ -186,6 +186,7 @@
 <span class="sd">    :ivar length: The total length of the genome.</span>
 <span class="sd">    :vartype length: int</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">chromosomes</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">mutation_rate_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">recombination_rate_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -261,6 +262,7 @@
 <span class="sd">        chromosome by ID, e.g. from the command line interface.</span>
 <span class="sd">    :vartype synonyms: list of str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">recombination_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -284,24 +286,32 @@
 <span class="sd">        in asceding order.</span>
 <span class="sd">    :vartype intervals: numpy.array, dtype=np.int32</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">mutation_type_ids</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">proportions</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The list of proportions and mutation type ids &quot;</span>
-                             <span class="s2">&quot;should be of the same length.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The list of proportions and mutation type ids &quot;</span>
+                <span class="s2">&quot;should be of the same length.&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">prop</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">]):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Proportions must lie within the [0,1] interval.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The sum of proportions can not be greater than 1.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span>
+        <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A valid array of intervals must be provided.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">safe_np_int_cast</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Left positions cannot be greater than or equal to right positions.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">safe_np_int_cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Left positions cannot be greater than or equal to right positions.&quot;</span>
+            <span class="p">)</span>
 
 
 <div class="viewcode-block" id="Contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
@@ -342,6 +352,7 @@
 <span class="sd">                genetic_map=old_contig.genetic_map,</span>
 <span class="sd">            )</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">genetic_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -352,12 +363,11 @@
     <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">get_length</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_slim_incompatible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@genomic_element_types</span><span class="o">.</span><span class="n">default</span>
     <span class="k">def</span> <span class="nf">_get_genetic_map_sized_genomic_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -378,30 +388,56 @@
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
             <span class="n">mut_ids</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">mtid</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">mtid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">]</span>
+                <span class="n">mtid</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">mtid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span>
+            <span class="p">]</span>
             <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)))</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mut_ids</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The mutation type ids in the genomic elements &quot;</span>
-                                 <span class="s2">&quot;must match the list of mutation types.&quot;</span><span class="p">)</span>
-            <span class="n">neutral_mut_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">neutral_mut_ids</span><span class="p">]):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: you defined neutral mutation type(s) &quot;</span>
-                               <span class="s2">&quot;which have non-zero proportions. This means &quot;</span>
-                               <span class="s2">&quot;neutral mutations will be simulated in SLiM, what &quot;</span>
-                               <span class="s2">&quot;can considerably slow down your simulations. If &quot;</span>
-                               <span class="s2">&quot;your neutral mutation type(s) are assigned &quot;</span>
-                               <span class="s2">&quot;proportions equal to zero, then they will be &quot;</span>
-                               <span class="s2">&quot;added onto the tree sequence using msprime.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">slim_fractions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">]</span>
-            <span class="n">all_intervals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">all_ge_types</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">sorter</span> <span class="o">=</span> <span class="n">all_intervals</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The mutation type ids in the genomic elements &quot;</span>
+                    <span class="s2">&quot;must match the list of mutation types.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">neutral_mut_ids</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">i</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">!=</span> <span class="mi">0</span>
+                    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">neutral_mut_ids</span>
+                <span class="p">]</span>
+            <span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Warning: you defined neutral mutation type(s) &quot;</span>
+                    <span class="s2">&quot;which have non-zero proportions. This means &quot;</span>
+                    <span class="s2">&quot;neutral mutations will be simulated in SLiM, what &quot;</span>
+                    <span class="s2">&quot;can considerably slow down your simulations. If &quot;</span>
+                    <span class="s2">&quot;your neutral mutation type(s) are assigned &quot;</span>
+                    <span class="s2">&quot;proportions equal to zero, then they will be &quot;</span>
+                    <span class="s2">&quot;added onto the tree sequence using msprime.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slim_fractions</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span>
+            <span class="p">]</span>
+            <span class="n">all_intervals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">)</span>
+            <span class="n">all_ge_types</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span>
+                <span class="p">],</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">sorter</span> <span class="o">=</span> <span class="n">all_intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
             <span class="n">all_intervals</span> <span class="o">=</span> <span class="n">all_intervals</span><span class="p">[</span><span class="n">sorter</span><span class="p">]</span>
             <span class="n">all_ge_types</span> <span class="o">=</span> <span class="n">all_ge_types</span><span class="p">[</span><span class="n">sorter</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">all_intervals</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Genomic elements are outside the genomic region&quot;</span>
-                                 <span class="s2">&quot; implied by the recombination map.&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">all_intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">all_intervals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Genomic elements are outside the genomic region&quot;</span>
+                    <span class="s2">&quot; implied by the recombination map.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">all_intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">all_intervals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You cannot have overlapping genomic elements.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">genomic_intervals</span> <span class="o">=</span> <span class="n">all_intervals</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">genomic_interval_types</span> <span class="o">=</span> <span class="n">all_ge_types</span>
@@ -415,16 +451,18 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">breaks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">rates</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genomic_intervals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_interval_types</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">start</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">genomic_intervals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_interval_types</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
                 <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
                 <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
             <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
-            <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">slim_fractions</span><span class="p">[</span><span class="n">t</span><span class="p">])</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+            <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">slim_fractions</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">breaks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)):</span>
             <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
             <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">rates</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">rates</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rates</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -436,19 +474,21 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">breaks</span><span class="p">,</span> <span class="n">rates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msp_mutation_rate_map</span>
         <span class="k">assert</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
-        <span class="n">slim_breaks</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
-        <span class="n">slim_rates</span>  <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="o">-</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rates</span><span class="p">]</span>
+        <span class="n">slim_breaks</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+        <span class="n">slim_rates</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">-</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rates</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">gmap</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;Contig(length=</span><span class="si">{:.2G}</span><span class="s2">, recombination_rate=</span><span class="si">{:.2G}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, genetic_map=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_recombination_rate</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
-                <span class="n">gmap</span><span class="p">)</span>
+            <span class="s2">&quot;mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, genetic_map=</span><span class="si">{}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_recombination_rate</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">gmap</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span></div>
 </pre></div>
 
