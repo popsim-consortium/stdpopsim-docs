@@ -322,7 +322,9 @@ can look at the help again as follows.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help
 usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
                         [--help-genetic-maps [HELP_GENETIC_MAPS]] [-D] [-g]
-                        [-c] [-l LENGTH_MULTIPLIER] [-s SEED] [-d] [-o OUTPUT]
+                        [-c] [-L LENGTH] [-i INCLUSION_MASK]
+                        [-e EXCLUSION_MASK] [-l LENGTH_MULTIPLIER] [-s SEED]
+                        [-d] [-o OUTPUT]
                         samples [samples ...]
 
 Run simulations for Homo sapiens using up-to-date genome information,
@@ -338,8 +340,6 @@ Mutation rate: 1.29e-08
 Recombination rate: 1.205e-08
 
 positional arguments:
-  samples               The number of samples to draw from each population. At
-                        least two samples must be specified. The number of
 ...
 </pre></div>
 </div>
@@ -1365,10 +1365,11 @@ Kelleher et al., 2016: https://doi.org/10.1371/journal.pcbi.1004842
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
+Namespace(bibtex_file=None, cache_dir=None, chromosome=&#39;chr1&#39;, demographic_model=&#39;AmericanAdmixture_4B11&#39;, dry_run=True, engine=&#39;msprime&#39;, exclusion_mask=None, genetic_map=&#39;HapMapII_GRCh37&#39;, help_genetic_maps=None, help_models=None, inclusion_mask=None, length=None, length_multiplier=1, msprime_change_model=[], msprime_model=&#39;hudson&#39;, output=&#39;afr-america-chr1.trees&#39;, quiet=None, runner=&lt;function add_simulate_species_parser.&lt;locals&gt;.run_simulation at 0x7f08c6ebdee0&gt;, samples=[4, 4, 4, 4], seed=13, slim_burn_in=10, slim_path=None, slim_scaling_factor=1, slim_script=False, species=&#39;HomSap&#39;, subcommand=&#39;HomSap&#39;, verbose=1)
 </pre></div>
 </div>
 <p>Once we’re sure, we can remove the <code class="docutils literal notranslate"><span class="pre">-D</span></code> flag to run the simulation. (Note: This took around 8 minutes to run on a laptop.)</p>

@@ -299,6 +299,7 @@ Mutation rate: 7e-09
 Recombination rate: 8.029e-10</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">AraTha</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -333,8 +334,16 @@ Recombination rate: 8.029e-10</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, Mt, Pt</p>
-<p>Simulate a specific chromosome. Options: 1, 2, 3, 4, 5, Mt, Pt. Default=1.</p>
-<p>Default: “1”</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 1, 2, 3, 4, 5, Mt, Pt. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>
@@ -366,6 +375,7 @@ Population size: 62000
 Mutation rate: 1.2e-08
 Recombination rate: 9.26e-09</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">BosTau</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -393,8 +403,16 @@ Recombination rate: 9.26e-09</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, X, MT</p>
-<p>Simulate a specific chromosome. Options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, X, MT. Default=1.</p>
-<p>Default: “1”</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, X, MT. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>
@@ -427,6 +445,7 @@ Mutation rate: 4e-09
 Recombination rate: 9.506e-09</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">CanFam</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -461,8 +480,16 @@ Recombination rate: 9.506e-09</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, X, MT</p>
-<p>Simulate a specific chromosome. Options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, X, MT. Default=1.</p>
-<p>Default: “1”</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, X, MT. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>
@@ -494,6 +521,7 @@ Mutation rate: 5.49e-09
 Recombination rate: 8.175e-09</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">DroMel</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -528,8 +556,16 @@ Recombination rate: 8.175e-09</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 2L, 2R, 3L, 3R, 4, X, Y, mitochondrion_genome</p>
-<p>Simulate a specific chromosome. Options: 2L, 2R, 3L, 3R, 4, X, Y, mitochondrion_genome. Default=2L.</p>
-<p>Default: “2L”</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 2L, 2R, 3L, 3R, 4, X, Y, mitochondrion_genome. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>
@@ -560,7 +596,8 @@ Generation time: 3.805175e-05
 Population size: 180000000.0
 Mutation rate: 8.9e-11
 Recombination rate: 0</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">EscCol</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">EscCol</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -585,6 +622,19 @@ Recombination rate: 0</p>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
 <p>Default: False</p>
+</dd>
+<dt><kbd>-c, --chromosome</kbd></dt>
+<dd><p>Possible choices: Chromosome</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: Chromosome. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>
@@ -616,6 +666,7 @@ Mutation rate: 1.29e-08
 Recombination rate: 1.205e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">HomSap</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -650,8 +701,16 @@ Recombination rate: 1.205e-08</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12, 13, chr13, 14, chr14, 15, chr15, 16, chr16, 17, chr17, 18, chr18, 19, chr19, 20, chr20, 21, chr21, 22, chr22, X, chrX, Y, chrY, MT, chrM</p>
-<p>Simulate a specific chromosome. Options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, X, Y, MT. Default=1.</p>
-<p>Default: “1”</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, X, Y, MT. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>
@@ -684,6 +743,7 @@ Mutation rate: 1.5e-08
 Recombination rate: 5.65e-09</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">PonAbe</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
@@ -718,8 +778,16 @@ Recombination rate: 5.65e-09</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2a, 2b, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, X, MT</p>
-<p>Simulate a specific chromosome. Options: 1, 2a, 2b, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, X, MT. Default=1.</p>
-<p>Default: “1”</p>
+<p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 1, 2a, 2b, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, X, MT. Default=None.</p>
+</dd>
+<dt><kbd>-L, --length</kbd></dt>
+<dd><p>Simulate a default contig of given length.</p>
+</dd>
+<dt><kbd>-i, --inclusion_mask</kbd></dt>
+<dd><p>Path to inclusion mask specified in bed format.</p>
+</dd>
+<dt><kbd>-e, --exclusion_mask</kbd></dt>
+<dd><p>Path to exclusion mask specified in bed format.</p>
 </dd>
 <dt><kbd>-l, --length-multiplier</kbd></dt>
 <dd><p>Simulate a sequence of length l times the named chromosome’s length, using the named chromosome’s mutation and recombination rates.</p>

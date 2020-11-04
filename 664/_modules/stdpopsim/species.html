@@ -315,7 +315,7 @@
         <span class="n">chromosome</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">sequence_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">inclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">exclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
@@ -341,7 +341,7 @@
 <span class="sd">            ``genetic_map`` argument.</span>
 <span class="sd">        :param inlusion_mask: If specified, ...</span>
 <span class="sd">        :param exclusion_mask: If specified, ...</span>
-<span class="sd">        :param float sequence_length: Used with a &quot;generic&quot; contig, specifies the</span>
+<span class="sd">        :param float length: Used with a &quot;generic&quot; contig, specifies the</span>
 <span class="sd">            length of genome sequence for this contig. For a generic contig, mutation</span>
 <span class="sd">            and recombination rates are equal to the genome-wide average across all</span>
 <span class="sd">            autosomal chromosomes.</span>
@@ -372,7 +372,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier for generic contig&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use mask with generic contig&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">sequence_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify sequence_length of generic contig&quot;</span><span class="p">)</span>
             <span class="n">non_autosomal_lower</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;mt&quot;</span><span class="p">,</span> <span class="s2">&quot;chrx&quot;</span><span class="p">,</span> <span class="s2">&quot;chry&quot;</span><span class="p">,</span> <span class="s2">&quot;chrm&quot;</span><span class="p">]</span>
             <span class="n">L_tot</span> <span class="o">=</span> <span class="mi">0</span>
@@ -385,10 +385,10 @@
                     <span class="n">u_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">mutation_rate</span>
             <span class="n">u</span> <span class="o">=</span> <span class="n">u_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">r_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
-            <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">uniform_map</span><span class="p">(</span><span class="n">sequence_length</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+            <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">uniform_map</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span><span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">sequence_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use sequence_length with named contig&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify both inclusion and exclusion masks&quot;</span><span class="p">)</span>
