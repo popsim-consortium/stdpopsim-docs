@@ -328,7 +328,7 @@
 <span class="sd">            A complete list of chromosome IDs for each species can be found in the</span>
 <span class="sd">            &quot;Genome&quot; subsection for the species in the :ref:`sec_catalog`.</span>
 <span class="sd">            If the chromosome is not given, we specify a &quot;generic&quot; contig with given</span>
-<span class="sd">            ``sequence_length``.</span>
+<span class="sd">            ``length``.</span>
 <span class="sd">        :param str genetic_map: If specified, obtain recombination rate information</span>
 <span class="sd">            from the genetic map with the specified ID. If None, simulate</span>
 <span class="sd">            using a default uniform recombination rate on a region with the length of</span>
@@ -339,8 +339,14 @@
 <span class="sd">            same chromosome-specific mutation and recombination rates.</span>
 <span class="sd">            This option cannot currently be used in conjunction with the</span>
 <span class="sd">            ``genetic_map`` argument.</span>
-<span class="sd">        :param inlusion_mask: If specified, ...</span>
-<span class="sd">        :param exclusion_mask: If specified, ...</span>
+<span class="sd">        :param inclusion_mask: If specified, simulated genomes are subset to only</span>
+<span class="sd">            inlude regions given by the mask. The mask can be specified by the</span>
+<span class="sd">            path and file name of a bed file or as a list or array of intervals</span>
+<span class="sd">            given by the left and right end points of the intervals.</span>
+<span class="sd">        :param exclusion_mask: If specified, simulated genomes are subset to exclude</span>
+<span class="sd">            regions given by the mask. The mask can be specified by the</span>
+<span class="sd">            path and file name of a bed file or as a list or array of intervals</span>
+<span class="sd">            given by the left and right end points of the intervals.</span>
 <span class="sd">        :param float length: Used with a &quot;generic&quot; contig, specifies the</span>
 <span class="sd">            length of genome sequence for this contig. For a generic contig, mutation</span>
 <span class="sd">            and recombination rates are equal to the genome-wide average across all</span>
@@ -349,15 +355,8 @@
 <span class="sd">        :return: A :class:`.Contig` describing the section of the genome.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: add non-autosomal support</span>
-        <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">chromosome</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span>
-            <span class="s2">&quot;x&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;y&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;mt&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;chrx&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;chry&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;chrm&quot;</span><span class="p">,</span>
-        <span class="p">):</span>
+        <span class="n">non_autosomal_lower</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;mt&quot;</span><span class="p">,</span> <span class="s2">&quot;chrx&quot;</span><span class="p">,</span> <span class="s2">&quot;chry&quot;</span><span class="p">,</span> <span class="s2">&quot;chrm&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">chromosome</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">non_autosomal_lower</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">NonAutosomalWarning</span><span class="p">(</span>
                     <span class="s2">&quot;Non-autosomal simulations are not yet supported. See &quot;</span>
@@ -373,8 +372,7 @@
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use mask with generic contig&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify sequence_length of generic contig&quot;</span><span class="p">)</span>
-            <span class="n">non_autosomal_lower</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;mt&quot;</span><span class="p">,</span> <span class="s2">&quot;chrx&quot;</span><span class="p">,</span> <span class="s2">&quot;chry&quot;</span><span class="p">,</span> <span class="s2">&quot;chrm&quot;</span><span class="p">]</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify sequence length of generic contig&quot;</span><span class="p">)</span>
             <span class="n">L_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">r_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">u_tot</span> <span class="o">=</span> <span class="mi">0</span>
@@ -389,7 +387,7 @@
             <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span><span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use sequence_length with named contig&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify sequence length for named contig&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify both inclusion and exclusion masks&quot;</span><span class="p">)</span>
             <span class="n">chrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>

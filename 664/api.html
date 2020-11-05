@@ -270,7 +270,7 @@ and chromosome.</p>
 A complete list of chromosome IDs for each species can be found in the
 “Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
 If the chromosome is not given, we specify a “generic” contig with given
-<code class="docutils literal notranslate"><span class="pre">sequence_length</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">length</span></code>.</p></li>
 <li><p><strong>genetic_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If specified, obtain recombination rate information
 from the genetic map with the specified ID. If None, simulate
 using a default uniform recombination rate on a region with the length of
@@ -281,8 +281,14 @@ specific, and can be found in the <a class="reference internal" href="catalog.ht
 same chromosome-specific mutation and recombination rates.
 This option cannot currently be used in conjunction with the
 <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
-<li><p><strong>inlusion_mask</strong> – If specified, …</p></li>
-<li><p><strong>exclusion_mask</strong> – If specified, …</p></li>
+<li><p><strong>inclusion_mask</strong> – If specified, simulated genomes are subset to only
+inlude regions given by the mask. The mask can be specified by the
+path and file name of a bed file or as a list or array of intervals
+given by the left and right end points of the intervals.</p></li>
+<li><p><strong>exclusion_mask</strong> – If specified, simulated genomes are subset to exclude
+regions given by the mask. The mask can be specified by the
+path and file name of a bed file or as a list or array of intervals
+given by the left and right end points of the intervals.</p></li>
 <li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Used with a “generic” contig, specifies the
 length of genome sequence for this contig. For a generic contig, mutation
 and recombination rates are equal to the genome-wide average across all
