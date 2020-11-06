@@ -322,7 +322,9 @@ can look at the help again as follows.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help
 usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
                         [--help-genetic-maps [HELP_GENETIC_MAPS]] [-D] [-g]
-                        [-c] [-l LENGTH_MULTIPLIER] [-s SEED] [-d] [-o OUTPUT]
+                        [-c] [-L LENGTH] [-i INCLUSION_MASK]
+                        [-e EXCLUSION_MASK] [-l LENGTH_MULTIPLIER] [-s SEED]
+                        [-d] [-o OUTPUT]
                         samples [samples ...]
 
 Run simulations for Homo sapiens using up-to-date genome information,
@@ -338,8 +340,6 @@ Mutation rate: 1.29e-08
 Recombination rate: 1.205e-08
 
 positional arguments:
-  samples               The number of samples to draw from each population. At
-                        least two samples must be specified. The number of
 ...
 </pre></div>
 </div>
@@ -1367,7 +1367,7 @@ Kelleher et al., 2016: https://doi.org/10.1371/journal.pcbi.1004842
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385

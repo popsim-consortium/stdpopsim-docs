@@ -325,6 +325,14 @@
 <span class="sd">        &lt;https://msprime.readthedocs.io/en/stable/api.html#msprime.RecombinationMap&gt;`_</span>
 <span class="sd">        for more details.</span>
 <span class="sd">    :vartype recombination_map: msprime.simulations.RecombinationMap</span>
+<span class="sd">    :ivar mask_intervals: Intervals to keep in simulated tree sequence, as a list</span>
+<span class="sd">        of (left_position, right_position), such that intervals are non-overlapping</span>
+<span class="sd">        and in ascending order. Should have shape Nx2, where N is the number of</span>
+<span class="sd">        intervals.</span>
+<span class="sd">    :vartype mask_intervals: array-like (?)</span>
+<span class="sd">    :ivar exclude: If True, ``mask_intervals`` specify regions to exclude. If False,</span>
+<span class="sd">        ``mask_intervals`` specify regions in keep.</span>
+<span class="sd">    :vartype exclude: bool</span>
 <span class="sd">    :ivar genomic_element_types: a list of stdpopsim.GenomicElementType</span>
 <span class="sd">        objects. By default, the only element is a single genomic element type</span>
 <span class="sd">        that spans the entire contiguous region.</span>
@@ -334,7 +342,6 @@
 <span class="sd">        stdpopsim.MutationType for more details.</span>
 
 <span class="sd">    .. note::</span>
-
 <span class="sd">        To run stdpopsim simulations with alternative, user-specified mutation</span>
 <span class="sd">        or recombination rates, a new contig can be created based on an existing</span>
 <span class="sd">        one. For instance, the following will create a ``new_contig`` that,</span>
@@ -352,6 +359,8 @@
     <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">genetic_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">inclusion_mask</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">exclusion_mask</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">genomic_element_types</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mutation_types</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
