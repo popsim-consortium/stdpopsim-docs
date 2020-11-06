@@ -1255,6 +1255,14 @@
                     <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span>
                     <span class="n">growth_rate</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">recap_epoch</span><span class="o">.</span><span class="n">populations</span><span class="p">]</span>
+        <span class="c1">#########################################</span>
+        <span class="c1"># FIX THIS BEFORE MERGING INTO MASTER!!!!</span>
+        <span class="c1"># NEED THE LATEST SLiM</span>
+        <span class="c1">#########################################</span>
+        <span class="c1"># TODO: remove this line once SLiM starts populating mutation times</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">tables</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">compute_mutation_times</span><span class="p">()</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">load_tables</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
         <span class="c1"># TODO: using recombination map in recapitate. maps should be discrete.</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">recapitate</span><span class="p">(</span>
                 <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_recombination_rate</span><span class="p">,</span>
