@@ -103,7 +103,7 @@ using the ``--help-models`` flag (here, truncated for space):
 This gives all of the possible demographic models we could simulate. We choose
 the two population out-of-Africa :ref:`model <sec_catalog_homsap_models_outofafrica_2t12>`
 from `Tennesen et al. (2012) <https://doi.org/10.1126/science.1219240>`_ .
-By looking at the model help we find that the name for this model is 
+By looking at the model help we find that the name for this model is
 ``OutOfAfrica_2T12`` and that we can specify it using
 the ``--demographic-model`` or ``-d`` option. We choose to draw two samples from the
 "African American" population and three samples from the "European American" population.
@@ -159,7 +159,7 @@ The output from a ``stdpopsim`` simulation is a *tree sequence*,
 a compact and efficient format for storing both genealogies and genome sequence.
 Some examples of analyzing tree sequences are given
 :ref:`below <sec_tute_analyses>`.
-If desired, these can be converted to VCF on the command line if the 
+If desired, these can be converted to VCF on the command line if the
 `tskit <https://tskit.readthedocs.io/>`__ package is installed,
 with the ``tskit vcf`` command:
 
@@ -389,7 +389,7 @@ for humans:
    # PapuansOutOfAfrica_10J19
 
 These models are described in detail in the :ref:`Catalog <sec_catalog>`.
-We'll look at the first model, "OutOfAfrica_3G09", from 
+We'll look at the first model, "OutOfAfrica_3G09", from
 `Gutenkunst et al (2009) <https://doi.org/10.1371/journal.pgen.1000695>`__.
 First we need to know how many populations it has, and what they are:
 
@@ -808,7 +808,7 @@ Next is "recapitation",
 for which the rationale and method is described in detail in the
 `pyslim documentation <https://pyslim.readthedocs.io/en/latest/tutorial.html#recapitation>`__.
 The third (and least crucial) step is to *simplify* the tree sequence.
-If as above we ask for 200 samples from a population whose final size is 
+If as above we ask for 200 samples from a population whose final size is
 1,450 individuals (after rescaling),
 then in fact the tree sequence returned by SLiM contains the entire genomes
 and genealogies of all 1,450 individuals,

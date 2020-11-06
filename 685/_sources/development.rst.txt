@@ -128,7 +128,7 @@ GitHub workflow
     2. Install the pre-commit hooks with::
 
         $ pre-commit install
-    
+
     2. Make sure that your local repository has been configured with an
        `upstream remote <https://help.github.com/articles/configuring-a-remote-for-a-fork/>`_.
     3. Create a "topic branch" to work on. One reliable way to do it
@@ -1056,4 +1056,3 @@ HTML output in the ``_build/html/`` directory.
 .. note::
 
     You will need ``stdpopsim`` to be installed for the build to work.
-
