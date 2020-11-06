@@ -259,7 +259,7 @@ information from Ensembl</p>
 
 <dl class="py method">
 <dt id="stdpopsim.Species.get_contig">
-<code class="sig-name descname">get_contig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chromosome</span></em>, <em class="sig-param"><span class="n">genetic_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">length_multiplier</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_contig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chromosome</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">genetic_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">length_multiplier</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">exclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
@@ -268,7 +268,9 @@ and chromosome.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>chromosome</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The ID of the chromosome to simulate.
 A complete list of chromosome IDs for each species can be found in the
-“Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p></li>
+“Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
+If the chromosome is not given, we specify a “generic” contig with given
+<code class="docutils literal notranslate"><span class="pre">length</span></code>.</p></li>
 <li><p><strong>genetic_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If specified, obtain recombination rate information
 from the genetic map with the specified ID. If None, simulate
 using a default uniform recombination rate on a region with the length of
@@ -279,6 +281,18 @@ specific, and can be found in the <a class="reference internal" href="catalog.ht
 same chromosome-specific mutation and recombination rates.
 This option cannot currently be used in conjunction with the
 <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
+<li><p><strong>inclusion_mask</strong> – If specified, simulated genomes are subset to only
+inlude regions given by the mask. The mask can be specified by the
+path and file name of a bed file or as a list or array of intervals
+given by the left and right end points of the intervals.</p></li>
+<li><p><strong>exclusion_mask</strong> – If specified, simulated genomes are subset to exclude
+regions given by the mask. The mask can be specified by the
+path and file name of a bed file or as a list or array of intervals
+given by the left and right end points of the intervals.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Used with a “generic” contig, specifies the
+length of genome sequence for this contig. For a generic contig, mutation
+and recombination rates are equal to the genome-wide average across all
+autosomal chromosomes.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -417,6 +431,12 @@ and recombination rates that are needed to simulate this region.</p>
 <li><p><strong>recombination_map</strong> (<em>msprime.simulations.RecombinationMap</em>) – The recombination map for the region. See the
 <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.RecombinationMap">msprime documentation</a>
 for more details.</p></li>
+<li><p><strong>mask_intervals</strong> (<em>array-like</em><em> (</em><em>?</em><em>)</em>) – Intervals to keep in simulated tree sequence, as a list
+of (left_position, right_position), such that intervals are non-overlapping
+and in ascending order. Should have shape Nx2, where N is the number of
+intervals.</p></li>
+<li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
+<code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
 </ul>
 </dd>
 </dl>

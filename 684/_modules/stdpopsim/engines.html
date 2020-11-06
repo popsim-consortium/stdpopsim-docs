@@ -221,8 +221,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Engine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.Engine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">demographic_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">contig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">demographic_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">contig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulates the model for the specified contig and samples.</span>
 
@@ -256,25 +261,36 @@
     <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;msprime&quot;</span>  <span class="c1">#:</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Msprime coalescent simulator&quot;</span>  <span class="c1">#:</span>
     <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-                <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1371/journal.pcbi.1004842&quot;</span><span class="p">,</span>
-                <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2016&quot;</span><span class="p">,</span>
-                <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Kelleher et al.&quot;</span><span class="p">,</span>
-                <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">}),</span>
-            <span class="p">]</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1371/journal.pcbi.1004842&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2016&quot;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Kelleher et al.&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">},</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
     <span class="c1"># We default to the first model in the list.</span>
     <span class="n">supported_models</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hudson&quot;</span><span class="p">,</span> <span class="s2">&quot;dtwf&quot;</span><span class="p">,</span> <span class="s2">&quot;smc&quot;</span><span class="p">,</span> <span class="s2">&quot;smc_prime&quot;</span><span class="p">]</span>
-    <span class="n">model_citations</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dtwf&quot;</span><span class="p">:</span> <span class="p">[</span>
-             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-                 <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1371/journal.pgen.1008619&quot;</span><span class="p">,</span>
-                 <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2020&quot;</span><span class="p">,</span>
-                 <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Nelson et al.&quot;</span><span class="p">,</span>
-                 <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">}),</span>
-             <span class="p">]}</span>
+    <span class="n">model_citations</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dtwf&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+                <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1371/journal.pgen.1008619&quot;</span><span class="p">,</span>
+                <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2020&quot;</span><span class="p">,</span>
+                <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Nelson et al.&quot;</span><span class="p">,</span>
+                <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">},</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
 
 <div class="viewcode-block" id="_MsprimeEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">demographic_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">contig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">msprime_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">msprime_change_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">demographic_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">contig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">msprime_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">msprime_change_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulate the demographic model using msprime.</span>
 <span class="sd">        See :meth:`.Engine.simulate()` for definitions of parameters defined</span>
@@ -311,15 +327,22 @@
             <span class="n">demographic_events</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-                <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span>
-                <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
-                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
-                <span class="n">population_configurations</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
-                <span class="n">migration_matrix</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
-                <span class="n">demographic_events</span><span class="o">=</span><span class="n">demographic_events</span><span class="p">,</span>
-                <span class="n">random_seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
-                <span class="n">model</span><span class="o">=</span><span class="n">msprime_model</span><span class="p">,</span>
-                <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">dry_run</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span>
+            <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">population_configurations</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
+            <span class="n">migration_matrix</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
+            <span class="n">demographic_events</span><span class="o">=</span><span class="n">demographic_events</span><span class="p">,</span>
+            <span class="n">random_seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">msprime_model</span><span class="p">,</span>
+            <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">dry_run</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
             <span class="n">ts</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">ts</span></div>
