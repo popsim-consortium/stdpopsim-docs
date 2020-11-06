@@ -1340,8 +1340,9 @@ To check that we have set up the simulation correctly, we may first wish to perf
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o   afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
+WARNING: RecombinationMap.read_hapmap() is deprecated. Use msprime.read_hapmap() instead.
 Simulation information:
-    Engine: msprime (0.7.4)
+    Engine: msprime (0.7.5.dev500+g1cd73ef3)
     Model id: AmericanAdmixture_4B11
     Model desciption: American admixture
     Seed: 13
@@ -1356,6 +1357,7 @@ Contig Description:
     Mean mutation rate: 1.29e-08
     Genetic map: HapMapII_GRCh37
 
+The provenance information for the resulting tree sequence is 6.96MB. This is nothing to worry about as provenance is a good thing to have, but if you want to save this memory/storage space you can disable provenance recording by setting record_provenance=False
 If you use this simulation in published work, please cite:
 [stdpopsim]
 Adrion et al., 2020: https://doi.org/10.7554/eLife.54967
@@ -1365,7 +1367,7 @@ Kelleher et al., 2016: https://doi.org/10.1371/journal.pcbi.1004842
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
