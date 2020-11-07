@@ -782,8 +782,8 @@
                 <span class="c1"># Zero out the population size for generations before this</span>
                 <span class="c1"># epoch, to avoid simulating invididuals that contribute no</span>
                 <span class="c1"># genealogy.</span>
-                <span class="n">N</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">growth_rates</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">N</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">growth_rates</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
 
                 <span class="c1"># Ensure there are no migrations to or from de.source before</span>
                 <span class="c1"># this epoch.</span>
@@ -1320,10 +1320,10 @@
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">):</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">):])</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">)</span> <span class="p">:])</span>
                 <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;WARNING: &quot;</span><span class="p">):</span>
                     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">UnspecifiedSLiMWarning</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;WARNING: &quot;</span><span class="p">):])</span>
+                        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">UnspecifiedSLiMWarning</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;WARNING: &quot;</span><span class="p">)</span> <span class="p">:])</span>
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># filter `dbg` function calls that generate output</span>
@@ -1333,7 +1333,7 @@
 
         <span class="k">if</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">stderr</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SLiMException</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">slim_path</span><span class="si">}</span><span class="s2"> exited with code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">slim_path</span><span class="si">}</span><span class="s2"> exited with code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_simplify_remembered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
