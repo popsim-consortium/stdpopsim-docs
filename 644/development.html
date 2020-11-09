@@ -689,7 +689,8 @@ The demographic model function should follow this format:</p>
             <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
             <span class="n">year</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
             <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
-            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">DEM_MODEL</span><span class="p">})</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">DEM_MODEL</span><span class="p">},</span>
+        <span class="p">)</span>
     <span class="p">]</span>
 
     <span class="n">generation_time</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
@@ -703,16 +704,10 @@ The demographic model function should follow this format:</p>
         <span class="n">populations</span><span class="o">=</span><span class="n">populations</span><span class="p">,</span>
         <span class="n">citations</span><span class="o">=</span><span class="n">citations</span><span class="p">,</span>
         <span class="n">generation_time</span><span class="o">=</span><span class="n">generation_time</span><span class="p">,</span>
-        <span class="n">population_configurations</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;FILL ME&quot;</span>
-        <span class="p">],</span>
-        <span class="n">migration_matrix</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;FILL ME&quot;</span>
-        <span class="p">],</span>
-        <span class="n">demographic_events</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;FILL ME&quot;</span>
-        <span class="p">],</span>
-        <span class="p">)</span>
+        <span class="n">population_configurations</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">],</span>
+        <span class="n">migration_matrix</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">],</span>
+        <span class="n">demographic_events</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
 
 
 <span class="n">_species</span><span class="o">.</span><span class="n">add_demographic_model</span><span class="p">(</span><span class="n">_model_func_name</span><span class="p">())</span>
@@ -773,6 +768,7 @@ instructions to install the development <code class="docutils literal notranslat
 requirements.</p>
 <p>Now check that your new demographic model function has been imported:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -918,26 +914,29 @@ recombination rates if necessary). This is then used to create a <cite>genome</c
     <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
     <span class="n">year</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
     <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Author et al.&quot;</span><span class="p">,</span>
-    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ASSEMBLY</span><span class="p">})</span>
+    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ASSEMBLY</span><span class="p">},</span>
+<span class="p">)</span>
 
 <span class="c1"># Parse list of chromosomes into a list of Chromosome objects which contain the</span>
 <span class="c1"># chromosome name, length, mutation rate, and recombination rate</span>
 <span class="n">_chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">genome_data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">_chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">Chromosome</span><span class="p">(</span>
-        <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-        <span class="n">length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
-        <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;synonyms&quot;</span><span class="p">],</span>
-        <span class="n">mutation_rate</span><span class="o">=</span><span class="n">FILL_ME</span><span class="p">,</span>
-        <span class="n">recombination_rate</span><span class="o">=</span><span class="n">FILL_ME</span>
-    <span class="p">))</span>
+    <span class="n">_chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Chromosome</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
+            <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;synonyms&quot;</span><span class="p">],</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">FILL_ME</span><span class="p">,</span>
+            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">FILL_ME</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
 
 <span class="c1"># Create a genome object</span>
 
 <span class="n">_genome</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Genome</span><span class="p">(</span>
-    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span>
-    <span class="n">assembly_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_assembly_citation</span><span class="p">])</span>
+    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span> <span class="n">assembly_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_assembly_citation</span><span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p>Once you have a genome object you can create a new <cite>Species</cite> object which contains
@@ -948,13 +947,15 @@ Arabidopsis thaliana and a final line of code that registers the species in the 
     <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1890/0012-9658(2002)083[1006:GTINSO]2.0.CO;2&quot;</span><span class="p">,</span>
     <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2002&quot;</span><span class="p">,</span>
     <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Donohue&quot;</span><span class="p">,</span>
-    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_TIME</span><span class="p">})</span>
+    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_TIME</span><span class="p">},</span>
+<span class="p">)</span>
 
 <span class="n">_pop_size_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-        <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1016/j.cell.2016.05.063&quot;</span><span class="p">,</span>
-        <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2016&quot;</span><span class="p">,</span>
-        <span class="n">author</span><span class="o">=</span><span class="s2">&quot;1001GenomesConsortium&quot;</span><span class="p">,</span>
-        <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">POP_SIZE</span><span class="p">})</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1016/j.cell.2016.05.063&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2016&quot;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;1001GenomesConsortium&quot;</span><span class="p">,</span>
+    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">POP_SIZE</span><span class="p">},</span>
+<span class="p">)</span>
 
 <span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;AraTha&quot;</span><span class="p">,</span>
@@ -963,9 +964,9 @@ Arabidopsis thaliana and a final line of code that registers the species in the 
     <span class="n">genome</span><span class="o">=</span><span class="n">_genome</span><span class="p">,</span>
     <span class="n">generation_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="n">generation_time_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_gen_time_citation</span><span class="p">],</span>
-    <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">population_size_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_pop_size_citation</span><span class="p">]</span>
-    <span class="p">)</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">population_size_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_pop_size_citation</span><span class="p">],</span>
+<span class="p">)</span>
 
 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">register_species</span><span class="p">(</span><span class="n">_species</span><span class="p">)</span>
 </pre></div>
@@ -1014,23 +1015,22 @@ AWS cloud once the new genetic map(s) are approved. Finally, you must add a <cit
 object to the file named for your species in the <cite>catalog</cite> directory (the same one in
 which the genome is defined) as shown below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_genetic_map_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-        <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
-        <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
-        <span class="n">year</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span>
-        <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_MAP</span><span class="p">})</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_MAP</span><span class="p">}</span>
+<span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The file_pattern argument is a pattern that matches the recombination map filenames,</span>
 <span class="sd">where &#39;{id}&#39; is replaced with the &#39;id&#39; field of a given chromosome.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">_gm</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">(</span>
     <span class="n">species</span><span class="o">=</span><span class="n">_species</span><span class="p">,</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="c1"># ID for genetic map, see naming conventions</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>  <span class="c1"># ID for genetic map, see naming conventions</span>
     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">url</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;https://stdpopsim.s3-us-west-2.amazonaws.com/genetic_maps/dir/filename&quot;</span><span class="p">),</span>
     <span class="n">sha256</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
     <span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;name_</span><span class="si">{id}</span><span class="s2">_more_name.txt&quot;</span><span class="p">,</span>
-    <span class="n">citations</span><span class="o">=</span><span class="p">[</span><span class="n">_genetic_map_citation</span><span class="p">])</span>
+    <span class="n">citations</span><span class="o">=</span><span class="p">[</span><span class="n">_genetic_map_citation</span><span class="p">],</span>
+<span class="p">)</span>
 
 <span class="n">_species</span><span class="o">.</span><span class="n">add_genetic_map</span><span class="p">(</span><span class="n">_gm</span><span class="p">)</span>
 </pre></div>

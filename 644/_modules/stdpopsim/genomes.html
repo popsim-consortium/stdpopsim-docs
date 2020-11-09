@@ -156,12 +156,12 @@
             
   <h1>Source code for stdpopsim.genomes</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Infrastructure for defining information about species&#39; genomes.</span>
+<span class="sd">Infrastructure for defining information about species&#39; genomes and genomic</span>
+<span class="sd">regions to be simulated.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">tskit</span>
 <span class="kn">import</span> <span class="nn">stdpopsim</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -273,22 +273,23 @@
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">GenomicElementType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    TODO: docstring.</span>
+<span class="sd">    Class that represents a map between genomic intervals and a group of</span>
+<span class="sd">    mutation types and the rate in which they occur within those intervals.</span>
+
 <span class="sd">    :ivar mutation_type_ids: Indices for the mutation types that can occur in</span>
 <span class="sd">        genomic elements of this type.</span>
 <span class="sd">    :vartype mutation_type_ids: list</span>
 <span class="sd">    :ivar proportions: Proportions (out of the mutation rate) in which each</span>
-<span class="sd">        mutation type can happen in genomic elements of this type.</span>
-<span class="sd">    :vartype: proportions: list</span>
+<span class="sd">        mutation type can happen in genomic intervals of this type.</span>
+<span class="sd">    :vartype: proportions: numpy.array, dtype=np.float32</span>
 <span class="sd">    :ivar intervals: (n, 2) numpy array with [left, right) genomic intervals</span>
 <span class="sd">        that will be of this GenomicElementType. The intervals are used to</span>
-<span class="sd">        specify SLiM GenomicElements. Intervals should be non-overlapping and</span>
-<span class="sd">        in asceding order.</span>
+<span class="sd">        specify SLiM GenomicElements. Intervals must be non-overlapping.</span>
 <span class="sd">    :vartype intervals: numpy.array, dtype=np.int32</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">mutation_type_ids</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
-    <span class="n">proportions</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">proportions</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -301,13 +302,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Proportions must lie within the [0,1] interval.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The sum of proportions can not be greater than 1.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">safe_np_int_cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Left positions cannot be greater than or equal to right positions.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A valid array of intervals must be provided.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">build_intervals_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
@@ -366,40 +361,39 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">get_length</span><span class="p">()</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_slim_incompatible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">get_length</span><span class="p">()</span>
 
     <span class="nd">@genomic_element_types</span><span class="o">.</span><span class="n">default</span>
     <span class="k">def</span> <span class="nf">_get_genetic_map_sized_genomic_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default is a genetic map sized genomic element</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">GenomicElementType</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]]))]</span>
 
     <span class="nd">@mutation_types</span><span class="o">.</span><span class="n">default</span>
     <span class="k">def</span> <span class="nf">_get_default_mut_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># One neutral mutation type, simulated with msprime</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">MutationType</span><span class="p">()]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">slim_fractions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">_check_fractions</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">props</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">atol</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The sum of the proportions within genomic element types cannot&quot;</span>
+                    <span class="s2">&quot; exceed 1.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">p</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1e-15</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">props</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;The sum of the proportions within genomic element types cannot&quot;</span>
-                <span class="s2">&quot; exceed 1.&quot;</span>
-            <span class="p">)</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">])</span>
+        <span class="n">_check_fractions</span><span class="p">(</span><span class="n">props</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">props</span>
 
     <span class="nd">@property</span>
@@ -407,7 +401,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an (n, 3) numpy array with n intervals (left, right, type)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">all_intervals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
             <span class="p">[</span>
@@ -416,15 +410,6 @@
             <span class="p">],</span>
             <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">sorter</span> <span class="o">=</span> <span class="n">all_intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
-        <span class="n">all_intervals</span> <span class="o">=</span> <span class="n">all_intervals</span><span class="p">[</span><span class="n">sorter</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">all_intervals</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Genomic elements are outside the genomic region&quot;</span>
-                <span class="s2">&quot; implied by the recombination map.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">all_intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">all_intervals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You cannot have overlapping genomic elements.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">all_intervals</span>
 
     <span class="nd">@property</span>
@@ -432,7 +417,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        breaks = [0,10,20] means [0,10) and [10,20)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">breaks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">rates</span> <span class="o">=</span> <span class="p">[]</span>
@@ -453,7 +438,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        breaks = [10,20] means [0,10] and (10,20]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slim_incompatible</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="c1"># making sure the mut types are still concordant with the ge types</span>
         <span class="n">_check_mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span>
@@ -492,12 +477,12 @@
 
 <span class="k">def</span> <span class="nf">_check_mutation_types</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">,</span> <span class="n">genomic_element_types</span><span class="p">):</span>
     <span class="n">mut_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mtid</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">mtid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)))</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mut_ids</span><span class="p">):</span>
+    <span class="n">set_all_muts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)))</span>
+    <span class="n">set_getypes_muts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mut_ids</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">set_getypes_muts</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">set_all_muts</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;The mutation type ids in the genomic elements &quot;</span>
-            <span class="s2">&quot;must match the list of mutation types.&quot;</span><span class="p">,</span>
-            <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">))),</span>
-            <span class="nb">set</span><span class="p">(</span><span class="n">mut_ids</span><span class="p">),</span>
+            <span class="s2">&quot;must match the list of mutation types.&quot;</span>
         <span class="p">)</span>
     <span class="n">neutral_mut_ids</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">i</span>

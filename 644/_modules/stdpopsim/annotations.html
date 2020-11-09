@@ -176,14 +176,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">{</span><span class="s1">&#39;seqid&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;seqid&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;strand&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;strand&#39;</span><span class="p">],</span>
-         <span class="s1">&#39;phase&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]}</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;seqid&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;seqid&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;strand&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;strand&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;phase&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">[</span><span class="s2">&quot;phase&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 
@@ -203,6 +205,7 @@
 <span class="sd">    :ivar citations: List of citations for the annotation.</span>
 <span class="sd">    :vartype citations: list of :class:`.Citation`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">species</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
@@ -266,19 +269,19 @@
         <span class="n">annots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chromosome_annotations</span><span class="p">(</span><span class="n">chrom_id</span><span class="p">)</span>
         <span class="n">subset</span> <span class="o">=</span> <span class="n">annots</span><span class="p">[</span><span class="n">annots</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">a_type</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">subset</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;annotation type &#39;</span><span class="si">{</span><span class="n">a_type</span><span class="si">}</span><span class="s2">&#39; not found on chrom&quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">chrom_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;annotation type &#39;</span><span class="si">{</span><span class="n">a_type</span><span class="si">}</span><span class="s2">&#39; not found on chrom </span><span class="si">{</span><span class="n">chrom_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">full_table</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">subset</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">subset</span><span class="p">[[</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">]]</span></div>
+            <span class="k">return</span> <span class="n">subset</span><span class="p">[[</span><span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">]]</span></div>
 
 <div class="viewcode-block" id="Annotation.get_genes_from_chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.get_genes_from_chromosome">[docs]</a>    <span class="k">def</span> <span class="nf">get_genes_from_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom_id</span><span class="p">,</span> <span class="n">full_table</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all elements of type gene from annotation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_annotation_type_from_chromomosome</span><span class="p">(</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span> <span class="n">chrom_id</span><span class="p">,</span>
-                                                          <span class="n">full_table</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_annotation_type_from_chromomosome</span><span class="p">(</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span> <span class="n">chrom_id</span><span class="p">,</span> <span class="n">full_table</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
