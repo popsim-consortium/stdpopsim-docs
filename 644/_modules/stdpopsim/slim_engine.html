@@ -1228,11 +1228,7 @@
                 <span class="s2">&quot;engine. You must specify a recombination map.&quot;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">contig</span><span class="o">.</span><span class="n">add_genomic_element_type</span><span class="p">(</span>
-                <span class="n">intervals</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">)]],</span>
-                <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">MutationType</span><span class="p">()],</span>
-                <span class="n">proportions</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="p">)</span>
+            <span class="n">contig</span><span class="o">.</span><span class="n">fully_neutral</span><span class="p">()</span>
 
         <span class="n">run_slim</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">slim_script</span>
 
