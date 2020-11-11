@@ -294,7 +294,7 @@
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_check_mut_proportions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">build_intervals_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">)</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">check_intervals_validity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
@@ -359,15 +359,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">slim_fractions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">_check_fractions</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">props</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">atol</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;The sum of the proportions within genomic element types cannot&quot;</span>
-                    <span class="s2">&quot; exceed 1.&quot;</span>
-                <span class="p">)</span>
-
+        <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">_check_mut_proportions</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span>
         <span class="n">props</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">])</span>
-        <span class="n">_check_fractions</span><span class="p">(</span><span class="n">props</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">props</span>
 
     <span class="nd">@property</span>
@@ -455,7 +448,7 @@
                 <span class="s2">&quot;You cannot add genomic element types to a &quot;</span>
                 <span class="s2">&quot;contig that has no recombination map.&quot;</span>
             <span class="p">)</span>
-        <span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
         <span class="n">ge_type</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GenomicElementType</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">intervals</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ge_type</span><span class="p">)</span>
         <span class="n">getid</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
@@ -470,7 +463,7 @@
     <span class="k">def</span> <span class="nf">fully_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slim_mutations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">convert_to_substitution</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_genomic_mutation_types</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_genomic_element_type</span><span class="p">(</span>
-            <span class="n">intervals</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]],</span>
+            <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]]),</span>
             <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span>
                 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
                     <span class="n">convert_to_substitution</span><span class="o">=</span><span class="n">convert_to_substitution</span>
@@ -496,15 +489,18 @@
         <span class="k">return</span> <span class="n">s</span></div>
 
 
-<span class="k">def</span> <span class="nf">_check_mut_proportions</span><span class="p">(</span><span class="n">proportions</span><span class="p">,</span> <span class="n">mutation_type</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">proportions</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutation_type</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_check_mut_proportions</span><span class="p">(</span><span class="n">proportions</span><span class="p">,</span> <span class="n">mutation_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mutation_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">proportions</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutation_type</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;The list of proportions and mutation types should be of the same length.&quot;</span>
         <span class="p">)</span>
     <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">prop</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">proportions</span><span class="p">]):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Proportions must lie within the [0,1] interval.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">proportions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The sum of proportions can not be greater than 1.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">proportions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">atol</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;The sum of the proportions within genomic element types cannot&quot;</span>
+            <span class="s2">&quot; exceed 1.&quot;</span>
+        <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_check_mutation_types</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">,</span> <span class="n">genomic_element_types</span><span class="p">):</span>
