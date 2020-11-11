@@ -455,7 +455,7 @@
                 <span class="s2">&quot;You cannot add genomic element types to a &quot;</span>
                 <span class="s2">&quot;contig that has no recombination map.&quot;</span>
             <span class="p">)</span>
-        <span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">build_intervals_array</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+        <span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
         <span class="n">ge_type</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GenomicElementType</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">intervals</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ge_type</span><span class="p">)</span>
         <span class="n">getid</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
