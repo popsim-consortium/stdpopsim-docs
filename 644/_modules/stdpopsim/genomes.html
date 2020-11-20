@@ -405,7 +405,6 @@
 <span class="sd">        breaks = [10,20] means [0,10] and (10,20]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># making sure the mut types are still concordant with the ge types</span>
-        <span class="n">_check_mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span>
         <span class="n">breaks</span><span class="p">,</span> <span class="n">rates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msp_mutation_rate_map</span>
         <span class="k">assert</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
         <span class="n">slim_breaks</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
@@ -439,8 +438,7 @@
             <span class="p">]</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">[</span><span class="n">genomic_element_type_id</span><span class="p">]</span><span class="o">.</span><span class="n">proportions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">[</span><span class="n">genomic_element_type_id</span><span class="p">]</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="p">[</span><span class="n">prop</span><span class="p">]</span>
-            <span class="p">)</span>
-        <span class="n">_check_mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span></div>
+            <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">add_genomic_element_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">mutation_types</span><span class="p">,</span> <span class="n">proportions</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -500,18 +498,6 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;The sum of the proportions within genomic element types cannot&quot;</span>
             <span class="s2">&quot; exceed 1.&quot;</span>
-        <span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">_check_mutation_types</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">,</span> <span class="n">genomic_element_types</span><span class="p">):</span>
-    <span class="n">mut_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mtid</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genomic_element_types</span> <span class="k">for</span> <span class="n">mtid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">]</span>
-    <span class="n">set_all_muts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)))</span>
-    <span class="n">set_getypes_muts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mut_ids</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">set_getypes_muts</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">set_all_muts</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;The mutation types referred by the genomic elements types &quot;</span>
-            <span class="s2">&quot;must be contained in the list of mutation types.&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">set_getypes_muts</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">set_all_muts</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 </pre></div>
 
