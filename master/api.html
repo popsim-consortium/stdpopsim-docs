@@ -463,17 +463,26 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 downloading and cacheing recombination maps from a remote URL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The URL where the packed and compressed genetic map can be obtained.</p></li>
-<li><p><strong>file_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The pattern used to map name individual chromosome to
-files, suitable for use with Python’s <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.format" title="(in Python v3.9)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> method.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The URL where the packed and compressed genetic map can be obtained.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.GeneticMap.download">
 <code class="sig-name descname">download</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genetic_maps.html#GeneticMap.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.GeneticMap.download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download the genetic map to the cache.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.GeneticMap.file_pattern">
+<em class="property">property </em><code class="sig-name descname">file_pattern</code><a class="headerlink" href="#stdpopsim.GeneticMap.file_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pattern used to map individual chromosome id strings to files. To obtain
+the file names, you can use Python’s <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.format" title="(in Python v3.9)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> method, for example
+<code class="docutils literal notranslate"><span class="pre">my_map.file_pattern.format(id=my_chromosome_id_string)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -499,6 +508,19 @@ A complete list of chromosome IDs for each species can be found in the
 <dt id="stdpopsim.GeneticMap.is_cached">
 <code class="sig-name descname">is_cached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genetic_maps.html#GeneticMap.is_cached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.GeneticMap.is_cached" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if this map is cached.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.GeneticMap.map_cache_dir">
+<em class="property">property </em><code class="sig-name descname">map_cache_dir</code><a class="headerlink" href="#stdpopsim.GeneticMap.map_cache_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the directory in which the files for this map are stored.
+Names for individual chromosome files within this directory can be obtained
+using <a class="reference internal" href="#stdpopsim.GeneticMap.file_pattern" title="stdpopsim.GeneticMap.file_pattern"><code class="xref py py-attr docutils literal notranslate"><span class="pre">file_pattern</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)">pathlib.Path</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

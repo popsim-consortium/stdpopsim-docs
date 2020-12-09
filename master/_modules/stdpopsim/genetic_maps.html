@@ -175,9 +175,6 @@
 
 <span class="sd">    :ivar url: The URL where the packed and compressed genetic map can be obtained.</span>
 <span class="sd">    :vartype url: str</span>
-<span class="sd">    :ivar file_pattern: The pattern used to map name individual chromosome to</span>
-<span class="sd">        files, suitable for use with Python&#39;s :meth:`str.format` method.</span>
-<span class="sd">    :vartype file_pattern: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -197,7 +194,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sha256</span> <span class="o">=</span> <span class="n">sha256</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_pattern</span> <span class="o">=</span> <span class="n">file_pattern</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_pattern</span> <span class="o">=</span> <span class="n">file_pattern</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="o">=</span> <span class="n">citations</span>
 
@@ -210,7 +207,25 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">map_cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The path to the directory in which the files for this map are stored.</span>
+<span class="sd">        Names for individual chromosome files within this directory can be obtained</span>
+<span class="sd">        using :attr:`file_pattern`.</span>
+
+<span class="sd">        :type: pathlib.Path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">cache_path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">file_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The pattern used to map individual chromosome id strings to files. To obtain</span>
+<span class="sd">        the file names, you can use Python&#39;s :meth:`str.format` method, for example</span>
+<span class="sd">        ``my_map.file_pattern.format(id=my_chromosome_id_string)``.</span>
+
+<span class="sd">        :type: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_pattern</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;GeneticMap:</span><span class="se">\n</span><span class="s2">&quot;</span>
