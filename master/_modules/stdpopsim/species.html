@@ -466,21 +466,21 @@
         <span class="n">genetic_map</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">genetic_map</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Species.get_genetic_map"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_genetic_map">[docs]</a>    <span class="k">def</span> <span class="nf">get_genetic_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a genetic map (AKA. recombination map) with the specified ``id``.</span>
-
-<span class="sd">        :param str id: The string identifier for the genetic map.</span>
-<span class="sd">            A complete list of IDs for each species can be found in the</span>
-<span class="sd">            &quot;Genetic Maps&quot; subsection for the species in the :ref:`sec_catalog`.</span>
-<span class="sd">        :rtype: :class:`GeneticMap`</span>
-<span class="sd">        :return: A :class:`GeneticMap` that defines the frequency of</span>
-<span class="sd">            recombinations across the genome.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get_genetic_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="c1"># NOTE: Undocumenting this method as the GeneticMap API isn&#39;t part of the</span>
+        <span class="c1"># supported public interface.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Returns a genetic map (AKA. recombination map) with the specified ``id``.</span>
+        <span class="c1"># :param str id: The string identifier for the genetic map.</span>
+        <span class="c1">#     A complete list of IDs for each species can be found in the</span>
+        <span class="c1">#     &quot;Genetic Maps&quot; subsection for the species in the :ref:`sec_catalog`.</span>
+        <span class="c1"># :rtype: :class:`GeneticMap`</span>
+        <span class="c1"># :return: A :class:`GeneticMap` that defines the frequency of</span>
+        <span class="c1">#     recombinations across the genome.</span>
         <span class="k">for</span> <span class="n">gm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">gm</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">gm</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genetic map &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genetic map &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotations</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">annotations</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">an</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">an</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">]:</span>
