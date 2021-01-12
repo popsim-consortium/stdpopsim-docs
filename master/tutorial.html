@@ -360,7 +360,7 @@ chromosome 22, using the <code class="docutils literal notranslate"><span class=
 tree-sequence formatted output should be written to the file <code class="docutils literal notranslate"><span class="pre">foo.ts</span></code> with the
 <code class="docutils literal notranslate"><span class="pre">-o</span></code> option. For more information on how to use tree-sequence files see
 <a class="reference external" href="https://tskit.readthedocs.io/en/latest/">tskit</a> .</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -c chr22 -o foo.ts <span class="m">2</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -o foo.ts <span class="m">2</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -420,7 +420,7 @@ a fraction of the length of the specified chromosome using the <code class="docu
 (e.g. 5%). This is just specifying a sequence length, not actually selecting
 a subset of the chromosome to sequence and as such cannot be used with anything
 other than a uniform recombination map. The command now looks like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
 </pre></div>
 </div>
 <p>Note that the number of samples from each population are simply specified
@@ -455,12 +455,12 @@ HapMapII_GRCh37
 <a class="reference internal" href="catalog.html#sec_catalog_homsap_genetic_maps_hapmapii_grch37"><span class="std std-ref">HapMapII_GRCh37</span></a> map. Empirical
 recombination maps cannot be used with length multipliers so we have to remove
 the <code class="docutils literal notranslate"><span class="pre">-l</span></code> option. (NOTE: this may a minute or so to run).</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
 </pre></div>
 </div>
 <p>For reproducibility we can also choose set the seed for the simulator using the
 <code class="docutils literal notranslate"><span class="pre">-s</span></code> flag.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
 </pre></div>
 </div>
 <p>On running these commands, the CLI also outputs the relevant citations for both
@@ -475,7 +475,7 @@ Some examples of analyzing tree sequences are given
 If desired, these can be converted to VCF on the command line if the
 <a class="reference external" href="https://tskit.readthedocs.io/">tskit</a> package is installed,
 with the <code class="docutils literal notranslate"><span class="pre">tskit</span> <span class="pre">vcf</span></code> command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> tskit vcf foo.ts &gt; foo.vcf
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit vcf foo.ts &gt; foo.vcf
 </pre></div>
 </div>
 <p>For this small example (only five samples), the file sizes are similar,
@@ -484,9 +484,9 @@ but the tree sequence is slightly larger
 However, if we up the sample sizes to 2000 and 3000
 (the simulation is still pretty quick)
 the tree sequence is twenty-three times smaller:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2000</span> <span class="m">3000</span>
-<span class="gp">$</span> tskit vcf foo.ts &gt; foo.vcf
-<span class="gp">$</span> ls -lth foo.*
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2000</span> <span class="m">3000</span>
+<span class="gp">$ </span>tskit vcf foo.ts &gt; foo.vcf
+<span class="gp">$ </span>ls -lth foo.*
 <span class="go">-rw-r--r-- 1 peter peter 3139M Apr  3 10:40 foo.vcf</span>
 <span class="go">-rw-r--r-- 1 peter peter  136M Apr  3 10:39 foo.ts</span>
 </pre></div>
@@ -494,9 +494,9 @@ the tree sequence is twenty-three times smaller:</p>
 <p>Zipping the files (using the <a class="reference external" href="https://tszip.readthedocs.io/en/latest/">tszip</a>
 package) reduces this difference quite a lot,
 but increases time required for processing:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> tskit vcf foo.ts <span class="p">|</span> gzip -c &gt; foo.vcf.gz
-<span class="gp">$</span> tszip foo.ts
-<span class="gp">$</span> ls -lth foo.*
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit vcf foo.ts <span class="p">|</span> gzip -c &gt; foo.vcf.gz
+<span class="gp">$ </span>tszip foo.ts
+<span class="gp">$ </span>ls -lth foo.*
 <span class="go">-rw-r--r-- 1 peter peter  31M Apr  3 10:51 foo.ts.tsz</span>
 <span class="go">-rw-r--r-- 1 peter peter  72M Apr  3 10:50 foo.vcf.gz</span>
 </pre></div>
@@ -519,7 +519,7 @@ a forwards-time, individual-based simulator.</p>
 For instance, to use SLiM to simulate the same 5% chunk of chromosome 22
 under the <code class="docutils literal notranslate"><span class="pre">OutOfAfrica_2T12</span></code> model as above,
 we would just run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim -e slim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
 </pre></div>
 </div>
 <p>Here we’ve changed the sample sizes to be even:
@@ -539,7 +539,7 @@ we can specify a <em>scaling factor</em>,
 described in more detail below (see <a class="reference internal" href="#sec-slim-scaling-factor"><span class="std std-ref">The scaling factor</span></a>),
 using the <code class="docutils literal notranslate"><span class="pre">--slim-scaling-factor</span></code> option.
 Unlike the previous command, this one should run very fast:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
 $    -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
 </pre></div>
 </div>
@@ -574,7 +574,7 @@ we see that to simulate copies of chromosome arm 2L
 from <em>Drosophila melanogaster</em> individuals with the demographic model
 inferred by <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">Sheehan &amp; Song (2016)</a>,
 using SLiM with a (very large!) scaling factor of 1000, we could run</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
 $     -c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span>
 </pre></div>
 </div>
@@ -588,7 +588,7 @@ every time a demographic event occurs
 (helpfully, this also gives us an idea of how quickly the simulation is going):
 This also outputs a fair bit of other debugging output,
 which can be turned off with <code class="docutils literal notranslate"><span class="pre">--quiet</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim -v -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -v -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
 $     -c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span> --quiet
 </pre></div>
 </div>
@@ -998,7 +998,7 @@ temporary file. So, for instance, after changing</p>
 <p>we could then run the simulation in SLiM’s GUI,
 to do more detailed investigation,
 or we could just run it on the command line:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> slim script.slim
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>slim script.slim
 </pre></div>
 </div>
 <p>If you go this route, you need to do a few postprocessing steps
@@ -1384,14 +1384,14 @@ Kelleher et al., 2016: https://doi.org/10.1371/journal.pcbi.1004842
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
 </pre></div>
 </div>
 <p>Once we’re sure, we can remove the <code class="docutils literal notranslate"><span class="pre">-D</span></code> flag to run the simulation. (Note: This took around 8 minutes to run on a laptop.)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s <span class="m">13</span> -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 <span class="m">4</span> <span class="m">4</span> <span class="m">4</span> <span class="m">4</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s <span class="m">13</span> -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 <span class="m">4</span> <span class="m">4</span> <span class="m">4</span> <span class="m">4</span>
 </pre></div>
 </div>
 </div>
