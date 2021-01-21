@@ -1,0 +1,977 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>API &mdash; stdpopsim 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Development" href="development.html" />
+    <link rel="prev" title="Command-line options" href="cli_arguments.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#species-definitions">Species definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#demographic-models">Demographic Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-models">Generic models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-engines">Simulation Engines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api">
+<span id="sec-api"></span><h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="species-definitions">
+<span id="sec-api-species-definitions"></span><h2>Species definitions<a class="headerlink" href="#species-definitions" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> contains a large number of species and simulation
+model definitions, which are built using a number of classes defined here.
+These are usually not intended to be instantiated directly, but should be
+accessed through the main entry point, <a class="reference internal" href="#stdpopsim.get_species" title="stdpopsim.get_species"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_species()</span></code></a>.</p>
+<dl class="py function">
+<dt id="stdpopsim.get_species">
+<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">get_species</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#get_species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.get_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> object for the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string identifier for the requested species. E.g. “HomSap”.
+A complete list of species, and their IDs, can be found in the
+<a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An object containing the species definition.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Species">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Species</code><a class="reference internal" href="_modules/stdpopsim/species.html#Species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a species in the catalog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The unique identifier for this species. The species ID is
+the three first letters of the genus name followed by the first
+three letters of the species name, and does not
+contain any spaces or punctuation. The usual scheme is to
+use the first three letters of the genus and species (similar to the
+approach used in the UCSC genome browser), e.g., “HomSap”
+is the ID for Homo Sapiens.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The full name of this species in binominal nomenclature as
+it would be used in written text, e.g., “Homo sapiens”.</p></li>
+<li><p><strong>common_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The name of this species as it would most often be
+used informally in written text, e.g., “human”, or “Orang-utan”.
+Where no common name for the species exist, use the most common
+abbreviation, e.g., “E. Coli”.</p></li>
+<li><p><strong>genome</strong> (<a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><em>stdpopsim.Genome</em></a>) – The <a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> instance describing the details
+of this species’ genome.</p></li>
+<li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The current best estimate for the generation
+time of this species in years. Note that individual demographic
+models in the catalog may or may not use this estimate: each
+model uses the generation time that was used in the original
+publication(s).</p></li>
+<li><p><strong>generation_time_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing justification for the genertion time estimate.</p></li>
+<li><p><strong>population_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The current best estimate for the population
+size of this species. Note that individual demographic
+models in the catalog may or may not use this estimate: each
+model uses the population sizes defined in the original
+publication(s).</p></li>
+<li><p><strong>population_size_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing justification for the population size estimate.</p></li>
+<li><p><strong>demographic_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>
+instances in the catalog for this species.</p></li>
+<li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The ensembl id for the species’ genome assembly,
+which will be used by maintenance scripts to query ensembl’s database.
+This parameter will be automatically populated from the species name,
+and should not be set directly unless a non-default assembly is used
+for the species definition (e.g. see E. coli).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.Species.get_annotations">
+<code class="sig-name descname">get_annotations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a set of annotations with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string identifier for the set of annotations
+A complete list of IDs for each species can be found in the
+“Annotations” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <a class="reference internal" href="#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> that holds genome annotation
+information from Ensembl</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Species.get_contig">
+<code class="sig-name descname">get_contig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chromosome</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">genetic_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">length_multiplier</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">exclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
+is to be simulated based on empirical information for a given species
+and chromosome.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chromosome</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The ID of the chromosome to simulate.
+A complete list of chromosome IDs for each species can be found in the
+“Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
+If the chromosome is not given, we specify a “generic” contig with given
+<code class="docutils literal notranslate"><span class="pre">length</span></code>.</p></li>
+<li><p><strong>genetic_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – If specified, obtain recombination rate information
+from the genetic map with the specified ID. If None, simulate
+using a default uniform recombination rate on a region with the length of
+the specified chromosome. The default rates are species- and chromosome-
+specific, and can be found in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>. (Default: None)</p></li>
+<li><p><strong>length_multiplier</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – If specified, simulate a region of length
+<cite>length_multiplier</cite> times the length of the specified chromosome with the
+same chromosome-specific mutation and recombination rates.
+This option cannot currently be used in conjunction with the
+<code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
+<li><p><strong>inclusion_mask</strong> – If specified, simulated genomes are subset to only
+inlude regions given by the mask. The mask can be specified by the
+path and file name of a bed file or as a list or array of intervals
+given by the left and right end points of the intervals.</p></li>
+<li><p><strong>exclusion_mask</strong> – If specified, simulated genomes are subset to exclude
+regions given by the mask. The mask can be specified by the
+path and file name of a bed file or as a list or array of intervals
+given by the left and right end points of the intervals.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Used with a “generic” contig, specifies the
+length of genome sequence for this contig. For a generic contig, mutation
+and recombination rates are equal to the genome-wide average across all
+autosomal chromosomes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> describing the section of the genome.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Species.get_demographic_model">
+<code class="sig-name descname">get_demographic_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_demographic_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_demographic_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a demographic model with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string identifier for the demographic model.
+A complete list of IDs for each species can be found in the
+“Demographic Models” subsection for the species in the
+<a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> that defines the requested model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Genome">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Genome</code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing the genome for a species.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chromosomes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> objects.</p></li>
+<li><p><strong>mutation_rate_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing justification for the mutation rate estimate.</p></li>
+<li><p><strong>recombination_rate_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing justification for the recombination rate estimate.</p></li>
+<li><p><strong>assembly_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing reference to the source of the genome assembly.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The total length of the genome.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.Genome.get_chromosome">
+<code class="sig-name descname">get_chromosome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.get_chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Genome.get_chromosome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the chromosome with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string ID of the chromosome.
+A complete list of chromosome IDs for each species can be found in the
+“Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> that defines properties of the chromosome
+such as length, mutation rate, and recombination rate.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Genome.mean_mutation_rate">
+<em class="property">property </em><code class="sig-name descname">mean_mutation_rate</code><a class="headerlink" href="#stdpopsim.Genome.mean_mutation_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length-weighted mean mutation rate across all chromosomes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Genome.mean_recombination_rate">
+<em class="property">property </em><code class="sig-name descname">mean_recombination_rate</code><a class="headerlink" href="#stdpopsim.Genome.mean_recombination_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length-weighted mean recombination rate across all chromosomes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Chromosome">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Chromosome</code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Chromosome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a single chromosome for a species.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string identifier for the chromosome.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The length of the chromosome.</p></li>
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The mutation rate used when simulating this
+chromosome.</p></li>
+<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The recombination rate used when simulating
+this chromosome (if not using a genetic map).</p></li>
+<li><p><strong>synonyms</strong> (<em>list of str</em>) – List of synonyms that may be used when requesting this
+chromosome by ID, e.g. from the command line interface.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Contig">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Contig</code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Contig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a contiguous region of genome that is to be
+simulated. This contains the information about mutation rates
+and recombination rates that are needed to simulate this region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
+<li><p><strong>recombination_map</strong> (<em>msprime.simulations.RecombinationMap</em>) – The recombination map for the region. See the
+<a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.RecombinationMap">msprime documentation</a>
+for more details.</p></li>
+<li><p><strong>mask_intervals</strong> (<em>array-like</em><em> (</em><em>?</em><em>)</em>) – Intervals to keep in simulated tree sequence, as a list
+of (left_position, right_position), such that intervals are non-overlapping
+and in ascending order. Should have shape Nx2, where N is the number of
+intervals.</p></li>
+<li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
+<code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To run stdpopsim simulations with alternative, user-specified mutation
+or recombination rates, a new contig can be created based on an existing
+one. For instance, the following will create a <code class="docutils literal notranslate"><span class="pre">new_contig</span></code> that,
+when simulated, will have double the mutation rate of the <code class="docutils literal notranslate"><span class="pre">old_contig</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
+    <span class="n">mutation_rate</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">recombination_map</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
+    <span class="n">genetic_map</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">genetic_map</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Citation">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Citation</code><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the literature that should be acknowledged by users of
+stdpopsim.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doi</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The DOI for the publication providing the definitive reference.</p></li>
+<li><p><strong>author</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Short author list, .e.g, “Author 1 et. al”.</p></li>
+<li><p><strong>year</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Year of publication as a 4 digit integer, e.g. 2008.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.Citation.because">
+<code class="sig-name descname">because</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reasons</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.because"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation.because" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new Citation with the given reasons.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Citation.fetch_bibtex">
+<code class="sig-name descname">fetch_bibtex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.fetch_bibtex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation.fetch_bibtex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the bibtex of a citation from Crossref.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Citation.merge">
+<em class="property">static </em><code class="sig-name descname">merge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">citations</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a deduplicated list of Citation objects.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Annotation">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Annotation</code><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a GFF3 annotation file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – String that uniquely identifies the annotation.</p></li>
+<li><p><strong>species</strong> (<a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a>) – The species to which this annotation applies.</p></li>
+<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The URL where the packed and compressed GFF3 can be found.</p></li>
+<li><p><strong>zarr_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The URL of the zarr cache of the GFF3.</p></li>
+<li><p><strong>zarr_sha256</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The SHA256 checksum of the zarr cache.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – One line description of the annotation.</p></li>
+<li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – List of citations for the annotation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.Annotation.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads the zarr URL and stores it in the cache directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Annotation.get_annotation_type_from_chromomosome">
+<code class="sig-name descname">get_annotation_type_from_chromomosome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a_type</span></em>, <em class="sig-param"><span class="n">chrom_id</span></em>, <em class="sig-param"><span class="n">full_table</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_annotation_type_from_chromomosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.get_annotation_type_from_chromomosome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all elements of type a_type from chromosome specified</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Annotation.get_chromosome_annotations">
+<code class="sig-name descname">get_chromosome_annotations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_chromosome_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.get_chromosome_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the pandas dataframe for the chromosome with the specified id.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Annotation.get_genes_from_chromosome">
+<code class="sig-name descname">get_genes_from_chromosome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chrom_id</span></em>, <em class="sig-param"><span class="n">full_table</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_genes_from_chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.get_genes_from_chromosome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all elements of type gene from annotation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Annotation.is_cached">
+<code class="sig-name descname">is_cached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.is_cached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.is_cached" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this annotation is cached locally.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="demographic-models">
+<h2>Demographic Models<a class="headerlink" href="#demographic-models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="stdpopsim.DemographicModel">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">DemographicModel</code><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a demographic model.</p>
+<p>Instances of this class are constructed by model implementors, following the
+<a class="reference internal" href="development.html#sec-development-demographic-model"><span class="std std-ref">developer documentation</span></a>. To instead
+obtain a pre-specified model as listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>,
+see <a class="reference internal" href="#stdpopsim.Species.get_demographic_model" title="stdpopsim.Species.get_demographic_model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species.get_demographic_model</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The unique identifier for this model. DemographicModel IDs should be
+short and memorable, and conform to the stdpopsim
+<a class="reference internal" href="development.html#sec-development-naming-conventions"><span class="std std-ref">naming conventions</span></a>
+for demographic models.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A short description of this model as it would be used in
+written text, e.g., “Three population Out-of-Africa”. This should
+describe the model itself and not contain author or year information.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A concise, but detailed, summary of the model.</p></li>
+<li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Mean inter-generation interval, in years.</p></li>
+<li><p><strong>populations</strong> (list of <a class="reference internal" href="#stdpopsim.Population" title="stdpopsim.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Population" title="stdpopsim.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a>, to provide each population
+with a unique ID and description.</p></li>
+<li><p><strong>qc_model</strong> (<a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> or None) – An independent implementation of the model, against which
+the model’s accuracy is validated. This should not be set by the user,
+and may be None if no QC implementation exists yet.</p></li>
+<li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>, that describe the primary
+reference(s) for the model.</p></li>
+<li><p><strong>demographic_events</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographicEvent</span></code>) – A list of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographicEvent</span></code> subclasses, that define changes to
+the populations through time, such as population size changes or mass
+migrations. See the
+<a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#sec-api-demographic-events" title="(in msprime v0.7)"><span class="xref std std-ref">msprime API documentation</span></a>
+for more information.</p></li>
+<li><p><strong>population_configurations</strong> (list of <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.PopulationConfiguration" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.PopulationConfiguration</span></code></a>) – A list of
+<a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.PopulationConfiguration" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.PopulationConfiguration</span></code></a>, one for each population, to
+set the population metadata, initial size and growth rate parameters.</p></li>
+<li><p><strong>migration_matrix</strong> (<em>list of list of int</em>) – The initial migration matrix. See the
+<code class="docutils literal notranslate"><span class="pre">migration_matrix</span></code> parameter to <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.simulate" title="(in msprime v0.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">msprime.simulate()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.DemographicModel.empty">
+<em class="property">static </em><code class="sig-name descname">empty</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a model with the mandatory attributes filled out.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.DemographicModel.equals">
+<code class="sig-name descname">equals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em>, <em class="sig-param"><span class="n">rtol</span><span class="o">=</span><span class="default_value">1e-08</span></em>, <em class="sig-param"><span class="n">atol</span><span class="o">=</span><span class="default_value">1e-05</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.equals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this model is equal to the specified model to the
+specified numerical tolerance (as defined by numpy.allclose).</p>
+<p>We use the ‘equals’ method here rather than the equality operator
+because we need to be able to specifiy the numerical tolerances.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.DemographicModel.get_demography_debugger">
+<code class="sig-name descname">get_demography_debugger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_demography_debugger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_demography_debugger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.DemographyDebugger" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographyDebugger</span></code></a> instance initialized
+with the parameters for this model. Please see the msprime documentation
+for details on how to use a DemographyDebugger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A DemographyDebugger instance for this DemographicModel.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.DemographyDebugger" title="(in msprime v0.7)">msprime.DemographyDebugger</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.DemographicModel.get_samples">
+<code class="sig-name descname">get_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of msprime.Sample objects, with the number of samples
+from each population determined by the positional arguments.
+For instance, <code class="docutils literal notranslate"><span class="pre">model.get_samples(2,</span> <span class="pre">5,</span> <span class="pre">7)</span></code> would return a list of 14 samples,
+two of which are from the model’s first population (i.e., with population ID
+<code class="docutils literal notranslate"><span class="pre">model.populations[0].id</span></code>), five are from the model’s second population,
+and seven are from the model’s third population.
+The number of of arguments must be less than or equal to the number of
+“sampling” populations, <code class="docutils literal notranslate"><span class="pre">model.num_sampling_populations</span></code>;
+if the number of arguments is less than the number of sampling populations,
+then remaining numbers are treated as zero.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.DemographicModel.register_qc">
+<code class="sig-name descname">register_qc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">qc_model</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.register_qc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.register_qc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a QC model implementation for this model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.DemographicModel.verify_equal">
+<code class="sig-name descname">verify_equal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em>, <em class="sig-param"><span class="n">rtol</span><span class="o">=</span><span class="default_value">1e-08</span></em>, <em class="sig-param"><span class="n">atol</span><span class="o">=</span><span class="default_value">1e-05</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.verify_equal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.verify_equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to the <code class="xref py py-func docutils literal notranslate"><span class="pre">equals()</span></code> method, but raises a UnequalModelsError if the
+models are not equal rather than returning False.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Population">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Population</code><a class="reference internal" href="_modules/stdpopsim/models.html#Population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class recording metadata representing a population in a simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The id of the population.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a short description of the population</p></li>
+<li><p><strong>sampling_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – an integer value which indicates how many
+generations prior to the present individuals should samples should
+be drawn from this population. If <cite>None</cite>, sampling not allowed from this
+population (default = 0).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.Population.asdict">
+<code class="sig-name descname">asdict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#Population.asdict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Population.asdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary representing the metadata about this population.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="generic-models">
+<span id="sec-api-generic-models"></span><h2>Generic models<a class="headerlink" href="#generic-models" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> contains simulation models from the literature
+that are defined for particular species. It is also useful to be able
+to simulate more generic models, which are documented here.
+Please see the <a class="reference internal" href="tutorial.html#sec-tutorial-generic-models"><span class="std std-ref">Running a generic model</span></a> for examples of using
+these models.</p>
+<dl class="py class">
+<dt id="stdpopsim.PiecewiseConstantSize">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">PiecewiseConstantSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N0</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#PiecewiseConstantSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.PiecewiseConstantSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a generic simulation model that can be run to output a
+tree sequence. This is a piecewise constant size model, which allows for
+instantaneous population size change over multiple epochs in a single population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The initial effective population size</p></li>
+<li><p><strong>args</strong> – Each subsequent argument is a tuple (t, N) which gives the
+time at which the size change takes place and the population size.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The usage is best illustrated by an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model1</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">PiecewiseConstantSize</span><span class="p">(</span><span class="n">N0</span><span class="p">,</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">N1</span><span class="p">))</span>  <span class="c1"># One change</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">PiecewiseConstantSize</span><span class="p">(</span><span class="n">N0</span><span class="p">,</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">N1</span><span class="p">),</span> <span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">N2</span><span class="p">))</span>  <span class="c1"># Two changes</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.IsolationWithMigration">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">IsolationWithMigration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NA</span></em>, <em class="sig-param"><span class="n">N1</span></em>, <em class="sig-param"><span class="n">N2</span></em>, <em class="sig-param"><span class="n">T</span></em>, <em class="sig-param"><span class="n">M12</span></em>, <em class="sig-param"><span class="n">M21</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#IsolationWithMigration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.IsolationWithMigration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a generic simulation model that can be run to output a tree
+sequence. A generic isolation with migration model where a single ancestral
+population of size NA splits into two populations of constant size N1
+and N2 time T generations ago, with migration rates M12 and M21 between
+the split populations. Sampling is disallowed in population index 0,
+as this is the ancestral population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NA</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The initial ancestral effective population size</p></li>
+<li><p><strong>N1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The effective population size of population 1</p></li>
+<li><p><strong>N2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The effective population size of population 2</p></li>
+<li><p><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Time of split between populations 1 and 2 (in generations)</p></li>
+<li><p><strong>M12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Migration rate from population 1 to 2</p></li>
+<li><p><strong>M21</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Migration rate from population 2 to 1</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model1</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">IsolationWithMigration</span><span class="p">(</span><span class="n">NA</span><span class="p">,</span> <span class="n">N1</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">M12</span><span class="p">,</span> <span class="n">M21</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="simulation-engines">
+<span id="sec-api-simulation-engines"></span><h2>Simulation Engines<a class="headerlink" href="#simulation-engines" title="Permalink to this headline">¶</a></h2>
+<p>Support for additional simulation engines can be implemented by subclassing
+the abstract <a class="reference internal" href="#stdpopsim.Engine" title="stdpopsim.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> class, and registering an instance of the
+subclass with <a class="reference internal" href="#stdpopsim.register_engine" title="stdpopsim.register_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">register_engine()</span></code></a>.
+These are usually not intended to be instantiated directly, but should be
+accessed through the main entry point, <a class="reference internal" href="#stdpopsim.get_engine" title="stdpopsim.get_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_engine()</span></code></a>.</p>
+<dl class="py function">
+<dt id="stdpopsim.get_engine">
+<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">get_engine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#get_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.get_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the simulation engine with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string identifier for the requested engine.
+The currently supported engines are “msprime” and “slim”.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A simulation engine object with a <code class="docutils literal notranslate"><span class="pre">simulate()</span></code> method.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stdpopsim.Engine" title="stdpopsim.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stdpopsim.get_default_engine">
+<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">get_default_engine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#get_default_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.get_default_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the default simulation engine (msprime).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stdpopsim.Engine" title="stdpopsim.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stdpopsim.register_engine">
+<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">register_engine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">engine</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#register_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.register_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers the specified simulation engine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>engine</strong> (<a class="reference internal" href="#stdpopsim.Engine" title="stdpopsim.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>) – The simulation engine object to register.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.Engine">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Engine</code><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class representing a simulation engine.</p>
+<p>To implement a new simulation engine, one should inherit from this
+class. At a minimum, the <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>
+and <code class="docutils literal notranslate"><span class="pre">citations</span></code> attributes must
+be set, and the <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate()</span></code></a> and <a class="reference internal" href="#stdpopsim.Engine.get_version" title="stdpopsim.Engine.get_version"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_version()</span></code></a> methods must
+be implemented. See msprime example in <code class="docutils literal notranslate"><span class="pre">engines.py</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The unique identifier for the simulation engine.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A short description of this engine.</p></li>
+<li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of citations for the simulation engine.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="stdpopsim.Engine.get_version">
+<code class="sig-name descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Engine.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the version of the engine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.Engine.simulate">
+<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">demographic_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">contig</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">samples</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine.simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Engine.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates the model for the specified contig and samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>demographic_model</strong> (<a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>) – The demographic model to simulate.</p></li>
+<li><p><strong>contig</strong> (<a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a>) – The contig, defining the length, mutation rate,
+and recombination rate(s).</p></li>
+<li><p><strong>samples</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.simulations.Sample</span></code>) – The samples to be obtained from the simulation.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The seed for the random number generator.</p></li>
+<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, the simulation engine will return None without
+running the simulation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A succinct tree sequence.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.trees.TreeSequence</span></code> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.engines._MsprimeEngine">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.engines.</code><code class="sig-name descname">_MsprimeEngine</code><a class="reference internal" href="_modules/stdpopsim/engines.html#_MsprimeEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.engines.Engine</span></code></p>
+<dl class="py attribute">
+<dt id="stdpopsim.engines._MsprimeEngine.description">
+<code class="sig-name descname">description</code><em class="property"> = 'Msprime coalescent simulator'</em><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="stdpopsim.engines._MsprimeEngine.id">
+<code class="sig-name descname">id</code><em class="property"> = 'msprime'</em><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.engines._MsprimeEngine.simulate">
+<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">demographic_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">contig</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">samples</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">msprime_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">msprime_change_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#_MsprimeEngine.simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate the demographic model using msprime.
+See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code></a> for definitions of parameters defined
+for all engines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msprime_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The msprime simulation model to be used.
+One of <code class="docutils literal notranslate"><span class="pre">hudson</span></code>, <code class="docutils literal notranslate"><span class="pre">dtwf</span></code>, <code class="docutils literal notranslate"><span class="pre">smc</span></code>, or <code class="docutils literal notranslate"><span class="pre">smc_prime</span></code>.
+See msprime API documentation for details.</p></li>
+<li><p><strong>msprime_change_model</strong> (<em>list of</em><em> (</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>) </em><em>tuples</em>) – A list of (time, model) tuples, which
+changes the simulation model to the new model at the time specified.</p></li>
+<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">end_time=0</span></code> is passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.simulate()</span></code>
+to initialise the simulation and then immediately return.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="stdpopsim.slim_engine._SLiMEngine">
+<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.slim_engine.</code><code class="sig-name descname">_SLiMEngine</code><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.engines.Engine</span></code></p>
+<dl class="py attribute">
+<dt id="stdpopsim.slim_engine._SLiMEngine.description">
+<code class="sig-name descname">description</code><em class="property"> = 'SLiM forward-time Wright-Fisher simulator'</em><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="stdpopsim.slim_engine._SLiMEngine.id">
+<code class="sig-name descname">id</code><em class="property"> = 'slim'</em><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">
+<code class="sig-name descname">recap_and_rescale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ts</span></em>, <em class="sig-param"><span class="n">demographic_model</span></em>, <em class="sig-param"><span class="n">contig</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="n">mutation_types</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extended_events</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">slim_scaling_factor</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.recap_and_rescale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply post-SLiM transformations to <code class="docutils literal notranslate"><span class="pre">ts</span></code>. This rescales node times,
+does recapitation, simplification, and adds neutral mutations.</p>
+<p>If the SLiM engine was used to output a SLiM script, and the script was
+run outside of stdpopsim, this function can be used to transform the
+SLiM tree sequence following the procedure that would have been used
+if stdpopsim had run SLiM itself.
+The parameters after <code class="docutils literal notranslate"><span class="pre">ts</span></code> have the same meaning as for <a class="reference internal" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="stdpopsim.slim_engine._SLiMEngine.simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate()</span></code></a>,
+and the values for <code class="docutils literal notranslate"><span class="pre">demographic_model</span></code>, <code class="docutils literal notranslate"><span class="pre">contig</span></code>, <code class="docutils literal notranslate"><span class="pre">samples</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">slim_scaling_factor</span></code> should match those that were used to
+generate the SLiM script with <a class="reference internal" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="stdpopsim.slim_engine._SLiMEngine.simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ts</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyslim.SlimTreeSequence</span></code>) – The tree sequence output by SLiM.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <a class="reference internal" href="#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale" title="stdpopsim.slim_engine._SLiMEngine.recap_and_rescale"><code class="xref py py-func docutils literal notranslate"><span class="pre">recap_and_rescale()</span></code></a> function is provided in the hope that
+it will be useful. But as we can’t anticipate what changes you’ll
+make to the SLiM code before using it, the stdpopsim source code
+should be consulted to determine if the behaviour is appropriate
+for your case.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="stdpopsim.slim_engine._SLiMEngine.simulate">
+<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">demographic_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">contig</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">samples</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mutation_types</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extended_events</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">slim_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">slim_script</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">slim_scaling_factor</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">slim_burn_in</span><span class="o">=</span><span class="default_value">10.0</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate the demographic model using SLiM.
+See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code></a> for definitions of the
+<code class="docutils literal notranslate"><span class="pre">demographic_model</span></code>, <code class="docutils literal notranslate"><span class="pre">contig</span></code>, and <code class="docutils literal notranslate"><span class="pre">samples</span></code> parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The seed for the random number generator.</p></li>
+<li><p><strong>slim_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The full path to the slim executable, or the name of
+a command in the current PATH.</p></li>
+<li><p><strong>slim_script</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If true, the simulation will not be executed.
+Instead the generated SLiM script will be printed to stdout.</p></li>
+<li><p><strong>slim_scaling_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Rescale model parameters by the given value,
+to speed up simulation. Population sizes and generation times are
+divided by this factor, whereas the mutation rate, recombination
+rate, and growth rates are multiplied by the factor.
+See SLiM manual: <cite>5.5 Rescaling population sizes to improve
+simulation performance.</cite></p></li>
+<li><p><strong>slim_burn_in</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Length of the burn-in phase, in units of N
+generations.</p></li>
+<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, run the first generation setup and then end the
+simulation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="development.html" class="btn btn-neutral float-right" title="Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cli_arguments.html" class="btn btn-neutral float-left" title="Command-line options" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2020, PopSim Consortium.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
