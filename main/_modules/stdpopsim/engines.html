@@ -160,6 +160,7 @@
             
   <h1>Source code for stdpopsim.engines</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">msprime</span>
@@ -260,7 +261,16 @@
 
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_warn_zigzag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;Zigzag_1S14&quot;</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;In stdpopsim &lt;= 0.1.2, the Zigzag_1S14 model produced population &quot;</span>
+                <span class="s2">&quot;sizes 5x lower than those in Schiffels &amp; Durbin (2014). &quot;</span>
+                <span class="s2">&quot;The population sizes have now been corrected. For details see: &quot;</span>
+                <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/745&quot;</span>
+            <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="_MsprimeEngine"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine">[docs]</a><span class="k">class</span> <span class="nc">_MsprimeEngine</span><span class="p">(</span><span class="n">Engine</span><span class="p">):</span>
@@ -341,6 +351,9 @@
                 <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;random_seed&quot;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot set both seed and random_seed&quot;</span><span class="p">)</span>
+
+        <span class="c1"># TODO: remove this after a release or two. See #745.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_zigzag</span><span class="p">(</span><span class="n">demographic_model</span><span class="p">)</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
             <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span>
