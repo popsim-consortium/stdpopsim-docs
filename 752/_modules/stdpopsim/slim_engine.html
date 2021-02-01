@@ -1,0 +1,1537 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stdpopsim.slim_engine</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stdpopsim.slim_engine</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SLiM simulation engine.</span>
+
+<span class="sd">This is a translation of the msprime API into SLiM&#39;s Eidos language, which</span>
+<span class="sd">resembles R. The generated SLiM script is designed differently to the recipes</span>
+<span class="sd">described in the SLiM reference manual. In our generated SLiM script, all the</span>
+<span class="sd">demographic model parameters are defined in multi-dimensional arrays at the</span>
+<span class="sd">top of the script, in the `initialize()` block. These arrays define the event</span>
+<span class="sd">generations, and event blocks are subsequently constructed programmatically</span>
+<span class="sd">using `sim.registerLateEvent()`, rather than writing out the blocks verbatim.</span>
+<span class="sd">This design is intended to permit modification of demographic parameters in</span>
+<span class="sd">the generated SLiM script, without needing to directly convert event times in</span>
+<span class="sd">the past into forwards-time generations.</span>
+
+<span class="sd">How backwards-time demographic events are mapped to forwards-time SLiM code:</span>
+
+<span class="sd"> * `msprime.DemographyDebugger()` does much of the hard work by extracting</span>
+<span class="sd">   epochs from the given model&#39;s `demographic_events`, and calculating a</span>
+<span class="sd">   migration_matrix for each epoch from the `msprime.MigrationRateChange`</span>
+<span class="sd">   events. The epoch boundaries defined here are indirectly translated into</span>
+<span class="sd">   &quot;late events&quot; in SLiM.</span>
+
+<span class="sd"> * `msprime.PopulationParametersChange` events are translated into SLiM as</span>
+<span class="sd">   `pop.setSubpopulationSize()`. If `growth_rate` is not None, the population</span>
+<span class="sd">   size is changed in every generation to match the specified rate.</span>
+
+<span class="sd"> * `msprime.MassMigration` events with proportion=1 are population splits</span>
+<span class="sd">   in forwards time. In SLiM, these are `sim.addSubpopSplit()`.</span>
+
+<span class="sd"> * `msprime.MassMigration` events with proportion&lt;1 indicate an admixture</span>
+<span class="sd">   pulse at a single point in time. In SLiM, we call `pop.setMigrationRates()`</span>
+<span class="sd">   in the relevant generation, and turn off migrations in the next generation.</span>
+<span class="sd">   When multiple MassMigration events correspond to a single SLiM generation,</span>
+<span class="sd">   the migration proportions multiply, following the msprime behaviour and</span>
+<span class="sd">   event ordering.</span>
+
+<span class="sd"> * The migration_matrix for each epoch describes continuous migrations that</span>
+<span class="sd">   occur over long time periods. In SLiM, we call `pop.setMigrationRates()`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">stdpopsim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">msprime</span>
+<span class="kn">import</span> <span class="nn">pyslim</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_slim_upper</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">initialize() {</span>
+<span class="s2">    if (!exists(&quot;dry_run&quot;))</span>
+<span class="s2">        defineConstant(&quot;dry_run&quot;, F);</span>
+<span class="s2">    if (!exists(&quot;verbosity&quot;))</span>
+<span class="s2">        defineConstant(&quot;verbosity&quot;, 2);</span>
+
+<span class="s2">    // Scaling factor to speed up simulation.</span>
+<span class="s2">    // See SLiM manual:</span>
+<span class="s2">    // `5.5 Rescaling population sizes to improve simulation performance`.</span>
+<span class="s2">    defineConstant(&quot;Q&quot;, $scaling_factor);</span>
+
+<span class="s2">    defineConstant(&quot;burn_in&quot;, $burn_in);</span>
+<span class="s2">    defineConstant(&quot;generation_time&quot;, $generation_time);</span>
+<span class="s2">    defineConstant(&quot;mutation_rate&quot;, Q * $mutation_rate);</span>
+<span class="s2">    defineConstant(&quot;chromosome_length&quot;, $chromosome_length);</span>
+<span class="s2">    defineConstant(&quot;trees_file&quot;, &quot;$trees_file&quot;);</span>
+<span class="s2">    defineConstant(&quot;pop_names&quot;, $pop_names);</span>
+
+<span class="s2">    _recombination_rates = $recombination_rates;</span>
+<span class="s2">    _recombination_ends = $recombination_ends;</span>
+<span class="s2">    defineConstant(&quot;recombination_rates&quot;, (1-(1-2*_recombination_rates)^Q)/2);</span>
+<span class="s2">    defineConstant(&quot;recombination_ends&quot;, _recombination_ends);</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">_slim_lower</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    defineConstant(&quot;N&quot;, asInteger(_N/Q));</span>
+
+<span class="s2">    initializeTreeSeq();</span>
+<span class="s2">    initializeMutationRate(mutation_rate);</span>
+<span class="s2">    initializeGenomicElement(g1, 0, chromosome_length-1);</span>
+<span class="s2">    initializeRecombinationRate(recombination_rates, recombination_ends);</span>
+<span class="s2">}</span>
+
+<span class="s2">function (void)err(string$ s) {</span>
+<span class="s2">    stop(&quot;ERROR: &quot; + s);</span>
+<span class="s2">}</span>
+
+<span class="s2">function (void)warn(string$ s) {</span>
+<span class="s2">    catn(&quot;WARNING: &quot; + s);</span>
+<span class="s2">}</span>
+
+<span class="s2">function (void)dbg(string$ s, [integer$ debug_level = 2]) {</span>
+<span class="s2">    if (verbosity &gt;= debug_level) {</span>
+<span class="s2">        catn(sim.generation + &quot;: &quot; + s);</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+<span class="s2">// Check that sizes aren&#39;t dangerously low or zero (e.g. due to scaling).</span>
+<span class="s2">function (void)check_size(integer$ pop, integer$ size, integer$ g) {</span>
+<span class="s2">    if (size == 0) {</span>
+<span class="s2">        err(&quot;The population size of p&quot;+pop+&quot; (&quot;+pop_names[pop]+&quot;) is zero &quot; +</span>
+<span class="s2">            &quot;at generation &quot;+g+&quot;.&quot;);</span>
+<span class="s2">    } else if (size &lt; 50) {</span>
+<span class="s2">        warn(&quot;p&quot;+pop+&quot; (&quot;+pop_names[pop]+&quot;) has only &quot;+size+&quot; individuals &quot; +</span>
+<span class="s2">             &quot;alive at generation &quot;+g+&quot;.&quot;);</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+<span class="s2">// Return the epoch index for generation g.</span>
+<span class="s2">function (integer)epoch(integer G, integer $g) {</span>
+<span class="s2">    for (i in 0:(num_epochs-1)) {</span>
+<span class="s2">        if (g &lt; G[i]) {</span>
+<span class="s2">            return i;</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">    return num_epochs - 1;</span>
+<span class="s2">}</span>
+
+<span class="s2">// Return the population size of pop at generation g.</span>
+<span class="s2">function (integer)pop_size_at(integer G, integer$ pop, integer$ g) {</span>
+<span class="s2">    e = epoch(G, g);</span>
+<span class="s2">    N0 = N[e,pop];</span>
+<span class="s2">    r = Q * growth_rates[e,pop];</span>
+<span class="s2">    if (r == 0) {</span>
+<span class="s2">        N_g = N0;</span>
+<span class="s2">    } else {</span>
+<span class="s2">        g_diff = g - G[e-1];</span>
+<span class="s2">        N_g = asInteger(round(N0*exp(r*g_diff)));</span>
+<span class="s2">    }</span>
+<span class="s2">    return N_g;</span>
+<span class="s2">}</span>
+
+<span class="s2">// Return the number of generations that separate t0 and t1.</span>
+<span class="s2">function (integer)gdiff(numeric$ t0, numeric t1) {</span>
+<span class="s2">    return asInteger(round((t0-t1)/generation_time/Q));</span>
+<span class="s2">}</span>
+
+<span class="s2">// Output tree sequence file and end the simulation.</span>
+<span class="s2">function (void)end(void) {</span>
+<span class="s2">    sim.treeSeqOutput(trees_file);</span>
+<span class="s2">    sim.simulationFinished();</span>
+<span class="s2">}</span>
+
+<span class="s2">1 {</span>
+<span class="s2">    // save/restore bookkeeping</span>
+<span class="s2">    sim.setValue(&quot;n_restores&quot;, 0);</span>
+<span class="s2">    sim.setValue(&quot;n_saves&quot;, 0);</span>
+<span class="s2">    sim.setValue(&quot;restore_function&quot;, F);</span>
+
+<span class="s2">    /*</span>
+<span class="s2">     * Create initial populations and migration rates.</span>
+<span class="s2">     */</span>
+
+<span class="s2">    // Initial populations.</span>
+<span class="s2">    for (i in 0:(num_populations-1)) {</span>
+<span class="s2">        if (N[0,i] &gt; 0) {</span>
+<span class="s2">            check_size(i, N[0,i], sim.generation);</span>
+<span class="s2">            dbg(&quot;sim.addSubpop(&quot;+i+&quot;, &quot;+N[0,i]+&quot;);&quot;);</span>
+<span class="s2">            sim.addSubpop(i, N[0,i]);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    if (length(sim.subpopulations) == 0) {</span>
+<span class="s2">        err(&quot;No populations with non-zero size in generation 1.&quot;);</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Initial migration rates.</span>
+<span class="s2">    i = 0;</span>
+<span class="s2">    for (j in 0:(num_populations-1)) {</span>
+<span class="s2">        for (k in 0:(num_populations-1)) {</span>
+<span class="s2">            if (j==k | N[i,j] == 0 | N[i,k] == 0) {</span>
+<span class="s2">                next;</span>
+<span class="s2">            }</span>
+
+<span class="s2">            m = Q * migration_matrices[k,j,i];</span>
+<span class="s2">            p = sim.subpopulations[j];</span>
+<span class="s2">            dbg(&quot;p&quot;+j+&quot;.setMigrationRates(&quot;+k+&quot;, &quot;+m+&quot;);&quot;);</span>
+<span class="s2">            p.setMigrationRates(k, m);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // The end of the burn-in is the starting generation, and corresponds to</span>
+<span class="s2">    // time T_start. All remaining events are relative to this generation.</span>
+<span class="s2">    N_max = max(N[0,0:(num_populations-1)]);</span>
+<span class="s2">    G_start = sim.generation + asInteger(round(burn_in * N_max));</span>
+<span class="s2">    T_start = max(_T);</span>
+<span class="s2">    G = G_start + gdiff(T_start, _T);</span>
+<span class="s2">    G_end = max(G);</span>
+
+<span class="s2">    /*</span>
+<span class="s2">     * Register events occurring at time T_start or more recently.</span>
+<span class="s2">     */</span>
+
+<span class="s2">    // Save/restore events. These should come before all other events.</span>
+<span class="s2">    if (length(drawn_mutations) &gt; 0) {</span>
+<span class="s2">        for (i in 0:(ncol(drawn_mutations)-1)) {</span>
+<span class="s2">            save = drawn_mutations[4,i] == 1;</span>
+<span class="s2">            if (!save) {</span>
+<span class="s2">                next;</span>
+<span class="s2">            }</span>
+<span class="s2">            g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
+<span class="s2">            // Unconditionally save the state before the mutation is drawn.</span>
+<span class="s2">            sim.registerLateEvent(NULL, &quot;{save();}&quot;, g, g);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">    if (length(condition_on_allele_frequency) &gt; 0) {</span>
+<span class="s2">        for (i in 0:(ncol(condition_on_allele_frequency)-1)) {</span>
+<span class="s2">            g_start = G_start + gdiff(T_start, condition_on_allele_frequency[0,i]);</span>
+<span class="s2">            g_end = G_start + gdiff(T_start, condition_on_allele_frequency[1,i]);</span>
+<span class="s2">            mut_type = asInteger(condition_on_allele_frequency[2,i]);</span>
+<span class="s2">            pop_id = asInteger(condition_on_allele_frequency[3,i]);</span>
+<span class="s2">            op = op_types[asInteger(drop(condition_on_allele_frequency[4,i]))];</span>
+<span class="s2">            af = condition_on_allele_frequency[5,i];</span>
+<span class="s2">            save = condition_on_allele_frequency[6,i] == 1;</span>
+
+<span class="s2">            if (g_start &gt; g_end) {</span>
+<span class="s2">                err(&quot;Attempt to register AF conditioning callback with g_start=&quot;+</span>
+<span class="s2">                    g_start+&quot; &gt; g_end=&quot;+g_end);</span>
+<span class="s2">            }</span>
+
+<span class="s2">            if (save) {</span>
+<span class="s2">                // Save the state conditional on the allele frequency.</span>
+<span class="s2">                // If the condition isn&#39;t met, we restore.</span>
+<span class="s2">                sim.registerLateEvent(NULL,</span>
+<span class="s2">                    &quot;{if (af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;)&quot; +</span>
+<span class="s2">                    &quot; save(); else restore();}&quot;,</span>
+<span class="s2">                    g_start, g_start);</span>
+<span class="s2">                g_start = g_start + 1;</span>
+<span class="s2">            }</span>
+
+<span class="s2">            if (g_start &lt;= g_end) {</span>
+<span class="s2">                sim.registerLateEvent(NULL,</span>
+<span class="s2">                    &quot;{if (!(af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;))&quot; +</span>
+<span class="s2">                    &quot; restore();}&quot;,</span>
+<span class="s2">                    g_start, g_end);</span>
+<span class="s2">            }</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Split events.</span>
+<span class="s2">    if (length(subpopulation_splits) &gt; 0 ) {</span>
+<span class="s2">        for (i in 0:(ncol(subpopulation_splits)-1)) {</span>
+<span class="s2">            g = G_start + gdiff(T_start, subpopulation_splits[0,i]);</span>
+<span class="s2">            newpop = drop(subpopulation_splits[1,i]);</span>
+<span class="s2">            size = asInteger(subpopulation_splits[2,i] / Q);</span>
+<span class="s2">            oldpop = subpopulation_splits[3,i];</span>
+<span class="s2">            check_size(newpop, size, g);</span>
+<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                &quot;sim.addSubpopSplit(&quot;+newpop+&quot;,&quot;+size+&quot;,&quot;+oldpop+&quot;);}&quot;,</span>
+<span class="s2">                g, g);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Population size changes.</span>
+<span class="s2">    if (num_epochs &gt; 1) {</span>
+<span class="s2">        for (i in 1:(num_epochs-1)) {</span>
+<span class="s2">            g = G[i-1];</span>
+<span class="s2">            for (j in 0:(num_populations-1)) {</span>
+<span class="s2">                // Change population size if this hasn&#39;t already been taken</span>
+<span class="s2">                // care of by sim.addSubpop() or sim.addSubpopSplit().</span>
+<span class="s2">                if (N[i,j] != N[i-1,j] &amp; N[i-1,j] != 0) {</span>
+<span class="s2">                    check_size(j, N[i,j], g);</span>
+<span class="s2">                    sim.registerLateEvent(NULL,</span>
+<span class="s2">                        &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                        &quot;p&quot;+j+&quot;.setSubpopulationSize(&quot;+N[i,j]+&quot;);}&quot;,</span>
+<span class="s2">                        g, g);</span>
+<span class="s2">                }</span>
+
+<span class="s2">                if (growth_rates[i,j] != 0) {</span>
+<span class="s2">                    growth_phase_start = g+1;</span>
+<span class="s2">                    if (i == num_epochs-1) {</span>
+<span class="s2">                        growth_phase_end = G[i];</span>
+<span class="s2">                    } else {</span>
+<span class="s2">                        // We already registered a size change at generation G[i].</span>
+<span class="s2">                        growth_phase_end = G[i] - 1;</span>
+<span class="s2">                    }</span>
+
+<span class="s2">                    if (growth_phase_start &gt;= growth_phase_end) {</span>
+<span class="s2">                        // Demographic models could have duplicate epoch times,</span>
+<span class="s2">                        // which should be fixed.</span>
+<span class="s2">                        warn(&quot;growth_phase_start=&quot;+growth_phase_start+</span>
+<span class="s2">                             &quot; &gt;= growth_phase_end=&quot;+growth_phase_end);</span>
+<span class="s2">                        next;</span>
+<span class="s2">                    }</span>
+
+<span class="s2">                    N_growth_phase_end = pop_size_at(G, j, growth_phase_end);</span>
+<span class="s2">                    check_size(j, N_growth_phase_end, growth_phase_end);</span>
+
+<span class="s2">                    N0 = N[i,j];</span>
+<span class="s2">                    r = Q * growth_rates[i,j];</span>
+<span class="s2">                    sim.registerLateEvent(NULL,</span>
+<span class="s2">                        &quot;{&quot; +</span>
+<span class="s2">                            &quot;dbg(self.source); &quot; +</span>
+<span class="s2">                            &quot;gx=sim.generation-&quot;+g+&quot;; &quot; +</span>
+<span class="s2">                            &quot;size=asInteger(round(&quot;+N0+&quot;*exp(&quot;+r+&quot;*gx))); &quot; +</span>
+<span class="s2">                            &quot;p&quot;+j+&quot;.setSubpopulationSize(size);&quot; +</span>
+<span class="s2">                        &quot;}&quot;,</span>
+<span class="s2">                        growth_phase_start, growth_phase_end);</span>
+<span class="s2">                }</span>
+<span class="s2">            }</span>
+<span class="s2">        }</span>
+
+<span class="s2">        // Migration rates.</span>
+<span class="s2">        for (i in 1:(num_epochs-1)) {</span>
+<span class="s2">            for (j in 0:(num_populations-1)) {</span>
+<span class="s2">                for (k in 0:(num_populations-1)) {</span>
+<span class="s2">                    if (j==k | N[i,j] == 0 | N[i,k] == 0) {</span>
+<span class="s2">                        next;</span>
+<span class="s2">                    }</span>
+
+<span class="s2">                    m_last = Q * migration_matrices[k,j,i-1];</span>
+<span class="s2">                    m = Q * migration_matrices[k,j,i];</span>
+<span class="s2">                    if (m == m_last) {</span>
+<span class="s2">                        // Do nothing if the migration rate hasn&#39;t changed.</span>
+<span class="s2">                        next;</span>
+<span class="s2">                    }</span>
+<span class="s2">                    g = G[i-1];</span>
+<span class="s2">                    sim.registerLateEvent(NULL,</span>
+<span class="s2">                        &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                        &quot;p&quot;+j+&quot;.setMigrationRates(&quot;+k+&quot;, &quot;+m+&quot;);}&quot;,</span>
+<span class="s2">                        g, g);</span>
+<span class="s2">                }</span>
+<span class="s2">            }</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Admixture pulses.</span>
+<span class="s2">    if (length(admixture_pulses) &gt; 0 ) {</span>
+<span class="s2">        for (i in 0:(ncol(admixture_pulses)-1)) {</span>
+<span class="s2">            g = G_start + gdiff(T_start, admixture_pulses[0,i]);</span>
+<span class="s2">            dest = admixture_pulses[1,i];</span>
+<span class="s2">            src = admixture_pulses[2,i];</span>
+<span class="s2">            rate = admixture_pulses[3,i];</span>
+<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                &quot;p&quot;+dest+&quot;.setMigrationRates(&quot;+src+&quot;, &quot;+rate+&quot;);}&quot;,</span>
+<span class="s2">                g, g);</span>
+<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                &quot;p&quot;+dest+&quot;.setMigrationRates(&quot;+src+&quot;, 0);}&quot;,</span>
+<span class="s2">                g+1, g+1);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Draw mutations.</span>
+<span class="s2">    if (length(drawn_mutations) &gt; 0) {</span>
+<span class="s2">        for (i in 0:(ncol(drawn_mutations)-1)) {</span>
+<span class="s2">            g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
+<span class="s2">            mut_type = drawn_mutations[1,i];</span>
+<span class="s2">            pop_id = drawn_mutations[2,i];</span>
+<span class="s2">            coordinate = drawn_mutations[3,i];</span>
+<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                &quot;add_mut(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;, &quot;+coordinate+&quot;);}&quot;,</span>
+<span class="s2">                g, g);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Setup fitness callbacks.</span>
+<span class="s2">    if (length(fitness_callbacks) &gt; 0) {</span>
+<span class="s2">        for (i in 0:(ncol(fitness_callbacks)-1)) {</span>
+<span class="s2">            g_start = G_start + gdiff(T_start, fitness_callbacks[0,i]);</span>
+<span class="s2">            g_end = G_start + gdiff(T_start, fitness_callbacks[1,i]);</span>
+<span class="s2">            mut_type = asInteger(fitness_callbacks[2,i]);</span>
+<span class="s2">            pop_id = asInteger(fitness_callbacks[3,i]);</span>
+<span class="s2">            selection_coeff = Q * fitness_callbacks[4,i];</span>
+<span class="s2">            dominance_coeff = fitness_callbacks[5,i];</span>
+
+<span class="s2">            if (g_start &gt; g_end) {</span>
+<span class="s2">                err(&quot;Attempt to register fitness callback with g_start=&quot;+</span>
+<span class="s2">                    g_start+&quot; &gt; g_end=&quot;+g_end);</span>
+<span class="s2">            }</span>
+
+<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(&#39;s=&quot;+selection_coeff+&quot;, h=&quot;+dominance_coeff+</span>
+<span class="s2">                &quot; for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
+<span class="s2">                g_start, g_start);</span>
+<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(&#39;s, h defaults for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
+<span class="s2">                g_end, g_end);</span>
+<span class="s2">            /* We explicitly format() here to prevent integral-valued floats</span>
+<span class="s2">             * from getting converted to integers during string interpolation</span>
+<span class="s2">             * (this triggers a type error when the fitness callback runs). */</span>
+<span class="s2">            f_hom = format(&quot;</span><span class="si">%e</span><span class="s2">&quot;, 1 + selection_coeff);</span>
+<span class="s2">            f_het = format(&quot;</span><span class="si">%e</span><span class="s2">&quot;, 1 + selection_coeff * dominance_coeff);</span>
+<span class="s2">            sim.registerFitnessCallback(NULL,</span>
+<span class="s2">                &quot;{if (homozygous) return &quot;+f_hom+&quot;; else return &quot;+f_het+&quot;;}&quot;,</span>
+<span class="s2">                mut_type, pop_id, g_start, g_end);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // Sample individuals.</span>
+<span class="s2">    for (i in 0:(ncol(sampling_episodes)-1)) {</span>
+<span class="s2">        pop = drop(sampling_episodes[0,i]);</span>
+<span class="s2">        n = sampling_episodes[1,i];</span>
+<span class="s2">        g = G_start + gdiff(T_start, sampling_episodes[2,i]);</span>
+
+<span class="s2">        // Check that there will be at least n individuals for sampling.</span>
+<span class="s2">        N_g = pop_size_at(G, pop, g);</span>
+<span class="s2">        if (n &gt; N_g) {</span>
+<span class="s2">            err(&quot;Request to sample &quot;+n+&quot; individuals from p&quot;+pop+</span>
+<span class="s2">                &quot; (&quot;+pop_names[pop]+&quot;) at generation &quot;+g+&quot;, but only &quot;+</span>
+<span class="s2">                N_g+&quot; individuals will be alive.&quot;);</span>
+<span class="s2">        }</span>
+
+<span class="s2">        sim.registerLateEvent(NULL,</span>
+<span class="s2">            &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">            &quot;inds=p&quot;+pop+&quot;.sampleIndividuals(&quot;+n+&quot;); &quot; +</span>
+<span class="s2">            &quot;sim.treeSeqRememberIndividuals(inds);}&quot;,</span>
+<span class="s2">            g, g);</span>
+<span class="s2">    }</span>
+
+<span class="s2">    sim.registerLateEvent(NULL, &quot;{dbg(self.source); end();}&quot;, G_end, G_end);</span>
+
+<span class="s2">    if (G_start &gt; sim.generation) {</span>
+<span class="s2">        dbg(&quot;Starting burn-in...&quot;);</span>
+<span class="s2">    }</span>
+
+<span class="s2">    if (dry_run) {</span>
+<span class="s2">        sim.simulationFinished();</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+<span class="s2">// Add `mut_type` mutation at `pos`, to a single individual in `pop`.</span>
+<span class="s2">function (void)add_mut(object$ mut_type, object$ pop, integer$ pos) {</span>
+<span class="s2">   targets = sample(pop.genomes, 1);</span>
+<span class="s2">   targets.addNewDrawnMutation(mut_type, pos);</span>
+<span class="s2">}</span>
+
+<span class="s2">// Return the allele frequency of a drawn mutation in the specified population.</span>
+<span class="s2">// Assumes there&#39;s only one mutation of the given type.</span>
+<span class="s2">function (float$)af(object$ mut_type, object$ pop) {</span>
+<span class="s2">    mut = sim.mutationsOfType(mut_type);</span>
+<span class="s2">    if (length(mut) == 0) {</span>
+<span class="s2">        return 0.0;</span>
+<span class="s2">    }</span>
+<span class="s2">    return sim.mutationFrequencies(pop, mut);</span>
+<span class="s2">}</span>
+
+<span class="s2">// Save the state of the simulation.</span>
+<span class="s2">function (void)save(void) {</span>
+<span class="s2">    if (sim.getValue(&quot;restore_function&quot;)) {</span>
+<span class="s2">        // Don&#39;t save if we&#39;re in the restore() function.</span>
+<span class="s2">        return;</span>
+<span class="s2">    }</span>
+<span class="s2">    n_saves = 1 + sim.getValue(&quot;n_saves&quot;);</span>
+<span class="s2">    sim.setValue(&quot;n_saves&quot;, n_saves);</span>
+<span class="s2">    dbg(&quot;save() &quot;+n_saves);</span>
+<span class="s2">    sim.treeSeqOutput(trees_file);</span>
+<span class="s2">}</span>
+
+<span class="s2">// Restore the simulation state.</span>
+<span class="s2">function (void)restore(void) {</span>
+<span class="s2">    g_restore = sim.generation;</span>
+<span class="s2">    n_restores = 1 + sim.getValue(&quot;n_restores&quot;);</span>
+<span class="s2">    sim.setValue(&quot;n_restores&quot;, n_restores);</span>
+<span class="s2">    n_saves = sim.getValue(&quot;n_saves&quot;);</span>
+<span class="s2">    if (n_saves == 0) {</span>
+<span class="s2">        err(&quot;restore() in generation &quot;+g_restore+&quot;, but nothing is saved.&quot;);</span>
+<span class="s2">    }</span>
+<span class="s2">    sim.readFromPopulationFile(trees_file);</span>
+<span class="s2">    dbg(&quot;restore() &quot;+n_restores+&quot; from generation &quot;+g_restore+&quot;, returning &quot;+</span>
+<span class="s2">        &quot;to state at save() &quot;+n_saves);</span>
+
+<span class="s2">    /*</span>
+<span class="s2">     * The generation counter sim.generation has now been reset to the</span>
+<span class="s2">     * value it had when save() was called. There are two issues relating</span>
+<span class="s2">     * to event scheduling which must now be dealt with.</span>
+<span class="s2">     *</span>
+<span class="s2">     * 1. There may be additional late events for the generation in which</span>
+<span class="s2">     * restore() was called, and they are still scheduled to run.</span>
+<span class="s2">     * So we deactivate all script blocks to avoid unexpected problems.</span>
+<span class="s2">     * They will be automatically reactivated at the start of the next</span>
+<span class="s2">     * generation (see SLiM manual section 23.10).</span>
+<span class="s2">     */</span>
+<span class="s2">    sim.scriptBlocks.active = F;</span>
+
+<span class="s2">    /*</span>
+<span class="s2">     * 2. The late events below were run in the save() generation,</span>
+<span class="s2">     * but after the save() call. We execute these again here, because</span>
+<span class="s2">     * the next late events to run will be for sim.generation + 1.</span>
+<span class="s2">     * Note that the save() event is indistinguishable from the other</span>
+<span class="s2">     * late events in this generation, so we set a flag `restore_function`</span>
+<span class="s2">     * to signal the save() function not to save again.</span>
+<span class="s2">     */</span>
+<span class="s2">    g = sim.generation;</span>
+<span class="s2">    sim.setValue(&quot;restore_function&quot;, T);</span>
+<span class="s2">    for (sb in sim.scriptBlocks) {</span>
+<span class="s2">        if (sb.type == &quot;late&quot; &amp; g &gt;= sb.start &amp; g &lt;= sb.end) {</span>
+<span class="s2">            self = sb;</span>
+<span class="s2">            executeLambda(sb.source);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">    sim.setValue(&quot;restore_function&quot;, F);</span>
+<span class="s2">}</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">recombination_map</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert recombination map from start position coords to end position coords.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rates</span> <span class="o">=</span> <span class="n">recombination_map</span><span class="o">.</span><span class="n">get_rates</span><span class="p">()</span>
+    <span class="n">ends</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">recombination_map</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">rates</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ends</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+
+<span class="k">def</span> <span class="nf">slim_makescript</span><span class="p">(</span>
+    <span class="n">script_file</span><span class="p">,</span>
+    <span class="n">trees_file</span><span class="p">,</span>
+    <span class="n">demographic_model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">mutation_types</span><span class="p">,</span>
+    <span class="n">extended_events</span><span class="p">,</span>
+    <span class="n">scaling_factor</span><span class="p">,</span>
+    <span class="n">burn_in</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="n">pop_names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">pc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">pc</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span>
+    <span class="p">]</span>
+    <span class="c1"># Use copies of these so that the time frobbing below doesn&#39;t have</span>
+    <span class="c1"># side-effects in the caller&#39;s model.</span>
+    <span class="n">demographic_events</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extended_events</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">extended_events</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">extended_events</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">extended_events</span><span class="p">)</span>
+
+    <span class="c1"># Reassign event times according to integral SLiM generations.</span>
+    <span class="c1"># This collapses the time deltas used in HomSap/AmericanAdmixture_4B11,</span>
+    <span class="c1"># and calculates times for GenerationAfter objects.</span>
+    <span class="k">def</span> <span class="nf">fix_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="n">t_rounded</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">scaling_factor</span><span class="p">)</span> <span class="o">*</span> <span class="n">scaling_factor</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">GenerationAfter</span><span class="p">):</span>
+                <span class="n">t_rounded</span> <span class="o">-=</span> <span class="n">scaling_factor</span>
+            <span class="k">if</span> <span class="n">t_rounded</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bad </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">t_rounded</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">demographic_events</span><span class="p">:</span>
+        <span class="n">fix_time</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">extended_events</span><span class="p">:</span>
+        <span class="n">fix_time</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+    <span class="c1"># The demography debugger constructs event epochs, which we use</span>
+    <span class="c1"># to define the forwards-time events.</span>
+    <span class="n">dd</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">DemographyDebugger</span><span class="p">(</span>
+        <span class="n">population_configurations</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
+        <span class="n">migration_matrix</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
+        <span class="n">demographic_events</span><span class="o">=</span><span class="n">demographic_events</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">epochs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">]</span>
+    <span class="n">migration_matrices</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">]</span>
+
+    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">growth_rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epoch</span><span class="o">.</span><span class="n">populations</span><span class="p">):</span>
+            <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">end_size</span><span class="p">)</span>
+            <span class="n">growth_rates</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span>
+
+    <span class="n">admixture_pulses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">subpopulation_splits</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">de</span> <span class="ow">in</span> <span class="n">epoch</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">de</span><span class="p">,</span> <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">de</span><span class="o">.</span><span class="n">proportion</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Calculate remainder of population after previous</span>
+                    <span class="c1"># MassMigration events in this epoch.</span>
+                    <span class="n">rem</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="n">ap</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                            <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">admixture_pulses</span>
+                            <span class="k">if</span> <span class="n">ap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span> <span class="ow">and</span> <span class="n">ap</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">de</span><span class="o">.</span><span class="n">source</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="n">admixture_pulses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="n">i</span><span class="p">,</span>
+                            <span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>  <span class="c1"># forwards-time dest</span>
+                            <span class="n">de</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span>  <span class="c1"># forwards-time source</span>
+                            <span class="n">rem</span> <span class="o">*</span> <span class="n">de</span><span class="o">.</span><span class="n">proportion</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># Backwards: de.source is being merged into de.dest.</span>
+                <span class="c1"># Forwards: de.source is being created, taking individuals</span>
+                <span class="c1">#           from de.dest.</span>
+                <span class="c1">#</span>
+                <span class="c1"># If the proportion==1, we can use SLiM function:</span>
+                <span class="c1">#       sim.addSubpopSplit(newpop, size, oldpop),</span>
+                <span class="c1"># which we trigger by adding a row to subpopulation_splits.</span>
+                <span class="c1"># This SLiM function creates newpop (=de.source), under the</span>
+                <span class="c1"># assumption that it doesn&#39;t already exist.</span>
+
+                <span class="n">subpopulation_splits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;_T[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_N[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Zero out the population size for generations before this</span>
+                <span class="c1"># epoch, to avoid simulating invididuals that contribute no</span>
+                <span class="c1"># genealogy.</span>
+                <span class="n">N</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">growth_rates</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="c1"># Ensure there are no migrations to or from de.source before</span>
+                <span class="c1"># this epoch.</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">):</span>
+                        <span class="n">migration_matrices</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">migration_matrices</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">drawn_mutations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fitness_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">condition_on_allele_frequency</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">op_id</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_id</span>
+    <span class="k">for</span> <span class="n">ee</span> <span class="ow">in</span> <span class="n">extended_events</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;mutation_type_id&quot;</span><span class="p">):</span>
+            <span class="n">mt_id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;mutation_type_id&quot;</span><span class="p">)</span>
+            <span class="n">cls_name</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">if</span> <span class="n">mutation_types</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> event. No mutation types defined.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ee</span><span class="o">.</span><span class="n">mutation_type_id</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)):</span>
+                <span class="c1"># FIXME: use zero-based indexes</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> event with mutation type id </span><span class="si">{</span><span class="n">mt_id</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">):</span>
+            <span class="c1"># Now that GenerationAfter times have been accounted for, we can</span>
+            <span class="c1"># properly catch invalid start/end times.</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">)</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">)</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">validate_time_range</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">):</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+            <span class="n">save</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">ee</span><span class="o">.</span><span class="n">save</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">drawn_mutations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">mutation_type_id</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">save</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ChangeMutationFitness</span><span class="p">):</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+            <span class="n">fitness_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">start_time</span><span class="p">,</span>
+                    <span class="n">end_time</span><span class="p">,</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">mutation_type_id</span><span class="p">,</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">selection_coeff</span><span class="p">,</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">):</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+            <span class="n">save</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">ee</span><span class="o">.</span><span class="n">save</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">condition_on_allele_frequency</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">start_time</span><span class="p">,</span>
+                    <span class="n">end_time</span><span class="p">,</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">mutation_type_id</span><span class="p">,</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
+                    <span class="n">op_id</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">op</span><span class="p">),</span>
+                    <span class="n">ee</span><span class="o">.</span><span class="n">allele_frequency</span><span class="p">,</span>
+                    <span class="n">save</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown extended event type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ee</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check that drawn mutations exist for extended events that need them.</span>
+    <span class="n">drawn_mut_type_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">mt_id</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">mt_id</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">drawn_mutations</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">ee</span> <span class="ow">in</span> <span class="n">extended_events</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ChangeMutationFitness</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">ee</span><span class="o">.</span><span class="n">mutation_type_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drawn_mut_type_ids</span><span class="p">:</span>
+                <span class="n">cls_name</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> event. No drawn mutation for &quot;</span>
+                    <span class="s2">&quot;mutation type id </span><span class="si">{ee.mutation_type_id}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+    <span class="n">printsc</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="nb">print</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">script_file</span><span class="p">)</span>
+
+    <span class="c1"># Header</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;/*&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot; * stdpopsim &quot;</span> <span class="o">+</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot; *&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot; * Demographic model: &quot;</span> <span class="o">+</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s2">&quot; * &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> * &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">citation</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">citations</span><span class="p">:</span>
+        <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot; * &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">citation</span><span class="p">))</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot; */&quot;</span><span class="p">)</span>
+
+    <span class="n">recomb_rates</span><span class="p">,</span> <span class="n">recomb_ends</span> <span class="o">=</span> <span class="n">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">)</span>
+    <span class="n">indent</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+    <span class="n">recomb_rates_str</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;c(</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">recomb_rates</span><span class="p">)),</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+            <span class="n">initial_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+            <span class="n">subsequent_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">recomb_ends_str</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;c(</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">recomb_ends</span><span class="p">)),</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+            <span class="n">initial_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+            <span class="n">subsequent_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">pop_names_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">pop_names</span><span class="p">))</span>
+
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">_slim_upper</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+            <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">,</span>
+            <span class="n">burn_in</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">burn_in</span><span class="p">),</span>
+            <span class="n">chromosome_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">get_length</span><span class="p">()),</span>
+            <span class="n">recombination_rates</span><span class="o">=</span><span class="n">recomb_rates_str</span><span class="p">,</span>
+            <span class="n">recombination_ends</span><span class="o">=</span><span class="n">recomb_ends_str</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">generation_time</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
+            <span class="n">trees_file</span><span class="o">=</span><span class="n">trees_file</span><span class="p">,</span>
+            <span class="n">pop_names</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;c(</span><span class="si">{</span><span class="n">pop_names_str</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">matrix2str</span><span class="p">(</span>
+        <span class="n">matrix</span><span class="p">,</span> <span class="n">row_comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an Eidos representation of the matrix as a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">row_comments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_comments</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;c()&quot;</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;array(c(</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">col_comment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indent</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;// &quot;</span> <span class="o">+</span> <span class="n">col_comment</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)):</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indent</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;c(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]])))</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">row_comments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; // &quot;</span> <span class="o">+</span> <span class="n">row_comments</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">indent</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dim</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">dim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="p">(</span><span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">))</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;), c(</span><span class="si">{</span><span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">dim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">mutation_types</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mutation_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">MutationType</span><span class="p">()]</span>
+
+    <span class="c1"># Mutation type; genomic elements.</span>
+    <span class="c1"># FIXME: Change this to use zero-based indices---one-based indices are</span>
+    <span class="c1">#        inconsistent with everything else, e.g. population IDs.</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">distrib_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">]</span>
+        <span class="n">distrib_args</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Q * &quot;</span> <span class="o">+</span> <span class="n">distrib_args</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">]</span>
+        <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">distrib_args</span><span class="p">)</span>
+        <span class="n">printsc</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;    initializeMutationType(&quot;m</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s1">, &#39;</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">distribution_type</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">distrib_args</span><span class="si">}</span><span class="s1">);&#39;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">:</span>
+            <span class="c1"># T is the default for WF simulations.</span>
+            <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
+    <span class="n">mut_weights</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutation_types</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    initializeGenomicElementType(&quot;g1&quot;, &#39;</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;seq(1, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)</span><span class="si">}</span><span class="s2">), c(</span><span class="si">{</span><span class="n">mut_weights</span><span class="si">}</span><span class="s2">));&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Epoch times.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Time of epoch boundaries, in years before present.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // The first epoch spans from INF to _T[0].&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s1">&#39;    defineConstant(&quot;_T&quot;, c(</span><span class="si">{}</span><span class="s1">));&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">T</span><span class="p">))))</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Population sizes.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Population sizes in each epoch.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s2">&quot;    _N = &quot;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
+            <span class="n">N</span><span class="p">,</span> <span class="n">row_comments</span><span class="o">=</span><span class="n">pop_names</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;INF:_T[0], _T[0]:_T[1], etc.&quot;</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="n">printsc</span><span class="p">(</span><span class="s1">&#39;    defineConstant(&quot;num_epochs&quot;, length(_T));&#39;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s1">&#39;    defineConstant(&quot;num_populations&quot;, ncol(_N));&#39;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Growth rates.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Population growth rates for each epoch.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;growth_rates&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
+            <span class="n">growth_rates</span><span class="p">,</span>
+            <span class="n">row_comments</span><span class="o">=</span><span class="n">pop_names</span><span class="p">,</span>
+            <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;INF:_T[0], _T[0]:_T[1], etc.&quot;</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;num_epochs&quot;</span><span class="p">,</span> <span class="s2">&quot;num_populations&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    no_migration = rep(0, num_populations*num_populations);&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Migration rates.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Migration rates for each epoch.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Migrations involving a population with size=0 are ignored.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // XXX: document what the rows &amp; cols correspond to.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s1">&#39;    defineConstant(&quot;migration_matrices&quot;, array(c(&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">migration_matrices</span><span class="p">)):</span>
+        <span class="n">epoch_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;INF:_T[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;_T[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]:_T[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">printsc</span><span class="p">()</span>
+        <span class="n">printsc</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;// &quot;</span> <span class="o">+</span> <span class="n">epoch_str</span><span class="p">)</span>
+
+        <span class="n">end</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">migration_matrices</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">migration_matrices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">printsc</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;no_migration&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">printsc</span><span class="p">(</span>
+                <span class="mi">2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+                <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
+                    <span class="n">migration_matrices</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                    <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
+                    <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;num_populations&quot;</span><span class="p">,</span> <span class="s2">&quot;num_populations&quot;</span><span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;), c(num_populations, num_populations, num_epochs)));&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Population splits.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Population splits, one row for each event.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;subpopulation_splits&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span><span class="n">subpopulation_splits</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;time, newpop, size, oldpop&quot;</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Admixture pulses.</span>
+    <span class="c1"># Output _T[...] variable rather than an index.</span>
+    <span class="n">admixture_pulses</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">f</span><span class="s2">&quot;_T[</span><span class="si">{</span><span class="n">ap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">ap</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">admixture_pulses</span><span class="p">]</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Admixture pulses, one row for each pulse.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;admixture_pulses&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span><span class="n">admixture_pulses</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;time, dest, source, rate&quot;</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Drawn mutations.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Drawn mutations, one row for each mutation.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;drawn_mutations&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
+            <span class="n">drawn_mutations</span><span class="p">,</span>
+            <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;time, mut_type, pop_id, genomic_coordinate, save&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Fitness callbacks.</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Fitness callbacks, one row for each callback.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;fitness_callbacks&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
+            <span class="n">fitness_callbacks</span><span class="p">,</span>
+            <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;start_time, end_time, mut_type, pop_id, &quot;</span>
+            <span class="s2">&quot;selection_coeff, dominance_coeff&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Allele frequency conditioning</span>
+    <span class="n">op_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_types</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    defineConstant(&quot;op_types&quot;, c(</span><span class="si">{</span><span class="n">op_types</span><span class="si">}</span><span class="s1">));&#39;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Allele frequency conditioning, one row for each.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;condition_on_allele_frequency&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
+            <span class="n">condition_on_allele_frequency</span><span class="p">,</span>
+            <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;start_time, end_time, mut_type, pop_id, &quot;</span>
+            <span class="s2">&quot;op, allele_frequency, save&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Sampling episodes.</span>
+    <span class="n">sample_counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">sampling_episodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">time</span><span class="p">),</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">sample_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># SLiM can only sample individuals, which we assume are diploid.</span>
+        <span class="n">n_inds</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pop_id</span> <span class="o">=</span> <span class="n">pop_names</span><span class="p">[</span><span class="n">pop</span><span class="p">]</span>
+            <span class="n">gen</span> <span class="o">=</span> <span class="n">time</span> <span class="o">/</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="n">stdpopsim</span><span class="o">.</span><span class="n">SLiMOddSampleWarning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;SLiM simulates diploid individuals, so </span><span class="si">{</span><span class="n">n_inds</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;individuals will be sampled for the </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> haploids &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;requested from population </span><span class="si">{</span><span class="n">pop_id</span><span class="si">}</span><span class="s2"> at time </span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="s2">&quot;See #464.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">sampling_episodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pop</span><span class="p">,</span> <span class="n">n_inds</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // One row for each sampling episode.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;sampling_episodes&quot;, &#39;</span>
+        <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span><span class="n">sampling_episodes</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;pop, n_inds, time&quot;</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_lower</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">epochs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">SLiMException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="_SLiMEngine"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine">[docs]</a><span class="k">class</span> <span class="nc">_SLiMEngine</span><span class="p">(</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">Engine</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;slim&quot;</span>  <span class="c1">#:</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;SLiM forward-time Wright-Fisher simulator&quot;</span>  <span class="c1">#:</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1111/1755-0998.12968&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2019</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Haller et al.&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">},</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">slim_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SLIM&quot;</span><span class="p">,</span> <span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">slim_path</span><span class="p">(),</span> <span class="s2">&quot;-v&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="_SLiMEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">demographic_model</span><span class="p">,</span>
+        <span class="n">contig</span><span class="p">,</span>
+        <span class="n">samples</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">slim_script</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulate the demographic model using SLiM.</span>
+<span class="sd">        See :meth:`.Engine.simulate()` for definitions of the</span>
+<span class="sd">        ``demographic_model``, ``contig``, and ``samples`` parameters.</span>
+
+<span class="sd">        :param seed: The seed for the random number generator.</span>
+<span class="sd">        :type seed: int</span>
+<span class="sd">        :param slim_path: The full path to the slim executable, or the name of</span>
+<span class="sd">            a command in the current PATH.</span>
+<span class="sd">        :type slim_path: str</span>
+<span class="sd">        :param slim_script: If true, the simulation will not be executed.</span>
+<span class="sd">            Instead the generated SLiM script will be printed to stdout.</span>
+<span class="sd">        :type slim_script: bool</span>
+<span class="sd">        :param slim_scaling_factor: Rescale model parameters by the given value,</span>
+<span class="sd">            to speed up simulation. Population sizes and generation times are</span>
+<span class="sd">            divided by this factor, whereas the mutation rate, recombination</span>
+<span class="sd">            rate, and growth rates are multiplied by the factor.</span>
+<span class="sd">            See SLiM manual: `5.5 Rescaling population sizes to improve</span>
+<span class="sd">            simulation performance.`</span>
+<span class="sd">        :type slim_scaling_factor: float</span>
+<span class="sd">        :param slim_burn_in: Length of the burn-in phase, in units of N</span>
+<span class="sd">            generations.</span>
+<span class="sd">        :type slim_burn_in: float</span>
+<span class="sd">        :param dry_run: If True, run the first generation setup and then end the</span>
+<span class="sd">            simulation.</span>
+<span class="sd">        :type dry_run: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">slim_scaling_factor</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slim_scaling_factor must be positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">slim_burn_in</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slim_burn_in must be non-negative&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">slim_scaling_factor</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="n">stdpopsim</span><span class="o">.</span><span class="n">SLiMScalingFactorWarning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;You&#39;re using a scaling factor (</span><span class="si">{</span><span class="n">slim_scaling_factor</span><span class="si">}</span><span class="s2">). &quot;</span>
+                    <span class="s2">&quot;This should give similar results for many situations, &quot;</span>
+                    <span class="s2">&quot;but is not equivalent, especially in the presence of selection. &quot;</span>
+                    <span class="s2">&quot;When using rescaling, you should be careful---do checks and &quot;</span>
+                    <span class="s2">&quot;compare results across different values of the scaling factor.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># TODO: remove this after a release or two. See #745.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_zigzag</span><span class="p">(</span><span class="n">demographic_model</span><span class="p">)</span>
+
+        <span class="n">run_slim</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">slim_script</span>
+
+        <span class="c1"># Ensure only &quot;weighted&quot; mutations are introduced by SLiM.</span>
+        <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
+        <span class="n">slim_frac</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">slim_mutation_frac</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)</span>
+        <span class="n">contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
+            <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">slim_frac</span> <span class="o">*</span> <span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">genetic_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">genetic_map</span><span class="p">,</span>
+            <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span><span class="p">,</span>
+            <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">mktemp</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+        <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+        <span class="k">def</span> <span class="nf">script_file_f</span><span class="p">():</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">mktemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.slim&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">slim_script</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+            <span class="k">yield</span> <span class="n">f</span>
+            <span class="c1"># Don&#39;t close sys.stdout.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">slim_script</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="n">script_file_f</span><span class="p">()</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">mktemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.ts&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ts_file</span><span class="p">:</span>
+
+            <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
+                <span class="n">script_file</span><span class="p">,</span>
+                <span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">demographic_model</span><span class="p">,</span>
+                <span class="n">contig</span><span class="p">,</span>
+                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">mutation_types</span><span class="p">,</span>
+                <span class="n">extended_events</span><span class="p">,</span>
+                <span class="n">slim_scaling_factor</span><span class="p">,</span>
+                <span class="n">slim_burn_in</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">script_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">run_slim</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_slim</span><span class="p">(</span>
+                <span class="n">script_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="n">slim_path</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="n">dry_run</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
+            <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">slim_frac</span><span class="p">,</span> <span class="n">slim_scaling_factor</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ts</span></div>
+
+    <span class="k">def</span> <span class="nf">_run_slim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run SLiM.</span>
+
+<span class="sd">        We capture the output using Popen&#39;s line-oriented text buffering</span>
+<span class="sd">        (bufsize=1, universal_newlines=True) and redirect all messages to</span>
+<span class="sd">        Python&#39;s logging module.</span>
+<span class="sd">        By convention, messages from SLiM prefixed with &quot;ERROR: &quot; or</span>
+<span class="sd">        &quot;WARNING: &quot; are treated as ERROR or WARN loglevels respectively.</span>
+<span class="sd">        All other output on stdout is given the DEBUG loglevel.</span>
+<span class="sd">        ERROR messages, and any output from SLiM on stderr, will raise a</span>
+<span class="sd">        SLiMException here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">slim_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">slim_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slim_path</span><span class="p">()</span>
+        <span class="n">slim_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">slim_path</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">slim_cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
+            <span class="n">slim_cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;dry_run=T&quot;</span><span class="p">])</span>
+        <span class="n">slim_cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">script_file</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="n">slim_cmd</span><span class="p">,</span>
+            <span class="n">bufsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">proc</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">):</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">)</span> <span class="p">:])</span>
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;WARNING: &quot;</span><span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">UnspecifiedSLiMWarning</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;WARNING: &quot;</span><span class="p">)</span> <span class="p">:])</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># filter `dbg` function calls that generate output</span>
+                    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;dbg(self.source); &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">stderr</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">stderr</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SLiMException</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">slim_path</span><span class="si">}</span><span class="s2"> exited with code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_simplify_remembered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove all samples except those individuals that were explicity</span>
+<span class="sd">        sampled in SLiM with sim.treeSeqRememberIndividuals().</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">nodes</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">individuals</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">INDIVIDUAL_REMEMBERED</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ts</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="n">filter_populations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ts</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">,</span>
+        <span class="n">recap_epoch</span><span class="p">,</span>
+        <span class="n">contig</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="p">,</span>
+        <span class="n">slim_frac</span><span class="p">,</span>
+        <span class="n">slim_scaling_factor</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
+<span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Node times come from SLiM generation numbers, which may have been</span>
+        <span class="c1"># divided by a scaling factor for computational tractability.</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">dump_tables</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="p">(</span><span class="n">tables</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">tables</span><span class="o">.</span><span class="n">migrations</span><span class="p">,</span> <span class="n">tables</span><span class="o">.</span><span class="n">mutations</span><span class="p">):</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">time</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
+        <span class="n">ts_metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="n">ts_metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">ts_metadata</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">SlimTreeSequence</span><span class="o">.</span><span class="n">load_tables</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
+
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">),</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
+
+        <span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">recap_epoch</span><span class="o">.</span><span class="n">populations</span>
+        <span class="p">]</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">recapitate</span><span class="p">(</span>
+            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_recombination_rate</span><span class="p">,</span>
+            <span class="n">population_configurations</span><span class="o">=</span><span class="n">population_configurations</span><span class="p">,</span>
+            <span class="n">migration_matrix</span><span class="o">=</span><span class="n">recap_epoch</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
+            <span class="n">random_seed</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simplify_remembered</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">slim_frac</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Add mutations to SLiM part of trees.</span>
+            <span class="n">rate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slim_frac</span><span class="p">)</span> <span class="o">*</span> <span class="n">mutation_rate</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">SlimTreeSequence</span><span class="p">(</span>
+                <span class="n">msprime</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
+                    <span class="n">ts</span><span class="p">,</span>
+                    <span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span>
+                    <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">random_seed</span><span class="o">=</span><span class="n">s2</span><span class="p">,</span>
+                    <span class="n">end_time</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">slim_generation</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Add mutations to recapitated part of trees.</span>
+        <span class="n">s3</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">SlimTreeSequence</span><span class="p">(</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
+                <span class="n">ts</span><span class="p">,</span>
+                <span class="n">rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
+                <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">random_seed</span><span class="o">=</span><span class="n">s3</span><span class="p">,</span>
+                <span class="n">start_time</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">slim_generation</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ts</span>
+
+<div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span> <span class="nf">recap_and_rescale</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ts</span><span class="p">,</span>
+        <span class="n">demographic_model</span><span class="p">,</span>
+        <span class="n">contig</span><span class="p">,</span>
+        <span class="n">samples</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
+<span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
+
+<span class="sd">        If the SLiM engine was used to output a SLiM script, and the script was</span>
+<span class="sd">        run outside of stdpopsim, this function can be used to transform the</span>
+<span class="sd">        SLiM tree sequence following the procedure that would have been used</span>
+<span class="sd">        if stdpopsim had run SLiM itself.</span>
+<span class="sd">        The parameters after ``ts`` have the same meaning as for :func:`simulate`,</span>
+<span class="sd">        and the values for ``demographic_model``, ``contig``, ``samples``,</span>
+<span class="sd">        and ``slim_scaling_factor`` should match those that were used to</span>
+<span class="sd">        generate the SLiM script with :func:`simulate`.</span>
+
+<span class="sd">        :param ts: The tree sequence output by SLiM.</span>
+<span class="sd">        :type ts: :class:`pyslim.SlimTreeSequence`</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            The :func:`recap_and_rescale` function is provided in the hope that</span>
+<span class="sd">            it will be useful. But as we can&#39;t anticipate what changes you&#39;ll</span>
+<span class="sd">            make to the SLiM code before using it, the stdpopsim source code</span>
+<span class="sd">            should be consulted to determine if the behaviour is appropriate</span>
+<span class="sd">            for your case.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Only &quot;weighted&quot; mutations are introduced by SLiM.</span>
+        <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
+        <span class="n">slim_frac</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">slim_mutation_frac</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)</span>
+        <span class="n">contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
+            <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">slim_frac</span> <span class="o">*</span> <span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">genetic_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">genetic_map</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
+            <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
+                <span class="n">script_file</span><span class="p">,</span>
+                <span class="s2">&quot;unused.trees&quot;</span><span class="p">,</span>
+                <span class="n">demographic_model</span><span class="p">,</span>
+                <span class="n">contig</span><span class="p">,</span>
+                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">mutation_types</span><span class="p">,</span>
+                <span class="n">extended_events</span><span class="p">,</span>
+                <span class="n">slim_scaling_factor</span><span class="p">,</span>
+                <span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
+            <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">slim_frac</span><span class="p">,</span> <span class="n">slim_scaling_factor</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ts</span></div></div>
+
+
+<span class="c1"># SLiM does not currently work on Windows.</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">!=</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
+    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">register_engine</span><span class="p">(</span><span class="n">_SLiMEngine</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2020, PopSim Consortium.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
