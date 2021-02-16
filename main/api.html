@@ -32,7 +32,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -178,7 +177,7 @@ These are usually not intended to be instantiated directly, but should be
 accessed through the main entry point, <a class="reference internal" href="#stdpopsim.get_species" title="stdpopsim.get_species"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_species()</span></code></a>.</p>
 <dl class="py function">
 <dt id="stdpopsim.get_species">
-<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">get_species</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#get_species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.get_species" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">get_species</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#get_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.get_species" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> object for the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -197,7 +196,7 @@ A complete list of species, and their IDs, can be found in the
 
 <dl class="py class">
 <dt id="stdpopsim.Species">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Species</code><a class="reference internal" href="_modules/stdpopsim/species.html#Species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Species</span></code><a class="reference internal" href="_modules/stdpopsim/species.html#Species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a species in the catalog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
@@ -243,7 +242,7 @@ for the species definition (e.g. see E. coli).</p></li>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.Species.get_annotations">
-<code class="sig-name descname">get_annotations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_annotations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_annotations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_annotations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a set of annotations with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -263,7 +262,7 @@ information from Ensembl</p>
 
 <dl class="py method">
 <dt id="stdpopsim.Species.get_contig">
-<code class="sig-name descname">get_contig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chromosome</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">genetic_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">length_multiplier</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">exclusion_mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_contig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
@@ -310,7 +309,7 @@ autosomal chromosomes.</p></li>
 
 <dl class="py method">
 <dt id="stdpopsim.Species.get_demographic_model">
-<code class="sig-name descname">get_demographic_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_demographic_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Species.get_demographic_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_demographic_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_demographic_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_demographic_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a demographic model with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -332,7 +331,7 @@ A complete list of IDs for each species can be found in the
 
 <dl class="py class">
 <dt id="stdpopsim.Genome">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Genome</code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Genome" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Genome</span></code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing the genome for a species.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
@@ -350,7 +349,7 @@ providing reference to the source of the genome assembly.</p></li>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.Genome.get_chromosome">
-<code class="sig-name descname">get_chromosome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.get_chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Genome.get_chromosome" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_chromosome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.get_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.get_chromosome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the chromosome with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -370,13 +369,13 @@ such as length, mutation rate, and recombination rate.</p>
 
 <dl class="py method">
 <dt id="stdpopsim.Genome.mean_mutation_rate">
-<em class="property">property </em><code class="sig-name descname">mean_mutation_rate</code><a class="headerlink" href="#stdpopsim.Genome.mean_mutation_rate" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">mean_mutation_rate</span></code><a class="headerlink" href="#stdpopsim.Genome.mean_mutation_rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The length-weighted mean mutation rate across all chromosomes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Genome.mean_recombination_rate">
-<em class="property">property </em><code class="sig-name descname">mean_recombination_rate</code><a class="headerlink" href="#stdpopsim.Genome.mean_recombination_rate" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">mean_recombination_rate</span></code><a class="headerlink" href="#stdpopsim.Genome.mean_recombination_rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The length-weighted mean recombination rate across all chromosomes.</p>
 </dd></dl>
 
@@ -384,7 +383,7 @@ such as length, mutation rate, and recombination rate.</p>
 
 <dl class="py class">
 <dt id="stdpopsim.Chromosome">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Chromosome</code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Chromosome" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Chromosome</span></code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Chromosome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a single chromosome for a species.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
@@ -404,7 +403,7 @@ chromosome by ID, e.g. from the command line interface.</p></li>
 
 <dl class="py class">
 <dt id="stdpopsim.Contig">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Contig</code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Contig" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Contig</span></code><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a contiguous region of genome that is to be
 simulated. This contains the information about mutation rates
 and recombination rates that are needed to simulate this region.</p>
@@ -442,7 +441,7 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 
 <dl class="py class">
 <dt id="stdpopsim.Citation">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Citation</code><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Citation</span></code><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Citation" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to the literature that should be acknowledged by users of
 stdpopsim.</p>
 <dl class="field-list simple">
@@ -456,19 +455,19 @@ stdpopsim.</p>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.Citation.because">
-<code class="sig-name descname">because</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reasons</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.because"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation.because" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">because</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reasons</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.because"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Citation.because" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new Citation with the given reasons.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Citation.fetch_bibtex">
-<code class="sig-name descname">fetch_bibtex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.fetch_bibtex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation.fetch_bibtex" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">fetch_bibtex</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.fetch_bibtex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Citation.fetch_bibtex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the bibtex of a citation from Crossref.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Citation.merge">
-<em class="property">static </em><code class="sig-name descname">merge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">citations</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Citation.merge" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">merge</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">citations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Citation.merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a deduplicated list of Citation objects.</p>
 </dd></dl>
 
@@ -476,7 +475,7 @@ stdpopsim.</p>
 
 <dl class="py class">
 <dt id="stdpopsim.Annotation">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Annotation</code><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Annotation</span></code><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a GFF3 annotation file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
@@ -493,31 +492,31 @@ stdpopsim.</p>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.Annotation.download">
-<code class="sig-name descname">download</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.download" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">download</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads the zarr URL and stores it in the cache directory.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Annotation.get_annotation_type_from_chromomosome">
-<code class="sig-name descname">get_annotation_type_from_chromomosome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a_type</span></em>, <em class="sig-param"><span class="n">chrom_id</span></em>, <em class="sig-param"><span class="n">full_table</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_annotation_type_from_chromomosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.get_annotation_type_from_chromomosome" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_annotation_type_from_chromomosome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_annotation_type_from_chromomosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.get_annotation_type_from_chromomosome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all elements of type a_type from chromosome specified</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Annotation.get_chromosome_annotations">
-<code class="sig-name descname">get_chromosome_annotations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_chromosome_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.get_chromosome_annotations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_chromosome_annotations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_chromosome_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.get_chromosome_annotations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the pandas dataframe for the chromosome with the specified id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Annotation.get_genes_from_chromosome">
-<code class="sig-name descname">get_genes_from_chromosome</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chrom_id</span></em>, <em class="sig-param"><span class="n">full_table</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_genes_from_chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.get_genes_from_chromosome" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_genes_from_chromosome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chrom_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_genes_from_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.get_genes_from_chromosome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all elements of type gene from annotation</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.Annotation.is_cached">
-<code class="sig-name descname">is_cached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.is_cached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Annotation.is_cached" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_cached</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.is_cached"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.is_cached" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if this annotation is cached locally.</p>
 </dd></dl>
 
@@ -528,7 +527,7 @@ stdpopsim.</p>
 <h2>Demographic Models<a class="headerlink" href="#demographic-models" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="stdpopsim.DemographicModel">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">DemographicModel</code><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">DemographicModel</span></code><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a demographic model.</p>
 <p>Instances of this class are constructed by model implementors, following the
 <a class="reference internal" href="development.html#sec-development-demographic-model"><span class="std std-ref">developer documentation</span></a>. To instead
@@ -569,13 +568,13 @@ set the population metadata, initial size and growth rate parameters.</p></li>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.empty">
-<em class="property">static </em><code class="sig-name descname">empty</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.empty" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">empty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.empty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a model with the mandatory attributes filled out.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.equals">
-<code class="sig-name descname">equals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em>, <em class="sig-param"><span class="n">rtol</span><span class="o">=</span><span class="default_value">1e-08</span></em>, <em class="sig-param"><span class="n">atol</span><span class="o">=</span><span class="default_value">1e-05</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.equals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.equals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">equals</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.equals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if this model is equal to the specified model to the
 specified numerical tolerance (as defined by numpy.allclose).</p>
 <p>We use the ‘equals’ method here rather than the equality operator
@@ -584,7 +583,7 @@ because we need to be able to specifiy the numerical tolerances.</p>
 
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.get_demography_debugger">
-<code class="sig-name descname">get_demography_debugger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_demography_debugger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_demography_debugger" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_demography_debugger</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_demography_debugger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_demography_debugger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.DemographyDebugger" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographyDebugger</span></code></a> instance initialized
 with the parameters for this model. Please see the msprime documentation
 for details on how to use a DemographyDebugger.</p>
@@ -600,7 +599,7 @@ for details on how to use a DemographyDebugger.</p>
 
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.get_samples">
-<code class="sig-name descname">get_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_samples" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_samples</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of msprime.Sample objects, with the number of samples
 from each population determined by the positional arguments.
 For instance, <code class="docutils literal notranslate"><span class="pre">model.get_samples(2,</span> <span class="pre">5,</span> <span class="pre">7)</span></code> would return a list of 14 samples,
@@ -615,13 +614,13 @@ then remaining numbers are treated as zero.</p>
 
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.register_qc">
-<code class="sig-name descname">register_qc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">qc_model</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.register_qc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.register_qc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">register_qc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.register_qc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.register_qc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a QC model implementation for this model.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.verify_equal">
-<code class="sig-name descname">verify_equal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em>, <em class="sig-param"><span class="n">rtol</span><span class="o">=</span><span class="default_value">1e-08</span></em>, <em class="sig-param"><span class="n">atol</span><span class="o">=</span><span class="default_value">1e-05</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.verify_equal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.DemographicModel.verify_equal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">verify_equal</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.verify_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.verify_equal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equivalent to the <code class="xref py py-func docutils literal notranslate"><span class="pre">equals()</span></code> method, but raises a UnequalModelsError if the
 models are not equal rather than returning False.</p>
 </dd></dl>
@@ -630,7 +629,7 @@ models are not equal rather than returning False.</p>
 
 <dl class="py class">
 <dt id="stdpopsim.Population">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Population</code><a class="reference internal" href="_modules/stdpopsim/models.html#Population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Population" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Population</span></code><a class="reference internal" href="_modules/stdpopsim/models.html#Population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Population" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class recording metadata representing a population in a simulation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
@@ -646,7 +645,7 @@ population (default = 0).</p></li>
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.Population.asdict">
-<code class="sig-name descname">asdict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#Population.asdict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Population.asdict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">asdict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#Population.asdict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Population.asdict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary representing the metadata about this population.</p>
 </dd></dl>
 
@@ -662,7 +661,7 @@ Please see the <a class="reference internal" href="tutorial.html#sec-tutorial-ge
 these models.</p>
 <dl class="py class">
 <dt id="stdpopsim.PiecewiseConstantSize">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">PiecewiseConstantSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">N0</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#PiecewiseConstantSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.PiecewiseConstantSize" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">PiecewiseConstantSize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#PiecewiseConstantSize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.PiecewiseConstantSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a generic simulation model that can be run to output a
 tree sequence. This is a piecewise constant size model, which allows for
 instantaneous population size change over multiple epochs in a single population.</p>
@@ -684,7 +683,7 @@ time at which the size change takes place and the population size.</p></li>
 
 <dl class="py class">
 <dt id="stdpopsim.IsolationWithMigration">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">IsolationWithMigration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NA</span></em>, <em class="sig-param"><span class="n">N1</span></em>, <em class="sig-param"><span class="n">N2</span></em>, <em class="sig-param"><span class="n">T</span></em>, <em class="sig-param"><span class="n">M12</span></em>, <em class="sig-param"><span class="n">M21</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#IsolationWithMigration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.IsolationWithMigration" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">IsolationWithMigration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M21</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#IsolationWithMigration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.IsolationWithMigration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a generic simulation model that can be run to output a tree
 sequence. A generic isolation with migration model where a single ancestral
 population of size NA splits into two populations of constant size N1
@@ -719,7 +718,7 @@ These are usually not intended to be instantiated directly, but should be
 accessed through the main entry point, <a class="reference internal" href="#stdpopsim.get_engine" title="stdpopsim.get_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_engine()</span></code></a>.</p>
 <dl class="py function">
 <dt id="stdpopsim.get_engine">
-<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">get_engine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#get_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.get_engine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">get_engine</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#get_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.get_engine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the simulation engine with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -737,7 +736,7 @@ The currently supported engines are “msprime” and “slim”.</p>
 
 <dl class="py function">
 <dt id="stdpopsim.get_default_engine">
-<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">get_default_engine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#get_default_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.get_default_engine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">get_default_engine</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#get_default_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.get_default_engine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the default simulation engine (msprime).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -748,7 +747,7 @@ The currently supported engines are “msprime” and “slim”.</p>
 
 <dl class="py function">
 <dt id="stdpopsim.register_engine">
-<code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">register_engine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">engine</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#register_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.register_engine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">register_engine</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">engine</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#register_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.register_engine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers the specified simulation engine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -759,7 +758,7 @@ The currently supported engines are “msprime” and “slim”.</p>
 
 <dl class="py class">
 <dt id="stdpopsim.Engine">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.</code><code class="sig-name descname">Engine</code><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Engine" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.</span></code><code class="sig-name descname"><span class="pre">Engine</span></code><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Engine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract class representing a simulation engine.</p>
 <p>To implement a new simulation engine, one should inherit from this
 class. At a minimum, the <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>
@@ -777,7 +776,7 @@ be implemented. See msprime example in <code class="docutils literal notranslate
 </dl>
 <dl class="py method">
 <dt id="stdpopsim.Engine.get_version">
-<code class="sig-name descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Engine.get_version" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_version</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine.get_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Engine.get_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the version of the engine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -788,7 +787,7 @@ be implemented. See msprime example in <code class="docutils literal notranslate
 
 <dl class="py method">
 <dt id="stdpopsim.Engine.simulate">
-<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">demographic_model</span></em>, <em class="sig-param"><span class="n">contig</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine.simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.Engine.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#Engine.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Engine.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulates the model for the specified contig and samples. <code class="docutils literal notranslate"><span class="pre">demographic_model</span></code>,
 <code class="docutils literal notranslate"><span class="pre">contig</span></code>, and <code class="docutils literal notranslate"><span class="pre">samples</span></code> must be specified.</p>
 <dl class="field-list simple">
@@ -816,21 +815,21 @@ running the simulation.</p></li>
 
 <dl class="py class">
 <dt id="stdpopsim.engines._MsprimeEngine">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.engines.</code><code class="sig-name descname">_MsprimeEngine</code><a class="reference internal" href="_modules/stdpopsim/engines.html#_MsprimeEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.engines.</span></code><code class="sig-name descname"><span class="pre">_MsprimeEngine</span></code><a class="reference internal" href="_modules/stdpopsim/engines.html#_MsprimeEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.engines.Engine</span></code></p>
 <dl class="py attribute">
 <dt id="stdpopsim.engines._MsprimeEngine.description">
-<code class="sig-name descname">description</code><em class="property"> = 'Msprime coalescent simulator'</em><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.description" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">description</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'Msprime</span> <span class="pre">coalescent</span> <span class="pre">simulator'</span></em><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.description" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="stdpopsim.engines._MsprimeEngine.id">
-<code class="sig-name descname">id</code><em class="property"> = 'msprime'</em><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">id</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'msprime'</span></em><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.engines._MsprimeEngine.simulate">
-<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">demographic_model</span></em>, <em class="sig-param"><span class="n">contig</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">msprime_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">msprime_change_model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#_MsprimeEngine.simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msprime_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msprime_change_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/engines.html#_MsprimeEngine.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.engines._MsprimeEngine.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate the demographic model using msprime.
 See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code></a> for definitions of parameters defined
 for all engines.</p>
@@ -854,21 +853,21 @@ to initialise the simulation and then immediately return.</p></li>
 
 <dl class="py class">
 <dt id="stdpopsim.slim_engine._SLiMEngine">
-<em class="property">class </em><code class="sig-prename descclassname">stdpopsim.slim_engine.</code><code class="sig-name descname">_SLiMEngine</code><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">stdpopsim.slim_engine.</span></code><code class="sig-name descname"><span class="pre">_SLiMEngine</span></code><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.engines.Engine</span></code></p>
 <dl class="py attribute">
 <dt id="stdpopsim.slim_engine._SLiMEngine.description">
-<code class="sig-name descname">description</code><em class="property"> = 'SLiM forward-time Wright-Fisher simulator'</em><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.description" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">description</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'SLiM</span> <span class="pre">forward-time</span> <span class="pre">Wright-Fisher</span> <span class="pre">simulator'</span></em><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.description" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="stdpopsim.slim_engine._SLiMEngine.id">
-<code class="sig-name descname">id</code><em class="property"> = 'slim'</em><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">id</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'slim'</span></em><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">
-<code class="sig-name descname">recap_and_rescale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ts</span></em>, <em class="sig-param"><span class="n">demographic_model</span></em>, <em class="sig-param"><span class="n">contig</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="n">mutation_types</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extended_events</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">slim_scaling_factor</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.recap_and_rescale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">recap_and_rescale</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_scaling_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.recap_and_rescale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply post-SLiM transformations to <code class="docutils literal notranslate"><span class="pre">ts</span></code>. This rescales node times,
 does recapitation, simplification, and adds neutral mutations.</p>
 <p>If the SLiM engine was used to output a SLiM script, and the script was
@@ -896,7 +895,7 @@ for your case.</p>
 
 <dl class="py method">
 <dt id="stdpopsim.slim_engine._SLiMEngine.simulate">
-<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">demographic_model</span></em>, <em class="sig-param"><span class="n">contig</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mutation_types</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extended_events</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">slim_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">slim_script</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">slim_scaling_factor</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">slim_burn_in</span><span class="o">=</span><span class="default_value">10.0</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_script</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_scaling_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_burn_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate the demographic model using SLiM.
 See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code></a> for definitions of the
 <code class="docutils literal notranslate"><span class="pre">demographic_model</span></code>, <code class="docutils literal notranslate"><span class="pre">contig</span></code>, and <code class="docutils literal notranslate"><span class="pre">samples</span></code> parameters.</p>

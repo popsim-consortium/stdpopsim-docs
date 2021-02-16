@@ -540,7 +540,7 @@ described in more detail below (see <a class="reference internal" href="#sec-sli
 using the <code class="docutils literal notranslate"><span class="pre">--slim-scaling-factor</span></code> option.
 Unlike the previous command, this one should run very fast:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
-$    -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
+<span class="gp">$    </span>-c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
 </pre></div>
 </div>
 <p>(Indeed, this example runs in less than a minute,
@@ -575,7 +575,7 @@ from <em>Drosophila melanogaster</em> individuals with the demographic model
 inferred by <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">Sheehan &amp; Song (2016)</a>,
 using SLiM with a (very large!) scaling factor of 1000, we could run</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
-$     -c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span>
+<span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span>
 </pre></div>
 </div>
 <p>The scaling factor of 1000 makes this model run very quickly,
@@ -589,7 +589,7 @@ every time a demographic event occurs
 This also outputs a fair bit of other debugging output,
 which can be turned off with <code class="docutils literal notranslate"><span class="pre">--quiet</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -v -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
-$     -c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span> --quiet
+<span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span> --quiet
 </pre></div>
 </div>
 <p>Trimming down the output somewhat, we get:</p>
