@@ -122,6 +122,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lifting-over-a-genetic-map">Lifting over a genetic map</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#coding-standards">Coding standards</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#naming-conventions">Naming conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
@@ -1047,6 +1048,77 @@ system, the following can instead be used:</p>
 <p>Once all this is done, submit a PR containing the code changes and wait for directions
 on whom to send the compressed archive of genetic maps to (currently Andrew Kern is the
 primary uploader but please wait to send files to him until directed).</p>
+</div>
+<div class="section" id="lifting-over-a-genetic-map">
+<h2>Lifting over a genetic map<a class="headerlink" href="#lifting-over-a-genetic-map" title="Permalink to this headline">¶</a></h2>
+<p>Existing genetic maps will need to be lifted over to a new assembly, if and when the
+current assembly is updated in <cite>stdpopsim</cite>. This process can be partially automated by running
+the liftOver maintenance code.</p>
+<p>First, you must download and install the <code class="docutils literal notranslate"><span class="pre">liftOver</span></code> executable from the
+<a class="reference external" href="https://genome-store.ucsc.edu/">UCSC Genome Browser Store</a>.
+Next, you must download the appropriate chain files, again from UCSC
+(see <a class="reference external" href="http://hgdownload.soe.ucsc.edu/downloads.html#liftover">UCSC Genome Browser downloads</a> for more details).
+To validate the remapping between assemblies it is required to have chain files
+corresponding to both directions of the liftOver
+(e.g. <cite>hg19ToHg38.over.chain.gz</cite> and <cite>hg38ToHg19.over.chain.gz</cite>) as in the
+example below.</p>
+<p>An example of the process for
+lifting over the <cite>GeneticMap</cite> <code class="docutils literal notranslate"><span class="pre">&quot;HapMapII_GRCh37&quot;</span></code> to the <code class="docutils literal notranslate"><span class="pre">&quot;Hg19&quot;</span></code> assembly
+is shown below:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python /maintenance/liftOver_catalog.py <span class="se">\</span>
+    --species HomSap <span class="se">\</span>
+    --map HapMapII_GRCh37 <span class="se">\</span>
+    --chainFile hg19ToHg38.over.chain.gz <span class="se">\</span>
+    --validationChain hg38ToHg19.over.chain.gz <span class="se">\</span>
+    --winLen <span class="m">1000</span> <span class="se">\</span>
+    --useAdjacentAvg <span class="se">\</span>
+    --retainIntermediates <span class="se">\</span>
+    --gapThresh <span class="m">1000000</span>
+</pre></div>
+</div>
+<p>Here, the argument <code class="docutils literal notranslate"><span class="pre">&quot;--winLen&quot;</span></code> corresponds to the size of the window over which a weighted
+average of recombination rates is taken when comparing the original map with the
+back-lifted map (for validation purposes only). The argument <code class="docutils literal notranslate"><span class="pre">&quot;--gapThresh&quot;</span></code> is used to select a threshold for
+which gaps in the new assembly longer than the <code class="docutils literal notranslate"><span class="pre">&quot;--gapThresh&quot;</span></code> will be set with a
+recombination rate equal to 0.0000, instead of an average rate. The type of average rate used for gaps
+shorter than the <code class="docutils literal notranslate"><span class="pre">&quot;--gapThresh&quot;</span></code> is determined either by using the mean rate of two most adjacent windows
+or by using the mean rate for the entire chromosome, using options <code class="docutils literal notranslate"><span class="pre">&quot;--useAdjacentAvg&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;--useChromosomeAvg&quot;`</span></code> respectively.</p>
+<p>Validation plots will automatically be generated in the <code class="docutils literal notranslate"><span class="pre">&quot;/liftOver_validation/&quot;</span></code>
+directory. Intermediate files created by the <code class="docutils literal notranslate"><span class="pre">liftOver</span></code> executable will be saved
+for inspection in the <code class="docutils literal notranslate"><span class="pre">&quot;/liftOver_intermediates/&quot;</span></code>, only if the
+<code class="docutils literal notranslate"><span class="pre">&quot;--retainInermediates&quot;</span></code> option is used. Once the user has inspected the validation plots
+and deemed the liftOver process to be sufficiently accurate, they can proceed to generating
+the SHA256 checksum.</p>
+<p>The SHA256 checksum of the new genetic map tarball can be obtained using the
+<code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
+system, the following can instead be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
+</pre></div>
+</div>
+<p>The newly lifted over maps will be formatted in a compressed archive and
+automatically named using the assembly name from the chain file.
+This file will be sent to one of the <cite>stdpopsim</cite> uploaders for placement in the
+AWS cloud, once the new map is approved. Finally, you must add a <cite>GeneticMap</cite>
+object to the file named for your species in the <cite>catalog</cite> directory (the same one in
+which the genome is defined) as shown in <a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a>.</p>
+<p>Again, once all this is done, submit a PR containing the code changes and wait for
+directions on whom to send the compressed archive of genetic maps to
+(currently Andrew Kern is the primary uploader but please wait to send files
+to him until directed).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">GeneticMap</span></code> named <code class="docutils literal notranslate"><span class="pre">&quot;ComeronCrossoverV2_dm6&quot;</span></code> for <code class="docutils literal notranslate"><span class="pre">&quot;DroMel&quot;</span></code>
+was generated by similar code (albeit slightly different
+compared to that shown above) using the following command:</p>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python /maintenance/liftOver_comeron2012.py <span class="se">\</span>
+    --winLen <span class="m">1000</span> <span class="se">\</span>
+    --gapThresh <span class="m">1000000</span> <span class="se">\</span>
+    --useAdjacentAvg <span class="se">\</span>
+    --retainIntermediates
+</pre></div>
+</div>
 </div>
 <div class="section" id="coding-standards">
 <h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this headline">¶</a></h2>

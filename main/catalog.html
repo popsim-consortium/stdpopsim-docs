@@ -116,6 +116,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_DroMel_genome">Genome</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_DroMel_genetic_maps">Genetic Maps</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_dromel_genetic_maps_comeroncrossover_dm6">ComeronCrossover_dm6</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_dromel_genetic_maps_comeroncrossoverv2_dm6">ComeronCrossoverV2_dm6</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_DroMel_models">Demographic Models</a><ul>
@@ -1228,6 +1229,10 @@ Then, if you feel ready, make an issue on our
 <td><p>2012</p></td>
 <td><p>Crossover map from meioses products of 8 lab crosses</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_dromel_genetic_maps_comeroncrossoverv2_dm6">ComeronCrossoverV2_dm6</a></p></td>
+<td><p>2012</p></td>
+<td><p>Crossover map from meioses products of 8 lab crosses</p></td>
+</tr>
 </tbody>
 </table>
 <div class="section" id="sec_catalog_dromel_genetic_maps_comeroncrossover_dm6">
@@ -1239,6 +1244,24 @@ Then, if you feel ready, make an issue on our
         Recombination rates were calculated from the density of individual
         recombination events that were detected in crosses. This map was
         subsequently lifted over to the dm6 assembly.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Comeron et al, 2012. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.1002905">https://doi.org/10.1371/journal.pgen.1002905</a></p></li>
+</ul>
+</div>
+<div class="section" id="sec_catalog_dromel_genetic_maps_comeroncrossoverv2_dm6">
+<span id="sec_catalog_dromel_genetic_maps_comeroncrossoverv2_dm6"></span><h4>ComeronCrossoverV2_dm6<a class="headerlink" href="#sec_catalog_dromel_genetic_maps_comeroncrossoverv2_dm6" title="Permalink to this headline">¶</a></h4>
+<p>
+        The crossover map from a study of 8 crosses of 12 highly
+        inbred lines of D. melanogaster. This is based on the
+        products of 5,860 female meioses from whole genome sequencing data.
+        Recombination rates were calculated from the density of individual
+        recombination events that were detected in crosses. This map was
+        subsequently lifted over to the dm6 assembly using the available
+        maintenance code command:
+
+        python liftOver_comeron2012.py             –winLen 1000             –gapThresh 1000000             –useAdjacentAvg             –retainIntermediates
         </p>
 <p class="rubric">Citations</p>
 <ul class="simple">
