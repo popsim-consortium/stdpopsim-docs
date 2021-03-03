@@ -1358,9 +1358,10 @@ To check that we have set up the simulation correctly, we may first wish to perf
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o   afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
+WARNING: RecombinationMap.read_hapmap() is deprecated. Use RateMap.read_hapmap() instead.
 WARNING: Recombination map has length 249218992.0, which is longer than chromosome length 248956422. The former will be used.
 Simulation information:
-    Engine: msprime (0.7.4)
+    Engine: msprime (1.0.0a6)
     Model id: AmericanAdmixture_4B11
     Model desciption: American admixture
     Seed: 13
@@ -1371,10 +1372,11 @@ Simulation information:
         ADMIX: 4 (0)
 Contig Description:
     Contig length: 249218992.0
-    Mean recombination rate: 1.1487055306951004e-08
+    Mean recombination rate: 1.1487055306951252e-08
     Mean mutation rate: 1.29e-08
     Genetic map: HapMapII_GRCh37
 
+The provenance information for the resulting tree sequence is 8.79MB. This is nothing to worry about as provenance is a good thing to have, but if you want to save this memory/storage space you can disable provenance recording by setting record_provenance=False
 If you use this simulation in published work, please cite:
 [stdpopsim]
 Adrion et al., 2020: https://doi.org/10.7554/eLife.54967
