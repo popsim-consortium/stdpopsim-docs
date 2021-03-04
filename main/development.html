@@ -1161,11 +1161,13 @@ which generates reports about each pull request.</p>
 <p>It is not practical to test the statistical properties of simulation models
 as part of unit tests.</p>
 <p>The unit test suite is in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory. Tests are run using the
-<a class="reference external" href="https://nose.readthedocs.io/en/latest/">nose</a> module. Use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m nose tests/
+<a class="reference external" href="https://docs.pytest.org/en/stable/">pytest</a> module. Use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pytest
 </pre></div>
 </div>
-<p>from the project root to run the full test suite.</p>
+<p>from the project root to run the full test suite. Pytest is very powerful and
+has lots of options; please see the <a class="reference external" href="https://tskit.dev/tskit/docs/stable/development.html#tests">tskit documentation</a> for help on
+how to run pytest and some common options.</p>
 <p>It’s useful to run the <code class="docutils literal notranslate"><span class="pre">flake8</span></code> CI tests <em>locally</em> before pushing a commit.
 To set this up use either <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install <code class="docutils literal notranslate"><span class="pre">flake8</span></code></p>
 <p>To run the test simply use:</p>
