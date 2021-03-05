@@ -206,7 +206,6 @@
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">contextlib</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">textwrap</span>
@@ -675,9 +674,9 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert recombination map from start position coords to end position coords.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rates</span> <span class="o">=</span> <span class="n">recombination_map</span><span class="o">.</span><span class="n">get_rates</span><span class="p">()</span>
-    <span class="n">ends</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">recombination_map</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()]</span>
-    <span class="k">return</span> <span class="n">rates</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ends</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">rates</span> <span class="o">=</span> <span class="n">recombination_map</span><span class="o">.</span><span class="n">rate</span>
+    <span class="n">ends</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">recombination_map</span><span class="o">.</span><span class="n">position</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">rates</span><span class="p">,</span> <span class="n">ends</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
 
 <span class="k">def</span> <span class="nf">slim_makescript</span><span class="p">(</span>
@@ -692,12 +691,10 @@
     <span class="n">burn_in</span><span class="p">,</span>
 <span class="p">):</span>
 
-    <span class="n">pop_names</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">pc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">pc</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span>
-    <span class="p">]</span>
+    <span class="n">pop_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">]</span>
     <span class="c1"># Use copies of these so that the time frobbing below doesn&#39;t have</span>
     <span class="c1"># side-effects in the caller&#39;s model.</span>
-    <span class="n">demographic_events</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">)</span>
+    <span class="n">demographic_events</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">extended_events</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">extended_events</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -725,11 +722,12 @@
 
     <span class="c1"># The demography debugger constructs event epochs, which we use</span>
     <span class="c1"># to define the forwards-time events.</span>
-    <span class="n">dd</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">DemographyDebugger</span><span class="p">(</span>
-        <span class="n">population_configurations</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
-        <span class="n">migration_matrix</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
-        <span class="n">demographic_events</span><span class="o">=</span><span class="n">demographic_events</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">dd</span> <span class="o">=</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">debug</span><span class="p">()</span>
+    <span class="c1"># msprime.DemographyDebugger(</span>
+    <span class="c1">#     population_configurations=demographic_model.population_configurations,</span>
+    <span class="c1">#     migration_matrix=demographic_model.migration_matrix,</span>
+    <span class="c1">#     demographic_events=demographic_events,</span>
+    <span class="c1"># )</span>
 
     <span class="n">epochs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">]</span>
@@ -746,54 +744,56 @@
     <span class="n">subpopulation_splits</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">de</span> <span class="ow">in</span> <span class="n">epoch</span><span class="o">.</span><span class="n">demographic_events</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">de</span><span class="p">,</span> <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">):</span>
-
-                <span class="k">if</span> <span class="n">de</span><span class="o">.</span><span class="n">proportion</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="c1"># Calculate remainder of population after previous</span>
-                    <span class="c1"># MassMigration events in this epoch.</span>
-                    <span class="n">rem</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-                        <span class="p">[</span>
-                            <span class="n">ap</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-                            <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">admixture_pulses</span>
-                            <span class="k">if</span> <span class="n">ap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span> <span class="ow">and</span> <span class="n">ap</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">de</span><span class="o">.</span><span class="n">source</span>
-                        <span class="p">]</span>
-                    <span class="p">)</span>
-                    <span class="n">admixture_pulses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="p">(</span>
-                            <span class="n">i</span><span class="p">,</span>
-                            <span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>  <span class="c1"># forwards-time dest</span>
-                            <span class="n">de</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span>  <span class="c1"># forwards-time source</span>
-                            <span class="n">rem</span> <span class="o">*</span> <span class="n">de</span><span class="o">.</span><span class="n">proportion</span><span class="p">,</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">de</span><span class="p">,</span> <span class="n">msprime</span><span class="o">.</span><span class="n">LineageMovementEvent</span><span class="p">):</span>
+                <span class="c1"># This is using internal msprime APIs here, but it&#39;s not worth</span>
+                <span class="c1"># updating before we change over to Demes.</span>
+                <span class="k">for</span> <span class="n">lm</span> <span class="ow">in</span> <span class="n">de</span><span class="o">.</span><span class="n">_as_lineage_movements</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">lm</span><span class="o">.</span><span class="n">proportion</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="c1"># Calculate remainder of population after previous</span>
+                        <span class="c1"># MassMigration events in this epoch.</span>
+                        <span class="n">rem</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                            <span class="p">[</span>
+                                <span class="n">ap</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                                <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">admixture_pulses</span>
+                                <span class="k">if</span> <span class="n">ap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span> <span class="ow">and</span> <span class="n">ap</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">lm</span><span class="o">.</span><span class="n">source</span>
+                            <span class="p">]</span>
                         <span class="p">)</span>
+                        <span class="n">admixture_pulses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="p">(</span>
+                                <span class="n">i</span><span class="p">,</span>
+                                <span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>  <span class="c1"># forwards-time dest</span>
+                                <span class="n">lm</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span>  <span class="c1"># forwards-time source</span>
+                                <span class="n">rem</span> <span class="o">*</span> <span class="n">lm</span><span class="o">.</span><span class="n">proportion</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="k">continue</span>
+
+                    <span class="c1"># Backwards: lm.source is being merged into lm.dest.</span>
+                    <span class="c1"># Forwards: lm.source is being created, taking individuals</span>
+                    <span class="c1">#           from lm.dest.</span>
+                    <span class="c1">#</span>
+                    <span class="c1"># If the proportion==1, we can use SLiM function:</span>
+                    <span class="c1">#       sim.addSubpopSplit(newpop, size, oldpop),</span>
+                    <span class="c1"># which we trigger by adding a row to subpopulation_splits.</span>
+                    <span class="c1"># This SLiM function creates newpop (=lm.source), under the</span>
+                    <span class="c1"># assumption that it doesn&#39;t already exist.</span>
+
+                    <span class="n">subpopulation_splits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;_T[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_N[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
                     <span class="p">)</span>
-                    <span class="k">continue</span>
 
-                <span class="c1"># Backwards: de.source is being merged into de.dest.</span>
-                <span class="c1"># Forwards: de.source is being created, taking individuals</span>
-                <span class="c1">#           from de.dest.</span>
-                <span class="c1">#</span>
-                <span class="c1"># If the proportion==1, we can use SLiM function:</span>
-                <span class="c1">#       sim.addSubpopSplit(newpop, size, oldpop),</span>
-                <span class="c1"># which we trigger by adding a row to subpopulation_splits.</span>
-                <span class="c1"># This SLiM function creates newpop (=de.source), under the</span>
-                <span class="c1"># assumption that it doesn&#39;t already exist.</span>
+                    <span class="c1"># Zero out the population size for generations before this</span>
+                    <span class="c1"># epoch, to avoid simulating invididuals that contribute no</span>
+                    <span class="c1"># genealogy.</span>
+                    <span class="n">N</span><span class="p">[</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">growth_rates</span><span class="p">[</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
 
-                <span class="n">subpopulation_splits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;_T[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_N[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
-                <span class="p">)</span>
-
-                <span class="c1"># Zero out the population size for generations before this</span>
-                <span class="c1"># epoch, to avoid simulating invididuals that contribute no</span>
-                <span class="c1"># genealogy.</span>
-                <span class="n">N</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">growth_rates</span><span class="p">[</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
-
-                <span class="c1"># Ensure there are no migrations to or from de.source before</span>
-                <span class="c1"># this epoch.</span>
-                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">):</span>
-                        <span class="n">migration_matrices</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="n">migration_matrices</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">de</span><span class="o">.</span><span class="n">source</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="c1"># Ensure there are no migrations to or from lm.source before</span>
+                    <span class="c1"># this epoch.</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">):</span>
+                            <span class="n">migration_matrices</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                            <span class="n">migration_matrices</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="n">drawn_mutations</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fitness_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
@@ -915,7 +915,7 @@
         <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">_slim_upper</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
             <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">,</span>
             <span class="n">burn_in</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">burn_in</span><span class="p">),</span>
-            <span class="n">chromosome_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">get_length</span><span class="p">()),</span>
+            <span class="n">chromosome_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">),</span>
             <span class="n">recombination_rates</span><span class="o">=</span><span class="n">recomb_rates_str</span><span class="p">,</span>
             <span class="n">recombination_ends</span><span class="o">=</span><span class="n">recomb_ends_str</span><span class="p">,</span>
             <span class="n">mutation_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
@@ -1113,28 +1113,29 @@
     <span class="n">printsc</span><span class="p">()</span>
 
     <span class="c1"># Sampling episodes.</span>
-    <span class="n">sample_counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
     <span class="n">sampling_episodes</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">time</span><span class="p">),</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">sample_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">sample_set</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">sample_set</span><span class="o">.</span><span class="n">population</span><span class="p">]</span>
+        <span class="c1"># We&#39;re currently sampling genomes, and set the ploidy to 1 to make</span>
+        <span class="c1"># sure it all fits together. This is probably confusing though and</span>
+        <span class="c1"># maybe we should change it.</span>
+        <span class="k">assert</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="c1"># SLiM can only sample individuals, which we assume are diploid.</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">num_samples</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">time</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">)</span>
         <span class="n">n_inds</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">pop_id</span> <span class="o">=</span> <span class="n">pop_names</span><span class="p">[</span><span class="n">pop</span><span class="p">]</span>
             <span class="n">gen</span> <span class="o">=</span> <span class="n">time</span> <span class="o">/</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">SLiMOddSampleWarning</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;SLiM simulates diploid individuals, so </span><span class="si">{</span><span class="n">n_inds</span><span class="si">}</span><span class="s2"> &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;individuals will be sampled for the </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> haploids &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;requested from population </span><span class="si">{</span><span class="n">pop_id</span><span class="si">}</span><span class="s2"> at time </span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;requested from population </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> at time </span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s2">. &quot;</span>
                     <span class="s2">&quot;See #464.&quot;</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="n">sampling_episodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pop</span><span class="p">,</span> <span class="n">n_inds</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+        <span class="n">sampling_episodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pop</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">n_inds</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
 
     <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // One row for each sampling episode.&quot;</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span>
@@ -1407,7 +1408,7 @@
             <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">recap_epoch</span><span class="o">.</span><span class="n">populations</span>
         <span class="p">]</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">recapitate</span><span class="p">(</span>
-            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_recombination_rate</span><span class="p">,</span>
+            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="p">,</span>
             <span class="n">population_configurations</span><span class="o">=</span><span class="n">population_configurations</span><span class="p">,</span>
             <span class="n">migration_matrix</span><span class="o">=</span><span class="n">recap_epoch</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
             <span class="n">random_seed</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>

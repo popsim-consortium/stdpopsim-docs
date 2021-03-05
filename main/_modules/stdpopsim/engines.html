@@ -164,6 +164,7 @@
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">msprime</span>
 <span class="kn">import</span> <span class="nn">stdpopsim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -333,16 +334,14 @@
             <span class="k">if</span> <span class="n">msprime_model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">msprime_model</span><span class="p">])</span>
 
-        <span class="n">demographic_events</span> <span class="o">=</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">demographic_events</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">msprime_change_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msprime_model</span> <span class="o">=</span> <span class="p">[</span><span class="n">msprime_model</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">msprime_change_model</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-                <span class="n">model_change</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SimulationModelChange</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-                <span class="n">demographic_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_change</span><span class="p">)</span>
+                <span class="n">msprime_model</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
-            <span class="n">demographic_events</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s2">&quot;random_seed&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -354,17 +353,24 @@
         <span class="c1"># TODO: remove this after a release or two. See #745.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_zigzag</span><span class="p">(</span><span class="n">demographic_model</span><span class="p">)</span>
 
-        <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">seeds</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_ancestry</span><span class="p">(</span>
             <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span>
-            <span class="n">recombination_map</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
-            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
-            <span class="n">population_configurations</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">population_configurations</span><span class="p">,</span>
-            <span class="n">migration_matrix</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
-            <span class="n">demographic_events</span><span class="o">=</span><span class="n">demographic_events</span><span class="p">,</span>
-            <span class="n">random_seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
+            <span class="n">demography</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
             <span class="n">model</span><span class="o">=</span><span class="n">msprime_model</span><span class="p">,</span>
             <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">dry_run</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_mutations</span><span class="p">(</span>
+            <span class="n">ts</span><span class="p">,</span>
+            <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">dry_run</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

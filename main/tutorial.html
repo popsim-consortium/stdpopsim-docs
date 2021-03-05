@@ -386,9 +386,9 @@ OutOfAfrica_3G09: Three population out-of-Africa
     various parameters given in Table 1 of Gutenkunst et al.
 
     Populations:
-        YRI: 1000 Genomes YRI (Yorubans)
-        CEU: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
-        CHB: 1000 Genomes CHB (Han Chinese in Beijing, China)
+        0: 1000 Genomes YRI (Yorubans)
+        1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
+        2: 1000 Genomes CHB (Han Chinese in Beijing, China)
 
 OutOfAfrica_2T12: Two population out-of-Africa
      The model is derived from the Tennesen et al. analysis of the
@@ -399,8 +399,8 @@ OutOfAfrica_2T12: Two population out-of-Africa
     et al.
 
     Populations:
-        AFR: African Americans
-        EUR: European Americans
+        0: African Americans
+        1: European Americans
 
 Africa_1T12: African population
      The model is a simplification of the two population Tennesen et
@@ -1068,9 +1068,9 @@ OutOfAfrica_3G09: Three population out-of-Africa
     various parameters given in Table 1 of Gutenkunst et al.
 
     Populations:
-        YRI: 1000 Genomes YRI (Yorubans)
-        CEU: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
-        CHB: 1000 Genomes CHB (Han Chinese in Beijing, China)
+        0: 1000 Genomes YRI (Yorubans)
+        1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
+        2: 1000 Genomes CHB (Han Chinese in Beijing, China)
 
 OutOfAfrica_2T12: Two population out-of-Africa
      The model is derived from the Tennesen et al. analysis of the
@@ -1358,7 +1358,6 @@ To check that we have set up the simulation correctly, we may first wish to perf
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o   afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
-WARNING: RecombinationMap.read_hapmap() is deprecated. Use RateMap.read_hapmap() instead.
 WARNING: Recombination map has length 249218992.0, which is longer than chromosome length 248956422. The former will be used.
 Simulation information:
     Engine: msprime (1.0.0a6)
@@ -1366,17 +1365,17 @@ Simulation information:
     Model desciption: American admixture
     Seed: 13
     Population: number_samples (sampling_time_generations):
-        AFR: 4 (0)
-        EUR: 4 (0)
-        ASIA: 4 (0)
-        ADMIX: 4 (0)
+        0: 4 (0)
+        1: 4 (0)
+        2: 4 (0)
+        3: 4 (0)
 Contig Description:
     Contig length: 249218992.0
-    Mean recombination rate: 1.1487055306951252e-08
+    Mean recombination rate: 1.1489616281669443e-08
     Mean mutation rate: 1.29e-08
     Genetic map: HapMapII_GRCh37
 
-The provenance information for the resulting tree sequence is 8.79MB. This is nothing to worry about as provenance is a good thing to have, but if you want to save this memory/storage space you can disable provenance recording by setting record_provenance=False
+The provenance information for the resulting tree sequence is 8.68MB. This is nothing to worry about as provenance is a good thing to have, but if you want to save this memory/storage space you can disable provenance recording by setting record_provenance=False
 If you use this simulation in published work, please cite:
 [stdpopsim]
 Adrion et al., 2020: https://doi.org/10.7554/eLife.54967
@@ -1386,7 +1385,7 @@ Kelleher et al., 2016: https://doi.org/10.1371/journal.pcbi.1004842
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385

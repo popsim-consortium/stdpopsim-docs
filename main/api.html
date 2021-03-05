@@ -411,9 +411,8 @@ and recombination rates that are needed to simulate this region.</p>
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
-<li><p><strong>recombination_map</strong> (<em>msprime.simulations.RecombinationMap</em>) – The recombination map for the region. See the
-<a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.RecombinationMap">msprime documentation</a>
-for more details.</p></li>
+<li><p><strong>recombination_map</strong> (<em>msprime.RateMap</em>) – The recombination map for the region. See the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code> for details.</p></li>
 <li><p><strong>mask_intervals</strong> (<em>array-like</em><em> (</em><em>?</em><em>)</em>) – Intervals to keep in simulated tree sequence, as a list
 of (left_position, right_position), such that intervals are non-overlapping
 and in ascending order. Should have shape Nx2, where N is the number of
@@ -545,58 +544,11 @@ written text, e.g., “Three population Out-of-Africa”. This should
 describe the model itself and not contain author or year information.</p></li>
 <li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A concise, but detailed, summary of the model.</p></li>
 <li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Mean inter-generation interval, in years.</p></li>
-<li><p><strong>populations</strong> (list of <a class="reference internal" href="#stdpopsim.Population" title="stdpopsim.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Population" title="stdpopsim.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a>, to provide each population
-with a unique ID and description.</p></li>
-<li><p><strong>qc_model</strong> (<a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> or None) – An independent implementation of the model, against which
-the model’s accuracy is validated. This should not be set by the user,
-and may be None if no QC implementation exists yet.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>, that describe the primary
 reference(s) for the model.</p></li>
-<li><p><strong>demographic_events</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographicEvent</span></code>) – A list of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographicEvent</span></code> subclasses, that define changes to
-the populations through time, such as population size changes or mass
-migrations. See the
-<a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#sec-api-demographic-events" title="(in msprime v0.7)"><span class="xref std std-ref">msprime API documentation</span></a>
-for more information.</p></li>
-<li><p><strong>population_configurations</strong> (list of <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.PopulationConfiguration" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.PopulationConfiguration</span></code></a>) – A list of
-<a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.PopulationConfiguration" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.PopulationConfiguration</span></code></a>, one for each population, to
-set the population metadata, initial size and growth rate parameters.</p></li>
-<li><p><strong>migration_matrix</strong> (<em>list of list of int</em>) – The initial migration matrix. See the
-<code class="docutils literal notranslate"><span class="pre">migration_matrix</span></code> parameter to <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.simulate" title="(in msprime v0.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">msprime.simulate()</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="stdpopsim.DemographicModel.empty">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">empty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.empty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a model with the mandatory attributes filled out.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="stdpopsim.DemographicModel.equals">
-<code class="sig-name descname"><span class="pre">equals</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.equals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if this model is equal to the specified model to the
-specified numerical tolerance (as defined by numpy.allclose).</p>
-<p>We use the ‘equals’ method here rather than the equality operator
-because we need to be able to specifiy the numerical tolerances.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="stdpopsim.DemographicModel.get_demography_debugger">
-<code class="sig-name descname"><span class="pre">get_demography_debugger</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_demography_debugger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_demography_debugger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.DemographyDebugger" title="(in msprime v0.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.DemographyDebugger</span></code></a> instance initialized
-with the parameters for this model. Please see the msprime documentation
-for details on how to use a DemographyDebugger.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A DemographyDebugger instance for this DemographicModel.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.DemographyDebugger" title="(in msprime v0.7)">msprime.DemographyDebugger</a></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.get_samples">
 <code class="sig-name descname"><span class="pre">get_samples</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_samples" title="Permalink to this definition">¶</a></dt>
@@ -610,19 +562,17 @@ The number of of arguments must be less than or equal to the number of
 “sampling” populations, <code class="docutils literal notranslate"><span class="pre">model.num_sampling_populations</span></code>;
 if the number of arguments is less than the number of sampling populations,
 then remaining numbers are treated as zero.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>This documentation is broken. We’re now returning msprime
+SampleSet objects.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt id="stdpopsim.DemographicModel.register_qc">
 <code class="sig-name descname"><span class="pre">register_qc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.register_qc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.register_qc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a QC model implementation for this model.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="stdpopsim.DemographicModel.verify_equal">
-<code class="sig-name descname"><span class="pre">verify_equal</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.verify_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.verify_equal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Equivalent to the <code class="xref py py-func docutils literal notranslate"><span class="pre">equals()</span></code> method, but raises a UnequalModelsError if the
-models are not equal rather than returning False.</p>
 </dd></dl>
 
 </dd></dl>
