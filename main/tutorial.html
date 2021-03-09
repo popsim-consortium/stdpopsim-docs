@@ -268,20 +268,20 @@ usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
                  [--msprime-model {hudson,dtwf,smc,smc_prime}]
                  [--msprime-change-model T MODEL] [--slim-path PATH]
                  [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
-                 {AraTha,BosTau,CanFam,DroMel,EscCol,HomSap,PonAbe,download-genetic-maps}
+                 {BosTau,AraTha,PonAbe,DroMel,CanFam,HomSap,EscCol,download-genetic-maps}
                  ...
 
 Command line interface for stdpopsim.
 
 positional arguments:
-  {AraTha,BosTau,CanFam,DroMel,EscCol,HomSap,PonAbe,download-genetic-maps}
-    AraTha              Run simulations for Arabidopsis thaliana.
+  {BosTau,AraTha,PonAbe,DroMel,CanFam,HomSap,EscCol,download-genetic-maps}
     BosTau              Run simulations for Bos Taurus.
-    CanFam              Run simulations for Canis familiaris.
-    DroMel              Run simulations for Drosophila melanogaster.
-    EscCol              Run simulations for Escherichia coli.
-    HomSap              Run simulations for Homo sapiens.
+    AraTha              Run simulations for Arabidopsis thaliana.
     PonAbe              Run simulations for Pongo abelii.
+    DroMel              Run simulations for Drosophila melanogaster.
+    CanFam              Run simulations for Canis familiaris.
+    HomSap              Run simulations for Homo sapiens.
+    EscCol              Run simulations for Escherichia coli.
     download-genetic-maps
                         Download genetic maps
 
@@ -1385,7 +1385,7 @@ Kelleher et al., 2016: https://doi.org/10.1371/journal.pcbi.1004842
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
