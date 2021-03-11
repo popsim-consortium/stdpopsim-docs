@@ -171,30 +171,54 @@
 
 <span class="sd">    :ivar chromosomes: A list of :class:`.Chromosome` objects.</span>
 <span class="sd">    :vartype chromosomes: list</span>
-<span class="sd">    :ivar mutation_rate_citations: A list of :class:`.Citation` objects</span>
-<span class="sd">        providing justification for the mutation rate estimate.</span>
-<span class="sd">    :vartype mutation_rate_citations: list</span>
-<span class="sd">    :ivar recombination_rate_citations: A list of :class:`.Citation` objects</span>
-<span class="sd">        providing justification for the recombination rate estimate.</span>
-<span class="sd">    :vartype recombination_rate_citations: list</span>
-<span class="sd">    :ivar assembly_citations: A list of :class:`.Citation` objects</span>
-<span class="sd">        providing reference to the source of the genome assembly.</span>
-<span class="sd">    :vartype assembly_citations: list</span>
+<span class="sd">    :ivar citations: A list of :class:`.Citation` objects</span>
+<span class="sd">        providing the source for the genome assembly,</span>
+<span class="sd">        mutation rate and recombination rate estimates.</span>
+<span class="sd">    :vartype citations: list</span>
 <span class="sd">    :ivar length: The total length of the genome.</span>
 <span class="sd">    :vartype length: int</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># TODO document the assembly_name and accession</span>
+
     <span class="n">chromosomes</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
-    <span class="n">mutation_rate_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">recombination_rate_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">assembly_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">assembly_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">assembly_accession</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="n">chromosome</span><span class="o">.</span><span class="n">length</span>
+<div class="viewcode-block" id="Genome.from_data"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome.from_data">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_data</span><span class="p">(</span><span class="n">genome_data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">recombination_rate</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">citations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a Genome object from the specified dictionary of</span>
+<span class="sd">        genome information from Ensembl, recombination_rate and</span>
+<span class="sd">        mutation_rate dictionaries.</span>
+
+<span class="sd">        This method is for internal use only.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">chr_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">recombination_rate</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
+        <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">mutation_rate</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
+        <span class="n">chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">Chromosome</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
+                    <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;synonyms&quot;</span><span class="p">],</span>
+                    <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
+                    <span class="n">recombination_rate</span><span class="o">=</span><span class="n">recombination_rate</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">Genome</span><span class="p">(</span>
+            <span class="n">chromosomes</span><span class="o">=</span><span class="n">chromosomes</span><span class="p">,</span>
+            <span class="n">assembly_name</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;assembly_name&quot;</span><span class="p">],</span>
+            <span class="n">assembly_accession</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;assembly_accession&quot;</span><span class="p">],</span>
+            <span class="n">citations</span><span class="o">=</span><span class="n">citations</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Chromosomes:</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -224,9 +248,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean recombination rate across all chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
         <span class="n">mean_recombination_rate</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
-            <span class="n">normalized_weight</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+            <span class="n">normalized_weight</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="n">length</span>
             <span class="n">cont</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span> <span class="o">*</span> <span class="n">normalized_weight</span>
             <span class="n">mean_recombination_rate</span> <span class="o">+=</span> <span class="n">cont</span>
         <span class="k">return</span> <span class="n">mean_recombination_rate</span>
@@ -236,9 +261,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean mutation rate across all chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
         <span class="n">mean_mutation_rate</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
-            <span class="n">normalized_weight</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+            <span class="n">normalized_weight</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="n">length</span>
             <span class="n">cont</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="n">normalized_weight</span>
             <span class="n">mean_mutation_rate</span> <span class="o">+=</span> <span class="n">cont</span>
         <span class="k">return</span> <span class="n">mean_mutation_rate</span></div>

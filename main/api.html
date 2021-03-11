@@ -221,22 +221,18 @@ time of this species in years. Note that individual demographic
 models in the catalog may or may not use this estimate: each
 model uses the generation time that was used in the original
 publication(s).</p></li>
-<li><p><strong>generation_time_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
-providing justification for the genertion time estimate.</p></li>
 <li><p><strong>population_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The current best estimate for the population
 size of this species. Note that individual demographic
 models in the catalog may or may not use this estimate: each
 model uses the population sizes defined in the original
 publication(s).</p></li>
-<li><p><strong>population_size_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
-providing justification for the population size estimate.</p></li>
+<li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing the source for the generation time and
+population size estimates.</p></li>
 <li><p><strong>demographic_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>
 instances in the catalog for this species.</p></li>
-<li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The ensembl id for the species’ genome assembly,
-which will be used by maintenance scripts to query ensembl’s database.
-This parameter will be automatically populated from the species name,
-and should not be set directly unless a non-default assembly is used
-for the species definition (e.g. see E. coli).</p></li>
+<li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The ensembl id for the species which is used by
+maintenance scripts to query ensembl’s database.</p></li>
 </ul>
 </dd>
 </dl>
@@ -337,16 +333,22 @@ A complete list of IDs for each species can be found in the
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>chromosomes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> objects.</p></li>
-<li><p><strong>mutation_rate_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
-providing justification for the mutation rate estimate.</p></li>
-<li><p><strong>recombination_rate_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
-providing justification for the recombination rate estimate.</p></li>
-<li><p><strong>assembly_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
-providing reference to the source of the genome assembly.</p></li>
+<li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+providing the source for the genome assembly,
+mutation rate and recombination rate estimates.</p></li>
 <li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The total length of the genome.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="stdpopsim.Genome.from_data">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">from_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome_data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recombination_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">citations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.from_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a Genome object from the specified dictionary of
+genome information from Ensembl, recombination_rate and
+mutation_rate dictionaries.</p>
+<p>This method is for internal use only.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="stdpopsim.Genome.get_chromosome">
 <code class="sig-name descname"><span class="pre">get_chromosome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.get_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.get_chromosome" title="Permalink to this definition">¶</a></dt>
@@ -452,6 +454,13 @@ stdpopsim.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="stdpopsim.Citation.assert_valid">
+<code class="sig-name descname"><span class="pre">assert_valid</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.assert_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Citation.assert_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that this citation is valid by checking the types and values
+of the instance variables.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="stdpopsim.Citation.because">
 <code class="sig-name descname"><span class="pre">because</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reasons</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/citations.html#Citation.because"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Citation.because" title="Permalink to this definition">¶</a></dt>

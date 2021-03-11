@@ -266,26 +266,21 @@
 <span class="sd">        model uses the generation time that was used in the original</span>
 <span class="sd">        publication(s).</span>
 <span class="sd">    :vartype generation_time: float</span>
-<span class="sd">    :ivar generation_time_citations: A list of :class:`.Citation` objects</span>
-<span class="sd">        providing justification for the genertion time estimate.</span>
-<span class="sd">    :vartype generation_time_citations: list</span>
 <span class="sd">    :ivar population_size: The current best estimate for the population</span>
 <span class="sd">        size of this species. Note that individual demographic</span>
 <span class="sd">        models in the catalog may or may not use this estimate: each</span>
 <span class="sd">        model uses the population sizes defined in the original</span>
 <span class="sd">        publication(s).</span>
 <span class="sd">    :vartype population_size: float</span>
-<span class="sd">    :ivar population_size_citations: A list of :class:`.Citation` objects</span>
-<span class="sd">        providing justification for the population size estimate.</span>
-<span class="sd">    :vartype population_size_citations: list</span>
+<span class="sd">    :ivar citations: A list of :class:`.Citation` objects</span>
+<span class="sd">        providing the source for the generation time and</span>
+<span class="sd">        population size estimates.</span>
+<span class="sd">    :vartype citations: list</span>
 <span class="sd">    :ivar demographic_models: This list of :class:`DemographicModel`</span>
 <span class="sd">        instances in the catalog for this species.</span>
 <span class="sd">    :vartype demographic_models: list</span>
-<span class="sd">    :ivar ensembl_id: The ensembl id for the species&#39; genome assembly,</span>
-<span class="sd">        which will be used by maintenance scripts to query ensembl&#39;s database.</span>
-<span class="sd">        This parameter will be automatically populated from the species name,</span>
-<span class="sd">        and should not be set directly unless a non-default assembly is used</span>
-<span class="sd">        for the species definition (e.g. see E. coli).</span>
+<span class="sd">    :ivar ensembl_id: The ensembl id for the species which is used by</span>
+<span class="sd">        maintenance scripts to query ensembl&#39;s database.</span>
 <span class="sd">    :vartype ensembl_id: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -293,25 +288,17 @@
     <span class="n">name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">common_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">genome</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">generation_time</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">generation_time_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">population_size</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">population_size_citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">generation_time</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">population_size</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">demographic_models</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ensembl_id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
     <span class="c1"># A list of genetic maps. This is undocumented as the parameter is not</span>
     <span class="c1"># intended to be used when the Species is initialsed.</span>
     <span class="c1"># Use add_genetic_map() instead.</span>
     <span class="n">genetic_maps</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">annotations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="nd">@ensembl_id</span><span class="o">.</span><span class="n">default</span>
-    <span class="k">def</span> <span class="nf">_default_ensembl_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the ID of this species for the Ensembl REST API.</span>
-<span class="sd">        This is the species name, underscore delimited and in lowercase.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Species.get_contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_contig">[docs]</a>    <span class="k">def</span> <span class="nf">get_contig</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>

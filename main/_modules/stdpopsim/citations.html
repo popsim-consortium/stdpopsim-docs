@@ -169,6 +169,9 @@
 <span class="kn">import</span> <span class="nn">attr</span>
 
 
+<span class="c1"># TODO this should be an enum.Enum</span>
+
+
 <span class="k">class</span> <span class="nc">CiteReason</span><span class="p">:</span>
     <span class="n">ENGINE</span> <span class="o">=</span> <span class="s2">&quot;simulation engine&quot;</span>
     <span class="n">DEM_MODEL</span> <span class="o">=</span> <span class="s2">&quot;demographic model&quot;</span>
@@ -234,6 +237,23 @@
                 <span class="n">citation</span> <span class="o">=</span> <span class="n">cset</span><span class="p">[</span><span class="n">citation</span><span class="o">.</span><span class="n">doi</span><span class="p">]</span><span class="o">.</span><span class="n">because</span><span class="p">(</span><span class="n">citation</span><span class="o">.</span><span class="n">reasons</span><span class="p">)</span>
             <span class="n">cset</span><span class="p">[</span><span class="n">citation</span><span class="o">.</span><span class="n">doi</span><span class="p">]</span> <span class="o">=</span> <span class="n">citation</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">cset</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Citation.assert_valid"><a class="viewcode-back" href="../../api.html#stdpopsim.Citation.assert_valid">[docs]</a>    <span class="k">def</span> <span class="nf">assert_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks that this citation is valid by checking the types and values</span>
+<span class="sd">        of the instance variables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reasons</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reason</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span></div>
+            <span class="c1"># TODO check that it&#39;s in the set of accepted reasons.</span>
 
 <div class="viewcode-block" id="Citation.fetch_bibtex"><a class="viewcode-back" href="../../api.html#stdpopsim.Citation.fetch_bibtex">[docs]</a>    <span class="k">def</span> <span class="nf">fetch_bibtex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieve the bibtex of a citation from Crossref.&quot;&quot;&quot;</span>
