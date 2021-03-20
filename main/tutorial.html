@@ -268,20 +268,20 @@ usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
                  [--msprime-model {hudson,dtwf,smc,smc_prime}]
                  [--msprime-change-model T MODEL] [--slim-path PATH]
                  [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
-                 {BosTau,AraTha,PonAbe,DroMel,CanFam,HomSap,EscCol,download-genetic-maps}
+                 {CanFam,DroMel,HomSap,BosTau,EscCol,AraTha,PonAbe,download-genetic-maps}
                  ...
 
 Command line interface for stdpopsim.
 
 positional arguments:
-  {BosTau,AraTha,PonAbe,DroMel,CanFam,HomSap,EscCol,download-genetic-maps}
-    BosTau              Run simulations for Bos Taurus.
+  {CanFam,DroMel,HomSap,BosTau,EscCol,AraTha,PonAbe,download-genetic-maps}
+    CanFam              Run simulations for Canis familiaris.
+    DroMel              Run simulations for Drosophila melanogaster.
+    HomSap              Run simulations for Homo sapiens.
+    BosTau              Run simulations for Bos taurus.
+    EscCol              Run simulations for Escherichia coli.
     AraTha              Run simulations for Arabidopsis thaliana.
     PonAbe              Run simulations for Pongo abelii.
-    DroMel              Run simulations for Drosophila melanogaster.
-    CanFam              Run simulations for Canis familiaris.
-    HomSap              Run simulations for Homo sapiens.
-    EscCol              Run simulations for Escherichia coli.
     download-genetic-maps
                         Download genetic maps
 
@@ -785,7 +785,7 @@ But, you can go crazy with the sample size!
 </div>
 <p>Finally, we simulate the model with the contig length and number of samples we defined above.
 The simulation results are recorded in a tree sequence object
-(<a class="reference external" href="https://tskit.readthedocs.io/en/stable/python-api.html#tskit.TreeSequence" title="(in tskit v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>).</p>
+(<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in tskit v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -817,7 +817,7 @@ and trees changes.</p>
 <p>In addition to working directly with the simulated tree sequence, we can also output
 other common formats used for population genetics analyses.
 We can use <code class="docutils literal notranslate"><span class="pre">tskit</span></code> to convert the tree sequence to a vcf file called “foo.vcf”.
-See the tskit documentation (<a class="reference external" href="https://tskit.readthedocs.io/en/stable/python-api.html#tskit.TreeSequence.write_vcf" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.write_vcf()</span></code></a>) for more information.</p>
+See the tskit documentation (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.write_vcf" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.write_vcf()</span></code></a>) for more information.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;foo.vcf&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">vcf_file</span><span class="p">:</span>
     <span class="n">ts</span><span class="o">.</span><span class="n">write_vcf</span><span class="p">(</span><span class="n">vcf_file</span><span class="p">,</span> <span class="n">contig_id</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1389,7 +1389,7 @@ Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
@@ -1418,7 +1418,7 @@ one from each population
 <cite>Genetic diversity</cite> of a population (often denoted <span class="math notranslate nohighlight">\(\pi\)</span>) is the same quantity,
 but with both chromosomes sampled from the same population.
 These quantities can be computed directly from our sample using tskit’s
-<a class="reference external" href="https://tskit.readthedocs.io/en/stable/python-api.html#tskit.TreeSequence.divergence" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.divergence()</span></code></a>.</p>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.divergence" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.divergence()</span></code></a>.</p>
 <p>By looking at
 <a class="reference external" href="https://tskit.readthedocs.io/en/latest/python-api.html#tskit.TreeSequence.divergence">the documentation</a>
 for this method, we can see that we’ll need two inputs: <code class="docutils literal notranslate"><span class="pre">sample_sets</span></code> and
@@ -1563,10 +1563,10 @@ and each allele is observed in the sample with some frequency.
 Each entry in the AFS corresponds to a particular sample frequency,
 and records the total number of derived alleles with that frequency.
 We can calculate the AFS directly from our tree sequence using the
-<a class="reference external" href="https://tskit.readthedocs.io/en/stable/python-api.html#tskit.TreeSequence.allele_frequency_spectrum" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.allele_frequency_spectrum()</span></code></a> method.</p>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.allele_frequency_spectrum" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.allele_frequency_spectrum()</span></code></a> method.</p>
 <p>Since we wish to find the AFS separately for each of our two populations, we will
 first need to know which samples correspond to each population.
-The <a class="reference external" href="https://tskit.readthedocs.io/en/stable/python-api.html#tskit.TreeSequence.samples" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.samples()</span></code></a>
+The <a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.samples" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.samples()</span></code></a>
 method in tskit allows us to find the IDs of samples from each population:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pop_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">ts</span><span class="o">.</span><span class="n">samples</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">ts</span><span class="o">.</span><span class="n">samples</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pop_samples</span><span class="p">)</span>
@@ -1579,7 +1579,7 @@ Since our dataset was generated using the default <code class="docutils literal 
 we know that it has exactly one derived allele at any polymorphic site.
 We also know what the derived and ancestral states are.
 We can therefore calculate the <em>polarised</em> AFS using tskit’s
-<a class="reference external" href="https://tskit.readthedocs.io/en/stable/python-api.html#tskit.TreeSequence.allele_frequency_spectrum" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.allele_frequency_spectrum()</span></code></a> method:</p>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.allele_frequency_spectrum" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.allele_frequency_spectrum()</span></code></a> method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sfs0</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">allele_frequency_spectrum</span><span class="p">(</span>
     <span class="n">sample_sets</span><span class="o">=</span><span class="p">[</span><span class="n">pop_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">polarised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">span_normalise</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
