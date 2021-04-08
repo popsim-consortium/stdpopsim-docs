@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Development &mdash; stdpopsim 0.1.1 documentation</title>
@@ -84,7 +85,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -197,7 +198,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="development">
+  <section id="development">
 <span id="sec-development"></span><h1>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>is a community effort, and we welcome YOU to join us!</strong></p>
 <p>We envision at least three main types of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> developers:</p>
@@ -237,7 +238,7 @@ or
 following sections to learn how to contribute.
 And, importantly, please have a look at our
 <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
-<div class="section" id="installation">
+<section id="installation">
 <span id="sec-development-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Before installing, be sure to make a fork of the repo and clone it locally
 following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a>.</p>
@@ -263,7 +264,7 @@ encounter problems with it.</p>
 <p>If you have trouble installing any of the requirements, your <code class="docutils literal notranslate"><span class="pre">pip</span></code> may be the wrong version.
 Try <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/development.txt</span></code></p>
 </div>
-<div class="section" id="using-a-virtual-environment">
+<section id="using-a-virtual-environment">
 <h3>Using a Virtual Environment<a class="headerlink" href="#using-a-virtual-environment" title="Permalink to this headline">¶</a></h3>
 <p>We encourage the use of a virtual environment.</p>
 <p>For <code class="docutils literal notranslate"><span class="pre">pip</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</p>
@@ -289,9 +290,9 @@ To deactivate the virtual environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $ deactivate
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="github-workflow">
+</section>
+</section>
+<section id="github-workflow">
 <h2>GitHub workflow<a class="headerlink" href="#github-workflow" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ol class="arabic">
@@ -325,7 +326,7 @@ out of date with the main repository, we might ask you to
 see the next section on how to rebase.</p></li>
 </ol>
 </div></blockquote>
-<div class="section" id="pre-commit-checks">
+<section id="pre-commit-checks">
 <h3>Pre-commit checks<a class="headerlink" href="#pre-commit-checks" title="Permalink to this headline">¶</a></h3>
 <p>On each commit a <a class="reference external" href="https://pre-commit.com/">pre-commit hook</a>  will run
 that checks for violations of code style and other common problems.
@@ -340,8 +341,8 @@ to commit all changed files.)</p>
 do <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all</span></code> to check unstaged changes as well).
 To bypass the checks (to save or get feedback on work-in-progress) use
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">--no-verify</span></code></p>
-</div>
-<div class="section" id="rebasing">
+</section>
+<section id="rebasing">
 <h3>Rebasing<a class="headerlink" href="#rebasing" title="Permalink to this headline">¶</a></h3>
 <p>Rebasing is used for two basic tasks we might ask for during review:</p>
 <ol class="arabic simple">
@@ -592,8 +593,8 @@ To github.com:jeromekelleher/stdpopsim.git
 </div>
 <p>This looks just right: we have one commit, pointing to the head of <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code>
 and have successfully squashed and rebased.</p>
-</div>
-<div class="section" id="when-rebasing-goes-wrong">
+</section>
+<section id="when-rebasing-goes-wrong">
 <h3>When rebasing goes wrong<a class="headerlink" href="#when-rebasing-goes-wrong" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes rebasing goes wrong, and you end up in a frustrating loop of making and
 undoing the same changes over and over again. In this case, it can be simplest to
@@ -621,9 +622,9 @@ $ git push -f origin topic_branch_name
 </div>
 <p>Hard resetting and force pushing are not reversible operations, so please
 beware!</p>
-</div>
-</div>
-<div class="section" id="adding-a-new-demographic-model">
+</section>
+</section>
+<section id="adding-a-new-demographic-model">
 <span id="sec-development-demographic-model"></span><h2>Adding a new demographic model<a class="headerlink" href="#adding-a-new-demographic-model" title="Permalink to this headline">¶</a></h2>
 <p>Steps for adding a new demographic model:</p>
 <ol class="arabic simple">
@@ -641,7 +642,7 @@ source code to see how existing models are typically written and documented. If 
 any questions or confusion about formatting or implementing demographic models, please
 don’t hesitate to open an <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">issue</a> –
 we’re more than happy to answer any questions and help get you up and running.</p>
-<div class="section" id="what-models-are-appropriate-to-add">
+<section id="what-models-are-appropriate-to-add">
 <h3>What models are appropriate to add?<a class="headerlink" href="#what-models-are-appropriate-to-add" title="Permalink to this headline">¶</a></h3>
 <p><cite>Stdpopsim</cite> supports any demographic model from the published literature that gives
 enough information to be able to define <cite>msprime</cite> demography objects. At a minimum, that
@@ -655,16 +656,16 @@ developing and testing inference methods. If there is a generic model that does 
 currently exist in our catalog but would be useful to include, we also welcome those
 contributions. Again, you should provide a citation for a generic models, or it
 should be commonly used.</p>
-</div>
-<div class="section" id="fork-the-repository-and-create-a-branch">
+</section>
+<section id="fork-the-repository-and-create-a-branch">
 <h3>Fork the repository and create a branch<a class="headerlink" href="#fork-the-repository-and-create-a-branch" title="Permalink to this headline">¶</a></h3>
 <p>Before implementing any model, be sure to have forked the <cite>stdpopsim</cite> repository
 and cloned it locally, following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a> section.
 Models are first implemented and tested locally, and then submitted as a pull request
 to the <cite>stdpopsim</cite> repository, at which point it is verified by another developer
 before being fully supported within <cite>stdpopsim</cite>.</p>
-</div>
-<div class="section" id="write-the-model-function-in-the-catalog-source-code">
+</section>
+<section id="write-the-model-function-in-the-catalog-source-code">
 <h3>Write the model function in the catalog source code<a class="headerlink" href="#write-the-model-function-in-the-catalog-source-code" title="Permalink to this headline">¶</a></h3>
 <p>In the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> catalog source code (found in <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/</span></code>),
 each species has a module that defines all of the necessary functions to run
@@ -749,8 +750,8 @@ parameters that give the maximum likelihood fit), which are translated into
 is your first time specifying a model using <cite>msprime</cite>, it’s worth taking some time to
 read through the <cite>msprime</cite>
 <a class="reference external" href="https://msprime.readthedocs.io/en/stable/tutorial.html">documentation and tutorials</a>.</p>
-</div>
-<div class="section" id="write-parameter-table">
+</section>
+<section id="write-parameter-table">
 <h3>Write parameter table<a class="headerlink" href="#write-parameter-table" title="Permalink to this headline">¶</a></h3>
 <p>The parameters used in the implementation must
 also be listed in a csv file in the <code class="docutils literal notranslate"><span class="pre">docs/parameter_tables</span></code> directory. This ensures
@@ -763,8 +764,8 @@ The csv file should have the format:</p>
 <p>We can check that the documentation builds properly after implementation by running
 <code class="docutils literal notranslate"><span class="pre">make</span></code> in the docs directory and opening the Catalog page from the <code class="docutils literal notranslate"><span class="pre">docs/_build/</span></code>
 directory. See <a class="reference internal" href="#documentation">Documentation</a> for more details.</p>
-</div>
-<div class="section" id="test-the-model-locally">
+</section>
+<section id="test-the-model-locally">
 <h3>Test the model locally<a class="headerlink" href="#test-the-model-locally" title="Permalink to this headline">¶</a></h3>
 <p>Once you have written the demographic model function, you should test the model locally
 with <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>. Follow the development <a class="reference internal" href="#sec-development-installation"><span class="std std-ref">Installation</span></a>
@@ -801,14 +802,14 @@ or <a class="reference external" href="https://github.com/popsim-consortium/stdp
 </div>
 <p>Next, check that you can successfully run a simulation with your new model with the
 Python API. See <a class="reference internal" href="tutorial.html#sec-python-tute"><span class="std std-ref">Running stdpopsim with the Python interface (API)</span></a> for more details.</p>
-</div>
-<div class="section" id="submit-a-pull-request-on-github">
+</section>
+<section id="submit-a-pull-request-on-github">
 <h3>Submit a Pull Request on GitHub<a class="headerlink" href="#submit-a-pull-request-on-github" title="Permalink to this headline">¶</a></h3>
 <p>Once you have implemented the demographic model locally, including
 documentation, the next step is to open a pull request with this addition.
 See the <a class="reference internal" href="#github-workflow">GitHub workflow</a> for more details.</p>
-</div>
-<div class="section" id="so-the-model-is-implemented-what-next">
+</section>
+<section id="so-the-model-is-implemented-what-next">
 <h3>So the model is implemented. What next?<a class="headerlink" href="#so-the-model-is-implemented-what-next" title="Permalink to this headline">¶</a></h3>
 <p>Now at this point, most of your work is done!  The model is reviewed and
 verified following the <a class="reference internal" href="#demographic-model-review-process">Demographic model review process</a> by an independent member
@@ -816,8 +817,8 @@ of the development team, and there may be some discussion about formatting and
 to clear up any confusing bits of the demographic parameters before the model is
 fully incorporated into <cite>stdpopsim</cite>.</p>
 <p>Thank you for your contribution, and welcome to the <cite>stdpopsim</cite> development team!</p>
-</div>
-<div class="section" id="demographic-model-review-process">
+</section>
+<section id="demographic-model-review-process">
 <h3>Demographic model review process<a class="headerlink" href="#demographic-model-review-process" title="Permalink to this headline">¶</a></h3>
 <p>When Developer A creates a new demographic model on their local fork they must
 follow these steps for it to be officially supported by stdpopsim:</p>
@@ -847,8 +848,8 @@ catalog and QC model implementations.</p></li>
 the QC issue is closed.</p></li>
 </ol>
 </div></blockquote>
-</div>
-<div class="section" id="arbitration">
+</section>
+<section id="arbitration">
 <h3>Arbitration<a class="headerlink" href="#arbitration" title="Permalink to this headline">¶</a></h3>
 <p>When developers A and B disagree on the model implementation, the process is to:</p>
 <blockquote>
@@ -864,9 +865,9 @@ made to the QC model they are committed to the branch where the QC PR
 originates from.</p></li>
 </ol>
 </div></blockquote>
-</div>
-</div>
-<div class="section" id="adding-a-new-species">
+</section>
+</section>
+<section id="adding-a-new-species">
 <h2>Adding a new species<a class="headerlink" href="#adding-a-new-species" title="Permalink to this headline">¶</a></h2>
 <p>To add a new species to <cite>stdpopsim</cite> several things are required:
 1. The genome definition
@@ -875,7 +876,7 @@ originates from.</p></li>
 <p>Once you have these things the first step is to create a new file in the <cite>catalog</cite>
 directory named for the species (see <a class="reference internal" href="#naming-conventions">Naming conventions</a> for more details). All
 code described below should go in this file unless explicitly specified otherwise.</p>
-<div class="section" id="default-species-parameters">
+<section id="default-species-parameters">
 <h3>Default species parameters<a class="headerlink" href="#default-species-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Four default parameters are required to create a new species:
 1. Generation time estimate
@@ -886,8 +887,8 @@ code described below should go in this file unless explicitly specified otherwis
 as represented in the literature for that species. Consequently one or more citations for
 each value are expected and will be required for constructing the species object detailed
 below.</p>
-</div>
-<div class="section" id="adding-updating-a-genome-definition">
+</section>
+<section id="adding-updating-a-genome-definition">
 <h3>Adding/Updating a genome definition<a class="headerlink" href="#adding-updating-a-genome-definition" title="Permalink to this headline">¶</a></h3>
 <p>A genome definition is created with a call to <cite>stdpopsim.Genome()</cite>  which requires a list
 of chromosomes and a citation for the assembly. <cite>stdpopsim</cite> has an automated procedure
@@ -981,8 +982,8 @@ prevent linting issues.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.catalog</span> <span class="kn">import</span> <span class="n">PonAbe</span>  <span class="c1"># NOQA</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="species-review-process">
+</section>
+<section id="species-review-process">
 <h3>Species review process<a class="headerlink" href="#species-review-process" title="Permalink to this headline">¶</a></h3>
 <p>Once you are satisfied that the species can be simulated via the CLI, submit a pull
 request with your changes. The species definition will go through a review process.
@@ -993,9 +994,9 @@ using the ‘Species QC issue template’. One or more volunteers will check ite
 the checklist, until all items have been completed satisfactorily. The QC issue,
 or the pull request, may be used for review discussion. The new species will be
 merged once the checklist is completed.</p>
-</div>
-</div>
-<div class="section" id="adding-a-genetic-map">
+</section>
+</section>
+<section id="adding-a-genetic-map">
 <h2>Adding a genetic map<a class="headerlink" href="#adding-a-genetic-map" title="Permalink to this headline">¶</a></h2>
 <p>Some species have sub-chromosomal recombination maps available. They can be added to
 <cite>stdpopsim</cite> by creating a new <cite>GeneticMap</cite> object and providing a formatted file
@@ -1048,8 +1049,8 @@ system, the following can instead be used:</p>
 <p>Once all this is done, submit a PR containing the code changes and wait for directions
 on whom to send the compressed archive of genetic maps to (currently Andrew Kern is the
 primary uploader but please wait to send files to him until directed).</p>
-</div>
-<div class="section" id="lifting-over-a-genetic-map">
+</section>
+<section id="lifting-over-a-genetic-map">
 <h2>Lifting over a genetic map<a class="headerlink" href="#lifting-over-a-genetic-map" title="Permalink to this headline">¶</a></h2>
 <p>Existing genetic maps will need to be lifted over to a new assembly, if and when the
 current assembly is updated in <cite>stdpopsim</cite>. This process can be partially automated by running
@@ -1119,8 +1120,8 @@ compared to that shown above) using the following command:</p>
     --retainIntermediates
 </pre></div>
 </div>
-</div>
-<div class="section" id="coding-standards">
+</section>
+<section id="coding-standards">
 <h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this headline">¶</a></h2>
 <p>To ensure that the code in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is as readable as possible
 and follows a reasonably uniform style, we require that all code follows
@@ -1128,8 +1129,8 @@ the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008
 Lines of code should be no more than 89 characters.
 Conformance to this style is checked as part of the Continuous Integration
 testing suite.</p>
-</div>
-<div class="section" id="naming-conventions">
+</section>
+<section id="naming-conventions">
 <span id="sec-development-naming-conventions"></span><h2>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h2>
 <p>To ensure uniformity in naming schemes across objects in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>
 we have strict conventions for species, genetic maps, and demographic
@@ -1149,8 +1150,8 @@ where the descriptive text is meant to capture something about the model
 is the number of populations implemented in the model (not necessarily the number
 from which samples are drawn). For author initial we will use a single letter, the 1st,
 until an ID collision, in which case we will include the 2nd letter, and so forth.</p>
-</div>
-<div class="section" id="unit-tests">
+</section>
+<section id="unit-tests">
 <h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
 <p>All code added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should have
 <a class="reference external" href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a>. These are typically
@@ -1185,8 +1186,8 @@ exec git diff-index --check --cached $against --
 </pre></div>
 </div>
 <p>Finally, rename <code class="docutils literal notranslate"><span class="pre">pre-commit.sample</span></code> to simply <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code></p>
-</div>
-<div class="section" id="documentation">
+</section>
+<section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>Documentation is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>
 markup and the <a class="reference external" href="http://www.sphinx-doc.org/en/master/">sphinx</a> documentation system.
@@ -1197,8 +1198,8 @@ HTML output in the <code class="docutils literal notranslate"><span class="pre">
 <p class="admonition-title">Note</p>
 <p>You will need <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to be installed for the build to work.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

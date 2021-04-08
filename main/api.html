@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>API &mdash; stdpopsim 0.1.1 documentation</title>
@@ -84,7 +85,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -167,9 +168,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="api">
+  <section id="api">
 <span id="sec-api"></span><h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="species-definitions">
+<section id="species-definitions">
 <span id="sec-api-species-definitions"></span><h2>Species definitions<a class="headerlink" href="#species-definitions" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> contains a large number of species and simulation
 model definitions, which are built using a number of classes defined here.
@@ -530,8 +531,8 @@ of the instance variables.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="demographic-models">
+</section>
+<section id="demographic-models">
 <h2>Demographic Models<a class="headerlink" href="#demographic-models" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="stdpopsim.DemographicModel">
@@ -610,8 +611,8 @@ population (default = 0).</p></li>
 
 </dd></dl>
 
-</div>
-<div class="section" id="generic-models">
+</section>
+<section id="generic-models">
 <span id="sec-api-generic-models"></span><h2>Generic models<a class="headerlink" href="#generic-models" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> contains simulation models from the literature
 that are defined for particular species. It is also useful to be able
@@ -667,8 +668,8 @@ as this is the ancestral population.</p>
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="simulation-engines">
+</section>
+<section id="simulation-engines">
 <span id="sec-api-simulation-engines"></span><h2>Simulation Engines<a class="headerlink" href="#simulation-engines" title="Permalink to this headline">¶</a></h2>
 <p>Support for additional simulation engines can be implemented by subclassing
 the abstract <a class="reference internal" href="#stdpopsim.Engine" title="stdpopsim.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> class, and registering an instance of the
@@ -802,7 +803,7 @@ See msprime API documentation for details.</p></li>
 changes the simulation model to the new model at the time specified.</p></li>
 <li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">end_time=0</span></code> is passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.simulate()</span></code>
 to initialise the simulation and then immediately return.</p></li>
-<li><p><strong>**kwargs</strong> – Further arguments passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.simulate()</span></code></p></li>
+<li><p><strong>**kwargs</strong> – Further arguments passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.sim_ancestry()</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -883,8 +884,8 @@ simulation.</p></li>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -82,7 +82,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -284,8 +284,15 @@
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">},</span>
         <span class="p">)</span>
     <span class="p">]</span>
+
     <span class="c1"># We default to the first model in the list.</span>
-    <span class="n">supported_models</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hudson&quot;</span><span class="p">,</span> <span class="s2">&quot;dtwf&quot;</span><span class="p">,</span> <span class="s2">&quot;smc&quot;</span><span class="p">,</span> <span class="s2">&quot;smc_prime&quot;</span><span class="p">]</span>
+    <span class="n">model_class_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;hudson&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">StandardCoalescent</span><span class="p">,</span>
+        <span class="s2">&quot;dtwf&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">DiscreteTimeWrightFisher</span><span class="p">,</span>
+        <span class="s2">&quot;smc&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SmcApproxCoalescent</span><span class="p">,</span>
+        <span class="s2">&quot;smc_prime&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SmcPrimeApproxCoalescent</span><span class="p">,</span>
+    <span class="p">}</span>
+
     <span class="n">model_citations</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;dtwf&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
@@ -296,6 +303,46 @@
             <span class="p">)</span>
         <span class="p">]</span>
     <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">supported_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_convert_model_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_str</span><span class="p">,</span> <span class="n">model_changes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the specified model specification into a form suitable</span>
+<span class="sd">        for sim_ancestry. The model param is a string or None. The</span>
+<span class="sd">        model_changes is either None or list of (time, model_str) tuples.</span>
+<span class="sd">        Also return the appropriate extra citations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">citations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">model_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_str</span> <span class="o">=</span> <span class="s2">&quot;hudson&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">model_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">model_str</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">model_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
+                <span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">model_str</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">model_changes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_str</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">last_t</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">last_model</span> <span class="o">=</span> <span class="n">model_str</span>
+            <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model_changes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
+                    <span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
+                <span class="n">duration</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">last_t</span>
+                <span class="n">model_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="p">[</span><span class="n">last_model</span><span class="p">](</span><span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">))</span>
+                <span class="n">last_model</span> <span class="o">=</span> <span class="n">model</span>
+                <span class="n">last_t</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="n">model_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="p">[</span><span class="n">last_model</span><span class="p">](</span><span class="n">duration</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_list</span>
+
+        <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">citations</span>
 
 <div class="viewcode-block" id="_MsprimeEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -324,24 +371,11 @@
 <span class="sd">        :param dry_run: If True, ``end_time=0`` is passed to :meth:`msprime.simulate()`</span>
 <span class="sd">            to initialise the simulation and then immediately return.</span>
 <span class="sd">        :type dry_run: bool</span>
-<span class="sd">        :param \\**kwargs: Further arguments passed to :meth:`msprime.simulate()`</span>
+<span class="sd">        :param \\**kwargs: Further arguments passed to :meth:`msprime.sim_ancestry()`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">msprime_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">msprime_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">msprime_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">msprime_model</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">msprime_model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">msprime_model</span><span class="p">])</span>
 
-        <span class="k">if</span> <span class="n">msprime_change_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">msprime_model</span> <span class="o">=</span> <span class="p">[</span><span class="n">msprime_model</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">msprime_change_model</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-                <span class="n">msprime_model</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
-                <span class="k">if</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">citations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_model_spec</span><span class="p">(</span><span class="n">msprime_model</span><span class="p">,</span> <span class="n">msprime_change_model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">citations</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s2">&quot;random_seed&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -362,7 +396,7 @@
             <span class="n">demography</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
             <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">model</span><span class="o">=</span><span class="n">msprime_model</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
             <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">dry_run</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
