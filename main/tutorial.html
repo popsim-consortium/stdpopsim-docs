@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Tutorials &mdash; stdpopsim 0.1.1 documentation</title>
@@ -86,7 +85,7 @@
               
             
             
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -221,7 +220,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="tutorials">
+  <div class="section" id="tutorials">
 <span id="sec-tutorial"></span><h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
 <p>There are two main ways of accessing the resources of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package
 that will be detailed in this tutorial. The first is via the command line
@@ -247,19 +246,19 @@ and the demographic model determines how many populations can be sampled from.
 Currently, the two choices of simulation engine are <code class="docutils literal notranslate"><span class="pre">msprime</span></code> and <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>.
 Below are examples of making these choices in various contexts,
 using both CLI and python interfaces.</p>
-<section id="running-stdpopsim-with-the-command-line-interface-cli">
+<div class="section" id="running-stdpopsim-with-the-command-line-interface-cli">
 <span id="sec-cli-tute"></span><h2>Running <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> with the command-line interface (CLI)<a class="headerlink" href="#running-stdpopsim-with-the-command-line-interface-cli" title="Permalink to this headline">¶</a></h2>
 <p>In order to use the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> CLI the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package must be
 installed (see <a class="reference internal" href="installation.html#sec-installation"><span class="std std-ref">Installation</span></a>). The CLI provides access
 to the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">catalog</span></a> of models that have already been implemented
 by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.</p>
-<section id="a-first-simulation">
+<div class="section" id="a-first-simulation">
 <h3>A first simulation<a class="headerlink" href="#a-first-simulation" title="Permalink to this headline">¶</a></h3>
 <p>As a first step, we’ll use the CLI built-in help
 to build up to a realistic coalescent simulation of some copies of
 human chromosome 22 with the HapMap genetic map,
 and a published demographic model.</p>
-<section id="choose-a-species-and-a-contig">
+<div class="section" id="choose-a-species-and-a-contig">
 <h4>Choose a species and a contig<a class="headerlink" href="#choose-a-species-and-a-contig" title="Permalink to this headline">¶</a></h4>
 <p>The first step for using the CLI is to select the species that
 you are interested in simulating data for. In order to see which species are
@@ -378,8 +377,8 @@ tree-sequence formatted output should be written to the file <code class="docuti
 to file or to use the <code class="docutils literal notranslate"><span class="pre">-o/--output</span></code> option. If you do not, the
 binary output may mess up your terminal session.</p>
 </div>
-</section>
-<section id="choose-a-model-and-a-sampling-scheme">
+</div>
+<div class="section" id="choose-a-model-and-a-sampling-scheme">
 <h4>Choose a model and a sampling scheme<a class="headerlink" href="#choose-a-model-and-a-sampling-scheme" title="Permalink to this headline">¶</a></h4>
 <p>Next, suppose we want to use a specific demographic model. We look up the available models
 using the <code class="docutils literal notranslate"><span class="pre">--help-models</span></code> flag (here, truncated for space):</p>
@@ -474,8 +473,8 @@ the <code class="docutils literal notranslate"><span class="pre">-l</span></code
 </div>
 <p>On running these commands, the CLI also outputs the relevant citations for both
 the simulator used and the resources used for simulation scenario.</p>
-</section>
-<section id="convert-output-to-vcf">
+</div>
+<div class="section" id="convert-output-to-vcf">
 <span id="sec-cli-vcf-output"></span><h4>Convert output to VCF<a class="headerlink" href="#convert-output-to-vcf" title="Permalink to this headline">¶</a></h4>
 <p>The output from a <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> simulation is a <em>tree sequence</em>,
 a compact and efficient format for storing both genealogies and genome sequence.
@@ -510,9 +509,9 @@ but increases time required for processing:</p>
 <span class="go">-rw-r--r-- 1 peter peter  72M Apr  3 10:50 foo.vcf.gz</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="using-the-slim-simulation-engine">
+</div>
+</div>
+<div class="section" id="using-the-slim-simulation-engine">
 <h3>Using the SLiM simulation engine<a class="headerlink" href="#using-the-slim-simulation-engine" title="Permalink to this headline">¶</a></h3>
 <p>The default “simulation engine” -
 i.e., the program that actually does the simulating -
@@ -521,7 +520,7 @@ a coalescent simulator.
 However, it is also possible to swap this out for
 <a class="reference external" href="https://messerlab.org/slim/">SLiM</a>,
 a forwards-time, individual-based simulator.</p>
-<section id="specifying-the-engine">
+<div class="section" id="specifying-the-engine">
 <h4>Specifying the engine<a class="headerlink" href="#specifying-the-engine" title="Permalink to this headline">¶</a></h4>
 <p>Using SLiM is as easy as passing the <code class="docutils literal notranslate"><span class="pre">--engine/-e</span></code> flag
 (we didn’t do this above, so it used the default engine, msprime).
@@ -536,8 +535,8 @@ SLiM simulates diploid individuals, but sample sizes are in numbers of chromosom
 so if you ask for an odd number, it will be rounded up to an even number.
 <strong>But:</strong> this simulation can take quite a while to run,
 so before you try that command out, <strong>read on!</strong></p>
-</section>
-<section id="the-scaling-factor">
+</div>
+<div class="section" id="the-scaling-factor">
 <span id="sec-slim-scaling-factor"></span><h4>The scaling factor<a class="headerlink" href="#the-scaling-factor" title="Permalink to this headline">¶</a></h4>
 <p>However, even with only 5% of a chromosome,
 that is a pretty big simulation, due to the large number of individuals
@@ -570,13 +569,13 @@ This is particularly true in simulations with large amounts of selection.
 See the SLiM manual and/or
 <a class="reference external" href="https://www.genetics.org/content/197/1/221.short">Urrichio &amp; Hernandez (2014)</a>
 for more discussion.</p>
-</section>
-</section>
-<section id="debugging-output-from-slim">
+</div>
+</div>
+<div class="section" id="debugging-output-from-slim">
 <h3>Debugging output from SLiM<a class="headerlink" href="#debugging-output-from-slim" title="Permalink to this headline">¶</a></h3>
 <p>Next we’ll look at running a different model with SLiM,
 but getting some sanity check output along the way.</p>
-<section id="choose-a-species-drosophila-melanogaster">
+<div class="section" id="choose-a-species-drosophila-melanogaster">
 <h4>Choose a species: Drosophila melanogaster<a class="headerlink" href="#choose-a-species-drosophila-melanogaster" title="Permalink to this headline">¶</a></h4>
 <p>Perusing the <cite>Catalog &lt;sec_catalog&gt;</cite>,
 we see that to simulate copies of chromosome arm 2L
@@ -624,10 +623,10 @@ as would be for instance if we had population sizes of 1 or 2 individuals.
 However, extensive testing would need to be done to find out
 if data produced with such an extreme scaling factor
 actually resembles the data that would be produced without rescaling.</p>
-</section>
-</section>
-</section>
-<section id="running-stdpopsim-with-the-python-interface-api">
+</div>
+</div>
+</div>
+<div class="section" id="running-stdpopsim-with-the-python-interface-api">
 <span id="sec-python-tute"></span><h2>Running stdpopsim with the Python interface (API)<a class="headerlink" href="#running-stdpopsim-with-the-python-interface-api" title="Permalink to this headline">¶</a></h2>
 <p>Nearly all the functionality of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is available through the CLI,
 but for complex situations it may be desirable to use python.
@@ -636,11 +635,11 @@ using the <a class="reference external" href="https://tskit.readthedocs.io">tski
 with tree sequences.
 In order to use the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> API the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package must be
 installed (see <a class="reference internal" href="installation.html#sec-installation"><span class="std std-ref">Installation</span></a>).</p>
-<section id="running-a-published-model">
+<div class="section" id="running-a-published-model">
 <span id="sec-tutorial-existing-models"></span><h3>Running a published model<a class="headerlink" href="#running-a-published-model" title="Permalink to this headline">¶</a></h3>
 <p>The first example uses a mostly default genome
 with a published demographic model.</p>
-<section id="pick-a-species-and-a-contig">
+<div class="section" id="pick-a-species-and-a-contig">
 <h4>Pick a species and a contig<a class="headerlink" href="#pick-a-species-and-a-contig" title="Permalink to this headline">¶</a></h4>
 <p>First, we will pick a species (humans), contig (chromosome 22),
 and genetic map (a flat map, the default):</p>
@@ -650,8 +649,8 @@ and genetic map (a flat map, the default):</p>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">)</span>  <span class="c1"># default is a flat genetic map</span>
 </pre></div>
 </div>
-</section>
-<section id="choose-a-demographic-model">
+</div>
+<div class="section" id="choose-a-demographic-model">
 <h4>Choose a demographic model<a class="headerlink" href="#choose-a-demographic-model" title="Permalink to this headline">¶</a></h4>
 <p>Now, we need a demographic model.
 In <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> there are two types of model:
@@ -691,8 +690,8 @@ and all three can be sampled from.
 The number of “sampling” populations could be smaller than the number of populations,
 since some models have ancient populations which are currently not allowed to be
 sampled from - but that is not the case in this model.</p>
-</section>
-<section id="choose-a-sampling-scheme-and-simulate">
+</div>
+<div class="section" id="choose-a-sampling-scheme-and-simulate">
 <h4>Choose a sampling scheme and simulate<a class="headerlink" href="#choose-a-sampling-scheme-and-simulate" title="Permalink to this headline">¶</a></h4>
 <p>The final ingredient we need before simulating
 is a specification of the number of samples from each population.
@@ -730,9 +729,9 @@ so we use the json module to easily parse it:</p>
 <span class="c1"># The tree sequence has 10 samples from population 2, which is CHB.</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="running-a-generic-model">
+</div>
+</div>
+<div class="section" id="running-a-generic-model">
 <span id="sec-tutorial-generic-models"></span><h3>Running a generic model<a class="headerlink" href="#running-a-generic-model" title="Permalink to this headline">¶</a></h3>
 <p>Next, we will simulate using a “generic” model,
 with piecewise constant population size.
@@ -741,7 +740,7 @@ we will simulate a small portion of human chromosome 2,
 again with a flat recombination map,
 using the current best estimate of the human
 effective population size from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
-<section id="choose-a-species">
+<div class="section" id="choose-a-species">
 <h4>Choose a species<a class="headerlink" href="#choose-a-species" title="Permalink to this headline">¶</a></h4>
 <p>Although the model is generic, we still need a species,
 to get contig information.
@@ -752,8 +751,8 @@ Again, we’ll use <cite>Homo sapiens</cite>, which has the id “HomSap”.
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="choose-a-contig-and-recombination-map">
+</div>
+<div class="section" id="choose-a-contig-and-recombination-map">
 <h4>Choose a contig and recombination map<a class="headerlink" href="#choose-a-contig-and-recombination-map" title="Permalink to this headline">¶</a></h4>
 <p>Next, we set the contig information, to 5% of chromosome 2,
 about 12Mb. Again, you could use a fraction of any of the
@@ -768,8 +767,8 @@ larger contigs will take longer to simulate.</p>
 It is not an integer because msprime works in continuous genomic coordinates.
 Again, since we didn’t specify a genetic map, by default
 a “flat” map of constant recombination rate is used.</p>
-</section>
-<section id="set-up-the-generic-model">
+</div>
+<div class="section" id="set-up-the-generic-model">
 <h4>Set up the generic model<a class="headerlink" href="#set-up-the-generic-model" title="Permalink to this headline">¶</a></h4>
 <p>Next, we set the model to be the generic piecewise constant size model, using the
 predefined human effective population size (see <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>).
@@ -780,8 +779,8 @@ single population of constant over all time.</p>
 </div>
 <p>Each species has a “default” population size, <code class="docutils literal notranslate"><span class="pre">species.population_size</span></code>,
 which for humans is 10,000.</p>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h4>Choose a sampling scheme, and simulate<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>Next, we set the number of samples and set the simulation engine.
 In this case we will simulate genomes of 10 samples
@@ -798,8 +797,8 @@ The simulation results are recorded in a tree sequence object
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="sanity-check-the-tree-sequence-output">
+</div>
+<div class="section" id="sanity-check-the-tree-sequence-output">
 <h4>Sanity check the tree sequence output<a class="headerlink" href="#sanity-check-the-tree-sequence-output" title="Permalink to this headline">¶</a></h4>
 <p>Now, we do some simple checks that our simulation worked with
 <a class="reference external" href="https://tskit.readthedocs.io">tskit</a>.</p>
@@ -820,8 +819,8 @@ on which there were 18187 mutations
 and trees will be slightly different for you). Try running the simulation again, and notice
 that the number of samples and populations stays the same, while the number of mutations
 and trees changes.</p>
-</section>
-<section id="output-to-vcf">
+</div>
+<div class="section" id="output-to-vcf">
 <h4>Output to VCF<a class="headerlink" href="#output-to-vcf" title="Permalink to this headline">¶</a></h4>
 <p>In addition to working directly with the simulated tree sequence, we can also output
 other common formats used for population genetics analyses.
@@ -846,9 +845,9 @@ See the tskit documentation (<a class="reference external" href="https://tskit.d
 2   992     .       0       1       .       PASS    .       GT      1       1       0       1       0       1       1       1       0       1
 </pre></div>
 </div>
-</section>
-</section>
-<section id="using-the-slim-engine">
+</div>
+</div>
+<div class="section" id="using-the-slim-engine">
 <h3>Using the SLiM engine<a class="headerlink" href="#using-the-slim-engine" title="Permalink to this headline">¶</a></h3>
 <p>Above, we used the coalescent simulator <code class="docutils literal notranslate"><span class="pre">msprime</span></code>
 as the simulation engine, which is in fact the default.
@@ -859,14 +858,14 @@ You may also want to install the
 <a class="reference external" href="https://pyslim.readthedocs.io/">pyslim</a> package
 to extract the additional SLiM-specific information
 in the tree sequences that are produced.</p>
-<section id="an-example-simulation">
+<div class="section" id="an-example-simulation">
 <h4>An example simulation<a class="headerlink" href="#an-example-simulation" title="Permalink to this headline">¶</a></h4>
 <p>The stdpopsim tool is designed so that different simulation engines
 are more or less exchangeable, so that to run an equivalent
 simulation with SLiM instead of msprime only requires specifying
 SLiM as the <em>simulation engine</em>.
 Here is a simple example.</p>
-<section id="choose-the-species-contig-and-recombination-map">
+<div class="section" id="choose-the-species-contig-and-recombination-map">
 <h5>Choose the species, contig, and recombination map<a class="headerlink" href="#choose-the-species-contig-and-recombination-map" title="Permalink to this headline">¶</a></h5>
 <p>First, let’s set up a simulation of 10% of human chromosome 22
 with a flat recombination map,
@@ -886,8 +885,8 @@ it doesn’t affect this very much either).</p>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="choose-the-simulation-engine">
+</div>
+<div class="section" id="choose-the-simulation-engine">
 <h5>Choose the simulation engine<a class="headerlink" href="#choose-the-simulation-engine" title="Permalink to this headline">¶</a></h5>
 <p>This time, we choose the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine,
 but otherwise, things work pretty much just as before.</p>
@@ -902,13 +901,13 @@ then you will need to specify the <code class="docutils literal notranslate"><sp
 To get an example that runs quickly,
 we have set the <em>scaling factor</em>,
 described in more detail above (<cite>sec_slim_scaling_factor</cite>),</p>
-</section>
-</section>
-<section id="other-slim-options">
+</div>
+</div>
+<div class="section" id="other-slim-options">
 <h4>Other SLiM options<a class="headerlink" href="#other-slim-options" title="Permalink to this headline">¶</a></h4>
 <p>Besides rescaling, there are a few additional options
 specific to the SLiM engine, discussed here.</p>
-<section id="the-slim-burn-in">
+<div class="section" id="the-slim-burn-in">
 <h5>The SLiM burn-in<a class="headerlink" href="#the-slim-burn-in" title="Permalink to this headline">¶</a></h5>
 <p>Another option specific to the SLiM engine is <code class="docutils literal notranslate"><span class="pre">slim_burn_in</span></code>:
 the amount of time before the first demographic model change that SLiM begins simulating for,
@@ -967,8 +966,8 @@ we’d do the following
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="outputting-the-slim-script">
+</div>
+<div class="section" id="outputting-the-slim-script">
 <h5>Outputting the SLiM script<a class="headerlink" href="#outputting-the-slim-script" title="Permalink to this headline">¶</a></h5>
 <p>One final option that could be useful
 is that you can ask stdpopsim to output the SLiM model code directly,
@@ -1047,13 +1046,13 @@ However, for many analyses you will probably want to extract samples
 of realistic size for real data.
 Again, methods to do this are discussed in the
 <a class="reference external" href="https://pyslim.readthedocs.io/en/latest/tutorial.html#simplification">pyslim documentation</a>.</p>
-</section>
-</section>
-</section>
-</section>
-<section id="example-analyses-with-stdpopsim">
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="example-analyses-with-stdpopsim">
 <span id="sec-tute-analyses"></span><h2>Example analyses with <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code><a class="headerlink" href="#example-analyses-with-stdpopsim" title="Permalink to this headline">¶</a></h2>
-<section id="calculating-genetic-divergence">
+<div class="section" id="calculating-genetic-divergence">
 <span id="sec-tute-divergence"></span><h3>Calculating genetic divergence<a class="headerlink" href="#calculating-genetic-divergence" title="Permalink to this headline">¶</a></h3>
 <p>Next we’ll give an example of computing some summaries of the simulation output.
 The <a class="reference external" href="https://tskit.readthedocs.io/en/latest/">tskit</a>  documentation
@@ -1061,7 +1060,7 @@ has details on many more statistics that you can compute using the tree sequence
 We will simulate some samples of human chromosomes
 from different populations,
 and then estimate the genetic divergence between each population pair.</p>
-<section id="simulating-the-dataset">
+<div class="section" id="simulating-the-dataset">
 <h4>1. Simulating the dataset<a class="headerlink" href="#simulating-the-dataset" title="Permalink to this headline">¶</a></h4>
 <p>First, let’s use the <code class="docutils literal notranslate"><span class="pre">--help-models</span></code> option to see the selection of demographic
 models available to us:</p>
@@ -1398,7 +1397,7 @@ Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
@@ -1408,8 +1407,8 @@ Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s <span class="m">13</span> -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 <span class="m">4</span> <span class="m">4</span> <span class="m">4</span> <span class="m">4</span>
 </pre></div>
 </div>
-</section>
-<section id="calculating-divergences">
+</div>
+<div class="section" id="calculating-divergences">
 <h4>2. Calculating divergences<a class="headerlink" href="#calculating-divergences" title="Permalink to this headline">¶</a></h4>
 <p>We should now have a file called <code class="docutils literal notranslate"><span class="pre">afr-america-chr1.trees</span></code>.
 Our work with <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is done; we’ll now switch to a Python console and import
@@ -1474,8 +1473,8 @@ and the mutation rate is <span class="math notranslate nohighlight">\(\mu = 1.29
 (shown in the output of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, or found in python with <code class="docutils literal notranslate"><span class="pre">contig.mutation_rate</span></code>),
 so we expect divergence values to be of order of magnitude <span class="math notranslate nohighlight">\(2 N_e \mu = 0.000254\)</span>,
 slightly higher because of population structure.</p>
-</section>
-<section id="plotting-the-divergences">
+</div>
+<div class="section" id="plotting-the-divergences">
 <h4>3. Plotting the divergences<a class="headerlink" href="#plotting-the-divergences" title="Permalink to this headline">¶</a></h4>
 <p>The output lists the divergences of all population pairs that are specified in
 <code class="docutils literal notranslate"><span class="pre">indexes</span></code>, in the same order.
@@ -1513,15 +1512,15 @@ estimates were obtained when Asian (ASI) samples were compared with themselves.
 However, the overwhelming sameness of the sample chromosomes is also evident:
 on average, any two sample chromosomes differ at less than 0.04% of positions,
 regardless of the populations they come from.</p>
-</section>
-</section>
-<section id="calculating-the-allele-frequency-spectrum">
+</div>
+</div>
+<div class="section" id="calculating-the-allele-frequency-spectrum">
 <span id="sec-tute-sfs"></span><h3>Calculating the allele frequency spectrum<a class="headerlink" href="#calculating-the-allele-frequency-spectrum" title="Permalink to this headline">¶</a></h3>
 <p>Next, we will simulate some samples of chromosomes from different populations of
 a non-human (finally!), <em>Arabidopsis thaliana</em>,
 and analyse the allele frequency spectrum (AFS) for each population
 (also called the “site frequency spectrum, or SFS).</p>
-<section id="id3">
+<div class="section" id="id3">
 <h4>1. Simulating the dataset<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p>This time, we will use the <a class="reference internal" href="api.html#stdpopsim.IsolationWithMigration" title="stdpopsim.IsolationWithMigration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stdpopsim.IsolationWithMigration()</span></code></a> model.
 Since this is a generic model that can be used for any species, we must use the Python
@@ -1562,8 +1561,8 @@ simulation using a random seed:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="calculating-the-afs">
+</div>
+<div class="section" id="calculating-the-afs">
 <h4>2. Calculating the AFS<a class="headerlink" href="#calculating-the-afs" title="Permalink to this headline">¶</a></h4>
 <p>Recall that the <em>allele frequency spectrum</em> (AFS) summarises the distribution of allele
 frequencies in a given sample.
@@ -1628,8 +1627,8 @@ You might also wish to check that the total sum of sites is the sum of the AFS e
 <span class="c1"># (8917.0, 8917.0, 8917)</span>
 </pre></div>
 </div>
-</section>
-<section id="plotting-the-afs">
+</div>
+<div class="section" id="plotting-the-afs">
 <h4>3. Plotting the AFS<a class="headerlink" href="#plotting-the-afs" title="Permalink to this headline">¶</a></h4>
 <p>Here is some more advanced code that compares the estimated AFS from each population.
 It relies on the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> packages.
@@ -1657,10 +1656,10 @@ most notably a larger number of singletons in population 0
 and a larger number of fixed and absent alleles in population 1.
 This makes sense given the demography we have specified:
 population 1 has had a much more extreme population size reduction.</p>
-</section>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
+</div>
 
 
            </div>

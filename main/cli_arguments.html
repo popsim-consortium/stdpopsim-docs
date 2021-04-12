@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Command-line options &mdash; stdpopsim 0.1.1 documentation</title>
@@ -85,7 +84,7 @@
               
             
             
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -250,7 +249,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="command-line-options">
+  <div class="section" id="command-line-options">
 <span id="sec-cli-args"></span><h1>Command-line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h1>
 <p><p>Command line interface for stdpopsim.</p>
 </p>
@@ -262,15 +261,15 @@
                  <span class="o">...</span>
 </pre></div>
 </div>
-<section id="Positional Arguments">
+<div class="section" id="Positional Arguments">
 <h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>subcommand</kbd></dt>
 <dd><p>Possible choices: AnaPla, ChlRei, HelMel, AnoGam, HomSap, BosTau, EscCol, AedAeg, StrAga, AraTha, PonAbe, CanFam, AnoCar, DroMel, DroSec, download-genetic-maps</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments">
+</div>
+<div class="section" id="Named Arguments">
 <h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>-V, --version</kbd></dt>
@@ -292,8 +291,8 @@
 <p>Default: “msprime”</p>
 </dd>
 </dl>
-</section>
-<section id="msprime specific parameters">
+</div>
+<div class="section" id="msprime specific parameters">
 <h2>msprime specific parameters<a class="headerlink" href="#msprime specific parameters" title="Permalink to this headline">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>--msprime-model</kbd></dt>
@@ -306,8 +305,8 @@
 <p>Default: []</p>
 </dd>
 </dl>
-</section>
-<section id="SLiM specific parameters">
+</div>
+<div class="section" id="SLiM specific parameters">
 <h2>SLiM specific parameters<a class="headerlink" href="#SLiM specific parameters" title="Permalink to this headline">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>--slim-path</kbd></dt>
@@ -326,10 +325,10 @@
 <p>Default: 10</p>
 </dd>
 </dl>
-</section>
-<section id="Sub-commands:">
+</div>
+<div class="section" id="Sub-commands:">
 <h2>Sub-commands:<a class="headerlink" href="#Sub-commands:" title="Permalink to this headline">¶</a></h2>
-<section id="AnaPla">
+<div class="section" id="AnaPla">
 <h3>AnaPla<a class="headerlink" href="#AnaPla" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Anas platyrhynchos using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -347,15 +346,15 @@ Recombination rate: 1.47e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat1">
+<div class="section" id="Positional Arguments_repeat1">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat1">
+</div>
+<div class="section" id="Named Arguments_repeat1">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -395,9 +394,9 @@ Recombination rate: 1.47e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="ChlRei">
+</div>
+</div>
+<div class="section" id="ChlRei">
 <h3>ChlRei<a class="headerlink" href="#ChlRei" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Chlamydomonas reinhardtii using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -415,15 +414,15 @@ Recombination rate: 1.459e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat2">
+<div class="section" id="Positional Arguments_repeat2">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat2">
+</div>
+<div class="section" id="Named Arguments_repeat2">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -463,9 +462,9 @@ Recombination rate: 1.459e-10</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="HelMel">
+</div>
+</div>
+<div class="section" id="HelMel">
 <h3>HelMel<a class="headerlink" href="#HelMel" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Heliconius melpomene using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -483,15 +482,15 @@ Recombination rate: 4.601e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat3">
+<div class="section" id="Positional Arguments_repeat3">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat3" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat3">
+</div>
+<div class="section" id="Named Arguments_repeat3">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat3" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -531,9 +530,9 @@ Recombination rate: 4.601e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="AnoGam">
+</div>
+</div>
+<div class="section" id="AnoGam">
 <h3>AnoGam<a class="headerlink" href="#AnoGam" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Anopheles gambiae using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -551,15 +550,15 @@ Recombination rate: 1.044e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat4">
+<div class="section" id="Positional Arguments_repeat4">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat4" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat4">
+</div>
+<div class="section" id="Named Arguments_repeat4">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat4" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -600,9 +599,9 @@ Recombination rate: 1.044e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="HomSap">
+</div>
+</div>
+<div class="section" id="HomSap">
 <h3>HomSap<a class="headerlink" href="#HomSap" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Homo sapiens using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
@@ -621,15 +620,15 @@ Recombination rate: 1.205e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat5">
+<div class="section" id="Positional Arguments_repeat5">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat5" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat5">
+</div>
+<div class="section" id="Named Arguments_repeat5">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat5" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -677,9 +676,9 @@ Recombination rate: 1.205e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="BosTau">
+</div>
+</div>
+<div class="section" id="BosTau">
 <h3>BosTau<a class="headerlink" href="#BosTau" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Bos taurus using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
@@ -697,15 +696,15 @@ Recombination rate: 9.26e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat6">
+<div class="section" id="Positional Arguments_repeat6">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat6" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat6">
+</div>
+<div class="section" id="Named Arguments_repeat6">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat6" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -746,9 +745,9 @@ Recombination rate: 9.26e-09</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="EscCol">
+</div>
+</div>
+<div class="section" id="EscCol">
 <h3>EscCol<a class="headerlink" href="#EscCol" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Escherichia coli using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -766,15 +765,15 @@ Recombination rate: 0</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat7">
+<div class="section" id="Positional Arguments_repeat7">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat7" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat7">
+</div>
+<div class="section" id="Named Arguments_repeat7">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat7" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -814,9 +813,9 @@ Recombination rate: 0</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="AedAeg">
+</div>
+</div>
+<div class="section" id="AedAeg">
 <h3>AedAeg<a class="headerlink" href="#AedAeg" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Aedes aegypti using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
@@ -834,15 +833,15 @@ Recombination rate: 0.2782</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat8">
+<div class="section" id="Positional Arguments_repeat8">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat8" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat8">
+</div>
+<div class="section" id="Named Arguments_repeat8">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat8" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -882,9 +881,9 @@ Recombination rate: 0.2782</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="StrAga">
+</div>
+</div>
+<div class="section" id="StrAga">
 <h3>StrAga<a class="headerlink" href="#StrAga" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Streptococcus agalactiae using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -902,15 +901,15 @@ Recombination rate: 0</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat9">
+<div class="section" id="Positional Arguments_repeat9">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat9" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat9">
+</div>
+<div class="section" id="Named Arguments_repeat9">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat9" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -950,9 +949,9 @@ Recombination rate: 0</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="AraTha">
+</div>
+</div>
+<div class="section" id="AraTha">
 <h3>AraTha<a class="headerlink" href="#AraTha" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Arabidopsis thaliana using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -971,15 +970,15 @@ Recombination rate: 8.029e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat10">
+<div class="section" id="Positional Arguments_repeat10">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat10" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat10">
+</div>
+<div class="section" id="Named Arguments_repeat10">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat10" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -1027,9 +1026,9 @@ Recombination rate: 8.029e-10</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="PonAbe">
+</div>
+</div>
+<div class="section" id="PonAbe">
 <h3>PonAbe<a class="headerlink" href="#PonAbe" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Pongo abelii using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
@@ -1048,15 +1047,15 @@ Recombination rate: 5.65e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat11">
+<div class="section" id="Positional Arguments_repeat11">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat11" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat11">
+</div>
+<div class="section" id="Named Arguments_repeat11">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat11" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -1104,9 +1103,9 @@ Recombination rate: 5.65e-09</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="CanFam">
+</div>
+</div>
+<div class="section" id="CanFam">
 <h3>CanFam<a class="headerlink" href="#CanFam" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Canis familiaris using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -1125,15 +1124,15 @@ Recombination rate: 9.506e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat12">
+<div class="section" id="Positional Arguments_repeat12">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat12" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat12">
+</div>
+<div class="section" id="Named Arguments_repeat12">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat12" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -1180,9 +1179,9 @@ Recombination rate: 9.506e-09</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="AnoCar">
+</div>
+</div>
+<div class="section" id="AnoCar">
 <h3>AnoCar<a class="headerlink" href="#AnoCar" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Anolis carolinensis using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -1200,15 +1199,15 @@ Recombination rate: 1e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat13">
+<div class="section" id="Positional Arguments_repeat13">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat13" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat13">
+</div>
+<div class="section" id="Named Arguments_repeat13">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat13" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -1248,9 +1247,9 @@ Recombination rate: 1e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="DroMel">
+</div>
+</div>
+<div class="section" id="DroMel">
 <h3>DroMel<a class="headerlink" href="#DroMel" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Drosophila melanogaster using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -1269,15 +1268,15 @@ Recombination rate: 2.104e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat14">
+<div class="section" id="Positional Arguments_repeat14">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat14" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat14">
+</div>
+<div class="section" id="Named Arguments_repeat14">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat14" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -1325,9 +1324,9 @@ Recombination rate: 2.104e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="DroSec">
+</div>
+</div>
+<div class="section" id="DroSec">
 <h3>DroSec<a class="headerlink" href="#DroSec" title="Permalink to this headline">¶</a></h3>
 <p>Run simulations for Drosophila sechellia using up-to-date genome
 information, genetic maps and simulation models from the literature.
@@ -1345,15 +1344,15 @@ Recombination rate: 2.165e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat15">
+<div class="section" id="Positional Arguments_repeat15">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat15" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two samples must be specified. The number of arguments that will be accepted depends on the simulation model that is specified: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
-</section>
-<section id="Named Arguments_repeat15">
+</div>
+<div class="section" id="Named Arguments_repeat15">
 <h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat15" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
@@ -1393,16 +1392,16 @@ Recombination rate: 2.165e-08</p>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
 </dl>
-</section>
-</section>
-<section id="download-genetic-maps">
+</div>
+</div>
+<div class="section" id="download-genetic-maps">
 <h3>download-genetic-maps<a class="headerlink" href="#download-genetic-maps" title="Permalink to this headline">¶</a></h3>
 <p>Download genetic maps and store them in the cache directory. Maps are downloaded regardless of whether they are already in the cache or not. Please use the –cache-dir option to download maps to a specific directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">download</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
                                 <span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="p">[</span><span class="n">genetic_maps</span> <span class="p">[</span><span class="n">genetic_maps</span> <span class="o">...</span><span class="p">]]</span>
 </pre></div>
 </div>
-<section id="Positional Arguments_repeat16">
+<div class="section" id="Positional Arguments_repeat16">
 <h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat16" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>species</kbd></dt>
@@ -1412,10 +1411,10 @@ Recombination rate: 2.165e-08</p>
 <dd><p>If specified, download these genetic maps. If no maps are provided, download all maps for this species.</p>
 </dd>
 </dl>
-</section>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
+</div>
 
 
            </div>
