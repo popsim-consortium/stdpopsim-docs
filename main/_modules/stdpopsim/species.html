@@ -306,6 +306,7 @@
         <span class="n">genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">inclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">exclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
@@ -329,6 +330,8 @@
 <span class="sd">            same chromosome-specific mutation and recombination rates.</span>
 <span class="sd">            This option cannot currently be used in conjunction with the</span>
 <span class="sd">            ``genetic_map`` argument.</span>
+<span class="sd">        :param float mutation_rate: The per-base mutation rate. If none is given,</span>
+<span class="sd">            the mutation rate defaults to the rate specified by species chromosomes.</span>
 <span class="sd">        :param inclusion_mask: If specified, simulated genomes are subset to only</span>
 <span class="sd">            inlude regions given by the mask. The mask can be specified by the</span>
 <span class="sd">            path and file name of a bed file or as a list or array of intervals</span>
@@ -371,10 +374,13 @@
                     <span class="n">L_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span>
                     <span class="n">r_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">recombination_rate</span>
                     <span class="n">u_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">mutation_rate</span>
-            <span class="n">u</span> <span class="o">=</span> <span class="n">u_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
+            <span class="k">if</span> <span class="n">mutation_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">u_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">r_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
             <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span><span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
+                <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify sequence length for named contig&quot;</span><span class="p">)</span>
@@ -415,9 +421,12 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">exclusion_intervals</span> <span class="o">=</span> <span class="n">exclusion_mask</span>
 
+            <span class="k">if</span> <span class="n">mutation_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">mutation_rate</span>
+
             <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
                 <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span>
-                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">chrom</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
+                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
                 <span class="n">genetic_map</span><span class="o">=</span><span class="n">gm</span><span class="p">,</span>
                 <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_intervals</span><span class="p">,</span>
                 <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_intervals</span><span class="p">,</span>

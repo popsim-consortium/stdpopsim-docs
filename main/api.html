@@ -258,7 +258,7 @@ information from Ensembl</p>
 
 <dl class="py method">
 <dt id="stdpopsim.Species.get_contig">
-<code class="sig-name descname"><span class="pre">get_contig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_contig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
@@ -280,6 +280,8 @@ specific, and can be found in the <a class="reference internal" href="catalog.ht
 same chromosome-specific mutation and recombination rates.
 This option cannot currently be used in conjunction with the
 <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The per-base mutation rate. If none is given,
+the mutation rate defaults to the rate specified by species chromosomes.</p></li>
 <li><p><strong>inclusion_mask</strong> – If specified, simulated genomes are subset to only
 inlude regions given by the mask. The mask can be specified by the
 path and file name of a bed file or as a list or array of intervals
@@ -413,8 +415,8 @@ and recombination rates that are needed to simulate this region.</p>
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
-<li><p><strong>recombination_map</strong> (<em>msprime.RateMap</em>) – The recombination map for the region. See the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code> for details.</p></li>
+<li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><em>msprime.RateMap</em></a>) – The recombination map for the region. See the
+<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code></a> for details.</p></li>
 <li><p><strong>mask_intervals</strong> (<em>array-like</em><em> (</em><em>?</em><em>)</em>) – Intervals to keep in simulated tree sequence, as a list
 of (left_position, right_position), such that intervals are non-overlapping
 and in ascending order. Should have shape Nx2, where N is the number of
@@ -555,6 +557,8 @@ describe the model itself and not contain author or year information.</p></li>
 <li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Mean inter-generation interval, in years.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>, that describe the primary
 reference(s) for the model.</p></li>
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The mutation rate associated with the demographic model.
+If no mutation rate is given, the species’ default mutation rate is used.</p></li>
 </ul>
 </dd>
 </dl>

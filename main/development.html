@@ -698,6 +698,7 @@ The demographic model function should follow this format:</p>
     <span class="p">]</span>
 
     <span class="n">generation_time</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
+    <span class="n">mutation_rate</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
 
     <span class="c1"># parameter value definitions based on published values</span>
 
@@ -708,6 +709,7 @@ The demographic model function should follow this format:</p>
         <span class="n">populations</span><span class="o">=</span><span class="n">populations</span><span class="p">,</span>
         <span class="n">citations</span><span class="o">=</span><span class="n">citations</span><span class="p">,</span>
         <span class="n">generation_time</span><span class="o">=</span><span class="n">generation_time</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
         <span class="n">population_configurations</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">],</span>
         <span class="n">migration_matrix</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">],</span>
         <span class="n">demographic_events</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">],</span>
@@ -737,6 +739,10 @@ for this model. The citation object requires author, year, and doi information, 
 a specified reason for citing this model.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">generation_time</span></code>: The generation time for the species in years. If you are
 implementing a generic model, the generation time should default to 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutation_rate</span></code>: The mutation rate assumed during the inference of this demographic
+model, if a mutation rate was used. If no mutation rate is associated with this
+demographic model, which is generally uncommon but possible, depending on the
+inference method, the mutation rate should be set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 <p>Every demographic model has a few necessary features or attributes. First of all,
 demographic models are defined by the population sizes, migration rates, split and
@@ -785,6 +791,8 @@ requirements.</p>
 <span class="c1"># Zigzag_1S14</span>
 <span class="c1"># AncientEurasia_9K19</span>
 <span class="c1"># PapuansOutOfAfrica_10J19</span>
+<span class="c1"># AshkSub_7G19</span>
+<span class="c1"># OutOfAfrica_4J17</span>
 </pre></div>
 </div>
 <p>The example above lists the imported demographic models for humans.

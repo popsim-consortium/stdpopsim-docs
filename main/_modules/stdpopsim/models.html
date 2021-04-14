@@ -229,6 +229,9 @@
 <span class="sd">    :ivar citations: A list of :class:`Citation`, that describe the primary</span>
 <span class="sd">        reference(s) for the model.</span>
 <span class="sd">    :vartype citations: list of :class:`Citation`</span>
+<span class="sd">    :ivar mutation_rate: The mutation rate associated with the demographic model.</span>
+<span class="sd">        If no mutation rate is given, the species&#39; default mutation rate is used.</span>
+<span class="sd">    :vartype mutation_rate: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -246,11 +249,13 @@
         <span class="n">population_id_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">populations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">generation_time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">generation_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">mutation_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">citations</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">citations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span>
 
@@ -332,7 +337,7 @@
             <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QC model already registered for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span><span class="o">.</span><span class="n">model</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span></div>
 
 <div class="viewcode-block" id="DemographicModel.get_samples"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_samples">[docs]</a>    <span class="k">def</span> <span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

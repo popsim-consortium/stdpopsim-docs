@@ -165,6 +165,7 @@
 <span class="kn">import</span> <span class="nn">msprime</span>
 <span class="kn">import</span> <span class="nn">stdpopsim</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -270,6 +271,19 @@
                 <span class="s2">&quot;sizes 5x lower than those in Schiffels &amp; Durbin (2014). &quot;</span>
                 <span class="s2">&quot;The population sizes have now been corrected. For details see: &quot;</span>
                 <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/745&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_warn_mutation_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span>
+            <span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
+        <span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;The demographic model has mutation rate &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">, but this simulation used the &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;contig&#39;s mutation rate </span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">. Diversity levels &quot;</span>
+                <span class="s2">&quot;may be different than expected for this species. For details see &quot;</span>
+                <span class="s2">&quot;documentation at &quot;</span>
+                <span class="s2">&quot;https://stdpopsim.readthedocs.io/en/latest/tutorial.html&quot;</span>
             <span class="p">)</span></div>
 
 
@@ -386,6 +400,7 @@
 
         <span class="c1"># TODO: remove this after a release or two. See #745.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_zigzag</span><span class="p">(</span><span class="n">demographic_model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_mutation_rate_mismatch</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">)</span>
 
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">seeds</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>

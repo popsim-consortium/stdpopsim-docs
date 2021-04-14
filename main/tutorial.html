@@ -111,15 +111,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#running-stdpopsim-with-the-python-interface-api">Running stdpopsim with the Python interface (API)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-a-published-model">Running a published model</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#pick-a-species-and-a-contig">Pick a species and a contig</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#choose-a-demographic-model">Choose a demographic model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pick-a-species-and-demographic-model">Pick a species and demographic model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-up-the-contig">Set up the contig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#choose-a-sampling-scheme-and-simulate">Choose a sampling scheme and simulate</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#running-a-generic-model">Running a generic model</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#choose-a-species">Choose a species</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#choose-a-contig-and-recombination-map">Choose a contig and recombination map</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#set-up-the-generic-model">Set up the generic model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-contig-and-recombination-map">Choose a contig and recombination map</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id1">Choose a sampling scheme, and simulate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sanity-check-the-tree-sequence-output">Sanity check the tree sequence output</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#output-to-vcf">Output to VCF</a></li>
@@ -362,7 +362,9 @@ chromosome, recombination map, and number of samples.</p>
 <p>The most basic simulation we can run is to simulate two (haploid) genomes
 - i.e., two samples -
 using the species’ defaults as seen in the species help (<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">--help</span></code>).
-These defaults include constant size population and a uniform recombination map.
+These defaults include constant size population, a uniform recombination map based
+on the average recombination rate (either genome-wide or within a chromosome, if
+specified), and the mutation rate shown above.
 To save time we will specify that the simulation use
 chromosome 22, using the <code class="docutils literal notranslate"><span class="pre">-c</span></code> option. We also specify that the resulting
 tree-sequence formatted output should be written to the file <code class="docutils literal notranslate"><span class="pre">foo.ts</span></code> with the
@@ -399,7 +401,7 @@ OutOfAfrica_3G09: Three population out-of-Africa
         2: 1000 Genomes CHB (Han Chinese in Beijing, China)
 
 OutOfAfrica_2T12: Two population out-of-Africa
-     The model is derived from the Tennesen et al. analysis of the
+     The model is derived from the Tennessen et al. analysis of the
     jSFS from European Americans and African Americans. It describes
     the ancestral human population in Africa, the out of Africa event,
     and two distinct periods of subsequent European population growth
@@ -437,6 +439,16 @@ model has two populations that we can sample from
 The order of those numbers is the same as the order
 specified in the model documentation. In this case, <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">3</span></code> means
 we are simulating two African American samples and three European American samples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Many demographic models were inferred or calibrated using a mutation rate that
+differs from the cataloged species’ mutation rate. Simulations using the CLI now
+automatically use the <em>model’s</em> specified mutation rate instead of the species
+rate, so that expected levels of diversity more closely match those observed in
+the data that were used to infer the demographic model. For generic demographic
+models or those without associated mutation rates, the species mutation rate is
+used.</p>
+</div>
 <p>Now we want to add an empirical recombination map to make the simulation more
 realistic. We can look up the available recombination maps using the
 <code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> flag (here, truncated for space):</p>
@@ -582,7 +594,7 @@ we see that to simulate copies of chromosome arm 2L
 from <em>Drosophila melanogaster</em> individuals with the demographic model
 inferred by <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">Sheehan &amp; Song (2016)</a>,
 using SLiM with a (very large!) scaling factor of 1000, we could run</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel<span class="se">\</span>
 <span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span>
 </pre></div>
 </div>
@@ -639,27 +651,18 @@ installed (see <a class="reference internal" href="installation.html#sec-install
 <span id="sec-tutorial-existing-models"></span><h3>Running a published model<a class="headerlink" href="#running-a-published-model" title="Permalink to this headline">¶</a></h3>
 <p>The first example uses a mostly default genome
 with a published demographic model.</p>
-<div class="section" id="pick-a-species-and-a-contig">
-<h4>Pick a species and a contig<a class="headerlink" href="#pick-a-species-and-a-contig" title="Permalink to this headline">¶</a></h4>
-<p>First, we will pick a species (humans), contig (chromosome 22),
-and genetic map (a flat map, the default):</p>
+<div class="section" id="pick-a-species-and-demographic-model">
+<h4>Pick a species and demographic model<a class="headerlink" href="#pick-a-species-and-demographic-model" title="Permalink to this headline">¶</a></h4>
+<p>First, we will pick a species (here, humans) and the published demographic
+model to simulated under. In <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> there are two types of model: ones
+taken to match the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">demographic history reported in published papers</span></a>, and <a class="reference internal" href="api.html#sec-api-generic-models"><span class="std std-ref">“generic” models</span></a>. We’ll
+first simulate using a published model from the catalog. Let’s see what
+demographic models are available for humans:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
-<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">)</span>  <span class="c1"># default is a flat genetic map</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="choose-a-demographic-model">
-<h4>Choose a demographic model<a class="headerlink" href="#choose-a-demographic-model" title="Permalink to this headline">¶</a></h4>
-<p>Now, we need a demographic model.
-In <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> there are two types of model:
-ones taken to match the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">demographic history reported in published papers</span></a>,
-and <a class="reference internal" href="api.html#sec-api-generic-models"><span class="std std-ref">“generic” models</span></a>.
-First, we’ll simulate samples from a published model of human prehistory.
-Let’s see what demographic models are available
-for humans:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
 <span class="c1"># OutOfAfrica_3G09</span>
@@ -670,26 +673,60 @@ for humans:</p>
 <span class="c1"># Zigzag_1S14</span>
 <span class="c1"># AncientEurasia_9K19</span>
 <span class="c1"># PapuansOutOfAfrica_10J19</span>
+<span class="c1"># AshkSub_7G19</span>
+<span class="c1"># OutOfAfrica_4J17</span>
 </pre></div>
 </div>
 <p>These models are described in detail in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
 We’ll look at the first model, “OutOfAfrica_3G09”, from
 <a class="reference external" href="https://doi.org/10.1371/journal.pgen.1000695">Gutenkunst et al (2009)</a>.
-First we need to know how many populations it has, and what they are:</p>
+We can check how many populations exist in this model, and what they are:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">num_populations</span><span class="p">)</span>
 <span class="c1"># 3</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">num_sampling_populations</span><span class="p">)</span>
 <span class="c1"># 3</span>
-<span class="nb">print</span><span class="p">([</span><span class="n">pop</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">])</span>
 <span class="c1"># [&#39;YRI&#39;, &#39;CEU&#39;, &#39;CHB&#39;]</span>
 </pre></div>
 </div>
-<p>This model has 3 populations, named YRI, CEU, CHB,
-and all three can be sampled from.
+<p>This model has 3 populations, named YRI, CEU, CHB, and all three can be sampled from.
 The number of “sampling” populations could be smaller than the number of populations,
 since some models have ancient populations which are currently not allowed to be
 sampled from - but that is not the case in this model.</p>
+</div>
+<div class="section" id="set-up-the-contig">
+<h4>Set up the contig<a class="headerlink" href="#set-up-the-contig" title="Permalink to this headline">¶</a></h4>
+<p>We’ll next define the contig, which contains information about the genome length we
+want to simulate and recombination and mutation rates. Here, we use the human
+chromosome 22. If no recombination map is specified, we assume a uniform genetic map
+based on the average recombination rate for that chromosome.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">)</span>
+
+<span class="c1"># default is a flat genetic map</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean recombination rate:&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="si">:</span><span class="s2">.3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># mean recombination rate: 1.44e-08</span>
+
+<span class="c1"># and the default mutation rate is based on the species default</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean mutation rate:&quot;</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># mean mutation rate: 1.29e-08</span>
+
+<span class="c1"># but note that the mutation rate differs from the model&#39;s assumed rate</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model mutation rate:&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># model mutation rate: 2.35e-08</span>
+</pre></div>
+</div>
+<p>The Gutenkunst OOA model was inferred using a mutation rate much larger than the
+default mutation rate in the <cite>stdpopsim</cite> catalog. As such, simulating using this
+model and default rate will result in levels of diversity substantially lower than
+expected for the human population data that this model was inferred from. To match
+observed diversity in humans, we should instead use the mutation rate associated
+with the demographic model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">==</span> <span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># True</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="choose-a-sampling-scheme-and-simulate">
 <h4>Choose a sampling scheme and simulate<a class="headerlink" href="#choose-a-sampling-scheme-and-simulate" title="Permalink to this headline">¶</a></h4>
@@ -733,17 +770,14 @@ so we use the json module to easily parse it:</p>
 </div>
 <div class="section" id="running-a-generic-model">
 <span id="sec-tutorial-generic-models"></span><h3>Running a generic model<a class="headerlink" href="#running-a-generic-model" title="Permalink to this headline">¶</a></h3>
-<p>Next, we will simulate using a “generic” model,
-with piecewise constant population size.
-This time,
-we will simulate a small portion of human chromosome 2,
-again with a flat recombination map,
-using the current best estimate of the human
-effective population size from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+<p>Next, we will simulate using a “generic” model, with piecewise constant
+population size. This time, we will simulate a given genome length under
+a flat recombination map, using an estimate of the
+human effective population size from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 <div class="section" id="choose-a-species">
 <h4>Choose a species<a class="headerlink" href="#choose-a-species" title="Permalink to this headline">¶</a></h4>
-<p>Although the model is generic, we still need a species,
-to get contig information.
+<p>Although the model is generic, we still need a species in order
+to get the contig information.
 Again, we’ll use <cite>Homo sapiens</cite>, which has the id “HomSap”.
 (But, you could use any species from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>!)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
@@ -751,22 +785,6 @@ Again, we’ll use <cite>Homo sapiens</cite>, which has the id “HomSap”.
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="choose-a-contig-and-recombination-map">
-<h4>Choose a contig and recombination map<a class="headerlink" href="#choose-a-contig-and-recombination-map" title="Permalink to this headline">¶</a></h4>
-<p>Next, we set the contig information, to 5% of chromosome 2,
-about 12Mb. Again, you could use a fraction of any of the
-chromosomes listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>, keeping in mind that
-larger contigs will take longer to simulate.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr2&quot;</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">get_sequence_length</span><span class="p">())</span>
-<span class="c1"># 12159968.65</span>
-</pre></div>
-</div>
-<p>The “sequence length” is the length in base pairs.
-It is not an integer because msprime works in continuous genomic coordinates.
-Again, since we didn’t specify a genetic map, by default
-a “flat” map of constant recombination rate is used.</p>
 </div>
 <div class="section" id="set-up-the-generic-model">
 <h4>Set up the generic model<a class="headerlink" href="#set-up-the-generic-model" title="Permalink to this headline">¶</a></h4>
@@ -780,6 +798,29 @@ single population of constant over all time.</p>
 <p>Each species has a “default” population size, <code class="docutils literal notranslate"><span class="pre">species.population_size</span></code>,
 which for humans is 10,000.</p>
 </div>
+<div class="section" id="choose-a-contig-and-recombination-map">
+<h4>Choose a contig and recombination map<a class="headerlink" href="#choose-a-contig-and-recombination-map" title="Permalink to this headline">¶</a></h4>
+<p>Next, we set the contig information. Again, we could use any of the chromosomes
+listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> (or a fraction of a chromosome, using the
+<code class="docutils literal notranslate"><span class="pre">length_multiplier</span></code> argument), keeping in mind that larger contigs will take
+longer to simulate. We could also specify a “generic” contig, which provides
+a segment of a given length with constant recombination rate, taken to be the
+average rate over all chromosomes for that species. Here, we define a contig
+of length 1 Mb:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">)</span>
+<span class="c1"># 1000000.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="p">)</span>
+<span class="c1"># 1.2313743222950562e-08</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># 1.29e-8</span>
+</pre></div>
+</div>
+<p>The “sequence length” is the length in base pairs. Since we are using a generic
+contig, we cannot specify a recombination map so we get a “flat” map of
+constant recombination rate. The mutation rate defaults to the species average
+mutation rate, as no mutation rate was provided when defining the contig.</p>
+</div>
 <div class="section" id="id1">
 <h4>Choose a sampling scheme, and simulate<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>Next, we set the number of samples and set the simulation engine.
@@ -791,8 +832,8 @@ But, you can go crazy with the sample size!
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Finally, we simulate the model with the contig length and number of samples we defined above.
-The simulation results are recorded in a tree sequence object
+<p>Finally, we simulate the model with the contig length and number of samples we
+defined above. The simulation results are recorded in a tree sequence object
 (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in tskit v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
 </pre></div>
@@ -807,18 +848,17 @@ The simulation results are recorded in a tree sequence object
 <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">)</span>
 <span class="c1"># 1</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_mutations</span><span class="p">)</span>
-<span class="c1"># 18187</span>
+<span class="c1"># 1472</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_trees</span><span class="p">)</span>
-<span class="c1"># 12203</span>
+<span class="c1"># 1078</span>
 </pre></div>
 </div>
-<p>As expected, there are 10 samples in one population. We can also see that it takes
-12203 distinct genealogical trees across these 5Mb of sequence,
-on which there were 18187 mutations
-(since we are not using a seed here, the number of mutations
-and trees will be slightly different for you). Try running the simulation again, and notice
-that the number of samples and populations stays the same, while the number of mutations
-and trees changes.</p>
+<p>As expected, there are 10 samples in one population. We can also see that it
+takes 1078 distinct genealogical trees across this 1Mb of sequence, on which
+there were 1472 mutations (since we are not using a seed here, the number of
+mutations and trees will be slightly different for you). Try running the
+simulation again, and notice that the number of samples and populations stays
+the same, while the number of mutations and trees changes.</p>
 </div>
 <div class="section" id="output-to-vcf">
 <h4>Output to VCF<a class="headerlink" href="#output-to-vcf" title="Permalink to this headline">¶</a></h4>
@@ -827,22 +867,22 @@ other common formats used for population genetics analyses.
 We can use <code class="docutils literal notranslate"><span class="pre">tskit</span></code> to convert the tree sequence to a vcf file called “foo.vcf”.
 See the tskit documentation (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.write_vcf" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.write_vcf()</span></code></a>) for more information.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;foo.vcf&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">vcf_file</span><span class="p">:</span>
-    <span class="n">ts</span><span class="o">.</span><span class="n">write_vcf</span><span class="p">(</span><span class="n">vcf_file</span><span class="p">,</span> <span class="n">contig_id</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
+    <span class="n">ts</span><span class="o">.</span><span class="n">write_vcf</span><span class="p">(</span><span class="n">vcf_file</span><span class="p">,</span> <span class="n">contig_id</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Taking a look at the vcf file, we see something like this:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>##fileformat=VCFv4.2
-##source=tskit 0.2.2
+##source=tskit 0.3.5
 ##FILTER=&lt;ID=PASS,Description=&quot;All filters passed&quot;&gt;
-##contig=&lt;ID=2,length=12159969&gt;
+##contig=&lt;ID=0,length=1000000&gt;
 ##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&quot;Genotype&quot;&gt;
-#CHROM      POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  tsk_0   tsk_1   tsk_2   tsk_3   tsk_4   tsk_5   tsk_6   tsk_7   tsk_8   tsk_9
-2   96      .       0       1       .       PASS    .       GT      0       0       1       0       1       0       0       0       1       0
-2   129     .       0       1       .       PASS    .       GT      0       0       0       0       0       0       0       0       1       0
-2   436     .       0       1       .       PASS    .       GT      0       0       0       0       0       1       0       0       0       0
-2   466     .       0       1       .       PASS    .       GT      0       0       1       0       1       0       0       0       0       0
-2   558     .       0       1       .       PASS    .       GT      0       0       0       0       0       0       0       0       1       0
-2   992     .       0       1       .       PASS    .       GT      1       1       0       1       0       1       1       1       0       1
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  tsk_0   tsk_1   tsk_2   tsk_3   tsk_4   tsk_5   tsk_6   tsk_7   tsk_8   tsk_9
+0       3608    .       A       T       .       PASS    .       GT      0       0       1       0       0       0       0       0       0       0
+0       5598    .       T       G       .       PASS    .       GT      1       0       0       0       1       1       0       0       1       0
+0       6190    .       C       A       .       PASS    .       GT      1       0       0       0       0       0       0       0       0       0
+0       6479    .       C       T       .       PASS    .       GT      0       0       0       0       0       1       0       0       1       0
+0       6556    .       A       C       .       PASS    .       GT      0       0       0       1       0       0       0       0       0       0
+0       6648    .       T       A       .       PASS    .       GT      1       1       1       0       1       1       1       1       1       1
 </pre></div>
 </div>
 </div>
@@ -879,9 +919,11 @@ it doesn’t affect this very much either).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
-<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="c1"># default is a flat genetic map</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Africa_1T12&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
+    <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
+<span class="p">)</span>
+<span class="c1"># default is a flat genetic map with average rate across chr22</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -960,7 +1002,9 @@ with a msprime coalescent simulation.</p>
 with the <code class="docutils literal notranslate"><span class="pre">HapMapII_GRCh37</span></code> genetic map,
 we’d do the following
 (again setting <code class="docutils literal notranslate"><span class="pre">slim_scaling_factor</span></code> to keep this example reasonably-sized):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="s2">&quot;HapMapII_GRCh37&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
+    <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="s2">&quot;HapMapII_GRCh37&quot;</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
+<span class="p">)</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -1081,7 +1125,7 @@ OutOfAfrica_3G09: Three population out-of-Africa
         2: 1000 Genomes CHB (Han Chinese in Beijing, China)
 
 OutOfAfrica_2T12: Two population out-of-Africa
-     The model is derived from the Tennesen et al. analysis of the
+     The model is derived from the Tennessen et al. analysis of the
     jSFS from European Americans and African Americans. It describes
     the ancestral human population in Africa, the out of Africa event,
     and two distinct periods of subsequent European population growth
@@ -1119,242 +1163,7 @@ DeCodeSexAveraged_GRCh36
     in 15,257 parent-offspring pairs from Iceland. 289,658 phased
     autosomal SNPs were used to call recombinations within these
     families, and recombination rates computed from the density of
-    these events. This is the combined male and female (sex averaged)
-    map. See https://www.decode.com/addendum/ for more details.
-
-PyrhoACB_GRCh38
-     This genetic map was inferred using individuals from the ACB
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoASW_GRCh38
-     This genetic map was inferred using individuals from the ASW
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoBEB_GRCh38
-     This genetic map was inferred using individuals from the BEB
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoCDX_GRCh38
-     This genetic map was inferred using individuals from the CDX
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoCEU_GRCh38
-     This genetic map was inferred using individuals from the CEU
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoCHB_GRCh38
-     This genetic map was inferred using individuals from the CHB
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoCHS_GRCh38
-     This genetic map was inferred using individuals from the CHS
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoCLM_GRCh38
-     This genetic map was inferred using individuals from the CLM
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoESN_GRCh38
-     This genetic map was inferred using individuals from the ESN
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoFIN_GRCh38
-     This genetic map was inferred using individuals from the FIN
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoGBR_GRCh38
-     This genetic map was inferred using individuals from the GBR
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoGIH_GRCh38
-     This genetic map was inferred using individuals from the GIH
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoGWD_GRCh38
-     This genetic map was inferred using individuals from the GWD
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoIBS_GRCh38
-     This genetic map was inferred using individuals from the IBS
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoITU_GRCh38
-     This genetic map was inferred using individuals from the ITU
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoJPT_GRCh38
-     This genetic map was inferred using individuals from the JPT
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoKHV_GRCh38
-     This genetic map was inferred using individuals from the KHV
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoLWK_GRCh38
-     This genetic map was inferred using individuals from the LWK
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoMSL_GRCh38
-     This genetic map was inferred using individuals from the MSL
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoMXL_GRCh38
-     This genetic map was inferred using individuals from the MXL
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoPEL_GRCh38
-     This genetic map was inferred using individuals from the PEL
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoPJL_GRCh38
-     This genetic map was inferred using individuals from the PJL
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoPUR_GRCh38
-     This genetic map was inferred using individuals from the PUR
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoSTU_GRCh38
-     This genetic map was inferred using individuals from the STU
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoTSI_GRCh38
-     This genetic map was inferred using individuals from the TSI
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
-
-PyrhoYRI_GRCh38
-     This genetic map was inferred using individuals from the YRI
-    population from Phase 3 of the 1000 Genomes Project. Rates were
-    estimated using pyrho (https://github.com/popgenmethods/pyrho)
-    while using population-specific population size history estimates
-    obtained from smc++ (https://github.com/popgenmethods/smcpp).
-    Genetic maps are only available for the 22 autosomes. See
-    https://doi.org/10.1126/sciadv.aaw9206 for more details.
+...
 </pre></div>
 </div>
 <p>Let’s go with <code class="docutils literal notranslate"><span class="pre">HapMapII_GRCh37</span></code>.
@@ -1365,7 +1174,7 @@ For the purposes of this tutorial, we’ll also specify a random seed using the
 To check that we have set up the simulation correctly, we may first wish to perform a
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o   afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
 WARNING: Recombination map has length 249218992.0, which is longer than chromosome length 248956422. The former will be used.
 Simulation information:
     Engine: msprime (1.0.0b1)
@@ -1397,7 +1206,7 @@ Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
 [mutation rate]
 Tian, Browning, and Browning, 2019: https://doi.org/10.1016/j.ajhg.2019.09.012
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2011: http://dx.doi.org/10.1371/journal.pgen.1007385
