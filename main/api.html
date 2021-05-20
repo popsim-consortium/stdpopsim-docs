@@ -413,7 +413,8 @@ chromosome by ID, e.g. from the command line interface.</p></li>
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">Contig</span></span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a contiguous region of genome that is to be
 simulated. This contains the information about mutation rates
-and recombination rates that are needed to simulate this region.</p>
+and recombination rates that are needed to simulate this region.
+Genomic element types can be provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
@@ -426,6 +427,12 @@ and in ascending order. Should have shape Nx2, where N is the number of
 intervals.</p></li>
 <li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
 <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
+<li><p><strong>genomic_element_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">GenomicElementType</span></code> objects.
+By default, the only element is a single genomic element type that spans
+the entire contiguous region.</p></li>
+<li><p><strong>mutation_types</strong> – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ext.MutationType</span></code> object. By default,
+the only mutation type is neutral. See <code class="xref py py-class docutils literal notranslate"><span class="pre">ext.MutationType</span></code> for
+more details.</p></li>
 </ul>
 </dd>
 </dl>
@@ -443,6 +450,20 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 </pre></div>
 </div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.add_mutation_types">
+<span class="sig-name descname"><span class="pre">add_mutation_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genomic_element_type_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_mutation_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_mutation_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds mutation types with their respective proportions to the genomic
+element type provided.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stdpopsim.Contig.all_intervals_array">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">all_intervals_array</span></span><a class="headerlink" href="#stdpopsim.Contig.all_intervals_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an (n, 3) numpy array with the intervals across all genomic
+element types in the form (left, right, type).</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -833,7 +854,7 @@ to initialise the simulation and then immediately return.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">
-<span class="sig-name descname"><span class="pre">recap_and_rescale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_scaling_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.recap_and_rescale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">recap_and_rescale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_scaling_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.recap_and_rescale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply post-SLiM transformations to <code class="docutils literal notranslate"><span class="pre">ts</span></code>. This rescales node times,
 does recapitation, simplification, and adds neutral mutations.</p>
 <p>If the SLiM engine was used to output a SLiM script, and the script was
@@ -846,7 +867,7 @@ and <code class="docutils literal notranslate"><span class="pre">slim_scaling_fa
 generate the SLiM script with <a class="reference internal" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="stdpopsim.slim_engine._SLiMEngine.simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ts</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyslim.SlimTreeSequence</span></code>) – The tree sequence output by SLiM.</p>
+<dd class="field-odd"><p><strong>ts</strong> (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in tskit v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>) – The tree sequence output by SLiM.</p>
 </dd>
 </dl>
 <div class="admonition warning">
@@ -861,7 +882,7 @@ for your case.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.slim_engine._SLiMEngine.simulate">
-<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_script</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_scaling_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_burn_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demographic_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_script</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_scaling_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slim_burn_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/slim_engine.html#_SLiMEngine.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate the demographic model using SLiM.
 See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code></a> for definitions of the
 <code class="docutils literal notranslate"><span class="pre">demographic_model</span></code>, <code class="docutils literal notranslate"><span class="pre">contig</span></code>, and <code class="docutils literal notranslate"><span class="pre">samples</span></code> parameters.</p>
