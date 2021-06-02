@@ -735,6 +735,22 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">msp_mutation_rate_map</span><span class="p">,</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">))</span>
 
 
+<span class="k">def</span> <span class="nf">slim_array_string</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Format an array as a SLiM c() array and return as a line-wrapped string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="s2">&quot;c(</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)),</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">initial_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+            <span class="n">subsequent_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="p">)</span>
+
+
 <span class="k">def</span> <span class="nf">slim_makescript</span><span class="p">(</span>
     <span class="n">script_file</span><span class="p">,</span>
     <span class="n">trees_file</span><span class="p">,</span>
@@ -941,26 +957,8 @@
 
     <span class="n">recomb_rates</span><span class="p">,</span> <span class="n">recomb_ends</span> <span class="o">=</span> <span class="n">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">)</span>
     <span class="n">indent</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
-    <span class="n">recomb_rates_str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;c(</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="o">+</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
-            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">recomb_rates</span><span class="p">)),</span>
-            <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
-            <span class="n">initial_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
-            <span class="n">subsequent_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
-    <span class="p">)</span>
-    <span class="n">recomb_ends_str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;c(</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="o">+</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
-            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">recomb_ends</span><span class="p">)),</span>
-            <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
-            <span class="n">initial_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
-            <span class="n">subsequent_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
-    <span class="p">)</span>
+    <span class="n">recomb_rates_str</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">recomb_rates</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
+    <span class="n">recomb_ends_str</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">recomb_ends</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
 
     <span class="n">pop_names_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">pop_names</span><span class="p">))</span>
 
@@ -1028,20 +1026,19 @@
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">genomic_element_types</span><span class="p">):</span>
         <span class="n">mut_props</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">])</span>
         <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span> <span class="k">for</span> <span class="n">mid</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_type_ids</span><span class="p">])</span>
-        <span class="n">element_starts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">element_starts</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
         <span class="c1"># stdpopsim intervals are 0-based left inclusive, right exclusive, but</span>
         <span class="c1"># SLiM intervals are right inclusive</span>
-        <span class="n">element_ends</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">((</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">element_ends</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
         <span class="n">printsc</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;    initializeGenomicElementType(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, c(</span><span class="si">{</span><span class="n">mut_types</span><span class="si">}</span><span class="s2">), c(</span><span class="si">{</span><span class="n">mut_props</span><span class="si">}</span><span class="s2">));&quot;</span>
         <span class="p">)</span>
-        <span class="n">printsc</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;    initializeGenomicElement(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, c(</span><span class="si">{</span><span class="n">element_starts</span><span class="si">}</span><span class="s2">), c(</span><span class="si">{</span><span class="n">element_ends</span><span class="si">}</span><span class="s2">));&quot;</span>
-        <span class="p">)</span>
+        <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    initializeGenomicElement(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_starts</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_ends</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">)</span>
     <span class="c1"># Mutation rate map.</span>
-    <span class="n">mut_breaks</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">slim_rate_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
-    <span class="n">mut_rates</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">slim_rate_map</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
-    <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    initializeMutationRate(c(</span><span class="si">{</span><span class="n">mut_rates</span><span class="si">}</span><span class="s2">)*Q, c(</span><span class="si">{</span><span class="n">mut_breaks</span><span class="si">}</span><span class="s2">));&quot;</span><span class="p">)</span>
+    <span class="n">mut_breaks</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">slim_rate_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">indent</span><span class="p">)</span>
+    <span class="n">mut_rates</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">slim_rate_map</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    initializeMutationRate(Q*</span><span class="si">{</span><span class="n">mut_rates</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">mut_breaks</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">()</span>
 
     <span class="c1"># Epoch times.</span>
     <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Time of epoch boundaries, in years before present.&quot;</span><span class="p">)</span>
