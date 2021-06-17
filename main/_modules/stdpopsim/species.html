@@ -166,10 +166,8 @@
 <span class="sd">organising the species catalog.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">attr</span>
-<span class="kn">import</span> <span class="nn">msprime</span>
 
 <span class="kn">import</span> <span class="nn">stdpopsim</span>
 <span class="kn">import</span> <span class="nn">stdpopsim.utils</span>
@@ -350,92 +348,16 @@
 <span class="sd">        :rtype: :class:`.Contig`</span>
 <span class="sd">        :return: A :class:`.Contig` describing the section of the genome.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TODO: add non-autosomal support</span>
-        <span class="n">non_autosomal_lower</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;mt&quot;</span><span class="p">,</span> <span class="s2">&quot;chrx&quot;</span><span class="p">,</span> <span class="s2">&quot;chry&quot;</span><span class="p">,</span> <span class="s2">&quot;chrm&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">chromosome</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">non_autosomal_lower</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="n">stdpopsim</span><span class="o">.</span><span class="n">NonAutosomalWarning</span><span class="p">(</span>
-                    <span class="s2">&quot;Non-autosomal simulations are not yet supported. See &quot;</span>
-                    <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/383 and &quot;</span>
-                    <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/406&quot;</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use genetic map with generic contic&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier for generic contig&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use mask with generic contig&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify sequence length of generic contig&quot;</span><span class="p">)</span>
-            <span class="n">L_tot</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">r_tot</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">u_tot</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">chrom_data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">non_autosomal_lower</span><span class="p">:</span>
-                    <span class="n">L_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span>
-                    <span class="n">r_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">recombination_rate</span>
-                    <span class="n">u_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">mutation_rate</span>
-            <span class="k">if</span> <span class="n">mutation_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">u_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">r_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
-            <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
-                <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify sequence length for named contig&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify both inclusion and exclusion masks&quot;</span><span class="p">)</span>
-            <span class="n">chrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Making flat chromosome </span><span class="si">{</span><span class="n">length_multiplier</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">gm</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
-                    <span class="nb">round</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">length_multiplier</span><span class="p">),</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with empirical maps&quot;</span><span class="p">)</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting map for </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">genetic_map</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">gm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_genetic_map</span><span class="p">(</span><span class="n">genetic_map</span><span class="p">)</span>
-                <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">gm</span><span class="o">.</span><span class="n">get_chromosome_map</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-
-            <span class="n">inclusion_intervals</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">exclusion_intervals</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with mask&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                    <span class="n">inclusion_intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">read_bed</span><span class="p">(</span>
-                        <span class="n">inclusion_mask</span><span class="p">,</span> <span class="n">chromosome</span>
-                    <span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">inclusion_intervals</span> <span class="o">=</span> <span class="n">inclusion_mask</span>
-            <span class="k">if</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with mask&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                    <span class="n">exclusion_intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">read_bed</span><span class="p">(</span>
-                        <span class="n">exclusion_mask</span><span class="p">,</span> <span class="n">chromosome</span>
-                    <span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">exclusion_intervals</span> <span class="o">=</span> <span class="n">exclusion_mask</span>
-
-            <span class="k">if</span> <span class="n">mutation_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">mutation_rate</span>
-
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
-                <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span>
-                <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
-                <span class="n">genetic_map</span><span class="o">=</span><span class="n">gm</span><span class="p">,</span>
-                <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_intervals</span><span class="p">,</span>
-                <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_intervals</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">ret</span></div>
+        <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="o">.</span><span class="n">species_contig</span><span class="p">(</span>
+            <span class="n">species</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">chromosome</span><span class="o">=</span><span class="n">chromosome</span><span class="p">,</span>
+            <span class="n">genetic_map</span><span class="o">=</span><span class="n">genetic_map</span><span class="p">,</span>
+            <span class="n">length_multiplier</span><span class="o">=</span><span class="n">length_multiplier</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_mask</span><span class="p">,</span>
+            <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_mask</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Species.get_demographic_model"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_demographic_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_demographic_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

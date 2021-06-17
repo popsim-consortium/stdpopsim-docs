@@ -1298,14 +1298,6 @@
                     <span class="s2">&quot;compare results across different values of the scaling factor.&quot;</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Your Contig object is not compatible with the SLiM &quot;</span>
-                <span class="s2">&quot;engine. You must specify a recombination map.&quot;</span>
-            <span class="p">)</span>
-        <span class="c1"># if no GET were defined, fully neutral sim with overlay of muts using msprime</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">contig</span><span class="o">.</span><span class="n">fully_neutral</span><span class="p">()</span>
 
         <span class="c1"># figuring out mutations in SLiM and neutral mutations to be added</span>
         <span class="c1"># by msprime later</span>
@@ -1542,14 +1534,6 @@
 <span class="sd">            should be consulted to determine if the behaviour is appropriate</span>
 <span class="sd">            for your case.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Your Contig object is not compatible with the SLiM &quot;</span>
-                <span class="s2">&quot;engine. You must specify a recombination map.&quot;</span>
-            <span class="p">)</span>
-        <span class="c1"># if no GET were defined, fully neutral sim with overlay of muts using msprime</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">genomic_element_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">contig</span><span class="o">.</span><span class="n">fully_neutral</span><span class="p">()</span>
         <span class="n">msp_rate_map</span><span class="p">,</span> <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_msp_and_slim_mutation_rate_maps</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
