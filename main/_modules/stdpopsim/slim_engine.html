@@ -1456,11 +1456,10 @@
             <span class="n">migration_matrix</span><span class="o">=</span><span class="n">recap_epoch</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="c1"># TODO: using recombination map in recapitate. maps should be discrete.</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_ancestry</span><span class="p">(</span>
             <span class="n">initial_state</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span>
             <span class="n">demography</span><span class="o">=</span><span class="n">demography</span><span class="p">,</span>
-            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="p">,</span>
+            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
             <span class="n">random_seed</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
         <span class="p">)</span>
 
