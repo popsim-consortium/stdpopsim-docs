@@ -1144,6 +1144,7 @@ and MutationTypes have the same arguments as in SLiM.</p>
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">clear_genomic_mutation_types</span><span class="p">()</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
 
 <span class="c1"># neutral and deleterious mutations occur across the whole contig</span>
@@ -1502,7 +1503,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
