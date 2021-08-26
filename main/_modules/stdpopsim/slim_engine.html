@@ -246,6 +246,7 @@
 <span class="s2">    defineConstant(&quot;recombination_ends&quot;, _recombination_ends);</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
+
 <span class="n">_slim_lower</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    defineConstant(&quot;N&quot;, asInteger(_N/Q));</span>
 
@@ -266,6 +267,10 @@
 <span class="s2">        catn(sim.generation + &quot;: &quot; + s);</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_slim_functions</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="s2">// Check that sizes aren&#39;t dangerously low or zero (e.g. due to scaling).</span>
 <span class="s2">function (void)check_size(integer$ pop, integer$ size, integer$ g) {</span>
@@ -313,6 +318,84 @@
 <span class="s2">    sim.simulationFinished();</span>
 <span class="s2">}</span>
 
+
+<span class="s2">// Add `mut_type` mutation at `pos`, to a single individual in `pop`.</span>
+<span class="s2">function (void)add_mut(object$ mut_type, object$ pop, integer$ pos) {</span>
+<span class="s2">   targets = sample(pop.genomes, 1);</span>
+<span class="s2">   targets.addNewDrawnMutation(mut_type, pos);</span>
+<span class="s2">}</span>
+
+<span class="s2">// Return the allele frequency of a drawn mutation in the specified population.</span>
+<span class="s2">// Assumes there&#39;s only one mutation of the given type.</span>
+<span class="s2">function (float$)af(object$ mut_type, object$ pop) {</span>
+<span class="s2">    mut = sim.mutationsOfType(mut_type);</span>
+<span class="s2">    if (length(mut) == 0) {</span>
+<span class="s2">        return 0.0;</span>
+<span class="s2">    }</span>
+<span class="s2">    return sim.mutationFrequencies(pop, mut);</span>
+<span class="s2">}</span>
+
+<span class="s2">// Save the state of the simulation.</span>
+<span class="s2">function (void)save(void) {</span>
+<span class="s2">    if (sim.getValue(&quot;restore_function&quot;)) {</span>
+<span class="s2">        // Don&#39;t save if we&#39;re in the restore() function.</span>
+<span class="s2">        return;</span>
+<span class="s2">    }</span>
+<span class="s2">    n_saves = 1 + sim.getValue(&quot;n_saves&quot;);</span>
+<span class="s2">    sim.setValue(&quot;n_saves&quot;, n_saves);</span>
+<span class="s2">    dbg(&quot;save() &quot;+n_saves);</span>
+<span class="s2">    sim.treeSeqOutput(trees_file);</span>
+<span class="s2">}</span>
+
+<span class="s2">// Restore the simulation state.</span>
+<span class="s2">function (void)restore(void) {</span>
+<span class="s2">    g_restore = sim.generation;</span>
+<span class="s2">    n_restores = 1 + sim.getValue(&quot;n_restores&quot;);</span>
+<span class="s2">    sim.setValue(&quot;n_restores&quot;, n_restores);</span>
+<span class="s2">    n_saves = sim.getValue(&quot;n_saves&quot;);</span>
+<span class="s2">    if (n_saves == 0) {</span>
+<span class="s2">        err(&quot;restore() in generation &quot;+g_restore+&quot;, but nothing is saved.&quot;);</span>
+<span class="s2">    }</span>
+<span class="s2">    sim.readFromPopulationFile(trees_file);</span>
+<span class="s2">    dbg(&quot;restore() &quot;+n_restores+&quot; from generation &quot;+g_restore+&quot;, returning &quot;+</span>
+<span class="s2">        &quot;to state at save() &quot;+n_saves);</span>
+
+<span class="s2">    /*</span>
+<span class="s2">     * The generation counter sim.generation has now been reset to the</span>
+<span class="s2">     * value it had when save() was called. There are two issues relating</span>
+<span class="s2">     * to event scheduling which must now be dealt with.</span>
+<span class="s2">     *</span>
+<span class="s2">     * 1. There may be additional late events for the generation in which</span>
+<span class="s2">     * restore() was called, and they are still scheduled to run.</span>
+<span class="s2">     * So we deactivate all script blocks to avoid unexpected problems.</span>
+<span class="s2">     * They will be automatically reactivated at the start of the next</span>
+<span class="s2">     * generation (see SLiM manual section 23.10).</span>
+<span class="s2">     */</span>
+<span class="s2">    sim.scriptBlocks.active = F;</span>
+
+<span class="s2">    /*</span>
+<span class="s2">     * 2. The late events below were run in the save() generation,</span>
+<span class="s2">     * but after the save() call. We execute these again here, because</span>
+<span class="s2">     * the next late events to run will be for sim.generation + 1.</span>
+<span class="s2">     * Note that the save() event is indistinguishable from the other</span>
+<span class="s2">     * late events in this generation, so we set a flag `restore_function`</span>
+<span class="s2">     * to signal the save() function not to save again.</span>
+<span class="s2">     */</span>
+<span class="s2">    g = sim.generation;</span>
+<span class="s2">    sim.setValue(&quot;restore_function&quot;, T);</span>
+<span class="s2">    for (sb in sim.scriptBlocks) {</span>
+<span class="s2">        if (sb.type == &quot;late&quot; &amp; g &gt;= sb.start &amp; g &lt;= sb.end) {</span>
+<span class="s2">            self = sb;</span>
+<span class="s2">            executeLambda(sb.source);</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">    sim.setValue(&quot;restore_function&quot;, F);</span>
+<span class="s2">}</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_slim_main</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">1 {</span>
 <span class="s2">    // save/restore bookkeeping</span>
 <span class="s2">    sim.setValue(&quot;n_restores&quot;, 0);</span>
@@ -594,79 +677,45 @@
 <span class="s2">    }</span>
 <span class="s2">}</span>
 
-<span class="s2">// Add `mut_type` mutation at `pos`, to a single individual in `pop`.</span>
-<span class="s2">function (void)add_mut(object$ mut_type, object$ pop, integer$ pos) {</span>
-<span class="s2">   targets = sample(pop.genomes, 1);</span>
-<span class="s2">   targets.addNewDrawnMutation(mut_type, pos);</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">_slim_debug_output</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">///</span>
+<span class="s2">/// Debugging output</span>
+<span class="s2">///</span>
+
+<span class="s2">// Print out selection coefficients for every new mutation:</span>
+<span class="s2">// this is for development purposes, and the format of this output</span>
+<span class="s2">// is subject to change or may even be removed!</span>
+<span class="s2">// Header:</span>
+<span class="s2">1 late() {</span>
+<span class="s2">    if (verbosity &gt;= 3) {</span>
+<span class="s2">        dbg(paste(c(&quot;dbg_selection_coeff:&quot;,</span>
+<span class="s2">                    &quot;selectionCoeff&quot;,</span>
+<span class="s2">                    &quot;id&quot;,</span>
+<span class="s2">                    &quot;position&quot;),</span>
+<span class="s2">                  sep=&quot;</span><span class="se">\t</span><span class="s2">&quot;));</span>
+<span class="s2">    }</span>
 <span class="s2">}</span>
 
-<span class="s2">// Return the allele frequency of a drawn mutation in the specified population.</span>
-<span class="s2">// Assumes there&#39;s only one mutation of the given type.</span>
-<span class="s2">function (float$)af(object$ mut_type, object$ pop) {</span>
-<span class="s2">    mut = sim.mutationsOfType(mut_type);</span>
-<span class="s2">    if (length(mut) == 0) {</span>
-<span class="s2">        return 0.0;</span>
-<span class="s2">    }</span>
-<span class="s2">    return sim.mutationFrequencies(pop, mut);</span>
-<span class="s2">}</span>
-
-<span class="s2">// Save the state of the simulation.</span>
-<span class="s2">function (void)save(void) {</span>
-<span class="s2">    if (sim.getValue(&quot;restore_function&quot;)) {</span>
-<span class="s2">        // Don&#39;t save if we&#39;re in the restore() function.</span>
-<span class="s2">        return;</span>
-<span class="s2">    }</span>
-<span class="s2">    n_saves = 1 + sim.getValue(&quot;n_saves&quot;);</span>
-<span class="s2">    sim.setValue(&quot;n_saves&quot;, n_saves);</span>
-<span class="s2">    dbg(&quot;save() &quot;+n_saves);</span>
-<span class="s2">    sim.treeSeqOutput(trees_file);</span>
-<span class="s2">}</span>
-
-<span class="s2">// Restore the simulation state.</span>
-<span class="s2">function (void)restore(void) {</span>
-<span class="s2">    g_restore = sim.generation;</span>
-<span class="s2">    n_restores = 1 + sim.getValue(&quot;n_restores&quot;);</span>
-<span class="s2">    sim.setValue(&quot;n_restores&quot;, n_restores);</span>
-<span class="s2">    n_saves = sim.getValue(&quot;n_saves&quot;);</span>
-<span class="s2">    if (n_saves == 0) {</span>
-<span class="s2">        err(&quot;restore() in generation &quot;+g_restore+&quot;, but nothing is saved.&quot;);</span>
-<span class="s2">    }</span>
-<span class="s2">    sim.readFromPopulationFile(trees_file);</span>
-<span class="s2">    dbg(&quot;restore() &quot;+n_restores+&quot; from generation &quot;+g_restore+&quot;, returning &quot;+</span>
-<span class="s2">        &quot;to state at save() &quot;+n_saves);</span>
-
-<span class="s2">    /*</span>
-<span class="s2">     * The generation counter sim.generation has now been reset to the</span>
-<span class="s2">     * value it had when save() was called. There are two issues relating</span>
-<span class="s2">     * to event scheduling which must now be dealt with.</span>
-<span class="s2">     *</span>
-<span class="s2">     * 1. There may be additional late events for the generation in which</span>
-<span class="s2">     * restore() was called, and they are still scheduled to run.</span>
-<span class="s2">     * So we deactivate all script blocks to avoid unexpected problems.</span>
-<span class="s2">     * They will be automatically reactivated at the start of the next</span>
-<span class="s2">     * generation (see SLiM manual section 23.10).</span>
-<span class="s2">     */</span>
-<span class="s2">    sim.scriptBlocks.active = F;</span>
-
-<span class="s2">    /*</span>
-<span class="s2">     * 2. The late events below were run in the save() generation,</span>
-<span class="s2">     * but after the save() call. We execute these again here, because</span>
-<span class="s2">     * the next late events to run will be for sim.generation + 1.</span>
-<span class="s2">     * Note that the save() event is indistinguishable from the other</span>
-<span class="s2">     * late events in this generation, so we set a flag `restore_function`</span>
-<span class="s2">     * to signal the save() function not to save again.</span>
-<span class="s2">     */</span>
-<span class="s2">    g = sim.generation;</span>
-<span class="s2">    sim.setValue(&quot;restore_function&quot;, T);</span>
-<span class="s2">    for (sb in sim.scriptBlocks) {</span>
-<span class="s2">        if (sb.type == &quot;late&quot; &amp; g &gt;= sb.start &amp; g &lt;= sb.end) {</span>
-<span class="s2">            self = sb;</span>
-<span class="s2">            executeLambda(sb.source);</span>
+<span class="s2">// Content:</span>
+<span class="s2">1: late() {</span>
+<span class="s2">    // Print out selection coefficients for every new mutation:</span>
+<span class="s2">    // this is for development purposes, and the format of this output</span>
+<span class="s2">    // is subject to change or may even be removed!</span>
+<span class="s2">    if (verbosity &gt;= 3) {</span>
+<span class="s2">        new = (sim.mutations.originGeneration == sim.generation);</span>
+<span class="s2">        for (mut in sim.mutations[new]) {</span>
+<span class="s2">            dbg(paste(c(&quot;dbg_selection_coeff:&quot;,</span>
+<span class="s2">                        mut.selectionCoeff,</span>
+<span class="s2">                        mut.id,</span>
+<span class="s2">                        mut.position),</span>
+<span class="s2">                      sep=&quot;</span><span class="se">\t</span><span class="s2">&quot;));</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
-<span class="s2">    sim.setValue(&quot;restore_function&quot;, F);</span>
 <span class="s2">}</span>
-
 <span class="s2">&quot;&quot;&quot;</span>
 
 
@@ -1208,6 +1257,9 @@
     <span class="p">)</span>
 
     <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_lower</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_functions</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_main</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_debug_output</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">epochs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1261,6 +1313,7 @@
         <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
         <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
         <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulate the demographic model using SLiM.</span>
@@ -1346,7 +1399,11 @@
                 <span class="k">return</span> <span class="kc">None</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_run_slim</span><span class="p">(</span>
-                <span class="n">script_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="n">slim_path</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="n">dry_run</span>
+                <span class="n">script_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">slim_path</span><span class="o">=</span><span class="n">slim_path</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                <span class="n">dry_run</span><span class="o">=</span><span class="n">dry_run</span><span class="p">,</span>
+                <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">,</span>
             <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
@@ -1365,7 +1422,9 @@
 
         <span class="k">return</span> <span class="n">ts</span></div>
 
-    <span class="k">def</span> <span class="nf">_run_slim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_run_slim</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run SLiM.</span>
 
@@ -1390,6 +1449,8 @@
             <span class="n">slim_cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
             <span class="n">slim_cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;dry_run=T&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">verbosity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">slim_cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;verbosity=</span><span class="si">{</span><span class="n">verbosity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
         <span class="n">slim_cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">script_file</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
