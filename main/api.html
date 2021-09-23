@@ -143,6 +143,8 @@ providing the source for the generation time and
 population size estimates.</p></li>
 <li><p><strong>demographic_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>
 instances in the catalog for this species.</p></li>
+<li><p><strong>dfes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – This list of <code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code>
+instances in the catalog for this species.</p></li>
 <li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The ensembl id for the species which is used by
 maintenance scripts to query ensembl’s database.</p></li>
 </ul>
@@ -233,6 +235,27 @@ A complete list of IDs for each species can be found in the
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> that defines the requested model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Species.get_dfe">
+<span class="sig-name descname"><span class="pre">get_dfe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_dfe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_dfe" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a DFE with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The string identifier for the DFE.
+A complete list of IDs for each species can be found in the
+# TODO add that section to the species catalogo
+“DFE” subsection for the species in the
+<a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code> that defines the requested model.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -359,6 +382,21 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 </pre></div>
 </div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.add_DFE">
+<span class="sig-name descname"><span class="pre">add_DFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_DFE" title="Permalink to this definition"></a></dt>
+<dd><p>Adds the provided DFE to the intervals specified, by making a new genomic
+element type with the mutation types and proportions specified by the DFE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>intervals</strong> (<em>array</em>) – A valid set of intervals.</p></li>
+<li><p><strong>dfe</strong> (<em>DFE</em>) – A DFE object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.add_mutation_types">
 <span class="sig-name descname"><span class="pre">add_mutation_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genomic_element_type_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_mutation_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_mutation_types" title="Permalink to this definition"></a></dt>

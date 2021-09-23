@@ -1060,7 +1060,7 @@ is similar to the UCSC Genome Browser naming convention and should be familiar.<
 <p>Genetic maps are named using a descriptive name and the assembly version according
 to <code class="docutils literal notranslate"><span class="pre">${CamelCaseDescriptiveName}_${Assembly}</span></code>. e.g., the HapMap phase 2 map on
 the GRCh37 assembly becomes HapMapII_GRCh37.</p>
-<p>Finally demographic models are named using a combination of a descriptive name,
+<p>Demographic models are named using a combination of a descriptive name,
 information about the simulation, and information about the publication it was
 presented in. Specifically we use
 <code class="docutils literal notranslate"><span class="pre">${SomethingDescriptive}_${number_of_populations}${first_author_initial}${two_digit_date}</span></code>
@@ -1069,6 +1069,11 @@ where the descriptive text is meant to capture something about the model
 is the number of populations implemented in the model (not necessarily the number
 from which samples are drawn). For author initial we will use a single letter, the 1st,
 until an ID collision, in which case we will include the 2nd letter, and so forth.</p>
+<p>DFEs (Distributions of Fitness Effects) are similarly named using something descriptive
+of the distribution, and information about the publication:
+<code class="docutils literal notranslate"><span class="pre">${SomethingDescriptive}_${First_authors_last_name_first_letter}{two_digit_date}</span></code>.
+For instance, if the distribution in question is a lognormal distribution,
+then <code class="docutils literal notranslate"><span class="pre">LogNormal</span></code> might be the descriptive string.</p>
 </section>
 <section id="unit-tests">
 <h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline"></a></h2>
