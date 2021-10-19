@@ -470,35 +470,25 @@ of the instance variables.</p>
 <li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – String that uniquely identifies the annotation.</p></li>
 <li><p><strong>species</strong> (<a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a>) – The species to which this annotation applies.</p></li>
 <li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The URL where the packed and compressed GFF3 can be found.</p></li>
-<li><p><strong>zarr_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The URL of the zarr cache of the GFF3.</p></li>
-<li><p><strong>zarr_sha256</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The SHA256 checksum of the zarr cache.</p></li>
+<li><p><strong>intervals_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The URL of the intervals cache of the annotations.</p></li>
+<li><p><strong>intervals_sha256</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The SHA256 checksum of the annotations cache.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – One line description of the annotation.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – List of citations for the annotation.</p></li>
+<li><p><strong>file_pattern</strong> – The pattern used to map individual chromosome id strings
+to files</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Annotation.download">
 <span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.download" title="Permalink to this definition"></a></dt>
-<dd><p>Downloads the zarr URL and stores it in the cache directory.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="stdpopsim.Annotation.get_annotation_type_from_chromomosome">
-<span class="sig-name descname"><span class="pre">get_annotation_type_from_chromomosome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_annotation_type_from_chromomosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.get_annotation_type_from_chromomosome" title="Permalink to this definition"></a></dt>
-<dd><p>Returns all elements of type a_type from chromosome specified</p>
+<dd><p>Downloads the intervals URL and stores it in the cache directory.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Annotation.get_chromosome_annotations">
 <span class="sig-name descname"><span class="pre">get_chromosome_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_chromosome_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.get_chromosome_annotations" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the pandas dataframe for the chromosome with the specified id.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="stdpopsim.Annotation.get_genes_from_chromosome">
-<span class="sig-name descname"><span class="pre">get_genes_from_chromosome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chrom_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/annotations.html#Annotation.get_genes_from_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Annotation.get_genes_from_chromosome" title="Permalink to this definition"></a></dt>
-<dd><p>Returns all elements of type gene from annotation</p>
+<dd><p>Returns the numpy interval array for the chromosome with the specified id.</p>
 </dd></dl>
 
 <dl class="py method">
