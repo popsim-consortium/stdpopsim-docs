@@ -1109,6 +1109,7 @@ and outside the gene, all mutations are neutral and all are added with msprime.<
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
 
 <span class="n">gene_interval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">]])</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">clear_genomic_mutation_types</span><span class="p">()</span>
 <span class="n">contig</span><span class="o">.</span><span class="n">add_genomic_element_type</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">gene_interval</span><span class="p">,</span> <span class="o">**</span><span class="n">KimDFE</span><span class="p">())</span>
 
 <span class="c1"># Simulate.</span>
