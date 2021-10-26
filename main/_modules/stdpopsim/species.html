@@ -87,6 +87,21 @@
 <span class="n">registered_species</span> <span class="o">=</span> <span class="p">{}</span>
 
 
+<span class="k">def</span> <span class="nf">_missing_from_catalog</span><span class="p">(</span><span class="n">type_of_thing</span><span class="p">,</span> <span class="n">thing_id</span><span class="p">,</span> <span class="n">available_things</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a user-friendly message if the user requests an identifier not in the</span>
+<span class="sd">    catalog</span>
+
+<span class="sd">    :param str type_of_thing: The kind of requested object (e.g. species,</span>
+<span class="sd">         genetic map, etc.)</span>
+<span class="sd">    :param str thing_id: the string identifier of the requested object.</span>
+<span class="sd">    :param list available_things: a list of string identifiers that are</span>
+<span class="sd">         available.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">avail_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available_things</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_of_thing</span><span class="si">}</span><span class="s2"> &#39;</span><span class="si">{</span><span class="n">thing_id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+
 <span class="k">def</span> <span class="nf">register_species</span><span class="p">(</span><span class="n">species</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registers the specified ``species``.</span>
@@ -113,8 +128,7 @@
     <span class="k">if</span> <span class="nb">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">registered_species</span><span class="p">:</span>
         <span class="c1"># TODO we should probably have a custom exception here and standardise</span>
         <span class="c1"># on using these for all the catalog search functions.</span>
-        <span class="n">avail_sps_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">registered_species</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Species &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_sps_str</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">registered_species</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">registered_species</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span></div>
 
 
@@ -295,9 +309,10 @@
             <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">model</span>
         <span class="n">available_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">dm</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">]</span>
-        <span class="n">avail_models_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available_models</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;DemographicModel &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_models_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span>
+                <span class="s2">&quot;DemographicModel&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_models</span>
+            <span class="p">)</span>
         <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">add_demographic_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
@@ -323,8 +338,9 @@
             <span class="k">if</span> <span class="n">dfe</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">dfe</span>
         <span class="n">available_dfes</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfes</span><span class="p">]</span>
-        <span class="n">avail_dfes_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available_dfes</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DFE &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_dfes_str</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;DFE&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_dfes</span><span class="p">)</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfe</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">dfe</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfes</span><span class="p">]:</span>
@@ -354,9 +370,8 @@
             <span class="k">if</span> <span class="n">gm</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">gm</span>
         <span class="n">available_maps</span> <span class="o">=</span> <span class="p">[</span><span class="n">gm</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">gm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="p">]</span>
-        <span class="n">avail_maps_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available_maps</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Genetic map &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_maps_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;GeneticMap&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_maps</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotations</span><span class="p">):</span>
@@ -382,9 +397,8 @@
             <span class="k">if</span> <span class="n">an</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">an</span>
         <span class="n">available_anno</span> <span class="o">=</span> <span class="p">[</span><span class="n">anno</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">anno</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">]</span>
-        <span class="n">avail_anno_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available_anno</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Annotations &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_anno_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;Annotations&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_anno</span><span class="p">)</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
