@@ -359,12 +359,11 @@ and in ascending order. Should have shape Nx2, where N is the number of
 intervals.</p></li>
 <li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
 <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
-<li><p><strong>genomic_element_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">GenomicElementType</span></code> objects.
-By default, the only element is a single genomic element type that spans
-the entire contiguous region.</p></li>
-<li><p><strong>mutation_types</strong> – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ext.MutationType</span></code> object. By default,
-the only mutation type is neutral. See <code class="xref py py-class docutils literal notranslate"><span class="pre">ext.MutationType</span></code> for
-more details.</p></li>
+<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code> objects.
+By default, the only DFE is neutral</p></li>
+<li><p><strong>interval_list</strong> – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects. By default,
+the inital interval list spans the whole chrom with the
+neutral DFE</p></li>
 </ul>
 </dd>
 </dl>
@@ -384,9 +383,9 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.add_DFE">
-<span class="sig-name descname"><span class="pre">add_DFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_DFE" title="Permalink to this definition"></a></dt>
-<dd><p>Adds the provided DFE to the intervals specified, by making a new genomic
-element type with the mutation types and proportions specified by the DFE.</p>
+<span class="sig-name descname"><span class="pre">add_DFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_neutral</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_DFE" title="Permalink to this definition"></a></dt>
+<dd><p>Adds the provided DFE and the intervals specified to go with it
+to the contig</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -397,13 +396,6 @@ element type with the mutation types and proportions specified by the DFE.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="stdpopsim.Contig.add_mutation_types">
-<span class="sig-name descname"><span class="pre">add_mutation_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutation_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genomic_element_type_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_mutation_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_mutation_types" title="Permalink to this definition"></a></dt>
-<dd><p>Adds mutation types with their respective proportions to the genomic
-element type provided.</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="stdpopsim.Contig.all_intervals_array">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">all_intervals_array</span></span><a class="headerlink" href="#stdpopsim.Contig.all_intervals_array" title="Permalink to this definition"></a></dt>
@@ -412,10 +404,23 @@ element types in the form (left, right, type).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.clear_features">
+<span class="sig-name descname"><span class="pre">clear_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.clear_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.clear_features" title="Permalink to this definition"></a></dt>
+<dd><p>convenience function to clear dfe_list and interval_list</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="stdpopsim.Contig.is_neutral">
-<span class="sig-name descname"><span class="pre">is_neutral</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.is_neutral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.is_neutral" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_neutral</span></span><a class="headerlink" href="#stdpopsim.Contig.is_neutral" title="Permalink to this definition"></a></dt>
 <dd><p>returns true if the contig has no non-neutral mutation
 types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.mutation_types">
+<span class="sig-name descname"><span class="pre">mutation_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.mutation_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.mutation_types" title="Permalink to this definition"></a></dt>
+<dd><p>returns a list of hashes where each hash has structure
+{dfe_id:&lt;val&gt;, mutation_type:, id:}</p>
 </dd></dl>
 
 <dl class="py method">

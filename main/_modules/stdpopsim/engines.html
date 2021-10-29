@@ -311,7 +311,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot set both seed and random_seed&quot;</span><span class="p">)</span>
         <span class="c1"># test to make sure contig is fully neutral</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">contig</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">contig</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Contig had non neutral mutation types &quot;</span>
                 <span class="s2">&quot;but you are using the msprime engine&quot;</span>
