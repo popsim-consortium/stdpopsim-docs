@@ -79,6 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#coding-standards">Coding standards</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#naming-conventions">Naming conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
@@ -1110,6 +1111,20 @@ exec git diff-index --check --cached $against --
 </pre></div>
 </div>
 <p>Finally, rename <code class="docutils literal notranslate"><span class="pre">pre-commit.sample</span></code> to simply <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code></p>
+</section>
+<section id="code-coverage">
+<h2>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline"></a></h2>
+<p>As part of the continuous testing suite we have automated checking of how
+well the test units cover the source code. As a result it’s very helpful
+to check locally how well your tests are covering your code by asking
+<cite>pytest</cite> for coverage reports. This can be done with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest --cov-report html --cov=stdpopsim tests/
+</pre></div>
+</div>
+<p>this will output of directory of html files for you to browse test coverage
+for every file in <cite>stdpopsim</cite> in a reasonably straightfoward graphical
+way. You’ll be looking for lines of code that are highlighted yellow or red
+indicated that tests do not currently cover that bit of code.</p>
 </section>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
