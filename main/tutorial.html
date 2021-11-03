@@ -186,30 +186,30 @@ usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
                  [--msprime-model {hudson,dtwf,smc,smc_prime}]
                  [--msprime-change-model T MODEL] [--slim-path PATH]
                  [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
-                 {StrAga,BosTau,DroSec,AnoGam,HomSap,CaeEle,EscCol,AnaPla,AnoCar,CanFam,DroMel,AedAeg,AraTha,ChlRei,ApiMel,HelMel,PonAbe,download-genetic-maps}
+                 {AnoCar,HelMel,AnoGam,EscCol,StrAga,ApiMel,AnaPla,DroMel,DroSec,BosTau,AedAeg,PonAbe,CaeEle,HomSap,CanFam,ChlRei,AraTha,download-genetic-maps}
                  ...
 
 Command line interface for stdpopsim.
 
 positional arguments:
-  {StrAga,BosTau,DroSec,AnoGam,HomSap,CaeEle,EscCol,AnaPla,AnoCar,CanFam,DroMel,AedAeg,AraTha,ChlRei,ApiMel,HelMel,PonAbe,download-genetic-maps}
-    StrAga              Run simulations for Streptococcus agalactiae.
-    BosTau              Run simulations for Bos taurus.
-    DroSec              Run simulations for Drosophila sechellia.
-    AnoGam              Run simulations for Anopheles gambiae.
-    HomSap              Run simulations for Homo sapiens.
-    CaeEle              Run simulations for Caenorhabditis elegans.
-    EscCol              Run simulations for Escherichia coli.
-    AnaPla              Run simulations for Anas platyrhynchos.
+  {AnoCar,HelMel,AnoGam,EscCol,StrAga,ApiMel,AnaPla,DroMel,DroSec,BosTau,AedAeg,PonAbe,CaeEle,HomSap,CanFam,ChlRei,AraTha,download-genetic-maps}
     AnoCar              Run simulations for Anolis carolinensis.
-    CanFam              Run simulations for Canis familiaris.
-    DroMel              Run simulations for Drosophila melanogaster.
-    AedAeg              Run simulations for Aedes aegypti.
-    AraTha              Run simulations for Arabidopsis thaliana.
-    ChlRei              Run simulations for Chlamydomonas reinhardtii.
-    ApiMel              Run simulations for Apis mellifera.
     HelMel              Run simulations for Heliconius melpomene.
+    AnoGam              Run simulations for Anopheles gambiae.
+    EscCol              Run simulations for Escherichia coli.
+    StrAga              Run simulations for Streptococcus agalactiae.
+    ApiMel              Run simulations for Apis mellifera.
+    AnaPla              Run simulations for Anas platyrhynchos.
+    DroMel              Run simulations for Drosophila melanogaster.
+    DroSec              Run simulations for Drosophila sechellia.
+    BosTau              Run simulations for Bos taurus.
+    AedAeg              Run simulations for Aedes aegypti.
     PonAbe              Run simulations for Pongo abelii.
+    CaeEle              Run simulations for Caenorhabditis elegans.
+    HomSap              Run simulations for Homo sapiens.
+    CanFam              Run simulations for Canis familiaris.
+    ChlRei              Run simulations for Chlamydomonas reinhardtii.
+    AraTha              Run simulations for Arabidopsis thaliana.
     download-genetic-maps
                         Download genetic maps
 
@@ -308,6 +308,21 @@ using the <code class="docutils literal notranslate"><span class="pre">--help-mo
 
 All simulation models for Homo sapiens
 
+OutOfAfricaExtendedNeandertalAdmixturePulse_3I21: Three population out-of-Africa with an extended pulse of         Neandertal admixture into Europeans
+     Demographic model af an extended admixture pulse from Neandertals
+    into Europenas taken from Iasi et al. (2021). This model simulates
+    3 populations: Africans, Europeans and Neandertals with an Out-of-
+    Africa event. The population sizes are constant with an
+    unidirectional admixture from Neandertals into Europeans after the
+    split between Europeans and Africans. The admixture event is
+    modelled as an 800 generation (20 ky) long extended admixture
+    pulse.
+
+    Populations:
+        0: 1000 Genomes YRI (Yorubans)
+        1: 1000 Genomes CEU (Utah Residents             (CEPH) with Northern and Western European Ancestry
+        2: Neandertals
+
 OutOfAfrica_3G09: Three population out-of-Africa
      The three population Out-of-Africa model from Gutenkunst et al.
     2009. It describes the ancestral human population in Africa, the
@@ -320,21 +335,6 @@ OutOfAfrica_3G09: Three population out-of-Africa
         1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
         2: 1000 Genomes CHB (Han Chinese in Beijing, China)
 
-OutOfAfrica_2T12: Two population out-of-Africa
-     The model is derived from the Tennessen et al. analysis of the
-    jSFS from European Americans and African Americans. It describes
-    the ancestral human population in Africa, the out of Africa event,
-    and two distinct periods of subsequent European population growth
-    over the past 23kya. Model parameters are taken from Fig. S5 in Fu
-    et al.
-
-    Populations:
-        0: African Americans
-        1: European Americans
-
-Africa_1T12: African population
-     The model is a simplification of the two population Tennesen et
-    al. model with the European-American population removed so that we
 ...
 </pre></div>
 </div>
@@ -1322,23 +1322,23 @@ models available to us:</p>
 
 All simulation models for Homo sapiens
 
-OutOfAfrica_3G09: Three population out-of-Africa
-     The three population Out-of-Africa model from Gutenkunst et al.
-    2009. It describes the ancestral human population in Africa, the
-    out of Africa event, and the subsequent European-Asian population
-    split. Model parameters are the maximum likelihood values of the
-    various parameters given in Table 1 of Gutenkunst et al.
+OutOfAfricaExtendedNeandertalAdmixturePulse_3I21: Three population out-of-Africa with an extended pulse of         Neandertal admixture into Europeans
+     Demographic model af an extended admixture pulse from Neandertals
+    into Europenas taken from Iasi et al. (2021). This model simulates
+    3 populations: Africans, Europeans and Neandertals with an Out-of-
+    Africa event. The population sizes are constant with an
+    unidirectional admixture from Neandertals into Europeans after the
+    split between Europeans and Africans. The admixture event is
+    modelled as an 800 generation (20 ky) long extended admixture
+    pulse.
 
     Populations:
-        0: 1000 Genomes YRI (Yoruba)
-        1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
-        2: 1000 Genomes CHB (Han Chinese in Beijing, China)
+        0: 1000 Genomes YRI (Yorubans)
+        1: 1000 Genomes CEU (Utah Residents             (CEPH) with Northern and Western European Ancestry
+        2: Neandertals
 
-OutOfAfrica_2T12: Two population out-of-Africa
-     The model is derived from the Tennessen et al. analysis of the
-    jSFS from European Americans and African Americans. It describes
-    the ancestral human population in Africa, the out of Africa event,
-    and two distinct periods of subsequent European population growth
+OutOfAfrica_3G09: Three population out-of-Africa
+     The three population Out-of-Africa model from Gutenkunst et al.
 ...
 </pre></div>
 </div>
@@ -1414,7 +1414,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
