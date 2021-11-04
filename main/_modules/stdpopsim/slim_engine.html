@@ -154,6 +154,8 @@
 <span class="s2">    _recombination_ends = $recombination_ends;</span>
 <span class="s2">    defineConstant(&quot;recombination_rates&quot;, (1-(1-2*_recombination_rates)^Q)/2);</span>
 <span class="s2">    defineConstant(&quot;recombination_ends&quot;, _recombination_ends);</span>
+<span class="s2">    // whatever is in this dictionary will be saved out in the .trees file</span>
+<span class="s2">    defineConstant(&quot;metadata&quot;, Dictionary(&quot;Q&quot;, Q));</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 
@@ -224,7 +226,7 @@
 
 <span class="s2">// Output tree sequence file and end the simulation.</span>
 <span class="s2">function (void)end(void) {</span>
-<span class="s2">    sim.treeSeqOutput(trees_file);</span>
+<span class="s2">    sim.treeSeqOutput(trees_file, metadata=metadata);</span>
 <span class="s2">    sim.simulationFinished();</span>
 <span class="s2">}</span>
 
@@ -254,7 +256,7 @@
 <span class="s2">    n_saves = 1 + sim.getValue(&quot;n_saves&quot;);</span>
 <span class="s2">    sim.setValue(&quot;n_saves&quot;, n_saves);</span>
 <span class="s2">    dbg(&quot;save() &quot;+n_saves);</span>
-<span class="s2">    sim.treeSeqOutput(trees_file);</span>
+<span class="s2">    sim.treeSeqOutput(trees_file, metadata=metadata);</span>
 <span class="s2">}</span>
 
 <span class="s2">// Restore the simulation state.</span>
@@ -494,8 +496,8 @@
 <span class="s2">    if (length(admixture_pulses) &gt; 0 ) {</span>
 <span class="s2">        for (i in 0:(ncol(admixture_pulses)-1)) {</span>
 <span class="s2">            g = G_start + gdiff(T_start, admixture_pulses[0,i]);</span>
-<span class="s2">            dest = admixture_pulses[1,i];</span>
-<span class="s2">            src = admixture_pulses[2,i];</span>
+<span class="s2">            dest = asInteger(admixture_pulses[1,i]);</span>
+<span class="s2">            src = asInteger(admixture_pulses[2,i]);</span>
 <span class="s2">            rate = admixture_pulses[3,i];</span>
 <span class="s2">            sim.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
@@ -512,9 +514,9 @@
 <span class="s2">    if (length(drawn_mutations) &gt; 0) {</span>
 <span class="s2">        for (i in 0:(ncol(drawn_mutations)-1)) {</span>
 <span class="s2">            g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
-<span class="s2">            mut_type = drawn_mutations[1,i];</span>
-<span class="s2">            pop_id = drawn_mutations[2,i];</span>
-<span class="s2">            coordinate = drawn_mutations[3,i];</span>
+<span class="s2">            mut_type = asInteger(drawn_mutations[1,i]);</span>
+<span class="s2">            pop_id = asInteger(drawn_mutations[2,i]);</span>
+<span class="s2">            coordinate = asInteger(drawn_mutations[3,i]);</span>
 <span class="s2">            sim.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                &quot;add_mut(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;, &quot;+coordinate+&quot;);}&quot;,</span>
@@ -626,6 +628,48 @@
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
+
+
+<span class="s2">// Save genomic element type information in tree sequence metadata</span>
+<span class="s2">// This is for development purposes, and the format of this metadata</span>
+<span class="s2">// is subject to change or may even be removed!</span>
+<span class="s2">1 {</span>
+<span class="s2">    if (verbosity &gt;= 3) {</span>
+<span class="s2">        // mutationTypes</span>
+<span class="s2">        muts = Dictionary();</span>
+<span class="s2">        for (mt in sim.mutationTypes) {</span>
+<span class="s2">            mut_info = Dictionary(</span>
+<span class="s2">                &quot;distributionParams&quot;, mt.distributionParams,</span>
+<span class="s2">                &quot;distributionType&quot;, mt.distributionType,</span>
+<span class="s2">                &quot;dominanceCoeff&quot;, mt.dominanceCoeff</span>
+<span class="s2">            );</span>
+<span class="s2">            muts.setValue(asString(mt.id), mut_info);</span>
+<span class="s2">        }</span>
+<span class="s2">        metadata.setValue(&quot;mutationTypes&quot;, muts);</span>
+<span class="s2">        // genomicElementTypes</span>
+<span class="s2">        ge_starts = sim.chromosome.genomicElements.startPosition;</span>
+<span class="s2">        ge_ends= sim.chromosome.genomicElements.endPosition;</span>
+<span class="s2">        ge_types= sim.chromosome.genomicElements.genomicElementType.id;</span>
+<span class="s2">        ges = Dictionary();</span>
+<span class="s2">        for (gt in sim.genomicElementTypes) {</span>
+<span class="s2">            gt_info = Dictionary(</span>
+<span class="s2">                &quot;mutationTypes&quot;, gt.mutationTypes.id,</span>
+<span class="s2">                &quot;mutationFractions&quot;, gt.mutationFractions,</span>
+<span class="s2">                &quot;intervalStarts&quot;, ge_starts[ge_types == gt.id],</span>
+<span class="s2">                &quot;intervalEnds&quot;, ge_ends[ge_types == gt.id]</span>
+<span class="s2">            );</span>
+<span class="s2">            ges.setValue(asString(gt.id), gt_info);</span>
+<span class="s2">        }</span>
+<span class="s2">        metadata.setValue(&quot;genomicElementTypes&quot;, ges);</span>
+<span class="s2">        // mutation rates</span>
+<span class="s2">        mr = Dictionary(</span>
+<span class="s2">            &quot;rates&quot;, sim.chromosome.mutationRates,</span>
+<span class="s2">            &quot;ends&quot;, sim.chromosome.mutationEndPositions</span>
+<span class="s2">        );</span>
+<span class="s2">        metadata.setValue(&quot;mutationRates&quot;, mr);</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
 <span class="s2">&quot;&quot;&quot;</span>
 
 
@@ -640,57 +684,33 @@
     <span class="k">return</span> <span class="n">rates</span><span class="p">,</span> <span class="n">ends</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
 
-<span class="k">def</span> <span class="nf">get_slim_fractions</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">])</span>
-
-
-<span class="k">def</span> <span class="nf">compute_msp_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">slim_fractions</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    breaks = [0,10,20] means [0,10) and [10,20)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">rates</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="n">contig</span><span class="o">.</span><span class="n">all_intervals_array</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">start</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
-            <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-            <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
-        <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
-        <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slim_fractions</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="o">*</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">breaks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">length</span><span class="p">)):</span>
-        <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
-        <span class="n">rates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">rates</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rates</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">compute_slim_mutation_breaks_and_rates</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">msp_mutation_rate_map</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    breaks = [10,20] means [0,10] and (10,20]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># making sure the mut types are still concordant with the ge types</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="n">msp_mutation_rate_map</span><span class="o">.</span><span class="n">position</span>
-    <span class="n">rates</span> <span class="o">=</span> <span class="n">msp_mutation_rate_map</span><span class="o">.</span><span class="n">rate</span>
-    <span class="k">assert</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
-    <span class="n">slim_breaks</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
-    <span class="n">slim_rates</span> <span class="o">=</span> <span class="p">[</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">-</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rates</span><span class="p">]</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">)</span>
-
-
 <span class="k">def</span> <span class="nf">get_msp_and_slim_mutation_rate_maps</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a :class:`msprime.RateMap` with the mutation rate map for overlay</span>
 <span class="sd">    of neutral mutations and a tuple with the breakpoints and rates of mutations</span>
 <span class="sd">    for SLiM.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">slim_fractions</span> <span class="o">=</span> <span class="n">get_slim_fractions</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
-    <span class="n">msp_mutation_rate_map</span> <span class="o">=</span> <span class="n">compute_msp_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">slim_fractions</span><span class="p">)</span>
+    <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
+    <span class="n">slim_fractions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="nb">sum</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">p</span>
+                    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span>
+        <span class="p">]</span>
+        <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span>  <span class="c1"># append 0 for the -1 labels</span>
+    <span class="n">slim_rates</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="n">slim_fractions</span><span class="p">[</span><span class="n">dfe_labels</span><span class="p">]</span>
+    <span class="n">slim_breaks</span> <span class="o">=</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># SLiM has inclusive right endpoints</span>
 
-    <span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span> <span class="o">=</span> <span class="n">compute_slim_mutation_breaks_and_rates</span><span class="p">(</span>
-        <span class="n">contig</span><span class="p">,</span> <span class="n">msp_mutation_rate_map</span>
+    <span class="n">msp_mutation_rate_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span>
+        <span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slim_fractions</span><span class="p">[</span><span class="n">dfe_labels</span><span class="p">])</span>
     <span class="p">)</span>
+
     <span class="k">return</span> <span class="p">(</span><span class="n">msp_mutation_rate_map</span><span class="p">,</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">))</span>
 
 
@@ -969,45 +989,45 @@
 
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-    <span class="c1"># Mutation types.</span>
-    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutation_types</span><span class="p">:</span>
-        <span class="n">m_mtype</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;mutation_type&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m_mtype</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">distrib_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">m_mtype</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">m_mtype</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">:</span>
-                <span class="n">distrib_args</span><span class="p">[</span><span class="n">m_mtype</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="s2">&quot;Q * &quot;</span> <span class="o">+</span> <span class="n">distrib_args</span><span class="p">[</span><span class="n">m_mtype</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
-                <span class="p">)</span>
-            <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">distrib_args</span><span class="p">)</span>
-        <span class="c1"># dealing with distributions given by &quot;s&quot; Eidos script:</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">distrib_args</span> <span class="o">=</span> <span class="n">m_mtype</span><span class="o">.</span><span class="n">distribution_args</span>
-        <span class="n">mid</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-        <span class="n">printsc</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;    initializeMutationType(</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">m_mtype</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">m_mtype</span><span class="o">.</span><span class="n">distribution_type</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">distrib_args</span><span class="si">}</span><span class="s1">);&#39;</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">m_mtype</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">:</span>
-            <span class="c1"># T is the default for WF simulations.</span>
-            <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
     <span class="c1"># Genomic element types.</span>
+    <span class="n">next_mutation_type_id</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">):</span>
+        <span class="c1"># Mutation types.</span>
+        <span class="n">mut_type_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">distrib_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">:</span>
+                    <span class="n">distrib_args</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;Q * &quot;</span> <span class="o">+</span> <span class="n">distrib_args</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+                    <span class="p">)</span>
+                <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">distrib_args</span><span class="p">)</span>
+            <span class="c1"># dealing with distributions given by &quot;s&quot; Eidos script,</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">])</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="n">next_mutation_type_id</span>
+            <span class="n">next_mutation_type_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">mut_type_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
+            <span class="n">printsc</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;    initializeMutationType(</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">distribution_type</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">distrib_args</span><span class="si">}</span><span class="s1">);&#39;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">:</span>
+                <span class="c1"># T is the default for WF simulations.</span>
+                <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
+        <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_type_list</span><span class="p">])</span>
         <span class="n">mut_props</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">proportions</span><span class="p">])</span>
-        <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="p">[</span>
-                <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutation_types</span>
-                <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;dfe_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
-            <span class="p">]</span>
-        <span class="p">)</span>
-        <span class="n">element_starts</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
-        <span class="c1"># stdpopsim intervals are 0-based left inclusive, right exclusive, but</span>
-        <span class="c1"># SLiM intervals are right inclusive</span>
-        <span class="n">element_ends</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
         <span class="n">printsc</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;    initializeGenomicElementType(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, c(</span><span class="si">{</span><span class="n">mut_types</span><span class="si">}</span><span class="s2">), c(</span><span class="si">{</span><span class="n">mut_props</span><span class="si">}</span><span class="s2">));&quot;</span>
         <span class="p">)</span>
-        <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    initializeGenomicElement(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_starts</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_ends</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">element_starts</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
+            <span class="c1"># stdpopsim intervals are 0-based left inclusive, right exclusive, but</span>
+            <span class="c1"># SLiM intervals are right inclusive</span>
+            <span class="n">element_ends</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
+            <span class="n">printsc</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;    initializeGenomicElement(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_starts</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_ends</span><span class="si">}</span><span class="s2">);&quot;</span>
+            <span class="p">)</span>
     <span class="c1"># Mutation rate map.</span>
     <span class="n">mut_breaks</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">slim_rate_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">indent</span><span class="p">)</span>
     <span class="n">mut_rates</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">slim_rate_map</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
@@ -1265,6 +1285,8 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slim_scaling_factor must be positive&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">slim_burn_in</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slim_burn_in must be non-negative&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;SLiM requires at least one DFE.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">slim_scaling_factor</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
@@ -1458,6 +1480,7 @@
                 <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
 
         <span class="c1"># Creating a SLiM mutation model</span>
+        <span class="c1"># TODO: fix this up to do the right types? or, share them?</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SLiMMutationModel</span><span class="p">(</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">()),</span> <span class="n">next_id</span><span class="o">=</span><span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="p">)</span>

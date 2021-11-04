@@ -47,6 +47,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#species-definitions">Species definitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#demographic-models">Demographic Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selection-and-dfes">Selection and DFEs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generic-models">Generic models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#simulation-engines">Simulation Engines</a></li>
 </ul>
@@ -143,7 +144,7 @@ providing the source for the generation time and
 population size estimates.</p></li>
 <li><p><strong>demographic_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>
 instances in the catalog for this species.</p></li>
-<li><p><strong>dfes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – This list of <code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code>
+<li><p><strong>dfes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a>
 instances in the catalog for this species.</p></li>
 <li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The ensembl id for the species which is used by
 maintenance scripts to query ensembl’s database.</p></li>
@@ -252,10 +253,10 @@ A complete list of IDs for each species can be found in the
 <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></p>
+<dd class="field-even"><p><a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code> that defines the requested model.</p>
+<dd class="field-odd"><p>A <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> that defines the requested model.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -343,10 +344,13 @@ chromosome by ID, e.g. from the command line interface.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="stdpopsim.Contig">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">Contig</span></span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig" title="Permalink to this definition"></a></dt>
-<dd><p>Class representing a contiguous region of genome that is to be
-simulated. This contains the information about mutation rates
-and recombination rates that are needed to simulate this region.
-Genomic element types can be provided.</p>
+<dd><p>Class representing a contiguous region of genome that is to be simulated.
+This contains the information about mutation rates, distributions of
+fitness effects (DFEs), and recombination rates that are needed to simulate
+this region.</p>
+<p>Information about targets of selection are contained in the <code class="docutils literal notranslate"><span class="pre">dfe_list</span></code>
+and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DFE
+applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_DFE" title="stdpopsim.Contig.add_DFE"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_DFE()</span></code></a> for more information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
@@ -359,11 +363,11 @@ and in ascending order. Should have shape Nx2, where N is the number of
 intervals.</p></li>
 <li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
 <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
-<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code> objects.
-By default, the only DFE is neutral</p></li>
-<li><p><strong>interval_list</strong> – a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects. By default,
-the inital interval list spans the whole chrom with the
-neutral DFE</p></li>
+<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects.
+By default, the only DFE is completely neutral.</p></li>
+<li><p><strong>interval_list</strong> – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects containing integers.
+By default, the inital interval list spans the whole chromosome with the
+neutral DFE.</p></li>
 </ul>
 </dd>
 </dl>
@@ -383,44 +387,99 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.add_DFE">
-<span class="sig-name descname"><span class="pre">add_DFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_neutral</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_DFE" title="Permalink to this definition"></a></dt>
-<dd><p>Adds the provided DFE and the intervals specified to go with it
-to the contig</p>
+<span class="sig-name descname"><span class="pre">add_DFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_DFE" title="Permalink to this definition"></a></dt>
+<dd><p>Adds the provided DFE to the contig, applying to the regions of the
+contig specified in <code class="docutils literal notranslate"><span class="pre">intervals</span></code>. These intervals are also <em>removed</em>
+from the intervals of any previously-present DFEs - in other words,
+more recently-added DFEs take precedence. Each DFE added in this way
+carries its own MutationTypes: no mutation types are shared between
+DFEs added by different calls to <code class="docutils literal notranslate"><span class="pre">add_DFE(</span> <span class="pre">)</span></code>, even if the same DFE
+object is added more than once.</p>
+<p>For instance, if we do
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">a1</span> <span class="pre">=</span> <span class="pre">np.array([[0,</span> <span class="pre">100]])</span>
+<span class="pre">a2</span> <span class="pre">=</span> <span class="pre">np.array([[50,</span> <span class="pre">120]])</span>
+<span class="pre">contig.add_DFE(a1,</span> <span class="pre">dfe1)</span>
+<span class="pre">contig.add_DFE(a2,</span> <span class="pre">dfe2)</span>
+<span class="pre">`</span></code>
+then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies to the
+region from 50 to 120.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>intervals</strong> (<em>array</em>) – A valid set of intervals.</p></li>
-<li><p><strong>dfe</strong> (<em>DFE</em>) – A DFE object.</p></li>
+<li><p><strong>dfe</strong> (<a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><em>DFE</em></a>) – A DFE object.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="stdpopsim.Contig.all_intervals_array">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">all_intervals_array</span></span><a class="headerlink" href="#stdpopsim.Contig.all_intervals_array" title="Permalink to this definition"></a></dt>
-<dd><p>Returns an (n, 3) numpy array with the intervals across all genomic
-element types in the form (left, right, type).</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.clear_DFEs">
 <span class="sig-name descname"><span class="pre">clear_DFEs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.clear_DFEs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.clear_DFEs" title="Permalink to this definition"></a></dt>
-<dd><p>convenience function to clear dfe_list and interval_list</p>
+<dd><p>Removes all DFEs from the contig (as well as the corresponding list of
+intervals).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.dfe_breakpoints">
+<span class="sig-name descname"><span class="pre">dfe_breakpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dfe_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dfe_breakpoints" title="Permalink to this definition"></a></dt>
+<dd><p>Returns two things: the sorted vector of endpoints of all intervals across
+all DFEs in the contig, and a vector of integer labels for these intervals,
+saying which DFE goes with which interval.
+This provides a complementary method to tell which bit of the contig
+has which DFE attached, which may be more convenient than the list of two-column
+arrays provided by interval_list.</p>
+<p>Suppose there are n+1 unique interval endpoints across all the DFE intervals
+in <code class="xref py py-attr docutils literal notranslate"><span class="pre">interval_list</span></code>.  (If the intervals in that list
+cover the whole genome, the number of intervals is n.)
+This method returns a tuple of two things: <code class="docutils literal notranslate"><span class="pre">breaks,</span> <span class="pre">dfe_labels</span></code>.
+“breaks” is the array containing those n+1 unique endpoints, in increasing order,
+and “dfe” is the array of length n containing the index of the DFE
+the applies to that interval. So, <code class="docutils literal notranslate"><span class="pre">breaks[0]</span></code> is always 0, and
+<code class="docutils literal notranslate"><span class="pre">breaks[n+1]</span></code> is always the length of the contig, and
+<code class="docutils literal notranslate"><span class="pre">dfe_labels[k]</span> <span class="pre">=</span> <span class="pre">j</span></code> if
+<code class="docutils literal notranslate"><span class="pre">[breaks[k],</span> <span class="pre">breaks[k+1]]</span></code> is an interval in <code class="docutils literal notranslate"><span class="pre">contig.interval_list[j]</span></code>,
+i.e., if <code class="docutils literal notranslate"><span class="pre">contig.dfe_list[j]</span></code> applies to the interval starting at
+<code class="docutils literal notranslate"><span class="pre">breaks[k]</span></code>.  Some intervals may not be covered by a DFE, in which
+case they will have the label <code class="docutils literal notranslate"><span class="pre">-1</span></code> (beware of python indexing!).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A tuple (breaks, dfe_labels).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="stdpopsim.Contig.is_neutral">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_neutral</span></span><a class="headerlink" href="#stdpopsim.Contig.is_neutral" title="Permalink to this definition"></a></dt>
-<dd><p>returns true if the contig has no non-neutral mutation
-types</p>
+<dd><p>Returns True if the contig has no non-neutral mutation types.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.mutation_types">
 <span class="sig-name descname"><span class="pre">mutation_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.mutation_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.mutation_types" title="Permalink to this definition"></a></dt>
-<dd><p>returns a list of hashes where each hash has structure
-{dfe_id:&lt;val&gt;, mutation_type:, id:}</p>
+<dd><p>Provides information about the MutationTypes assigned to this Contig,
+along with information about which DFE they correspond to. This is
+useful because when simulating with SLiM, the mutation types are
+assigned numeric IDs in the order provided here (e.g., in the order
+encountered when iterating over the DFEs); this method provides an easy
+way to map back from their numeric ID to the DFE that each MutationType
+corresponds to.</p>
+<p>This method returns a list of dictionaries of length equal to the
+number of MutationTypes in all DFEs of the contig, each dictionary
+containing three things: <code class="docutils literal notranslate"><span class="pre">&quot;dfe_id&quot;</span></code>: the ID of the DFE this
+MutationType comes from; <code class="docutils literal notranslate"><span class="pre">mutation_type</span></code>: the mutation type; and
+<code class="docutils literal notranslate"><span class="pre">id</span></code>: the index in the list.</p>
+<p>For instance, if <code class="docutils literal notranslate"><span class="pre">muts</span></code> is a list of mutation objects in a SLiM tree
+sequence, then the following code will print the IDs of the DFEs that
+each comes from:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mut_types</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">muts</span><span class="p">:</span>
+    <span class="n">dfe_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mut_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;dfe_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">md</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;muation_list&quot;</span><span class="p">]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mutation </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> has mutations from DFE(s) </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dfe_ids</span><span class="p">)</span><span class="s2">&quot;)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -513,7 +572,7 @@ to files</p></li>
 
 </section>
 <section id="demographic-models">
-<h2>Demographic Models<a class="headerlink" href="#demographic-models" title="Permalink to this headline"></a></h2>
+<span id="sec-api-demographic-models"></span><h2>Demographic Models<a class="headerlink" href="#demographic-models" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="stdpopsim.DemographicModel">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">DemographicModel</span></span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel" title="Permalink to this definition"></a></dt>
@@ -591,6 +650,51 @@ population (default = 0).</p></li>
 <dd><p>Returns a dictionary representing the metadata about this population.</p>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="selection-and-dfes">
+<span id="sec-api-dfes"></span><h2>Selection and DFEs<a class="headerlink" href="#selection-and-dfes" title="Permalink to this headline"></a></h2>
+<p>To allow for different kinds of mutations,
+each <code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code> carries a list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects
+(for “Distribution of Fitness Effects”),
+and a list of collections of intervals to which these apply.
+The <code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code> contains the overall mutation rate,
+and the <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> describes the proportions of different types of mutations.
+Each <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> comes, by default, with a single, neutral DFE
+that applies to the entire Contig.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="stdpopsim.DFE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">DFE</span></span><a class="reference internal" href="_modules/stdpopsim/dfe.html#DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DFE" title="Permalink to this definition"></a></dt>
+<dd><p>Class representing a “Distribution of Fitness Effects”, i.e., a DFE.
+The class records the different <em>mutation types</em>, and the <em>proportions</em>
+with which they occur. The overall rate of mutations will be determined
+by the Contig to which the DFE is applied (see <a class="reference internal" href="#stdpopsim.Contig.add_DFE" title="stdpopsim.Contig.add_DFE"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_DFE()</span></code></a>).</p>
+<p>Instances of this class are constructed by DFE implementors, following the
+<a class="reference internal" href="development.html#sec-development-dfe-model"><span class="std std-ref">developer documentation</span></a>. To instead
+obtain a pre-specified model as listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>,
+see <a class="reference internal" href="#stdpopsim.Species.get_dfe" title="stdpopsim.Species.get_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Species.get_dfe()</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">proportions</span></code> and <code class="docutils literal notranslate"><span class="pre">mutation_types</span></code> must be lists of the same length,
+and <code class="docutils literal notranslate"><span class="pre">proportions</span></code> should be nonnegative numbers summing to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mutation_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of MutationTypes associated with the DFE.</p></li>
+<li><p><strong>proportions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of the proportions of new mutations that
+fall in to each of the mutation types (must sum to 1).</p></li>
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier for this model. DFE IDs should be
+short and memorable, and conform to the stdpopsim
+<a class="reference internal" href="development.html#sec-development-naming-conventions"><span class="std std-ref">naming conventions</span></a>
+for DFE models.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A short description of this model as it would be used in
+written text, e.g., “Lognormal DFE”. This should
+describe the DFE itself and not contain author or year information.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A concise, but detailed, summary of the DFE model.</p></li>
+<li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citations</span></code></a>, that describe the primary
+reference(s) for the DFE model.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
