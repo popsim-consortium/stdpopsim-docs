@@ -226,7 +226,7 @@
 
 <span class="sd">    Information about targets of selection are contained in the ``dfe_list``</span>
 <span class="sd">    and ``interval_list``. These must be of the same length, and the k-th DFE</span>
-<span class="sd">    applies to the k-th interval; see :meth:`.add_DFE` for more information.</span>
+<span class="sd">    applies to the k-th interval; see :meth:`.add_dfe` for more information.</span>
 
 <span class="sd">    :ivar mutation_rate: The rate of mutation per base per generation.</span>
 <span class="sd">    :vartype mutation_rate: float</span>
@@ -272,9 +272,9 @@
     <span class="n">interval_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_DFE</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]]),</span>
-            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">dfe</span><span class="o">.</span><span class="n">neutral_DFE</span><span class="p">(),</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">dfe</span><span class="o">.</span><span class="n">neutral_dfe</span><span class="p">(),</span>
         <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
@@ -422,7 +422,7 @@
             <span class="n">dfe_labels</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">breaks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="o">=</span> <span class="n">j</span>
         <span class="k">return</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span></div>
 
-<div class="viewcode-block" id="Contig.clear_DFEs"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_DFEs">[docs]</a>    <span class="k">def</span> <span class="nf">clear_DFEs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Contig.clear_dfes"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dfes">[docs]</a>    <span class="k">def</span> <span class="nf">clear_dfes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes all DFEs from the contig (as well as the corresponding list of</span>
 <span class="sd">        intervals).</span>
@@ -430,22 +430,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="Contig.add_DFE"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_DFE">[docs]</a>    <span class="k">def</span> <span class="nf">add_DFE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
+<div class="viewcode-block" id="Contig.add_dfe"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dfe">[docs]</a>    <span class="k">def</span> <span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the provided DFE to the contig, applying to the regions of the</span>
 <span class="sd">        contig specified in ``intervals``. These intervals are also *removed*</span>
 <span class="sd">        from the intervals of any previously-present DFEs - in other words,</span>
 <span class="sd">        more recently-added DFEs take precedence. Each DFE added in this way</span>
 <span class="sd">        carries its own MutationTypes: no mutation types are shared between</span>
-<span class="sd">        DFEs added by different calls to ``add_DFE( )``, even if the same DFE</span>
+<span class="sd">        DFEs added by different calls to ``add_dfe( )``, even if the same DFE</span>
 <span class="sd">        object is added more than once.</span>
 
 <span class="sd">        For instance, if we do</span>
 <span class="sd">        ```</span>
 <span class="sd">        a1 = np.array([[0, 100]])</span>
 <span class="sd">        a2 = np.array([[50, 120]])</span>
-<span class="sd">        contig.add_DFE(a1, dfe1)</span>
-<span class="sd">        contig.add_DFE(a2, dfe2)</span>
+<span class="sd">        contig.add_dfe(a1, dfe1)</span>
+<span class="sd">        contig.add_dfe(a2, dfe2)</span>
 <span class="sd">        ```</span>
 <span class="sd">        then ``dfe1`` applies to the region from 0 to 50 and ``dfe2`` applies to the</span>
 <span class="sd">        region from 50 to 120.</span>

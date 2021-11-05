@@ -350,7 +350,7 @@ fitness effects (DFEs), and recombination rates that are needed to simulate
 this region.</p>
 <p>Information about targets of selection are contained in the <code class="docutils literal notranslate"><span class="pre">dfe_list</span></code>
 and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DFE
-applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_DFE" title="stdpopsim.Contig.add_DFE"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_DFE()</span></code></a> for more information.</p>
+applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> for more information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
@@ -386,21 +386,21 @@ when simulated, will have double the mutation rate of the <code class="docutils 
 </div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="stdpopsim.Contig.add_DFE">
-<span class="sig-name descname"><span class="pre">add_DFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_DFE" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="stdpopsim.Contig.add_dfe">
+<span class="sig-name descname"><span class="pre">add_dfe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_dfe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_dfe" title="Permalink to this definition"></a></dt>
 <dd><p>Adds the provided DFE to the contig, applying to the regions of the
 contig specified in <code class="docutils literal notranslate"><span class="pre">intervals</span></code>. These intervals are also <em>removed</em>
 from the intervals of any previously-present DFEs - in other words,
 more recently-added DFEs take precedence. Each DFE added in this way
 carries its own MutationTypes: no mutation types are shared between
-DFEs added by different calls to <code class="docutils literal notranslate"><span class="pre">add_DFE(</span> <span class="pre">)</span></code>, even if the same DFE
+DFEs added by different calls to <code class="docutils literal notranslate"><span class="pre">add_dfe(</span> <span class="pre">)</span></code>, even if the same DFE
 object is added more than once.</p>
 <p>For instance, if we do
 <code class="docutils literal notranslate"><span class="pre">`</span>
 <span class="pre">a1</span> <span class="pre">=</span> <span class="pre">np.array([[0,</span> <span class="pre">100]])</span>
 <span class="pre">a2</span> <span class="pre">=</span> <span class="pre">np.array([[50,</span> <span class="pre">120]])</span>
-<span class="pre">contig.add_DFE(a1,</span> <span class="pre">dfe1)</span>
-<span class="pre">contig.add_DFE(a2,</span> <span class="pre">dfe2)</span>
+<span class="pre">contig.add_dfe(a1,</span> <span class="pre">dfe1)</span>
+<span class="pre">contig.add_dfe(a2,</span> <span class="pre">dfe2)</span>
 <span class="pre">`</span></code>
 then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies to the
 region from 50 to 120.</p>
@@ -415,8 +415,8 @@ region from 50 to 120.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="stdpopsim.Contig.clear_DFEs">
-<span class="sig-name descname"><span class="pre">clear_DFEs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.clear_DFEs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.clear_DFEs" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="stdpopsim.Contig.clear_dfes">
+<span class="sig-name descname"><span class="pre">clear_dfes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.clear_dfes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.clear_dfes" title="Permalink to this definition"></a></dt>
 <dd><p>Removes all DFEs from the contig (as well as the corresponding list of
 intervals).</p>
 </dd></dl>
@@ -669,7 +669,7 @@ that applies to the entire Contig.</p>
 <dd><p>Class representing a “Distribution of Fitness Effects”, i.e., a DFE.
 The class records the different <em>mutation types</em>, and the <em>proportions</em>
 with which they occur. The overall rate of mutations will be determined
-by the Contig to which the DFE is applied (see <a class="reference internal" href="#stdpopsim.Contig.add_DFE" title="stdpopsim.Contig.add_DFE"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_DFE()</span></code></a>).</p>
+by the Contig to which the DFE is applied (see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_dfe()</span></code></a>).</p>
 <p>Instances of this class are constructed by DFE implementors, following the
 <a class="reference internal" href="development.html#sec-development-dfe-model"><span class="std std-ref">developer documentation</span></a>. To instead
 obtain a pre-specified model as listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>,

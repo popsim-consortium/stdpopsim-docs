@@ -1042,7 +1042,7 @@ To do this, we need to</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>add these to the <a class="reference internal" href="api.html#stdpopsim.Contig.add_DFE" title="stdpopsim.Contig.add_DFE"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig</span></code></a>,</dt><dd><p>with the Annotation saying which portions of the genome the DFE
+<dt>add these to the <a class="reference internal" href="api.html#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig</span></code></a>,</dt><dd><p>with the Annotation saying which portions of the genome the DFE
 applies to.</p>
 </dd>
 </dl>
@@ -1066,7 +1066,7 @@ and get one using the <a class="reference internal" href="api.html#stdpopsim.Spe
 </div>
 <p>Once we have the DFE, we can add it to the Contig,
 specifying which set of <em>intervals</em> it will apply to:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span><span class="o">.</span><span class="n">add_DFE</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">)]]),</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">)]]),</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
@@ -1120,7 +1120,7 @@ are removed from the intervals associated with previous DFEs.</p>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
 
 <span class="n">gene_interval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">]])</span>
-<span class="n">contig</span><span class="o">.</span><span class="n">add_DFE</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">gene_interval</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">gene_interval</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
@@ -1184,7 +1184,7 @@ For instance, for humans we have:</p>
 to <em>all</em> exons on chromosome 21
 (the remainder of the chromosome will have only neutral mutations),
 we extract the intervals from the <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> object
-and use this in <a class="reference internal" href="api.html#stdpopsim.Contig.add_DFE" title="stdpopsim.Contig.add_DFE"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_DFE()</span></code></a>:</p>
+and use this in <a class="reference internal" href="api.html#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_dfe()</span></code></a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">)</span>
@@ -1193,7 +1193,7 @@ and use this in <a class="reference internal" href="api.html#stdpopsim.Contig.ad
 
 <span class="n">exons</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">(</span><span class="s2">&quot;ensembl_havana_104_exons&quot;</span><span class="p">)</span>
 <span class="n">exon_intervals</span> <span class="o">=</span> <span class="n">exons</span><span class="o">.</span><span class="n">get_chromosome_annotations</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-<span class="n">contig</span><span class="o">.</span><span class="n">add_DFE</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">exon_intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">exon_intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
@@ -1282,7 +1282,7 @@ the index of the new mutation type in the contig’s list of mutation types.</p>
     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;added mutation&quot;</span><span class="p">,</span>
     <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;mutation type to be added&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">contig</span><span class="o">.</span><span class="n">add_DFE</span><span class="p">(</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span>
     <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">),</span>
     <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">,</span>
 <span class="p">)</span>
