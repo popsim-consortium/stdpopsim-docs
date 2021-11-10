@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>stdpopsim.species &mdash; stdpopsim 0.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> stdpopsim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>stdpopsim.species</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for stdpopsim.species</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Infrastructure for defining basic information about species and</span>
+<span class="sd">organising the species catalog.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">attr</span>
+
+<span class="kn">import</span> <span class="nn">stdpopsim</span>
+<span class="kn">import</span> <span class="nn">stdpopsim.utils</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">registered_species</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">_missing_from_catalog</span><span class="p">(</span><span class="n">type_of_thing</span><span class="p">,</span> <span class="n">thing_id</span><span class="p">,</span> <span class="n">available_things</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a user-friendly message if the user requests an identifier not in the</span>
+<span class="sd">    catalog</span>
+
+<span class="sd">    :param str type_of_thing: The kind of requested object (e.g. species,</span>
+<span class="sd">         genetic map, etc.)</span>
+<span class="sd">    :param str thing_id: the string identifier of the requested object.</span>
+<span class="sd">    :param list available_things: a list of string identifiers that are</span>
+<span class="sd">         available.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">avail_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available_things</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_of_thing</span><span class="si">}</span><span class="s2"> &#39;</span><span class="si">{</span><span class="n">thing_id</span><span class="si">}</span><span class="s2">&#39; not in catalog (</span><span class="si">{</span><span class="n">avail_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">register_species</span><span class="p">(</span><span class="n">species</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registers the specified ``species``.</span>
+
+<span class="sd">    :param species: The species to be registered.</span>
+<span class="sd">    :type: :class:`Species`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">species</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">registered_species</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">species</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> already registered.&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Registering species &#39;</span><span class="si">{</span><span class="n">species</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="n">registered_species</span><span class="p">[</span><span class="n">species</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">species</span>
+
+
+<div class="viewcode-block" id="get_species"><a class="viewcode-back" href="../../api.html#stdpopsim.get_species">[docs]</a><span class="k">def</span> <span class="nf">get_species</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a :class:`Species` object for the specified ``id``.</span>
+
+<span class="sd">    :param str id: The string identifier for the requested species. E.g. &quot;HomSap&quot;.</span>
+<span class="sd">        A complete list of species, and their IDs, can be found in the</span>
+<span class="sd">        :ref:`sec_catalog`.</span>
+<span class="sd">    :return: An object containing the species definition.</span>
+<span class="sd">    :rtype: :class:`Species`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">registered_species</span><span class="p">:</span>
+        <span class="c1"># TODO we should probably have a custom exception here and standardise</span>
+        <span class="c1"># on using these for all the catalog search functions.</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">registered_species</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">registered_species</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span></div>
+
+
+<span class="c1"># Convenience methods for getting all the species/genetic maps/models</span>
+<span class="c1"># we have defined in the catalog.</span>
+
+
+<span class="k">def</span> <span class="nf">all_species</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an iterator over all species in the catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">registered_species</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">yield</span> <span class="n">species</span>
+
+
+<span class="k">def</span> <span class="nf">all_genetic_maps</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">all_species</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">genetic_map</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">genetic_maps</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">genetic_map</span>
+
+
+<span class="k">def</span> <span class="nf">all_demographic_models</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">all_species</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">model</span>
+
+
+<span class="k">def</span> <span class="nf">all_dfes</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">all_species</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">dfes</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">dfe</span>
+
+
+<span class="k">def</span> <span class="nf">all_annotations</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">all_species</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">an</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">an</span>
+
+
+<div class="viewcode-block" id="Species"><a class="viewcode-back" href="../../api.html#stdpopsim.Species">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">Species</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a species in the catalog.</span>
+
+<span class="sd">    :ivar ~.id: The unique identifier for this species. The species ID is</span>
+<span class="sd">        the three first letters of the genus name followed by the first</span>
+<span class="sd">        three letters of the species name, and does not</span>
+<span class="sd">        contain any spaces or punctuation. The usual scheme is to</span>
+<span class="sd">        use the first three letters of the genus and species (similar to the</span>
+<span class="sd">        approach used in the UCSC genome browser), e.g., &quot;HomSap&quot;</span>
+<span class="sd">        is the ID for Homo Sapiens.</span>
+<span class="sd">    :vartype ~.id: str</span>
+<span class="sd">    :ivar name: The full name of this species in binominal nomenclature as</span>
+<span class="sd">        it would be used in written text, e.g., &quot;Homo sapiens&quot;.</span>
+<span class="sd">    :vartype name: str</span>
+<span class="sd">    :ivar common_name: The name of this species as it would most often be</span>
+<span class="sd">        used informally in written text, e.g., &quot;human&quot;, or &quot;Orang-utan&quot;.</span>
+<span class="sd">        Where no common name for the species exist, use the most common</span>
+<span class="sd">        abbreviation, e.g., &quot;E. Coli&quot;.</span>
+<span class="sd">    :vartype common_name: str</span>
+<span class="sd">    :ivar genome: The :class:`.Genome` instance describing the details</span>
+<span class="sd">        of this species&#39; genome.</span>
+<span class="sd">    :vartype genome: stdpopsim.Genome</span>
+<span class="sd">    :ivar generation_time: The current best estimate for the generation</span>
+<span class="sd">        time of this species in years. Note that individual demographic</span>
+<span class="sd">        models in the catalog may or may not use this estimate: each</span>
+<span class="sd">        model uses the generation time that was used in the original</span>
+<span class="sd">        publication(s).</span>
+<span class="sd">    :vartype generation_time: float</span>
+<span class="sd">    :ivar population_size: The current best estimate for the population</span>
+<span class="sd">        size of this species. Note that individual demographic</span>
+<span class="sd">        models in the catalog may or may not use this estimate: each</span>
+<span class="sd">        model uses the population sizes defined in the original</span>
+<span class="sd">        publication(s).</span>
+<span class="sd">    :vartype population_size: float</span>
+<span class="sd">    :ivar citations: A list of :class:`.Citation` objects</span>
+<span class="sd">        providing the source for the generation time and</span>
+<span class="sd">        population size estimates.</span>
+<span class="sd">    :vartype citations: list</span>
+<span class="sd">    :ivar demographic_models: This list of :class:`DemographicModel`</span>
+<span class="sd">        instances in the catalog for this species.</span>
+<span class="sd">    :vartype demographic_models: list</span>
+<span class="sd">    :ivar dfes: This list of :class:`DFE`</span>
+<span class="sd">        instances in the catalog for this species.</span>
+<span class="sd">    :vartype dfes: list</span>
+<span class="sd">    :ivar ensembl_id: The ensembl id for the species which is used by</span>
+<span class="sd">        maintenance scripts to query ensembl&#39;s database.</span>
+<span class="sd">    :vartype ensembl_id: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">common_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">genome</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">generation_time</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">population_size</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">demographic_models</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dfes</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ensembl_id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># A list of genetic maps. This is undocumented as the parameter is not</span>
+    <span class="c1"># intended to be used when the Species is initialised.</span>
+    <span class="c1"># Use add_genetic_map() instead.</span>
+    <span class="n">genetic_maps</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">annotations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Species.get_contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_contig">[docs]</a>    <span class="k">def</span> <span class="nf">get_contig</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">chromosome</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">inclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">exclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a :class:`.Contig` instance describing a section of genome that</span>
+<span class="sd">        is to be simulated based on empirical information for a given species</span>
+<span class="sd">        and chromosome.</span>
+
+<span class="sd">        :param str chromosome: The ID of the chromosome to simulate.</span>
+<span class="sd">            A complete list of chromosome IDs for each species can be found in the</span>
+<span class="sd">            &quot;Genome&quot; subsection for the species in the :ref:`sec_catalog`.</span>
+<span class="sd">            If the chromosome is not given, we specify a &quot;generic&quot; contig with given</span>
+<span class="sd">            ``length``.</span>
+<span class="sd">        :param str genetic_map: If specified, obtain recombination rate information</span>
+<span class="sd">            from the genetic map with the specified ID. If None, simulate</span>
+<span class="sd">            using a default uniform recombination rate on a region with the length of</span>
+<span class="sd">            the specified chromosome. The default rates are species- and chromosome-</span>
+<span class="sd">            specific, and can be found in the :ref:`sec_catalog`. (Default: None)</span>
+<span class="sd">        :param float length_multiplier: If specified, simulate a region of length</span>
+<span class="sd">            `length_multiplier` times the length of the specified chromosome with the</span>
+<span class="sd">            same chromosome-specific mutation and recombination rates.</span>
+<span class="sd">            This option cannot currently be used in conjunction with the</span>
+<span class="sd">            ``genetic_map`` argument.</span>
+<span class="sd">        :param float mutation_rate: The per-base mutation rate. If none is given,</span>
+<span class="sd">            the mutation rate defaults to the rate specified by species chromosomes.</span>
+<span class="sd">        :param inclusion_mask: If specified, simulated genomes are subset to only</span>
+<span class="sd">            inlude regions given by the mask. The mask can be specified by the</span>
+<span class="sd">            path and file name of a bed file or as a list or array of intervals</span>
+<span class="sd">            given by the left and right end points of the intervals.</span>
+<span class="sd">        :param exclusion_mask: If specified, simulated genomes are subset to exclude</span>
+<span class="sd">            regions given by the mask. The mask can be specified by the</span>
+<span class="sd">            path and file name of a bed file or as a list or array of intervals</span>
+<span class="sd">            given by the left and right end points of the intervals.</span>
+<span class="sd">        :param float length: Used with a &quot;generic&quot; contig, specifies the</span>
+<span class="sd">            length of genome sequence for this contig. For a generic contig, mutation</span>
+<span class="sd">            and recombination rates are equal to the genome-wide average across all</span>
+<span class="sd">            autosomal chromosomes.</span>
+<span class="sd">        :rtype: :class:`.Contig`</span>
+<span class="sd">        :return: A :class:`.Contig` describing the section of the genome.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="o">.</span><span class="n">species_contig</span><span class="p">(</span>
+            <span class="n">species</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">chromosome</span><span class="o">=</span><span class="n">chromosome</span><span class="p">,</span>
+            <span class="n">genetic_map</span><span class="o">=</span><span class="n">genetic_map</span><span class="p">,</span>
+            <span class="n">length_multiplier</span><span class="o">=</span><span class="n">length_multiplier</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_mask</span><span class="p">,</span>
+            <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_mask</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Species.get_demographic_model"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_demographic_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_demographic_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a demographic model with the specified ``id``.</span>
+
+<span class="sd">        :param str id: The string identifier for the demographic model.</span>
+<span class="sd">            A complete list of IDs for each species can be found in the</span>
+<span class="sd">            &quot;Demographic Models&quot; subsection for the species in the</span>
+<span class="sd">            :ref:`sec_catalog`.</span>
+<span class="sd">        :rtype: :class:`DemographicModel`</span>
+<span class="sd">        :return: A :class:`DemographicModel` that defines the requested model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">model</span>
+        <span class="n">available_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">dm</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span>
+                <span class="s2">&quot;DemographicModel&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_models</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">add_demographic_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;DemographicModel &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39; already in catalog.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Species.get_dfe"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_dfe">[docs]</a>    <span class="k">def</span> <span class="nf">get_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a DFE with the specified ``id``.</span>
+
+<span class="sd">        :param str id: The string identifier for the DFE.</span>
+<span class="sd">            A complete list of IDs for each species can be found in the</span>
+<span class="sd">            # TODO add that section to the species catalogo</span>
+<span class="sd">            &quot;DFE&quot; subsection for the species in the</span>
+<span class="sd">            :ref:`sec_catalog`.</span>
+<span class="sd">        :rtype: :class:`DFE`</span>
+<span class="sd">        :return: A :class:`DFE` that defines the requested model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dfe</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">dfe</span>
+        <span class="n">available_dfes</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfes</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;DFE&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_dfes</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfe</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dfe</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfes</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DFE &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">dfe</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39; already in catalog.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfe</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_genetic_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">genetic_map</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">gm</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">gm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Genetic map &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39; already in catalog.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">genetic_map</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">genetic_map</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_genetic_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="c1"># NOTE: Undocumenting this method as the GeneticMap API isn&#39;t part of the</span>
+        <span class="c1"># supported public interface.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Returns a genetic map (AKA. recombination map) with the specified ``id``.</span>
+        <span class="c1"># :param str id: The string identifier for the genetic map.</span>
+        <span class="c1">#     A complete list of IDs for each species can be found in the</span>
+        <span class="c1">#     &quot;Genetic Maps&quot; subsection for the species in the :ref:`sec_catalog`.</span>
+        <span class="c1"># :rtype: :class:`GeneticMap`</span>
+        <span class="c1"># :return: A :class:`GeneticMap` that defines the frequency of</span>
+        <span class="c1">#     recombinations across the genome.</span>
+        <span class="k">for</span> <span class="n">gm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">gm</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">gm</span>
+        <span class="n">available_maps</span> <span class="o">=</span> <span class="p">[</span><span class="n">gm</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">gm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_maps</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;GeneticMap&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_maps</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotations</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">annotations</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">an</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">an</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Annotations &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">annotations</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39; already in catalog.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">annotations</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Species.get_annotations"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">get_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a set of annotations with the specified ``id``.</span>
+
+<span class="sd">        :param str id: The string identifier for the set of annotations</span>
+<span class="sd">            A complete list of IDs for each species can be found in the</span>
+<span class="sd">            &quot;Annotations&quot; subsection for the species in the :ref:`sec_catalog`.</span>
+<span class="sd">        :rtype: :class:`Annotation`</span>
+<span class="sd">        :return: A :class:`Annotation` that holds genome annotation</span>
+<span class="sd">            information from Ensembl</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">an</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">an</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">an</span>
+        <span class="n">available_anno</span> <span class="o">=</span> <span class="p">[</span><span class="n">anno</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">anno</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_missing_from_catalog</span><span class="p">(</span><span class="s2">&quot;Annotations&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">available_anno</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2020, PopSim Consortium.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
