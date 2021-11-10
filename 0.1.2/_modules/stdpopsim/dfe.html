@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stdpopsim.dfe &mdash; stdpopsim 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stdpopsim.dfe</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stdpopsim.dfe</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Common infrastructure for specifying DFEs.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># import numpy as np</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">attr</span>
+<span class="kn">import</span> <span class="nn">collections.abc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MutationType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a &quot;type&quot; of mutation.  The design closely (exactly)</span>
+<span class="sd">    mirrors SLiM&#39;s MutationType class.</span>
+
+<span class="sd">    The main thing that mutation types carry is a way of drawing a selection</span>
+<span class="sd">    coefficient for each new mutation. This ``distribution_type`` should be one</span>
+<span class="sd">    of (see the SLiM manual for more information on these):</span>
+
+<span class="sd">    - ``f``: fixed, one parameter (the selection coefficient)</span>
+<span class="sd">    - ``e``: exponential, one parameter (mean)</span>
+<span class="sd">    - ``g``: gamma, two parameters (mean, shape)</span>
+<span class="sd">    - ``n``: normal, two parameters (mean, SD)</span>
+<span class="sd">    - ``w``: Weibull, two parameters (scale, shape)</span>
+<span class="sd">    - ``l``: logNormal, two parameters (mean and sd on log scale; see rlnorm)</span>
+
+<span class="sd">    :ivar distribution_type: A one-letter abbreviation for the distribution of</span>
+<span class="sd">        fitness effects that each new mutation of this type draws from (see below).</span>
+<span class="sd">    :vartype distribution_type: str</span>
+<span class="sd">    :ivar distribution_args: Arguments for the distribution type.</span>
+<span class="sd">    :vartype distribution_type: list</span>
+<span class="sd">    :ivar dominance_coeff: A single dominance coefficient (negative = underdominance,</span>
+<span class="sd">        0 = recessive, 0.5 = additive, 1.0 = completely dominant, &gt; 1.0 = overdominant)</span>
+<span class="sd">    :vartype dominance_coeff: float</span>
+<span class="sd">    :ivar convert_to_substitution: Whether to retain any fixed mutations in the</span>
+<span class="sd">        simulation: if not, we cannot ask about their frequency once fixed.</span>
+<span class="sd">        (Either way, they will remain in the tree sequence).</span>
+<span class="sd">    :vartype convert_to_substitution: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dominance_coeff</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">distribution_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">distribution_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">convert_to_substitution</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># To add a new distribution type: validate the</span>
+        <span class="c1"># distribution_args here, and add unit tests.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span>
+            <span class="c1"># Fixed-value selection coefficent.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Fixed-value mutation types (distribution_type=&#39;f&#39;)&quot;</span>
+                    <span class="s2">&quot;take a single selection-coefficient parameter.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;g&quot;</span><span class="p">:</span>
+            <span class="c1"># Gamma-distributed selection coefficient with (mean, shape)</span>
+            <span class="c1"># parameterisation. A negative value for the mean is permitted,</span>
+            <span class="c1"># and indicates a reflection of the horizontal axis.</span>
+            <span class="c1"># See Eidos documentation for rgamma().</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Gamma-distributed sel. coefs. (distribution_type=&#39;g&#39;) &quot;</span>
+                    <span class="s2">&quot;use a (mean, shape) parameterisation, requiring shape &gt; 0.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+            <span class="c1"># An exponentially-distributed fitness effect (mean).</span>
+            <span class="c1"># See Eidos documentation for rexp().</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Exponentially-distributed sel. coefs. (distribution_type=&#39;e&#39;) &quot;</span>
+                    <span class="s2">&quot;use a (mean) parameterisation.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span>
+            <span class="c1"># An normally-distributed fitness effect (mean, standard deviation).</span>
+            <span class="c1"># See Eidos documentation for rnorm().</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Normally-distributed sel. coefs. (distribution_type=&#39;n&#39;) &quot;</span>
+                    <span class="s2">&quot;use a (mean, sd) parameterisation, requiring sd &gt; 0.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span>
+            <span class="c1"># A Weibull-distributed fitness effect (scale, shape).</span>
+            <span class="c1"># See Eidos documentation for rweibull().</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Weibull-distributed sel. coef. (distribution_type=&#39;w&#39;) &quot;</span>
+                    <span class="s2">&quot;use a (scale, shape) parameterisation, requiring parameters &gt; 0.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span>
+            <span class="c1"># An lognormally-distributed fitness effect (meanlog, sdlog).</span>
+            <span class="c1"># See Eidos documentation for rlnorm().</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">))</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Lognormally-distributed sel. coefs. (distribution_type=&#39;l&#39;) &quot;</span>
+                    <span class="s2">&quot;use a (meanlog, sdlog) parameterisation, requiring sdlog &gt; 0.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
+            <span class="c1"># dealing with lognormal distribution</span>
+            <span class="c1"># (adding instead of multiplying the mean):</span>
+            <span class="n">logmean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">logsd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;return rlnorm(1, </span><span class="si">{</span><span class="n">logmean</span><span class="si">}</span><span class="s2"> + log(Q), </span><span class="si">{</span><span class="n">logsd</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="si">}</span><span class="s2"> is not a supported distribution type&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># The index(s) of the param in the distribution_args list that should be</span>
+        <span class="c1"># multiplied by Q when using --slim-scaling-factor Q.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q_scaled_index</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># mean</span>
+            <span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># fixed value</span>
+            <span class="s2">&quot;g&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># mean</span>
+            <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># mean and sd</span>
+            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># scale</span>
+            <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># script types should just printout arguments</span>
+        <span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the mutation type is strictly neutral. This is defined here to</span>
+<span class="sd">        be of type &quot;f&quot; and with fitness effect 0.0, and so excludes other situations</span>
+<span class="sd">        that also produce only neutral mutations (e.g., exponential with mean 0).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="DFE"><a class="viewcode-back" href="../../api.html#stdpopsim.DFE">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DFE</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a &quot;Distribution of Fitness Effects&quot;, i.e., a DFE.</span>
+<span class="sd">    The class records the different *mutation types*, and the *proportions*</span>
+<span class="sd">    with which they occur. The overall rate of mutations will be determined</span>
+<span class="sd">    by the Contig to which the DFE is applied (see :meth:`.Contig.add_DFE`).</span>
+
+<span class="sd">    Instances of this class are constructed by DFE implementors, following the</span>
+<span class="sd">    :ref:`developer documentation &lt;sec_development_dfe_model&gt;`. To instead</span>
+<span class="sd">    obtain a pre-specified model as listed in the :ref:`sec_catalog`,</span>
+<span class="sd">    see :meth:`Species.get_dfe`.</span>
+
+<span class="sd">    ``proportions`` and ``mutation_types`` must be lists of the same length,</span>
+<span class="sd">    and ``proportions`` should be nonnegative numbers summing to 1.</span>
+
+<span class="sd">    :ivar ~.mutation_types: A list of MutationTypes associated with the DFE.</span>
+<span class="sd">    :vartype ~.mutation_types: list</span>
+<span class="sd">    :ivar ~.proportions: A list of the proportions of new mutations that</span>
+<span class="sd">        fall in to each of the mutation types (must sum to 1).</span>
+<span class="sd">    :vartype ~.proportions: list</span>
+<span class="sd">    :ivar ~.id: The unique identifier for this model. DFE IDs should be</span>
+<span class="sd">        short and memorable, and conform to the stdpopsim</span>
+<span class="sd">        :ref:`naming conventions &lt;sec_development_naming_conventions&gt;`</span>
+<span class="sd">        for DFE models.</span>
+<span class="sd">    :vartype ~.id: str</span>
+<span class="sd">    :ivar ~.description: A short description of this model as it would be used in</span>
+<span class="sd">        written text, e.g., &quot;Lognormal DFE&quot;. This should</span>
+<span class="sd">        describe the DFE itself and not contain author or year information.</span>
+<span class="sd">    :vartype ~.description: str</span>
+<span class="sd">    :ivar long_description: A concise, but detailed, summary of the DFE model.</span>
+<span class="sd">    :vartype long_description: str</span>
+<span class="sd">    :ivar citations: A list of :class:`Citations &lt;.Citation&gt;`, that describe the primary</span>
+<span class="sd">        reference(s) for the DFE model.</span>
+<span class="sd">    :vartype citations: list of :class:`Citation`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">mutation_types</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">attr</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
+    <span class="n">proportions</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">attr</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">attr</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="o">==</span> <span class="p">[]</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Collection</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Collection</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;proportions and mutation_types must be lists of the same length.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proportions must be nonnegative numbers.&quot;</span><span class="p">)</span>
+        <span class="n">sum_p</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">sum_p</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proportions must sum 1.0.&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">MutationType</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;mutation_types must be a list of MutationType objects.&quot;</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">long_desc_lines</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">long_description</span><span class="p">))</span>
+        <span class="p">]</span>
+        <span class="n">long_desc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">║                     &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">long_desc_lines</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;DFE:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  id               = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  description      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  long_description = </span><span class="si">{</span><span class="n">long_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span> <span class="k">for</span> <span class="n">cite</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+
+<span class="k">def</span> <span class="nf">neutral_DFE</span><span class="p">(</span><span class="n">convert_to_substitution</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;neutral&quot;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;neutral DFE&quot;</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="s2">&quot;strictly neutral mutations&quot;</span>
+    <span class="n">neutral</span> <span class="o">=</span> <span class="n">MutationType</span><span class="p">(</span><span class="n">convert_to_substitution</span><span class="o">=</span><span class="n">convert_to_substitution</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">DFE</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">neutral</span><span class="p">],</span>
+        <span class="n">proportions</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span>
+    <span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, PopSim Consortium
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

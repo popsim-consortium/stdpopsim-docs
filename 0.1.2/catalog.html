@@ -1,0 +1,3729 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Catalog &mdash; stdpopsim 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorial.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Catalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sec_catalog_AraTha">Arabidopsis thaliana</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_AraTha_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_AraTha_genetic_maps">Genetic Maps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_aratha_genetic_maps_salomeaveraged_tair7">SalomeAveraged_TAIR7</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_AraTha_models">Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_aratha_models_southmiddleatlas_1d17">South Middle Atlas piecewise constant size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_aratha_models_african2epoch_1h18">South Middle Atlas African two epoch model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_aratha_models_african3epoch_1h18">South Middle Atlas African three epoch model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sec_catalog_CanFam">Canis familiaris</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_CanFam_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_CanFam_genetic_maps">Genetic Maps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_canfam_genetic_maps_campbell2016_canfam3_1">Campbell2016_CanFam3_1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_CanFam_models">Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sec_catalog_DroMel">Drosophila melanogaster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_DroMel_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_DroMel_genetic_maps">Genetic Maps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_dromel_genetic_maps_comeroncrossover_dm6">ComeronCrossover_dm6</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_DroMel_models">Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_dromel_models_african3epoch_1s16">Three epoch African population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_dromel_models_outofafrica_2l06">Three epoch model for African and European populations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sec_catalog_EscCol">Escherichia coli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_EscCol_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_EscCol_genetic_maps">Genetic Maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_EscCol_models">Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sec_catalog_HomSap">Homo sapiens</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_HomSap_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_HomSap_genetic_maps">Genetic Maps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch37">HapMapII_GRCh37</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">DeCodeSexAveraged_GRCh36</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_HomSap_models">Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_outofafrica_3g09">Three population out-of-Africa</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_outofafrica_2t12">Two population out-of-Africa</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_africa_1t12">African population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_americanadmixture_4b11">American admixture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_outofafricaarchaicadmixture_5r19">Three population out-of-Africa with archaic admixture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_zigzag_1s14">Periodic growth and decline.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_ancienteurasia_9k19">Multi-population model of ancient Eurasia</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_papuansoutofafrica_10j19">Out-of-Africa with archaic admixture into Papuans</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_models_ashksub_7g19">Ashkenazi Jewish with substructure and European admixture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sec_catalog_PonAbe">Pongo abelii</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_PonAbe_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_PonAbe_genetic_maps">Genetic Maps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_ponabe_genetic_maps_naterpa_ponabe2">NaterPA_PonAbe2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_ponabe_genetic_maps_naterpp_ponabe2">NaterPP_PonAbe2</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_PonAbe_models">Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_ponabe_models_twospecies_2l11">Two population orangutan model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Catalog</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/catalog.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="catalog">
+<span id="sec-catalog"></span><h1>Catalog<a class="headerlink" href="#catalog" title="Permalink to this headline">¶</a></h1>
+<p>With <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, you can run simulations from a number of demographic models
+that were implemented from published demographic histories. These models have been
+rigorously checked and tested by multiple people, so you can rest easy knowing that
+your simulations are reproducible and bug-free!</p>
+<p>This catalog shows you all of the possible options that you can use to configure
+your simulation.
+It is organised around a number of choices that you’ll need to make about the
+<a class="reference internal" href="api.html#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> you wish to simulate:</p>
+<ol class="arabic simple">
+<li><p>Which <strong>chromosome</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> object?)</p></li>
+<li><p>Which <strong>genetic map</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.GeneticMap" title="stdpopsim.GeneticMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticMap</span></code></a> object?)</p></li>
+<li><p>Which <strong>model of demographic history</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> object)</p></li>
+</ol>
+<p>For instance, suppose you are interested in simulating modern human samples of</p>
+<ol class="arabic simple">
+<li><p>chromosome 22, using</p></li>
+<li><p>the HapMapII genetic map, under</p></li>
+<li><p>a 3-population Out-of-Africa model.</p></li>
+</ol>
+<p>The following command simulates 2 samples from each of the three populations,
+and saves the output to a file called <code class="docutils literal notranslate"><span class="pre">test.trees</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> stdpopsim HomSap -c chr22 -o test.trees -g HapMapII_GRCh37 -d OutOfAfrica_3G09 <span class="m">2</span> <span class="m">2</span> <span class="m">2</span>
+</pre></div>
+</div>
+<p>(To learn more about using <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> via the command-line, read our <a class="reference internal" href="tutorial.html#sec-tutorial"><span class="std std-ref">Tutorials</span></a>
+about it.)</p>
+<p>Are there other well-known organisms, genetic maps or models that
+you’d like to see in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>? Head to our <a class="reference internal" href="development.html#sec-development"><span class="std std-ref">Development</span></a>
+page to learn about the process for adding new items to the catalog.
+Then, if you feel ready, make an issue on our
+<a class="reference external" href="https://github.com/popgensims/stdpopsim/issues">GitHub page</a>.</p>
+<div class="section" id="sec_catalog_AraTha">
+<span id="sec_catalog_AraTha"></span><h2>Arabidopsis thaliana<a class="headerlink" href="#sec_catalog_AraTha" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>AraTha</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>Arabidopsis thaliana</p>
+</dd>
+<dt class="field-odd">Common name</dt>
+<dd class="field-odd"><p>A. thaliana</p>
+</dd>
+<dt class="field-even">Generation time</dt>
+<dd class="field-even"><p>1.0 (<a class="reference external" href="https://doi.org/10.1890/0012-9658(2002)083[1006:GTINSO]2.0.CO;2">Donohue, 2002</a>)</p>
+</dd>
+<dt class="field-odd">Population size</dt>
+<dd class="field-odd"><p>10000 (<a class="reference external" href="https://doi.org/10.1016/j.cell.2016.05.063">1001GenomesConsortium, 2016</a>)</p>
+</dd>
+</dl>
+<div class="section" id="sec_catalog_AraTha_genome">
+<h3>Genome<a class="headerlink" href="#sec_catalog_AraTha_genome" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Length</p></th>
+<th class="head"><p>Recombination rate</p></th>
+<th class="head"><p>Mutation rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chr1</p></td>
+<td><p>30427671</p></td>
+<td><p>8.06452e-10</p></td>
+<td><p>7e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr2</p></td>
+<td><p>19698289</p></td>
+<td><p>8.06452e-10</p></td>
+<td><p>7e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr3</p></td>
+<td><p>23459830</p></td>
+<td><p>8.06452e-10</p></td>
+<td><p>7e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr4</p></td>
+<td><p>18585056</p></td>
+<td><p>8.06452e-10</p></td>
+<td><p>7e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr5</p></td>
+<td><p>26975502</p></td>
+<td><p>8.06452e-10</p></td>
+<td><p>7e-09</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_AraTha_genetic_maps">
+<h3>Genetic Maps<a class="headerlink" href="#sec_catalog_AraTha_genetic_maps" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Year</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_aratha_genetic_maps_salomeaveraged_tair7">SalomeAveraged_TAIR7</a></p></td>
+<td><p>2012</p></td>
+<td><p>Crossover frequency map averaged over 17 populations</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_aratha_genetic_maps_salomeaveraged_tair7">
+<span id="sec_catalog_aratha_genetic_maps_salomeaveraged_tair7"></span><h4>SalomeAveraged_TAIR7<a class="headerlink" href="#sec_catalog_aratha_genetic_maps_salomeaveraged_tair7" title="Permalink to this headline">¶</a></h4>
+<p>
+        This map is based on the study of crossover frequencies in over 7000
+        plants in 17 F2 populations derived from crosses between 18 A. thaliana
+        accessions. Salomé et al provide genetic maps for each of these
+        populations. To get a single map for each chromosome, the Haldane map
+        function distances were converted to recombination rates (cM/Mb) for
+        each cross and then averaged across the 17 populations using loess.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Salomé et al., 2012. <a class="reference external" href="https://doi.org/10.1038/hdy.2011.95">https://doi.org/10.1038/hdy.2011.95</a></p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_AraTha_models">
+<h3>Models<a class="headerlink" href="#sec_catalog_AraTha_models" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_aratha_models_southmiddleatlas_1d17">SouthMiddleAtlas_1D17</a></p></td>
+<td><p>South Middle Atlas piecewise constant size</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_aratha_models_african2epoch_1h18">African2Epoch_1H18</a></p></td>
+<td><p>South Middle Atlas African two epoch model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_aratha_models_african3epoch_1h18">African3Epoch_1H18</a></p></td>
+<td><p>South Middle Atlas African three epoch model</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_aratha_models_southmiddleatlas_1d17">
+<span id="sec_catalog_aratha_models_southmiddleatlas_1d17"></span><h4>South Middle Atlas piecewise constant size<a class="headerlink" href="#sec_catalog_aratha_models_southmiddleatlas_1d17" title="Permalink to this headline">¶</a></h4>
+<p>
+            This model comes from MSMC using two randomly sampled homozygous
+            individuals (Khe32 and Ifr4) from the South Middle Atlas region
+            from the Middle Atlas Mountains in Morocco. The model is estimated
+            with 32 time periods. Because estimates from the recent and ancient
+            past are less accurate, we set the population size in the first 7
+            time periods equal to the size at the 8th time period and the size
+            during last 2 time periods equal to the size in the 30th time
+            period.
+        </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>SouthMiddleAtlas_1D17</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>South Middle Atlas piecewise constant size</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>SouthMiddleAtlas</p></td>
+<td><p>0</p></td>
+<td><p>Arabidopsis Thaliana South Middle Atlas population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Durvasula et al., 2017. <a class="reference external" href="https://doi.org/10.1073/pnas.1616736114">https://doi.org/10.1073/pnas.1616736114</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>73,989</p></td>
+<td><p>Ancestral population size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>121,796</p></td>
+<td><p>Pop. size during 1st time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>165,210</p></td>
+<td><p>Pop. size during 2nd time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>198,019</p></td>
+<td><p>Pop. size during 3rd time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>217,752</p></td>
+<td><p>Pop. size during 4th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>228,222</p></td>
+<td><p>Pop. size during 5th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>238,593</p></td>
+<td><p>Pop. size during 6th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>246,984</p></td>
+<td><p>Pop. size during 7th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>241,400</p></td>
+<td><p>Pop. size during 8th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>217,331</p></td>
+<td><p>Pop. size during 9th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>181,571</p></td>
+<td><p>Pop. size during 10th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>143456</p></td>
+<td><p>Pop. size during 11th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>111,644</p></td>
+<td><p>Pop. size during 12th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>91,813</p></td>
+<td><p>Pop. size during 13th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>83,829</p></td>
+<td><p>Pop. size during 14th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>83,932</p></td>
+<td><p>Pop. size during 15th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>87,661</p></td>
+<td><p>Pop. size during 16th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>96,283</p></td>
+<td><p>Pop. size during 17th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>110,745</p></td>
+<td><p>Pop. size during 18th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>111,132</p></td>
+<td><p>Pop. size during 19th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>78,908</p></td>
+<td><p>Pop. size during 20th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>1,537,686</p></td>
+<td><p>Begining of 1st time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>1,119,341</p></td>
+<td><p>Begining of 2nd time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>954,517</p></td>
+<td><p>Begining of 3rd time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>813,610</p></td>
+<td><p>Begining of 4th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>693,151</p></td>
+<td><p>Begining of 5th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>590,173</p></td>
+<td><p>Begining of 6th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>502,139</p></td>
+<td><p>Begining of 7th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>426,879</p></td>
+<td><p>Begining of 8th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>362,541</p></td>
+<td><p>Begining of 9th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>307,540</p></td>
+<td><p>Begining of 10th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>260,520</p></td>
+<td><p>Begining of 11th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>220,324</p></td>
+<td><p>Begining of 12th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>185,960</p></td>
+<td><p>Begining of 13th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>156,584</p></td>
+<td><p>Begining of 14th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>131,471</p></td>
+<td><p>Begining of 15th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>110,001</p></td>
+<td><p>Begining of 16th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>91,648</p></td>
+<td><p>Begining of 17th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>75,958</p></td>
+<td><p>Begining of 18th time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>62,544</p></td>
+<td><p>Begining of 19th time interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>51,077</p></td>
+<td><p>Begining of 20th time interval</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_aratha_models_african2epoch_1h18">
+<span id="sec_catalog_aratha_models_african2epoch_1h18"></span><h4>South Middle Atlas African two epoch model<a class="headerlink" href="#sec_catalog_aratha_models_african2epoch_1h18" title="Permalink to this headline">¶</a></h4>
+<p>
+            Model estimated from site frequency spectrum of synonymous
+            SNPs from African South Middle Atlas samples using
+            Williamson et al. 2005 methodology. Values come from supplementary
+            table 1 of Huber et al 2018. Sizes change from N_A -&gt; N_0 and t_1 is
+            time of the second epoch.
+        </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>African2Epoch_1H18</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>South Middle Atlas African two epoch model</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>SouthMiddleAtlas</p></td>
+<td><p>0</p></td>
+<td><p>Arabidopsis Thaliana South Middle Atlas population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Huber et al., 2018. <a class="reference external" href="https://doi.org/10.1038/s41467-018-05281-7">https://doi.org/10.1038/s41467-018-05281-7</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>746,148</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>100,218</p></td>
+<td><p>Pop. size during second epoch</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>568,344</p></td>
+<td><p>Time of second epoch</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_aratha_models_african3epoch_1h18">
+<span id="sec_catalog_aratha_models_african3epoch_1h18"></span><h4>South Middle Atlas African three epoch model<a class="headerlink" href="#sec_catalog_aratha_models_african3epoch_1h18" title="Permalink to this headline">¶</a></h4>
+<p>
+            Model estimated from site frequency spectrum of synonymous
+            SNPs from African (South Middle Atlas) samples using Williamson et
+            al. 2005 methodology. Values come from supplementary table 1 of
+            Huber et al 2018. Sizes change from N_A -&gt; N_2 -&gt; N_3 and t_2 is
+            the time of the second epoch and t_3 is the time of the 3rd epoch.
+        </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>African3Epoch_1H18</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>South Middle Atlas African three epoch model</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>SouthMiddleAtlas</p></td>
+<td><p>0</p></td>
+<td><p>Arabidopsis Thaliana South Middle Atlas population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Huber et al., 2018. <a class="reference external" href="https://doi.org/10.1038/s41467-018-05281-7">https://doi.org/10.1038/s41467-018-05281-7</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>161,744</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>24,076</p></td>
+<td><p>Pop. size during second epoch</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>203,077</p></td>
+<td><p>Pop. size during Third epoch</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>7,420</p></td>
+<td><p>Time of second epoch</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>14,534</p></td>
+<td><p>Time of third epoch</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="sec_catalog_CanFam">
+<span id="sec_catalog_CanFam"></span><h2>Canis familiaris<a class="headerlink" href="#sec_catalog_CanFam" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>CanFam</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>Canis familiaris</p>
+</dd>
+<dt class="field-odd">Common name</dt>
+<dd class="field-odd"><p>Dog</p>
+</dd>
+<dt class="field-even">Generation time</dt>
+<dd class="field-even"><p>3</p>
+</dd>
+<dt class="field-odd">Population size</dt>
+<dd class="field-odd"><p>13000 (<a class="reference external" href="https://doi.org/10.1038/nature04338">Lindblad-Toh et al., 2005</a>)</p>
+</dd>
+</dl>
+<div class="section" id="sec_catalog_CanFam_genome">
+<h3>Genome<a class="headerlink" href="#sec_catalog_CanFam_genome" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Length</p></th>
+<th class="head"><p>Recombination rate</p></th>
+<th class="head"><p>Mutation rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chr1</p></td>
+<td><p>122678785</p></td>
+<td><p>7.636e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr2</p></td>
+<td><p>85426708</p></td>
+<td><p>8.79852e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr3</p></td>
+<td><p>91889043</p></td>
+<td><p>8.00087e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr4</p></td>
+<td><p>88276631</p></td>
+<td><p>8.0523e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr5</p></td>
+<td><p>88915250</p></td>
+<td><p>9.34433e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr6</p></td>
+<td><p>77573801</p></td>
+<td><p>8.19219e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr7</p></td>
+<td><p>80974532</p></td>
+<td><p>7.29347e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr8</p></td>
+<td><p>74330416</p></td>
+<td><p>8.29131e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr9</p></td>
+<td><p>61074082</p></td>
+<td><p>9.28772e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr10</p></td>
+<td><p>69331447</p></td>
+<td><p>9.10715e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr11</p></td>
+<td><p>74389097</p></td>
+<td><p>7.63945e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr12</p></td>
+<td><p>72498081</p></td>
+<td><p>7.76106e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr13</p></td>
+<td><p>63241923</p></td>
+<td><p>8.41302e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr14</p></td>
+<td><p>60966679</p></td>
+<td><p>9.02812e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr15</p></td>
+<td><p>64190966</p></td>
+<td><p>7.85675e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr16</p></td>
+<td><p>59632846</p></td>
+<td><p>8.61406e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr17</p></td>
+<td><p>64289059</p></td>
+<td><p>9.71883e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr18</p></td>
+<td><p>55844845</p></td>
+<td><p>1.02993e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr19</p></td>
+<td><p>53741614</p></td>
+<td><p>1.04251e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr20</p></td>
+<td><p>58134056</p></td>
+<td><p>9.99097e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr21</p></td>
+<td><p>50858623</p></td>
+<td><p>1.0339e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr22</p></td>
+<td><p>61439934</p></td>
+<td><p>8.61505e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr23</p></td>
+<td><p>52294480</p></td>
+<td><p>9.12664e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr24</p></td>
+<td><p>47698779</p></td>
+<td><p>1.1146e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr25</p></td>
+<td><p>51628933</p></td>
+<td><p>1.15437e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr26</p></td>
+<td><p>38964690</p></td>
+<td><p>1.20846e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr27</p></td>
+<td><p>45876710</p></td>
+<td><p>1.12603e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr28</p></td>
+<td><p>41182112</p></td>
+<td><p>1.24636e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr29</p></td>
+<td><p>41845238</p></td>
+<td><p>1.10136e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr30</p></td>
+<td><p>40214260</p></td>
+<td><p>1.16876e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr31</p></td>
+<td><p>39895921</p></td>
+<td><p>1.13977e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr32</p></td>
+<td><p>38810281</p></td>
+<td><p>1.15559e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr33</p></td>
+<td><p>31377067</p></td>
+<td><p>1.33394e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr34</p></td>
+<td><p>42124431</p></td>
+<td><p>1.04838e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr35</p></td>
+<td><p>26524999</p></td>
+<td><p>1.42991e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr36</p></td>
+<td><p>30810995</p></td>
+<td><p>1.18752e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr37</p></td>
+<td><p>30902991</p></td>
+<td><p>1.38346e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr38</p></td>
+<td><p>23914537</p></td>
+<td><p>1.43637e-08</p></td>
+<td><p>4e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chrX</p></td>
+<td><p>123869142</p></td>
+<td><p>9.50648e-09</p></td>
+<td><p>4e-09</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_CanFam_genetic_maps">
+<h3>Genetic Maps<a class="headerlink" href="#sec_catalog_CanFam_genetic_maps" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Year</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_canfam_genetic_maps_campbell2016_canfam3_1">Campbell2016_CanFam3_1</a></p></td>
+<td><p>2016</p></td>
+<td><p>Pedigree-based crossover map from 237 individuals</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_canfam_genetic_maps_campbell2016_canfam3_1">
+<span id="sec_catalog_canfam_genetic_maps_campbell2016_canfam3_1"></span><h4>Campbell2016_CanFam3_1<a class="headerlink" href="#sec_catalog_canfam_genetic_maps_campbell2016_canfam3_1" title="Permalink to this headline">¶</a></h4>
+<p>
+        Sex-averaged crossover frequency map based on 163,400 autosomal SNPs
+        genotyped in a pedigree of 237 Labrador Retriever x Greyhound crosses.
+        Genotypes were phased without respect to the pedigree, using SHAPEIT2,
+        recombinations were called using duoHMM, and genetic distances were
+        obtained using Haldane’s map function.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Campbell et al., 2016. <a class="reference external" href="https://doi.org/10.1534/g3.116.034678">https://doi.org/10.1534/g3.116.034678</a></p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_CanFam_models">
+<h3>Models<a class="headerlink" href="#sec_catalog_CanFam_models" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="sec_catalog_DroMel">
+<span id="sec_catalog_DroMel"></span><h2>Drosophila melanogaster<a class="headerlink" href="#sec_catalog_DroMel" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>DroMel</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>Drosophila melanogaster</p>
+</dd>
+<dt class="field-odd">Common name</dt>
+<dd class="field-odd"><p>D. melanogaster</p>
+</dd>
+<dt class="field-even">Generation time</dt>
+<dd class="field-even"><p>0.1 (<a class="reference external" href="https://doi.org/10.1371/journal.pgen.0020166">Li et al., 2006</a>)</p>
+</dd>
+<dt class="field-odd">Population size</dt>
+<dd class="field-odd"><p>1720600 (<a class="reference external" href="https://doi.org/10.1371/journal.pgen.0020166">Li et al., 2006</a>)</p>
+</dd>
+</dl>
+<div class="section" id="sec_catalog_DroMel_genome">
+<h3>Genome<a class="headerlink" href="#sec_catalog_DroMel_genome" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Length</p></th>
+<th class="head"><p>Recombination rate</p></th>
+<th class="head"><p>Mutation rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chrX</p></td>
+<td><p>23542271</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr2L</p></td>
+<td><p>23513712</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr2R</p></td>
+<td><p>25286936</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr3L</p></td>
+<td><p>28110227</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chr3R</p></td>
+<td><p>32079331</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr4</p></td>
+<td><p>1348131</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+<tr class="row-even"><td><p>chrY</p></td>
+<td><p>3667352</p></td>
+<td><p>8.4e-09</p></td>
+<td><p>5.49e-09</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_DroMel_genetic_maps">
+<h3>Genetic Maps<a class="headerlink" href="#sec_catalog_DroMel_genetic_maps" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Year</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_dromel_genetic_maps_comeroncrossover_dm6">ComeronCrossover_dm6</a></p></td>
+<td><p>2012</p></td>
+<td><p>Crossover map from meioses products of 8 lab crosses</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_dromel_genetic_maps_comeroncrossover_dm6">
+<span id="sec_catalog_dromel_genetic_maps_comeroncrossover_dm6"></span><h4>ComeronCrossover_dm6<a class="headerlink" href="#sec_catalog_dromel_genetic_maps_comeroncrossover_dm6" title="Permalink to this headline">¶</a></h4>
+<p>
+        The crossover map from a study of 8 crosses of 12 highly
+        inbred lines of D. melanogaster. This is based on the
+        products of 5,860 female meioses from whole genome sequencing data.
+        Recombination rates were calculated from the density of individual
+        recombination events that were detected in crosses. This map was
+        subsequently lifted over to the dm6 assembly.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Comeron et al, 2012. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.1002905">https://doi.org/10.1371/journal.pgen.1002905</a></p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_DroMel_models">
+<h3>Models<a class="headerlink" href="#sec_catalog_DroMel_models" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_dromel_models_african3epoch_1s16">African3Epoch_1S16</a></p></td>
+<td><p>Three epoch African population</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_dromel_models_outofafrica_2l06">OutOfAfrica_2L06</a></p></td>
+<td><p>Three epoch model for African and European populations</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_dromel_models_african3epoch_1s16">
+<span id="sec_catalog_dromel_models_african3epoch_1s16"></span><h4>Three epoch African population<a class="headerlink" href="#sec_catalog_dromel_models_african3epoch_1s16" title="Permalink to this headline">¶</a></h4>
+<p>
+        The three epoch (modern, bottleneck, ancestral) model estimated for a
+        single African Drosophila Melanogaster population from Sheehan and Song (2016).
+        Population sizes are estimated by a
+        deep learning model trained on simulation data. NOTE: Due to differences in
+        coalescence units between PSMC (2N) and msms (4N) the number of generations were
+        doubled from PSMC estimates when simulating data from msms in the original
+        publication. We have faithfully represented the published model here.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>African3Epoch_1S16</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Three epoch African population</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>AFR</p></td>
+<td><p>0</p></td>
+<td><p>African D. melanogaster population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Sheehan and Song, 2016. <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">https://doi.org/10.1371/journal.pcbi.1004845</a></p></li>
+<li><p>Li et al., 2006. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.0020166">https://doi.org/10.1371/journal.pgen.0020166</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>100,000</p></td>
+<td><p>Reference population size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>652,700</p></td>
+<td><p>Ancestral pop. Size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>145,300</p></td>
+<td><p>Bottleneck pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>544,200</p></td>
+<td><p>Recent pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>2,200,000</p></td>
+<td><p>Onset of bottleneck</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>200,000</p></td>
+<td><p>Population expansion</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>0.1</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_dromel_models_outofafrica_2l06">
+<span id="sec_catalog_dromel_models_outofafrica_2l06"></span><h4>Three epoch model for African and European populations<a class="headerlink" href="#sec_catalog_dromel_models_outofafrica_2l06" title="Permalink to this headline">¶</a></h4>
+<p>
+        The three epoch (modern, bottleneck, ancestral) model estimated for two
+        Drosophila Melanogaster populations: African (ancestral) and European (derived)
+        from Li and Stephan (2006).
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>OutOfAfrica_2L06</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Three epoch model for African and European populations</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>2</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>AFR</p></td>
+<td><p>0</p></td>
+<td><p>African D. melanogaster population</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>EUR</p></td>
+<td><p>0</p></td>
+<td><p>European D. melanogaster population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Li et al., 2006. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.0020166">https://doi.org/10.1371/journal.pgen.0020166</a></p></li>
+<li><p>Li et al., 2006. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.0020166">https://doi.org/10.1371/journal.pgen.0020166</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>1,720,600</p></td>
+<td><p>Ancestral pop. Size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>8,603,000</p></td>
+<td><p>Post-expansion African pop. Size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>2,200</p></td>
+<td><p>European bottleneck pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,075,000</p></td>
+<td><p>Modern European pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>600,000</p></td>
+<td><p>Expansion of population in Africa</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>158,000</p></td>
+<td><p>African-European divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>154,600</p></td>
+<td><p>European pop. Expansion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generation time (yrs.)</p></td>
+<td><p>0.1</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="sec_catalog_EscCol">
+<span id="sec_catalog_EscCol"></span><h2>Escherichia coli<a class="headerlink" href="#sec_catalog_EscCol" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>EscCol</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>Escherichia coli</p>
+</dd>
+<dt class="field-odd">Common name</dt>
+<dd class="field-odd"><p>E. coli</p>
+</dd>
+<dt class="field-even">Generation time</dt>
+<dd class="field-even"><p>3.805175e-05 (<a class="reference external" href="https://doi.org/10.1128/JB.01368-07">Sezonov et al., 2007</a>)</p>
+</dd>
+<dt class="field-odd">Population size</dt>
+<dd class="field-odd"><p>180000000.0 (<a class="reference external" href="https://doi.org/10.1093/molbev/msw048">Lapierre et al., 2016</a>)</p>
+</dd>
+</dl>
+<div class="section" id="sec_catalog_EscCol_genome">
+<h3>Genome<a class="headerlink" href="#sec_catalog_EscCol_genome" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Length</p></th>
+<th class="head"><p>Recombination rate</p></th>
+<th class="head"><p>Mutation rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>None</p></td>
+<td><p>4641652</p></td>
+<td><p>0</p></td>
+<td><p>0.00021</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_EscCol_genetic_maps">
+<h3>Genetic Maps<a class="headerlink" href="#sec_catalog_EscCol_genetic_maps" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Year</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_EscCol_models">
+<h3>Models<a class="headerlink" href="#sec_catalog_EscCol_models" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="sec_catalog_HomSap">
+<span id="sec_catalog_HomSap"></span><h2>Homo sapiens<a class="headerlink" href="#sec_catalog_HomSap" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>HomSap</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>Homo sapiens</p>
+</dd>
+<dt class="field-odd">Common name</dt>
+<dd class="field-odd"><p>Human</p>
+</dd>
+<dt class="field-even">Generation time</dt>
+<dd class="field-even"><p>30 (<a class="reference external" href="https://doi.org/10.1086/302770">Tremblay and Vezina, 2000</a>)</p>
+</dd>
+<dt class="field-odd">Population size</dt>
+<dd class="field-odd"><p>10000 (<a class="reference external" href="https://doi.org/10.1093/oxfordjournals.molbev.a039995">Takahata, 1993</a>)</p>
+</dd>
+</dl>
+<div class="section" id="sec_catalog_HomSap_genome">
+<h3>Genome<a class="headerlink" href="#sec_catalog_HomSap_genome" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Length</p></th>
+<th class="head"><p>Recombination rate</p></th>
+<th class="head"><p>Mutation rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chr1</p></td>
+<td><p>249250621</p></td>
+<td><p>1.14856e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr2</p></td>
+<td><p>243199373</p></td>
+<td><p>1.10543e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr3</p></td>
+<td><p>198022430</p></td>
+<td><p>1.12796e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr4</p></td>
+<td><p>191154276</p></td>
+<td><p>1.12312e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr5</p></td>
+<td><p>180915260</p></td>
+<td><p>1.12809e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr6</p></td>
+<td><p>171115067</p></td>
+<td><p>1.12229e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr7</p></td>
+<td><p>159138663</p></td>
+<td><p>1.17646e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr8</p></td>
+<td><p>146364022</p></td>
+<td><p>1.14785e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr9</p></td>
+<td><p>141213431</p></td>
+<td><p>1.17807e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr10</p></td>
+<td><p>135534747</p></td>
+<td><p>1.33651e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr11</p></td>
+<td><p>135006516</p></td>
+<td><p>1.17193e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr12</p></td>
+<td><p>133851895</p></td>
+<td><p>1.30502e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr13</p></td>
+<td><p>115169878</p></td>
+<td><p>1.09149e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr14</p></td>
+<td><p>107349540</p></td>
+<td><p>1.11973e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr15</p></td>
+<td><p>102531392</p></td>
+<td><p>1.38358e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr16</p></td>
+<td><p>90354753</p></td>
+<td><p>1.48346e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr17</p></td>
+<td><p>81195210</p></td>
+<td><p>1.58249e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr18</p></td>
+<td><p>78077248</p></td>
+<td><p>1.5076e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr19</p></td>
+<td><p>59128983</p></td>
+<td><p>1.82201e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr20</p></td>
+<td><p>63025520</p></td>
+<td><p>1.71783e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr21</p></td>
+<td><p>48129895</p></td>
+<td><p>1.30452e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr22</p></td>
+<td><p>51304566</p></td>
+<td><p>1.4445e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chrX</p></td>
+<td><p>155270560</p></td>
+<td><p>1.16466e-08</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chrY</p></td>
+<td><p>59373566</p></td>
+<td><p>0</p></td>
+<td><p>1.29e-08</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_HomSap_genetic_maps">
+<h3>Genetic Maps<a class="headerlink" href="#sec_catalog_HomSap_genetic_maps" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Year</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch37">HapMapII_GRCh37</a></p></td>
+<td><p>2007</p></td>
+<td><p>HapMap Phase II lifted over to GRCh37</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">DeCodeSexAveraged_GRCh36</a></p></td>
+<td><p>2010</p></td>
+<td><p>Sex averaged map from deCode family study</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_homsap_genetic_maps_hapmapii_grch37">
+<span id="sec_catalog_homsap_genetic_maps_hapmapii_grch37"></span><h4>HapMapII_GRCh37<a class="headerlink" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch37" title="Permalink to this headline">¶</a></h4>
+<p>
+        This genetic map is from the Phase II Hapmap project
+        and based on 3.1 million genotyped SNPs
+        from 270 individuals across four populations (YRI, CEU, CHB and JPT).
+        Genome wide recombination rates were estimated using LDHat.
+        This version of the HapMap genetic map was lifted over to GRCh37
+        (and adjusted in regions where the genome assembly had rearranged)
+        for use in the 1000 Genomes project. Please see the README file on
+        the 1000 Genomes download site for details of these adjustments.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>The International HapMap Consortium, 2007. <a class="reference external" href="https://doi.org/10.1038/nature06258">https://doi.org/10.1038/nature06258</a></p></li>
+</ul>
+</div>
+<div class="section" id="sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">
+<span id="sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36"></span><h4>DeCodeSexAveraged_GRCh36<a class="headerlink" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36" title="Permalink to this headline">¶</a></h4>
+<p>
+        This genetic map is from the deCode study of recombination
+        events in 15,257 parent-offspring pairs from Iceland.
+        289,658 phased autosomal SNPs were used to call recombinations
+        within these families, and recombination rates computed from the
+        density of these events. This is the combined male and female
+        (sex averaged) map. See
+        https://www.decode.com/addendum/ for more details.</p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Kong et al, 2010. <a class="reference external" href="https://doi.org/10.1038/nature09525">https://doi.org/10.1038/nature09525</a></p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_HomSap_models">
+<h3>Models<a class="headerlink" href="#sec_catalog_HomSap_models" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_outofafrica_3g09">OutOfAfrica_3G09</a></p></td>
+<td><p>Three population out-of-Africa</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_outofafrica_2t12">OutOfAfrica_2T12</a></p></td>
+<td><p>Two population out-of-Africa</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_africa_1t12">Africa_1T12</a></p></td>
+<td><p>African population</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_americanadmixture_4b11">AmericanAdmixture_4B11</a></p></td>
+<td><p>American admixture</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_outofafricaarchaicadmixture_5r19">OutOfAfricaArchaicAdmixture_5R19</a></p></td>
+<td><p>Three population out-of-Africa with archaic admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_zigzag_1s14">Zigzag_1S14</a></p></td>
+<td><p>Periodic growth and decline.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_ancienteurasia_9k19">AncientEurasia_9K19</a></p></td>
+<td><p>Multi-population model of ancient Eurasia</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_papuansoutofafrica_10j19">PapuansOutOfAfrica_10J19</a></p></td>
+<td><p>Out-of-Africa with archaic admixture into Papuans</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_models_ashksub_7g19">AshkSub_7G19</a></p></td>
+<td><p>Ashkenazi Jewish with substructure and European admixture</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_homsap_models_outofafrica_3g09">
+<span id="sec_catalog_homsap_models_outofafrica_3g09"></span><h4>Three population out-of-Africa<a class="headerlink" href="#sec_catalog_homsap_models_outofafrica_3g09" title="Permalink to this headline">¶</a></h4>
+<p>
+        The three population Out-of-Africa model from Gutenkunst et al. 2009.
+        It describes the ancestral human population in Africa, the out of Africa
+        event, and the subsequent European-Asian population split.
+        Model parameters are the maximum likelihood values of the
+        various parameters given in Table 1 of Gutenkunst et al.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>OutOfAfrica_3G09</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Three population out-of-Africa</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>3</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>YRI</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes YRI (Yorubans)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>CEU</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>CHB</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CHB (Han Chinese in Beijing, China)</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Gutenkunst et al., 2009. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.1000695">https://doi.org/10.1371/journal.pgen.1000695</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>7,300</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>12,300</p></td>
+<td><p>YRI pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>2,100</p></td>
+<td><p>OOA pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,000</p></td>
+<td><p>CEU pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>510</p></td>
+<td><p>CHB pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.4</p></td>
+<td><p>CEU pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.55</p></td>
+<td><p>CHB pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>25</p></td>
+<td><p>YRI-OOA migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>3</p></td>
+<td><p>YRI-CEU migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>1.9</p></td>
+<td><p>YRI-CHB migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>9.6</p></td>
+<td><p>CEU-CHB migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>8,800</p></td>
+<td><p>Expansion time of ancestral pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>5,600</p></td>
+<td><p>Time of OOA event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>848</p></td>
+<td><p>Time of CEU-CHB split</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>25</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_outofafrica_2t12">
+<span id="sec_catalog_homsap_models_outofafrica_2t12"></span><h4>Two population out-of-Africa<a class="headerlink" href="#sec_catalog_homsap_models_outofafrica_2t12" title="Permalink to this headline">¶</a></h4>
+<p>
+        The model is derived from the Tennesen et al. analysis of the
+        jSFS from European Americans and African Americans.
+        It describes the ancestral human population in Africa, the out of Africa event,
+        and two distinct periods of subsequent European population growth over the past
+        23kya. Model parameters are taken from Fig. S5 in Fu et al.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>OutOfAfrica_2T12</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Two population out-of-Africa</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>2</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>AFR</p></td>
+<td><p>0</p></td>
+<td><p>African Americans</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>EUR</p></td>
+<td><p>0</p></td>
+<td><p>European Americans</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Tennessen et al., 2012. <a class="reference external" href="https://doi.org/10.1126/science.1219240">https://doi.org/10.1126/science.1219240</a></p></li>
+<li><p>Fu et al., 2013. <a class="reference external" href="https://doi.org/10.1038/nature11690">https://doi.org/10.1038/nature11690</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>7,310</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>14,474</p></td>
+<td><p>AFR pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>1,861</p></td>
+<td><p>OOA pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,032</p></td>
+<td><p>EU pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>9,279</p></td>
+<td><p>EU pop. size after 1st expansion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>501,436</p></td>
+<td><p>EU pop. size after 2nd expansion</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>432,125</p></td>
+<td><p>AFR pop. size after 1st expansion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.00307</p></td>
+<td><p>EU pop. growth rate 1st expansion</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.0195</p></td>
+<td><p>EU pop. growth rate 2st expansion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.0166</p></td>
+<td><p>AFR pop. growth rate 1st expansion</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5 per gen.)</p></td>
+<td><p>15</p></td>
+<td><p>AFR-OOA migration rate </p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5 per gen.)</p></td>
+<td><p>2.5</p></td>
+<td><p>AFR-EU migration rate (both expansions)</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>5,920</p></td>
+<td><p>Expansion time of ancestral pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>2,040</p></td>
+<td><p>Time of OOA event</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>920</p></td>
+<td><p>Beginning of 1st EU growth period</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>204.6</p></td>
+<td><p>Beginning of 2nd EU/1st AFR growth period</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>25</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_africa_1t12">
+<span id="sec_catalog_homsap_models_africa_1t12"></span><h4>African population<a class="headerlink" href="#sec_catalog_homsap_models_africa_1t12" title="Permalink to this headline">¶</a></h4>
+<p>
+        The model is a simplification of the two population Tennesen et al.
+        model with the European-American population removed so that we are
+        modeling the African population in isolation.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>Africa_1T12</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>African population</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>AFR</p></td>
+<td><p>0</p></td>
+<td><p>African</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Tennessen et al., 2012. <a class="reference external" href="https://doi.org/10.1126/science.1219240">https://doi.org/10.1126/science.1219240</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>7,310</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>14,474</p></td>
+<td><p>AFR pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>432,125</p></td>
+<td><p>AFR pop. size after 1st expansion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.0166</p></td>
+<td><p>AFR pop. growth rate 1st expansion</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>5,920</p></td>
+<td><p>Expansion time of ancestral pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>204.6</p></td>
+<td><p>Beginning of AFR growth period</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>25</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_americanadmixture_4b11">
+<span id="sec_catalog_homsap_models_americanadmixture_4b11"></span><h4>American admixture<a class="headerlink" href="#sec_catalog_homsap_models_americanadmixture_4b11" title="Permalink to this headline">¶</a></h4>
+<p>
+        Demographic model for American admixture, taken from Browning et al. 2011.
+        This model extends the Gravel et al. (2011) model of African/European/Asian
+        demographic history to simulate an admixed population with admixture
+        occurring 12 generations ago. The admixed population had an initial size
+        of 30,000 and grew at a rate of 5% per generation, with 1/6 of the
+        population of African ancestry, 1/3 European, and 1/2 Asian.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>AmericanAdmixture_4B11</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>American admixture</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>4</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>AFR</p></td>
+<td><p>0</p></td>
+<td><p>Contemporary African population</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>EUR</p></td>
+<td><p>0</p></td>
+<td><p>Contemporary European population</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>ASIA</p></td>
+<td><p>0</p></td>
+<td><p>Contemporary Asian population</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>ADMIX</p></td>
+<td><p>0</p></td>
+<td><p>Modern admixed population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Browning et al., 2011. <a class="reference external" href="http://dx.doi.org/10.1371/journal.pgen.1007385">http://dx.doi.org/10.1371/journal.pgen.1007385</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>7,310</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>14,474</p></td>
+<td><p>AFR pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>1,861</p></td>
+<td><p>OOA pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,032</p></td>
+<td><p>EU pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>554</p></td>
+<td><p>ASN pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>30,000</p></td>
+<td><p>Initial ADMIX pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.0038</p></td>
+<td><p>EU pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.0048</p></td>
+<td><p>ASN pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.05</p></td>
+<td><p>ADMIX pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>15</p></td>
+<td><p>AFR-OOA migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>2.5</p></td>
+<td><p>AFR-EU migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>0.78</p></td>
+<td><p>AFR-ASN migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>3.11</p></td>
+<td><p>EU-ASN migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>5,920</p></td>
+<td><p>Expansion time of ancestral pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>2,040</p></td>
+<td><p>Time of OOA event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>920</p></td>
+<td><p>Time of EU-ASN split</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>12</p></td>
+<td><p>Time of ADMIX population emergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p> 1/6</p></td>
+<td><p>Amount African admixture</p></td>
+</tr>
+<tr class="row-even"><td><p>ADMIX percentage</p></td>
+<td><p> 1/3</p></td>
+<td><p>Amount European admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p> 1/2</p></td>
+<td><p>Amount Asian admixture</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>25</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_outofafricaarchaicadmixture_5r19">
+<span id="sec_catalog_homsap_models_outofafricaarchaicadmixture_5r19"></span><h4>Three population out-of-Africa with archaic admixture<a class="headerlink" href="#sec_catalog_homsap_models_outofafricaarchaicadmixture_5r19" title="Permalink to this headline">¶</a></h4>
+<p>
+        The three population out-of-African model popularized by Gutenkunst et al. (2009)
+        and augmented by archaic contributions to both Eurasian and African populations.
+        Two archaic populations split early in human history, before the African
+        expansion, and contribute to Eurasian populations (putative Neanderthal branch)
+        and to the African branch (a deep diverging branch within Africa). Admixture
+        is modeled as symmetric migration between the archaic and modern human branches,
+        with contribution ending at a given time in the past.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>OutOfAfricaArchaicAdmixture_5R19</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Three population out-of-Africa with archaic admixture</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>5</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>YRI</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes YRI (Yorubans)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>CEU</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>CHB</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CHB (Han Chinese in Beijing, China)</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Neanderthal</p></td>
+<td><p>None</p></td>
+<td><p>Putative Neanderthals</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>ArchaicAFR</p></td>
+<td><p>None</p></td>
+<td><p>Putative Archaic Africans</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Ragsdale and Gravel, 2019. <a class="reference external" href="https://doi.org/10.1371/journal.pgen.1008204">https://doi.org/10.1371/journal.pgen.1008204</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>3,600</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>13,900</p></td>
+<td><p>YRI pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>880</p></td>
+<td><p>OOA pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>2,300</p></td>
+<td><p>CEU pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>650</p></td>
+<td><p>CHB pop. size after EU/AS divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.00125</p></td>
+<td><p>CEU pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.00372</p></td>
+<td><p>CHB pop. growth rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>52.2</p></td>
+<td><p>YRI-OOA migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>2.48</p></td>
+<td><p>YRI-CEU migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>0</p></td>
+<td><p>YRI-CHB migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>11.3</p></td>
+<td><p>CEU-CHB migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (kya)</p></td>
+<td><p>300</p></td>
+<td><p>Expansion time of ancestral pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (kya)</p></td>
+<td><p>61</p></td>
+<td><p>Time of OOA event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (kya)</p></td>
+<td><p>36</p></td>
+<td><p>Time of CEU-CHB split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (kya)</p></td>
+<td><p>499</p></td>
+<td><p>Archaic African split time</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (kya)</p></td>
+<td><p>125</p></td>
+<td><p>Archaic African migration begins</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>1.95</p></td>
+<td><p>Arch Afr-Nean migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (kya)</p></td>
+<td><p>559</p></td>
+<td><p>Neanderthal split time</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-5)</p></td>
+<td><p>0.825</p></td>
+<td><p>OOA pops-Nean migration rate (per gen.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (kya)</p></td>
+<td><p>18.7</p></td>
+<td><p>Archaic migrations end</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>29</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_zigzag_1s14">
+<span id="sec_catalog_homsap_models_zigzag_1s14"></span><h4>Periodic growth and decline.<a class="headerlink" href="#sec_catalog_homsap_models_zigzag_1s14" title="Permalink to this headline">¶</a></h4>
+<p>
+        A validation model used by Schiffels and Durbin (2014) and Terhorst and
+        Terhorst, Kamm, and Song (2017) with periods of exponential growth and
+        decline in a single population.
+        </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>Zigzag_1S14</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Periodic growth and decline.</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>generic</p></td>
+<td><p>0</p></td>
+<td><p>Generic expanding and contracting population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Schiffels and Durbin, 2014. <a class="reference external" href="https://doi.org/10.1038/ng.3015">https://doi.org/10.1038/ng.3015</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>1,431</p></td>
+<td><p>Ancient pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>14,312</p></td>
+<td><p>Recent pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>8.99448 x10^(-5)</p></td>
+<td><p>Growth rate for 1st growth</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>-0.00035977</p></td>
+<td><p>Growth rate for 1st decline</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.0014391</p></td>
+<td><p>Growth rate for 2nd growth</p></td>
+</tr>
+<tr class="row-odd"><td><p>Growth rate (per gen.)</p></td>
+<td><p>-0.005756</p></td>
+<td><p>Growth rate for 2rd decline</p></td>
+</tr>
+<tr class="row-even"><td><p>Growth rate (per gen.)</p></td>
+<td><p>0.023025</p></td>
+<td><p>Growth rate for 3st growth</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (gen.)</p></td>
+<td><p>34,133.31</p></td>
+<td><p>Begining of 1st growth</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (gen.)</p></td>
+<td><p>8,533.33</p></td>
+<td><p>Begining of 1st decline</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (gen.)</p></td>
+<td><p>2,133.33</p></td>
+<td><p>Begining of 2nd growth</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (gen.)</p></td>
+<td><p>533.33</p></td>
+<td><p>Begining of 2nd decline</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (gen.)</p></td>
+<td><p>33.333</p></td>
+<td><p>Begining of 3rd growth</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (gen.)</p></td>
+<td><p>133.33</p></td>
+<td><p>End of 3rd growth</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generation time (yrs.)</p></td>
+<td><p>29</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_ancienteurasia_9k19">
+<span id="sec_catalog_homsap_models_ancienteurasia_9k19"></span><h4>Multi-population model of ancient Eurasia<a class="headerlink" href="#sec_catalog_homsap_models_ancienteurasia_9k19" title="Permalink to this headline">¶</a></h4>
+<p>
+        This is the best-fitting model of a history of
+        multiple ancient and present-day human populations
+        sampled across Eurasia over the past 120,000 years.
+        The fitting was performed using momi2 (Kamm et al. 2019),
+        which uses the multi-population site-frequency spectrum
+        as input data. The model includes a ghost admixture event
+        (from unsampled basal Eurasians into early European
+        farmers), and two admixture events where the source is
+        approximately well-known (from Neanderthals into
+        Non-Africans and from Western European hunter-gatherers
+        into modern Sardinians. There are three present-day
+        populations: Sardinians, Han Chinese and African Mbuti.
+        Additionally, there are several ancient samples
+        obtained from fossils dated at different times in
+        the past: the Altai Neanderthal (Prufer et al. 2014),
+        a Mesolithic hunter-gatherer (Lazaridis et al. 2014),
+        a Neolithic early European sample (Lazaridis et al. 2014),
+        and two Palaeolithic modern humans from Siberia - MA1
+        (Raghavan et al. 2014) and  Ust’Ishim (Fu et al. 2014).
+        All the ancient samples are represented by a single diploid
+        genome.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>AncientEurasia_9K19</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Multi-population model of ancient Eurasia</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>9</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Mbuti</p></td>
+<td><p>0</p></td>
+<td><p>Present-day African Mbuti</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>LBK</p></td>
+<td><p>320</p></td>
+<td><p>Early European farmer (EEF)</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Sardinian</p></td>
+<td><p>0</p></td>
+<td><p>Present-day Sardinian</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Loschbour</p></td>
+<td><p>300</p></td>
+<td><p>Western hunter-gatherer (WHG)</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>MA1</p></td>
+<td><p>960</p></td>
+<td><p>Upper Palaeolithic MAl’ta culture</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>Han</p></td>
+<td><p>0</p></td>
+<td><p>Present-day Han Chinese</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>UstIshim</p></td>
+<td><p>1800</p></td>
+<td><p>early Palaeolithic Ust’-Ishim</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Neanderthal</p></td>
+<td><p>2000</p></td>
+<td><p>Altai Neanderthal from Siberia</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>BasalEurasian</p></td>
+<td><p>None</p></td>
+<td><p>Basal Eurasians</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Kamm et al., 2019. <a class="reference external" href="https://doi.org/10.1080/01621459.2019.1635482">https://doi.org/10.1080/01621459.2019.1635482</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>17,300</p></td>
+<td><p>Mbuti pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>75.7</p></td>
+<td><p>EEF pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>15,000</p></td>
+<td><p>Sardinian pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,920</p></td>
+<td><p>Size of WHG, Bazal, Mal’ta and Ust’-Ishim populations</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>6,300</p></td>
+<td><p>Han Chinese pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>86.9</p></td>
+<td><p>Neanderthal pop. size after exp. decline</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>2,340</p></td>
+<td><p>(WHG + Han chinese) pop. size before divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>29,100</p></td>
+<td><p>(WHG + Mbuti) pop. size before divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>18,200</p></td>
+<td><p>Ancestral pop. size and Nean. size before exp. decline</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>12,000</p></td>
+<td><p>(Sardinian + EEF) pop. size before divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>696,000</p></td>
+<td><p>Time of WHG and Neanderthal split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>95,800</p></td>
+<td><p>Time of WHG and Mbuti split, start of Nean. decline</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>79,800</p></td>
+<td><p>Time of WHG and Bazal split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>51,500</p></td>
+<td><p>Time of WHG and Ust’Ishim split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>50,400</p></td>
+<td><p>Time of WHG and Han Chinese split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>44,900</p></td>
+<td><p>Time of WHG and Mal’ta split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>37,700</p></td>
+<td><p>Time of WHG and EEF split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>7,690</p></td>
+<td><p>Time of EEF and Sardinian split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>56,800</p></td>
+<td><p>Time of Neanderthal to Eurasian (WHG) admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>33,700</p></td>
+<td><p>Time of Bazal to EEF admixture</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>1,230</p></td>
+<td><p>Time of WHG to Sardinian admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p>2.96</p></td>
+<td><p>Amount of Neanderthal admixture in Eurasian pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>ADMIX percentage</p></td>
+<td><p>9.36</p></td>
+<td><p>Amount of Bazal admixture in EEF pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p>3.17</p></td>
+<td><p>Amount of WHG admixture in Sardinian pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>8,000</p></td>
+<td><p>Time of EEF samples</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>7,500</p></td>
+<td><p>Time of WHG samples</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>24,000</p></td>
+<td><p>Time of MAl’ta samples</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>45,000</p></td>
+<td><p>Time of Ust’-Ishim samples</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>50,000</p></td>
+<td><p>Time of Neanderthal samples</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generation time (yrs.)</p></td>
+<td><p>25</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_papuansoutofafrica_10j19">
+<span id="sec_catalog_homsap_models_papuansoutofafrica_10j19"></span><h4>Out-of-Africa with archaic admixture into Papuans<a class="headerlink" href="#sec_catalog_homsap_models_papuansoutofafrica_10j19" title="Permalink to this headline">¶</a></h4>
+<p>
+        A ten population model of out-of-Africa, including two pulses of
+        Denisovan admixture into Papuans, and several pulses of Neandertal
+        admixture into non-Africans.
+        Most parameters are from Jacobs et al. (2019), Table S5 and Figure S5.
+        This model is an extension of one from Malaspinas et al. (2016), thus
+        some parameters are inherited from there.
+        </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>PapuansOutOfAfrica_10J19</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Out-of-Africa with archaic admixture into Papuans</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>10</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>YRI</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes YRI (Yorubans)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>CEU</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>CHB</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CHB (Han Chinese in Beijing, China)</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Papuan</p></td>
+<td><p>0</p></td>
+<td><p>Papuans from Indonesian and New Guinea</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>DenA</p></td>
+<td><p>2058</p></td>
+<td><p>Altai Denisovan (sampling) lineage</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>NeaA</p></td>
+<td><p>2612</p></td>
+<td><p>Altai Neandertal (sampling) lineage</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>Den1</p></td>
+<td><p>None</p></td>
+<td><p>Denisovan D1 (introgressing) lineage</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Den2</p></td>
+<td><p>None</p></td>
+<td><p>Denisovan D2 (introgressing) lineage</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>Nea1</p></td>
+<td><p>None</p></td>
+<td><p>Neandertal N1 (introgressing) lineage</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>Ghost</p></td>
+<td><p>None</p></td>
+<td><p>Out-of-Africa lineage</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Jacobs et al., 2019. <a class="reference external" href="https://doi.org/10.1016/j.cell.2019.02.035">https://doi.org/10.1016/j.cell.2019.02.035</a></p></li>
+<li><p>Malaspinas et al., 2016. <a class="reference external" href="https://doi.org/10.1038/nature18299">https://doi.org/10.1038/nature18299</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>29</p></td>
+<td><p>Generation time</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>48,433</p></td>
+<td><p>African pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>6,962</p></td>
+<td><p>European pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>9,025</p></td>
+<td><p>East Asian pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>8,834</p></td>
+<td><p>Papuan pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>5,083</p></td>
+<td><p>Altai Denisovan pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>826</p></td>
+<td><p>Altai Neandertal pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>13,249</p></td>
+<td><p>Introgressing Denisovan D1 pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>13,249</p></td>
+<td><p>Introgressing Denisovan D2 pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>13,249</p></td>
+<td><p>Introgressing Neandertal pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>8,516</p></td>
+<td><p>Ghost (out-of-Africa lineage) pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>12,971</p></td>
+<td><p>(European + East Asian) pop. size before divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>41,563</p></td>
+<td><p>(Ghost + African) pop. size before divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>13,249</p></td>
+<td><p>(Denisovan + Neandertal) pop. size before divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>32,671</p></td>
+<td><p>(Human + Archaic) pop. size before divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>100</p></td>
+<td><p>(Altai Denisovan + Introgressing Denisovan D1) pop. size before divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>100</p></td>
+<td><p>(Altai Denisovan + Introgressing Denisovan D2) pop. size before divergence</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>13,249</p></td>
+<td><p>(Altai Neandertal + Introgressing Neandertal) pop. size before divergence</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>37,497</p></td>
+<td><p>Time of European and East Asian split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>50,982</p></td>
+<td><p>Time of Ghost and (European + East Asian) split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>51,736</p></td>
+<td><p>Time of Ghost and Papuan split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>64,322</p></td>
+<td><p>Time of Ghost and African split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>97,875</p></td>
+<td><p>Time of Altai Neandertal and Introgressing Neandertal split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>282,750</p></td>
+<td><p>Time of Altai Denisovan and Introgressing Denisovan D1 split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>362,500</p></td>
+<td><p>Time of Altai Denisovan and Introgressing Denisovan D2 split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>437,610</p></td>
+<td><p>Time of Denisovan and Neandertal split</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>586,525</p></td>
+<td><p>Time of Human and Archaic split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>2,231</p></td>
+<td><p>(European + East Asian) bottleneck pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>243</p></td>
+<td><p>Papuan bottleneck pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,394</p></td>
+<td><p>Ghost (out-of-Africa) bottleneck pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>48,111</p></td>
+<td><p>Time of the (European + East Asian) bottleneck</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>48,865</p></td>
+<td><p>Time of the Papuan bottleneck</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>61,451</p></td>
+<td><p>Time of the Ghost (out-of-Africa) bottleneck</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p>2.2</p></td>
+<td><p>Amount of Denisovan D1 admixture in Papaun pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>ADMIX percentage</p></td>
+<td><p>1.8</p></td>
+<td><p>Amount of Denisovan D2 admixture in Papaun pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p>2.4</p></td>
+<td><p>Amount of Neandertal admixture in Ghost pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>ADMIX percentage</p></td>
+<td><p>1.1</p></td>
+<td><p>Amount of Neandertal admixture in (European + East Asian) pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p>0.2</p></td>
+<td><p>Amount of Neandertal admixture in Papuan pop.</p></td>
+</tr>
+<tr class="row-even"><td><p>ADMIX percentage</p></td>
+<td><p>0.2</p></td>
+<td><p>Amount of Neandertal admixture in East Asian pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>29,800</p></td>
+<td><p>Time of Denisovan D1 to Papuan admixture</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>45,700</p></td>
+<td><p>Time of Denisovan D2 to Papuan admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>53,737</p></td>
+<td><p>Time of Neandertal to Ghost admixture</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>45,414</p></td>
+<td><p>Time of Neandertal to (European + East Asian) admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>40,948</p></td>
+<td><p>Time of Neandertal to Papuan admixture</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>25,607</p></td>
+<td><p>Time of Neandertal to East Asian admixture</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-4)</p></td>
+<td><p>1.79</p></td>
+<td><p>Ghost–African migration rate</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-4)</p></td>
+<td><p>4.42</p></td>
+<td><p>Ghost–European migration rate</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-4)</p></td>
+<td><p>31.4</p></td>
+<td><p>European–East Asian migration rate</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-4)</p></td>
+<td><p>57.2</p></td>
+<td><p>East Asian–Papuan migration rate</p></td>
+</tr>
+<tr class="row-odd"><td><p>Migration rate (x10^-4)</p></td>
+<td><p>5.72</p></td>
+<td><p>(European + East Asian)–Papuan migration rate</p></td>
+</tr>
+<tr class="row-even"><td><p>Migration rate (x10^-4)</p></td>
+<td><p>4.42</p></td>
+<td><p>(European + East Asian)–Ghost migration rate</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time (yrs.)</p></td>
+<td><p>37,497</p></td>
+<td><p>(European + East Asian)–Papuan migration begins</p></td>
+</tr>
+<tr class="row-even"><td><p>Time (yrs.)</p></td>
+<td><p>37,497</p></td>
+<td><p>(European + East Asian)–Ghost migration begins</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_homsap_models_ashksub_7g19">
+<span id="sec_catalog_homsap_models_ashksub_7g19"></span><h4>Ashkenazi Jewish with substructure and European admixture<a class="headerlink" href="#sec_catalog_homsap_models_ashksub_7g19" title="Permalink to this headline">¶</a></h4>
+<p>
+    This was the best fit model of Ashkenazi Jewish demographic history from
+    Gladstein and Hammer 2019, shown in Figure 1, labeled “Substructure Model”.
+    Model choice and parameter estimation were performed with Approximate
+    Bayesian Computation. Parameter values are based on the mode from ABC found
+    in Table S3 of Gladstein and Hammer 2019. In this model, the ancestors of
+    Europeans and Middle Eastern populations diverge. Non-Ashkenazi Jewish
+    populations then diverge from the Middle Eastern population. The Ashkenazi
+    Jews then diverge from the other Jewish populations and experience a
+    substantial reduction in population size and a single pulse of gene flow
+    from Europeans (corresponding to their arrival in Europe). After the gene
+    flow from Europeans to the Ashkenazi Jews, the Ashkenazi Jews split into
+    two groups, the Western and Eastern. Finally, the Western Ashkenazi Jews
+    experience moderate instantaneous population size increase, and the
+    Eastern experience a massive population size increase. In addition to the
+    demographic model Gladstein and Hammer 2019 also incorporated an SNP array
+    ascertainment scheme into the simulation. This demographic model does not
+    include the SNP array ascertainment scheme. It should be noted that
+    Gladstein and Hammer 2019 simulated with a mutation rate of 2.5e-8.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>AshkSub_7G19</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Ashkenazi Jewish with substructure and European admixture</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>7</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>YRI</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes YRI (Yorubans)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>CHB</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CHB (Han Chinese in Beijing, China)</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>CEU</p></td>
+<td><p>0</p></td>
+<td><p>1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>ME</p></td>
+<td><p>0</p></td>
+<td><p>Middle Eastern</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>J</p></td>
+<td><p>0</p></td>
+<td><p>non-Ashkenazi Jewish</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>WAJ</p></td>
+<td><p>0</p></td>
+<td><p>Western Ashkenazi Jewish</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>EAJ</p></td>
+<td><p>0</p></td>
+<td><p>Eastern Ashkenazi Jewish</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Gladstein and Hammer, 2019. <a class="reference external" href="https://doi.org/10.1093/molbev/msz047">https://doi.org/10.1093/molbev/msz047</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>7,300</p></td>
+<td><p>Ancestral African pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>18,197</p></td>
+<td><p>YRI pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>4,073</p></td>
+<td><p>CHB pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>33,113</p></td>
+<td><p>CEU pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>436,515</p></td>
+<td><p>Middle Eastern pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>354,813</p></td>
+<td><p>non-AJ Jewish pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>6,606</p></td>
+<td><p> Western AJ pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>1,949,844</p></td>
+<td><p> Eastern AJ founder pop. size</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>8,800</p></td>
+<td><p>Expansion time of YRI ancestral pop.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>2,105</p></td>
+<td><p>Time of OOA event</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>850</p></td>
+<td><p>Time of CEU-CHB split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>481</p></td>
+<td><p>Time of Middle Eastern-CEU split</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>211</p></td>
+<td><p>Time of Jewish-Middle Eastern split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>29</p></td>
+<td><p>Time of AJ-Jewish split</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>28</p></td>
+<td><p>Time of geneflow (not inferred)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>14</p></td>
+<td><p>Time of Eastern-Western AJ split</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>13</p></td>
+<td><p>Time of AJ growth (not inferred)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADMIX percentage</p></td>
+<td><p> 0.17</p></td>
+<td><p> European to AJ gene flow</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>25</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="sec_catalog_PonAbe">
+<span id="sec_catalog_PonAbe"></span><h2>Pongo abelii<a class="headerlink" href="#sec_catalog_PonAbe" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>PonAbe</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>Pongo abelii</p>
+</dd>
+<dt class="field-odd">Common name</dt>
+<dd class="field-odd"><p>Sumatran orangutan</p>
+</dd>
+<dt class="field-even">Generation time</dt>
+<dd class="field-even"><p>20 (<a class="reference external" href="http://doi.org/10.1038/nature09687">Locke et al., 2011</a>)</p>
+</dd>
+<dt class="field-odd">Population size</dt>
+<dd class="field-odd"><p>17900.0 (<a class="reference external" href="http://doi.org/10.1038/nature09687">Locke et al., 2011</a>)</p>
+</dd>
+</dl>
+<div class="section" id="sec_catalog_PonAbe_genome">
+<h3>Genome<a class="headerlink" href="#sec_catalog_PonAbe_genome" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Length</p></th>
+<th class="head"><p>Recombination rate</p></th>
+<th class="head"><p>Mutation rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>chr1</p></td>
+<td><p>229942017</p></td>
+<td><p>5.19e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr2a</p></td>
+<td><p>113028656</p></td>
+<td><p>5.43e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr2b</p></td>
+<td><p>135000294</p></td>
+<td><p>5.38e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr3</p></td>
+<td><p>202140232</p></td>
+<td><p>5.36e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr4</p></td>
+<td><p>198332218</p></td>
+<td><p>5.43e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr5</p></td>
+<td><p>183952662</p></td>
+<td><p>5.2e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr6</p></td>
+<td><p>174210431</p></td>
+<td><p>5.22e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr7</p></td>
+<td><p>157549271</p></td>
+<td><p>5.73e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr8</p></td>
+<td><p>153482349</p></td>
+<td><p>5.67e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr9</p></td>
+<td><p>135191526</p></td>
+<td><p>5.34e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr10</p></td>
+<td><p>133410057</p></td>
+<td><p>5.91e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr11</p></td>
+<td><p>132107971</p></td>
+<td><p>5.29e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr12</p></td>
+<td><p>136387465</p></td>
+<td><p>5.44e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr13</p></td>
+<td><p>117095149</p></td>
+<td><p>4.91e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr14</p></td>
+<td><p>108868599</p></td>
+<td><p>4.7e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr15</p></td>
+<td><p>99152023</p></td>
+<td><p>4.82e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr16</p></td>
+<td><p>77800216</p></td>
+<td><p>6.12e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr17</p></td>
+<td><p>73212453</p></td>
+<td><p>7.26e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr18</p></td>
+<td><p>94050890</p></td>
+<td><p>4.57e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr19</p></td>
+<td><p>60714840</p></td>
+<td><p>7.56e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr20</p></td>
+<td><p>62736349</p></td>
+<td><p>5.83e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chr21</p></td>
+<td><p>48394510</p></td>
+<td><p>4.98e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-even"><td><p>chr22</p></td>
+<td><p>46535552</p></td>
+<td><p>6.03e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p>chrX</p></td>
+<td><p>156195299</p></td>
+<td><p>9.5e-09</p></td>
+<td><p>1.5e-08</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_PonAbe_genetic_maps">
+<h3>Genetic Maps<a class="headerlink" href="#sec_catalog_PonAbe_genetic_maps" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Year</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_ponabe_genetic_maps_naterpa_ponabe2">NaterPA_PonAbe2</a></p></td>
+<td><p>2017</p></td>
+<td><p>From Nater et al. (2017) for Pongo abelii</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_ponabe_genetic_maps_naterpp_ponabe2">NaterPP_PonAbe2</a></p></td>
+<td><p>2017</p></td>
+<td><p>From Nater et al. (2017) for Pongo pygmaeus</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_ponabe_genetic_maps_naterpa_ponabe2">
+<span id="sec_catalog_ponabe_genetic_maps_naterpa_ponabe2"></span><h4>NaterPA_PonAbe2<a class="headerlink" href="#sec_catalog_ponabe_genetic_maps_naterpa_ponabe2" title="Permalink to this headline">¶</a></h4>
+<p>
+        This genetic map is from the Nater et al. (2017) study, inferred using
+        LDhat from n=15 whole-genome sequenced Sumatran orangutan individuals.
+        See https://doi.org/10.1016/j.cub.2017.09.047 for more details.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Nater et al., 2017. <a class="reference external" href="https://doi.org/10.1016/j.cub.2017.09.047">https://doi.org/10.1016/j.cub.2017.09.047</a></p></li>
+</ul>
+</div>
+<div class="section" id="sec_catalog_ponabe_genetic_maps_naterpp_ponabe2">
+<span id="sec_catalog_ponabe_genetic_maps_naterpp_ponabe2"></span><h4>NaterPP_PonAbe2<a class="headerlink" href="#sec_catalog_ponabe_genetic_maps_naterpp_ponabe2" title="Permalink to this headline">¶</a></h4>
+<p>
+        This genetic map is from the Nater et al. (2017) study, inferred using
+        LDhat from n=20 whole-genome sequenced Bornean orangutan individuals.
+        See https://doi.org/10.1016/j.cub.2017.09.047 for more details.
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Nater et al., 2017. <a class="reference external" href="https://doi.org/10.1016/j.cub.2017.09.047">https://doi.org/10.1016/j.cub.2017.09.047</a></p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sec_catalog_PonAbe_models">
+<h3>Models<a class="headerlink" href="#sec_catalog_PonAbe_models" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_ponabe_models_twospecies_2l11">TwoSpecies_2L11</a></p></td>
+<td><p>Two population orangutan model</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="sec_catalog_ponabe_models_twospecies_2l11">
+<span id="sec_catalog_ponabe_models_twospecies_2l11"></span><h4>Two population orangutan model<a class="headerlink" href="#sec_catalog_ponabe_models_twospecies_2l11" title="Permalink to this headline">¶</a></h4>
+<p>
+        The two orang-utan species, Sumatran (Pongo abelii) and Bornean (Pongo
+        pygmaeus) inferred from the joint-site frequency spectrum with ten
+        individuals from each population. This model is an isolation-with-
+        migration model, with exponential growth or decay in each population
+        after the split. The Sumatran population grows in size, while the
+        Bornean population slightly declines.
+    </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID</dt>
+<dd class="field-odd"><p>TwoSpecies_2L11</p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Two population orangutan model</p>
+</dd>
+<dt class="field-odd">Num populations</dt>
+<dd class="field-odd"><p>2</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Bornean</p></td>
+<td><p>0</p></td>
+<td><p>Pongo pygmaeus (Bornean) population</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Sumatran</p></td>
+<td><p>0</p></td>
+<td><p>Pongo abelii (Sumatran) population</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Locke et al., 2011. <a class="reference external" href="http://doi.org/10.1038/nature09687">http://doi.org/10.1038/nature09687</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>17,934</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>10,617</p></td>
+<td><p>Pongo pygmaeus pop. size at split</p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>7,317</p></td>
+<td><p>Pongo abelii pop. size at split</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>8,805</p></td>
+<td><p>Modern Pongo pygmaeus pop. size </p></td>
+</tr>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>37,661</p></td>
+<td><p>Modern Pongo abelii pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Epoch Time (gen.)</p></td>
+<td><p>20,157</p></td>
+<td><p>Species divergence time</p></td>
+</tr>
+<tr class="row-even"><td><p>Generation time (yrs.)</p></td>
+<td><p>20</p></td>
+<td><p>Generation time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, PopSim Consortium
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

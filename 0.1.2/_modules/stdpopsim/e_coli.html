@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stdpopsim.e_coli &mdash; stdpopsim 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stdpopsim.e_coli</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stdpopsim.e_coli</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Genome and demographic model definitions for Escherichia coli.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">msprime</span>
+
+<span class="kn">import</span> <span class="nn">stdpopsim.models</span> <span class="k">as</span> <span class="nn">models</span>
+<span class="kn">import</span> <span class="nn">stdpopsim.genomes</span> <span class="k">as</span> <span class="nn">genomes</span>
+
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Genome definition</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+<span class="n">_chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">_chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">genomes</span><span class="o">.</span><span class="n">Chromosome</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;chr&quot;</span><span class="p">,</span>
+        <span class="n">length</span><span class="o">=</span><span class="mi">4641652</span><span class="p">,</span>
+        <span class="n">default_mutation_rate</span><span class="o">=</span><span class="mf">1e-5</span><span class="o">+</span><span class="mf">2e-4</span><span class="p">,</span>
+        <span class="n">default_recombination_rate</span><span class="o">=</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="c1"># mean_conversion_rate=8.9e-11 # not implemented yet!</span>
+<span class="c1"># mean_conversion_length=542 # not implemented yet!</span>
+
+<span class="c1">#: :class:`stdpopsim.Genome` definition for E. Coli.</span>
+<span class="c1"># Chromosome length data is based on strain K-12.</span>
+<span class="n">genome</span> <span class="o">=</span> <span class="n">genomes</span><span class="o">.</span><span class="n">Genome</span><span class="p">(</span>
+    <span class="n">species</span><span class="o">=</span><span class="s2">&quot;e_coli&quot;</span><span class="p">,</span>
+    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span>
+    <span class="n">default_genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Demographic models</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+<span class="c1"># TODO add a generation time here</span>
+<span class="c1"># default_generation_time = -1</span>
+
+<div class="viewcode-block" id="LapierreConstant"><a class="viewcode-back" href="../../api.html#stdpopsim.e_coli.LapierreConstant">[docs]</a><span class="k">class</span> <span class="nc">LapierreConstant</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        LapierreConstant</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The constant population size model from `Lapierre et al. 2016 &lt;https://doi.org/</span>
+<span class="sd">        10.1093/molbev/msw048&gt;`_. The population does not undergo growth or size changes</span>
+<span class="sd">        making it a simple scenario in which to study the effects of recombination and/</span>
+<span class="sd">        or mutation on a variety of inference methods.</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - E. coli: 0</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/e_coli/LapierreConstant_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim e-coli LapierreConstant -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Lapierre, M., Blin, C., Lambert, A., Achaz, G. &amp; Rocha, E. P. C. The Impact of</span>
+<span class="sd">        Selection, Gene Conversion, and Biased Sampling on the Assessment of Microbial</span>
+<span class="sd">        Demography. Mol Biol Evol 33, 1711–1725 (2016).</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Lapierre et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="s2">&quot;2016&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1093/molbev/msw048&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="n">N_e</span> <span class="o">=</span> <span class="mf">1.8e8</span>
+        <span class="c1"># Single population</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_e</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PopSim Consortium
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

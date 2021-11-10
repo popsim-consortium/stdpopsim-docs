@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stdpopsim.drosophila_melanogaster &mdash; stdpopsim 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stdpopsim.drosophila_melanogaster</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stdpopsim.drosophila_melanogaster</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Genome, genetic map and demographic model definitions for humans.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">msprime</span>
+
+<span class="kn">import</span> <span class="nn">stdpopsim.models</span> <span class="k">as</span> <span class="nn">models</span>
+<span class="kn">import</span> <span class="nn">stdpopsim.genomes</span> <span class="k">as</span> <span class="nn">genomes</span>
+<span class="kn">import</span> <span class="nn">stdpopsim.genetic_maps</span> <span class="k">as</span> <span class="nn">genetic_maps</span>
+
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Genetic maps</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+
+<div class="viewcode-block" id="Comeron2012_dm6"><a class="viewcode-back" href="../../api.html#stdpopsim.drosophila_melanogaster.Comeron2012_dm6">[docs]</a><span class="k">class</span> <span class="nc">Comeron2012_dm6</span><span class="p">(</span><span class="n">genetic_maps</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Comeron et al. (2012) maps (lifted over to dm6) used in</span>
+<span class="sd">    Currently needs a readme as to the lift over, etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;http://sesame.uoregon.edu/~adkern/dmel_recombination_map/&quot;</span>
+        <span class="s2">&quot;comeron2012_maps.tar.gz&quot;</span><span class="p">)</span>
+    <span class="n">file_pattern</span> <span class="o">=</span> <span class="s2">&quot;genetic_map_comeron2012_dm6_</span><span class="si">{name}</span><span class="s2">.txt&quot;</span></div>
+
+
+<span class="n">genetic_maps</span><span class="o">.</span><span class="n">register_genetic_map</span><span class="p">(</span><span class="n">Comeron2012_dm6</span><span class="p">())</span>
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Genome definition</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+<span class="c1"># List of chromosomes. Data for length information based on DM6,</span>
+<span class="c1"># https://www.ncbi.nlm.nih.gov/genome/?term=drosophila+melanogaster.</span>
+<span class="c1"># FIXME: add mean mutation and recombination rate data to this table.</span>
+<span class="n">_chromosome_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">chrX   23542271</span>
+<span class="s2">chr2L   23513712</span>
+<span class="s2">chr2R   25286936</span>
+<span class="s2">chr3L   28110227</span>
+<span class="s2">chr3R   32079331</span>
+<span class="s2">chr4   1348131</span>
+<span class="s2">chrY   3667352</span>
+<span class="s2">chrM   19524</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">_chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">_chromosome_data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">_chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">genomes</span><span class="o">.</span><span class="n">Chromosome</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">length</span><span class="p">),</span>
+        <span class="n">default_mutation_rate</span><span class="o">=</span><span class="mf">8.4e-9</span><span class="p">,</span>  <span class="c1"># WRONG!, underestimate used in S&amp;S</span>
+        <span class="n">default_recombination_rate</span><span class="o">=</span><span class="mf">8.4e-9</span><span class="p">))</span>  <span class="c1"># WRONG, underestimate used in S&amp;S!</span>
+
+
+<span class="c1">#: :class:`stdpopsim.Genome` definition for D. melanogaster. Chromosome length data is</span>
+<span class="c1">#: based on `dm6 &lt;https://www.ncbi.nlm.nih.gov/assembly/GCF_000001215.4/&gt;`_.</span>
+<span class="n">genome</span> <span class="o">=</span> <span class="n">genomes</span><span class="o">.</span><span class="n">Genome</span><span class="p">(</span>
+    <span class="n">species</span><span class="o">=</span><span class="s2">&quot;drosophila_melanogaster&quot;</span><span class="p">,</span>
+    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span>
+    <span class="n">default_genetic_map</span><span class="o">=</span><span class="n">Comeron2012_dm6</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Demographic models</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+<span class="n">default_generation_time</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+
+<div class="viewcode-block" id="SheehanSongThreeEpoch"><a class="viewcode-back" href="../../api.html#stdpopsim.drosophila_melanogaster.SheehanSongThreeEpoch">[docs]</a><span class="k">class</span> <span class="nc">SheehanSongThreeEpoch</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        SheehanSongThreeEpoch</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The three epoch (modern, bottleneck, ancestral) model estimated for a</span>
+<span class="sd">        single African Drosophila Melanogaster population from `Sheehan and Song &lt;https:/</span>
+<span class="sd">        /doi.org/10.1371/journal.pcbi.1004845&gt;`_ . Population sizes are estimated by a</span>
+<span class="sd">        deep learning model trained on simulation data. NOTE: Due to differences in</span>
+<span class="sd">        coalescence units between PSMC (2N) and msms (4N) the number of generations were</span>
+<span class="sd">        doubled from PSMC estimates when simulating data from msms in the original</span>
+<span class="sd">        publication. We have faithfully represented the published model here.</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African D. melanogaster: 0</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/drosophila_melanogaster/SheehanSongThreeEpoch_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim drosophila-melanogaster SheehanSongThreeEpoch -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Sheehan, S. &amp; Song, Y. S. Deep Learning for Population Genetic Inference. PLOS</span>
+<span class="sd">        Computational Biology 12, e1004845 (2016).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Sheehan et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">2016</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1371/journal.pcbi.1004845&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Parameter values from &quot;Simulating Data&quot; section</span>
+        <span class="c1"># these are assumptions, not estimates</span>
+        <span class="n">N_ref</span> <span class="o">=</span> <span class="mi">100000</span>
+        <span class="n">t_1_coal</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="n">t_2_coal</span> <span class="o">=</span> <span class="mf">5.0</span>
+        <span class="c1"># estimates from the ANN</span>
+        <span class="n">N_R</span> <span class="o">=</span> <span class="mi">544200</span>
+        <span class="n">N_B</span> <span class="o">=</span> <span class="mi">145300</span>
+        <span class="n">N_A</span> <span class="o">=</span> <span class="mi">652700</span>
+        <span class="c1"># Times are provided in 4N_ref generations, so we convert into generations.</span>
+        <span class="c1"># generation_time = 10 / year</span>
+        <span class="n">t_1</span> <span class="o">=</span> <span class="n">t_1_coal</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">N_ref</span>
+        <span class="n">t_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_1_coal</span> <span class="o">+</span> <span class="n">t_2_coal</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">N_ref</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="n">default_generation_time</span>
+
+        <span class="c1"># Population metadata</span>
+        <span class="n">metadata_afr</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AFR_dmel&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;African D. melanogaster population&quot;</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Single population in this model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_R</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata_afr</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Size change at bottleneck (back in time; BIT)</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">t_1</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_B</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="c1"># Size change at recovery (BIT)</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">t_2</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_A</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="LiStephanTwoPopulation"><a class="viewcode-back" href="../../api.html#stdpopsim.drosophila_melanogaster.LiStephanTwoPopulation">[docs]</a><span class="k">class</span> <span class="nc">LiStephanTwoPopulation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        LiStephanTwoPopulation</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The three epoch (modern, bottleneck, ancestral) model estimated for two</span>
+<span class="sd">        Drosophila Melanogaster populations: African (ancestral) and European (derived)</span>
+<span class="sd">        from `Li and Stephan &lt;https://doi.org/10.1371/journal.pgen.0020166&gt;`_ .</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African D. melanogaster: 0</span>
+<span class="sd">        - European D. melanogaster: 1</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/drosophila_melanogaster/LiStephanTwoPopulation_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim drosophila-melanogaster LiStephanTwoPopulation -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Li, H. &amp; Stephan, W. Inferring the Demographic History and Rate of Adaptive      Substitution in Drosophila. PLOS Genetics 2, e166 (2006).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Li et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">2006</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1371/journal.pgen.0020166&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># African Parameter values from &quot;Demographic History of the African</span>
+        <span class="c1"># Population&quot; section</span>
+        <span class="n">N_A0</span> <span class="o">=</span> <span class="mf">8.603e06</span>
+        <span class="n">t_A0</span> <span class="o">=</span> <span class="mi">600000</span>  <span class="c1"># assuming 10 generations / year</span>
+        <span class="n">N_A1</span> <span class="o">=</span> <span class="n">N_A0</span> <span class="o">/</span> <span class="mf">5.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="n">default_generation_time</span>
+
+        <span class="c1"># European Parameter values from &quot;Demo History of Euro Population&quot;</span>
+        <span class="n">N_E0</span> <span class="o">=</span> <span class="mf">1.075e06</span>
+        <span class="n">N_E1</span> <span class="o">=</span> <span class="mi">2200</span>
+        <span class="n">t_AE</span> <span class="o">=</span> <span class="mi">158000</span>  <span class="c1"># generations</span>
+        <span class="n">t_E1</span> <span class="o">=</span> <span class="n">t_AE</span> <span class="o">-</span> <span class="mi">3400</span>
+
+        <span class="n">metadata_afr</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AFR_dmel&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;African D. melanogaster population&quot;</span>
+        <span class="p">}</span>
+        <span class="n">metadata_eu</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;EU_dmel&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;European D. melanogaster population&quot;</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_A0</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata_afr</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_E0</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata_eu</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Size change at Euro bottleneck</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">t_E1</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_E1</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="c1"># Split</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">t_AE</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="c1"># African bottleneck</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">t_A0</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_A1</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PopSim Consortium
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

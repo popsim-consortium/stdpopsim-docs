@@ -1,0 +1,898 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stdpopsim.homo_sapiens &mdash; stdpopsim 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stdpopsim.homo_sapiens</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stdpopsim.homo_sapiens</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Genome, genetic map and demographic model definitions for humans.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">msprime</span>
+
+<span class="kn">import</span> <span class="nn">stdpopsim.models</span> <span class="k">as</span> <span class="nn">models</span>
+<span class="kn">import</span> <span class="nn">stdpopsim.genomes</span> <span class="k">as</span> <span class="nn">genomes</span>
+<span class="kn">import</span> <span class="nn">stdpopsim.genetic_maps</span> <span class="k">as</span> <span class="nn">genetic_maps</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Genetic maps</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+
+<div class="viewcode-block" id="HapmapII_GRCh37"><a class="viewcode-back" href="../../api.html#stdpopsim.homo_sapiens.HapmapII_GRCh37">[docs]</a><span class="k">class</span> <span class="nc">HapmapII_GRCh37</span><span class="p">(</span><span class="n">genetic_maps</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Usage: `hapmap = homo_sapiens.HapmapII_GRCh37()` (note the</span>
+<span class="sd">    parentheses).</span>
+
+<span class="sd">    The Phase II HapMap Genetic map (lifted over to GRCh37) used in</span>
+<span class="sd">    1000 Genomes. Please see the `README</span>
+<span class="sd">    &lt;ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20110106_recombination_hotspots/README_hapmapII_GRCh37_map&gt;`_</span>
+<span class="sd">    for more details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;http://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/&quot;</span>
+        <span class="s2">&quot;20110106_recombination_hotspots/&quot;</span>
+        <span class="s2">&quot;HapmapII_GRCh37_RecombinationHotspots.tar.gz&quot;</span><span class="p">)</span>
+    <span class="n">file_pattern</span> <span class="o">=</span> <span class="s2">&quot;genetic_map_GRCh37_</span><span class="si">{name}</span><span class="s2">.txt&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1038/nature06258&quot;</span></div>
+
+
+<span class="n">genetic_maps</span><span class="o">.</span><span class="n">register_genetic_map</span><span class="p">(</span><span class="n">HapmapII_GRCh37</span><span class="p">())</span>
+
+
+<span class="k">class</span> <span class="nc">Decode_2010_sex_averaged</span><span class="p">(</span><span class="n">genetic_maps</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Usage: `decode = homo_sapiens.Decode_2010()` (note the</span>
+<span class="sd">    parentheses).</span>
+
+<span class="sd">    Decode fine scale genetic map from Kong, A et al. Fine scale</span>
+<span class="sd">    recombination rate differences</span>
+<span class="sd">    between sexes, populations and individuals. Nature (28 October 2010).</span>
+<span class="sd">    (http://www.nature.com/nature/journal/v467/n7319/full/nature09525.html)</span>
+<span class="sd">    Please see https://www.decode.com/addendum/ for more details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;http://sesame.uoregon.edu/~adkern/stdpopsim/decode/&quot;</span>
+        <span class="s2">&quot;decode_2010_sex-averaged_map.tar.gz&quot;</span><span class="p">)</span>
+    <span class="n">file_pattern</span> <span class="o">=</span> <span class="s2">&quot;genetic_map_decode_2010_sex-averaged_</span><span class="si">{name}</span><span class="s2">.txt&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1038/nature09525&quot;</span>
+
+
+<span class="n">genetic_maps</span><span class="o">.</span><span class="n">register_genetic_map</span><span class="p">(</span><span class="n">Decode_2010_sex_averaged</span><span class="p">())</span>
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Genome definition</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+<span class="c1"># List of chromosomes.</span>
+
+<span class="c1"># FIXME: add mean mutation rate data to this table.</span>
+<span class="c1"># Name  Length  mean_recombination_rate mean_mutation_rate</span>
+
+<span class="c1"># length information can be found here</span>
+<span class="c1"># &lt;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/chromInfo.txt.gz&gt;</span>
+
+<span class="c1"># mean_recombination_rate was computed across all windows of the GRCh37 genetic map</span>
+<span class="c1"># &lt;ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20110106_recombination_hotspots&gt;</span>
+<span class="n">_chromosome_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">chr1 	 249250621 	 1.1485597641285933e-08</span>
+<span class="s2">chr2 	 243199373 	 1.1054289277533446e-08</span>
+<span class="s2">chr3 	 198022430 	 1.1279585624662551e-08</span>
+<span class="s2">chr4 	 191154276 	 1.1231162636001008e-08</span>
+<span class="s2">chr5 	 180915260 	 1.1280936570022824e-08</span>
+<span class="s2">chr6 	 171115067 	 1.1222852661225285e-08</span>
+<span class="s2">chr7 	 159138663 	 1.1764614397655721e-08</span>
+<span class="s2">chr8 	 146364022 	 1.1478465778920576e-08</span>
+<span class="s2">chr9 	 141213431 	 1.1780701596308656e-08</span>
+<span class="s2">chr10 	 135534747 	 1.3365134257075317e-08</span>
+<span class="s2">chr11 	 135006516 	 1.1719334320833283e-08</span>
+<span class="s2">chr12 	 133851895 	 1.305017186986983e-08</span>
+<span class="s2">chr13 	 115169878 	 1.0914860554958317e-08</span>
+<span class="s2">chr14 	 107349540 	 1.119730771394731e-08</span>
+<span class="s2">chr15 	 102531392 	 1.3835785893339787e-08</span>
+<span class="s2">chr16 	 90354753 	 1.4834607113882717e-08</span>
+<span class="s2">chr17 	 81195210 	 1.582489036239487e-08</span>
+<span class="s2">chr18 	 78077248 	 1.5075956950023575e-08</span>
+<span class="s2">chr19 	 59128983 	 1.8220141872466202e-08</span>
+<span class="s2">chr20 	 63025520 	 1.7178269031631664e-08</span>
+<span class="s2">chr21 	 48129895 	 1.3045214034879191e-08</span>
+<span class="s2">chr22 	 51304566 	 1.4445022767788226e-08</span>
+<span class="s2">chrX 	 155270560 	 1.164662223273842e-08</span>
+<span class="s2">chrY 	 59373566 	 0.0</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">_chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">_chromosome_data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">mean_rr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">_chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">genomes</span><span class="o">.</span><span class="n">Chromosome</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">length</span><span class="p">),</span>
+        <span class="n">default_mutation_rate</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>  <span class="c1"># WRONG!,</span>
+        <span class="n">default_recombination_rate</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">mean_rr</span><span class="p">)))</span>
+
+
+<span class="c1">#: :class:`stdpopsim.Genome` definition for humans.</span>
+<span class="n">genome</span> <span class="o">=</span> <span class="n">genomes</span><span class="o">.</span><span class="n">Genome</span><span class="p">(</span>
+    <span class="n">species</span><span class="o">=</span><span class="s2">&quot;homo_sapiens&quot;</span><span class="p">,</span>
+    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span>
+    <span class="n">default_genetic_map</span><span class="o">=</span><span class="n">HapmapII_GRCh37</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># Experimental interface used to develop the CLI.</span>
+<span class="c1">#</span>
+
+
+<span class="k">class</span> <span class="nc">TempChromosome</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Temporary class while figuring out the best way to do this.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">chromosome_factory</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Temporary function to help figure out the right interface for getting</span>
+<span class="sd">    chromosome information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chrom</span> <span class="o">=</span> <span class="n">genome</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Making flat chromosome </span><span class="si">{length_multiplier}</span><span class="s2"> * </span><span class="si">{chrom.name}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RecombinationMap</span><span class="o">.</span><span class="n">uniform_map</span><span class="p">(</span>
+            <span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">length_multiplier</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">default_recombination_rate</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with empirical maps&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Getting map for </span><span class="si">{chrom.name}</span><span class="s2"> from </span><span class="si">{genetic_map}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">(</span><span class="n">genetic_map</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">TempChromosome</span><span class="p">()</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">recombination_map</span> <span class="o">=</span> <span class="n">recomb_map</span>
+    <span class="n">ret</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">default_mutation_rate</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Demographic models</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+
+
+<span class="c1"># species wide default generation time</span>
+<span class="n">default_generation_time</span> <span class="o">=</span> <span class="mi">25</span>
+
+
+<div class="viewcode-block" id="GutenkunstThreePopOutOfAfrica"><a class="viewcode-back" href="../../api.html#stdpopsim.homo_sapiens.GutenkunstThreePopOutOfAfrica">[docs]</a><span class="k">class</span> <span class="nc">GutenkunstThreePopOutOfAfrica</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        GutenkunstThreePopOutOfAfrica</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The three population Out-of-Africa model from `Gutenkunst et al. &lt;https://</span>
+<span class="sd">        doi.org/10.1371/journal.pgen.1000695&gt;`_ It describes the ancestral human</span>
+<span class="sd">        population in Africa, the out of Africa event, and the subsequent European-Asian</span>
+<span class="sd">        population split. Model parameters are the maximum likelihood values of the</span>
+<span class="sd">        various parameters given in Table 1 of Gutenkunst et al.</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African (YRI): 0</span>
+<span class="sd">        - European (CEU): 1</span>
+<span class="sd">        - Asian (CHB): 2</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/homo_sapiens/GutenkunstThreePopOutOfAfrica_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim homo-sapiens GutenkunstThreePopOutOfAfrica -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Gutenkunst, R. N., Hernandez, R. D., Williamson, S. H. &amp; Bustamante, C. D.</span>
+<span class="sd">        Inferring the Joint Demographic History of Multiple Populations from</span>
+<span class="sd">        Multidimensional SNP Frequency Data. PLOS Genetics 5, e1000695 (2009).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Gutenkunst et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">2009</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1371/journal.pgen.1000695&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># First we set out the maximum likelihood values of the various parameters</span>
+        <span class="c1"># given in Table 1.</span>
+        <span class="n">N_A</span> <span class="o">=</span> <span class="mi">7300</span>
+        <span class="n">N_B</span> <span class="o">=</span> <span class="mi">2100</span>
+        <span class="n">N_AF</span> <span class="o">=</span> <span class="mi">12300</span>
+        <span class="n">N_EU0</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="n">N_AS0</span> <span class="o">=</span> <span class="mi">510</span>
+        <span class="c1"># Times are provided in years, so we convert into generations.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="n">default_generation_time</span>
+        <span class="n">T_AF</span> <span class="o">=</span> <span class="mf">220e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_B</span> <span class="o">=</span> <span class="mf">140e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_EU_AS</span> <span class="o">=</span> <span class="mf">21.2e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="c1"># We need to work out the starting (diploid) population sizes based on</span>
+        <span class="c1"># the growth rates provided for these two populations</span>
+        <span class="n">r_EU</span> <span class="o">=</span> <span class="mf">0.004</span>
+        <span class="n">r_AS</span> <span class="o">=</span> <span class="mf">0.0055</span>
+        <span class="n">N_EU</span> <span class="o">=</span> <span class="n">N_EU0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_EU</span> <span class="o">*</span> <span class="n">T_EU_AS</span><span class="p">)</span>
+        <span class="n">N_AS</span> <span class="o">=</span> <span class="n">N_AS0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_AS</span> <span class="o">*</span> <span class="n">T_EU_AS</span><span class="p">)</span>
+        <span class="c1"># Migration rates during the various epochs.</span>
+        <span class="n">m_AF_B</span> <span class="o">=</span> <span class="mf">25e-5</span>
+        <span class="n">m_AF_EU</span> <span class="o">=</span> <span class="mf">3e-5</span>
+        <span class="n">m_AF_AS</span> <span class="o">=</span> <span class="mf">1.9e-5</span>
+        <span class="n">m_EU_AS</span> <span class="o">=</span> <span class="mf">9.6e-5</span>
+        <span class="c1"># Population IDs correspond to their indexes in the population</span>
+        <span class="c1"># configuration array. Therefore, we have 0=YRI, 1=CEU and 2=CHB</span>
+        <span class="c1"># initially.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_AF</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_EU</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_EU</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_AS</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_AS</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>      <span class="mi">0</span><span class="p">,</span> <span class="n">m_AF_EU</span><span class="p">,</span> <span class="n">m_AF_AS</span><span class="p">],</span>  <span class="c1"># noqa</span>
+            <span class="p">[</span><span class="n">m_AF_EU</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span> <span class="n">m_EU_AS</span><span class="p">],</span>  <span class="c1"># noqa</span>
+            <span class="p">[</span><span class="n">m_AF_AS</span><span class="p">,</span> <span class="n">m_EU_AS</span><span class="p">,</span>       <span class="mi">0</span><span class="p">],</span>  <span class="c1"># noqa</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># CEU and CHB merge into B with rate changes at T_EU_AS</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_B</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_B</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_B</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="c1"># Population B merges into YRI at T_B</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_B</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="c1"># Size changes to N_A at T_AF</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_AF</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_A</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TennessenTwoPopOutOfAfrica"><a class="viewcode-back" href="../../api.html#stdpopsim.homo_sapiens.TennessenTwoPopOutOfAfrica">[docs]</a><span class="k">class</span> <span class="nc">TennessenTwoPopOutOfAfrica</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        TennessenTwoPopOutOfAfrica</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The model is derived from the Tennesen et al. `analysis &lt;https://doi.org/10.1126/</span>
+<span class="sd">        science.1219240&gt;`_  of the jSFS from European Americans and African Americans.</span>
+<span class="sd">        It describes the ancestral human population in Africa, the out of Africa event,</span>
+<span class="sd">        and two distinct periods of subsequent European population growth over the past</span>
+<span class="sd">        23kya. Model parameters are taken from Fig. S5 in `Fu et al. (2013) &lt;https://</span>
+<span class="sd">        doi.org/10.1038 nature11690&gt;`_.</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African (AFR): 0</span>
+<span class="sd">        - European (EU): 1</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/homo_sapiens/TennessenTwoPopOutOfAfrica_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim homo-sapiens TennessenTwoPopOutOfAfrica -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Tennessen, J. A. et al. Evolution and Functional Impact of Rare Coding</span>
+<span class="sd">        Variation from Deep Sequencing of Human Exomes. Science 337, 64–69</span>
+<span class="sd">        (2012).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="c1"># NOTE choosing the first publication above the &#39;the&#39; paper to reference.</span>
+    <span class="c1"># Should we allow for multiple references??</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Tennessen et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="s2">&quot;2012&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1126/science.1219240&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="n">default_generation_time</span>
+        <span class="n">T_AF</span> <span class="o">=</span> <span class="mf">148e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_OOA</span> <span class="o">=</span> <span class="mf">51e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_EU0</span> <span class="o">=</span> <span class="mf">23e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_EG</span> <span class="o">=</span> <span class="mi">5115</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+
+        <span class="c1"># Growth rates</span>
+        <span class="n">r_EU0</span> <span class="o">=</span> <span class="mf">0.00307</span>
+        <span class="n">r_EU</span> <span class="o">=</span> <span class="mf">0.0195</span>
+        <span class="n">r_AF</span> <span class="o">=</span> <span class="mf">0.0166</span>
+
+        <span class="c1"># population sizes</span>
+        <span class="n">N_A</span> <span class="o">=</span> <span class="mi">7310</span>
+        <span class="n">N_AF1</span> <span class="o">=</span> <span class="mi">14474</span>
+        <span class="n">N_B</span> <span class="o">=</span> <span class="mi">1861</span>
+        <span class="n">N_EU0</span> <span class="o">=</span> <span class="mi">1032</span>
+        <span class="n">N_EU1</span> <span class="o">=</span> <span class="n">N_EU0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_EU0</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_EU0</span><span class="o">-</span><span class="n">T_EG</span><span class="p">))</span>
+
+        <span class="c1"># migration rates</span>
+        <span class="n">m_AF_B</span> <span class="o">=</span> <span class="mf">15e-5</span>
+        <span class="n">m_AF_EU</span> <span class="o">=</span> <span class="mf">2.5e-5</span>
+
+        <span class="c1"># present Ne</span>
+        <span class="n">N_EU</span> <span class="o">=</span> <span class="n">N_EU1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_EU</span> <span class="o">*</span> <span class="n">T_EG</span><span class="p">)</span>
+        <span class="n">N_AF</span> <span class="o">=</span> <span class="n">N_AF1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_AF</span> <span class="o">*</span> <span class="n">T_EG</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_AF</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_AF</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_EU</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_EU</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">m_AF_EU</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">m_AF_EU</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EG</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_EU</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EG</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_EU</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EG</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_EU0</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_EU1</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EG</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_AF1</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU0</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_B</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU0</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_B</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU0</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_B</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_OOA</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_AF</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_A</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TennessenOnePopAfrica"><a class="viewcode-back" href="../../api.html#stdpopsim.homo_sapiens.TennessenOnePopAfrica">[docs]</a><span class="k">class</span> <span class="nc">TennessenOnePopAfrica</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        TennessenOnePopAfrica</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The model is a simplification of the two population Tennesen et al.</span>
+<span class="sd">        `model &lt;https://doi.org/10.1126/science.1219240&gt;`_ with the European-American</span>
+<span class="sd">        population removed so that we are modeling the African population in isolation.</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African (AFR): 0</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/homo_sapiens/TennessenOnePopAfrica_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim homo-sapiens TennessenOnePopAfrica -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Tennessen, J. A. et al. Evolution and Functional Impact of Rare Coding</span>
+<span class="sd">        Variation from Deep Sequencing of Human Exomes. Science 337, 64–69</span>
+<span class="sd">        (2012).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="c1"># NOTE choosing the first publication above the &#39;the&#39; paper to reference.</span>
+    <span class="c1"># Should we allow for multiple references??</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Tennessen et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="s2">&quot;2012&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1126/science.1219240&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="n">default_generation_time</span>
+        <span class="n">T_AF</span> <span class="o">=</span> <span class="mf">148e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_EG</span> <span class="o">=</span> <span class="mi">5115</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+
+        <span class="c1"># Growth rate</span>
+        <span class="n">r_AF</span> <span class="o">=</span> <span class="mf">0.0166</span>
+
+        <span class="c1"># population sizes</span>
+        <span class="n">N_A</span> <span class="o">=</span> <span class="mi">7310</span>
+        <span class="n">N_AF1</span> <span class="o">=</span> <span class="mi">14474</span>
+
+        <span class="c1"># present Ne</span>
+        <span class="n">N_AF</span> <span class="o">=</span> <span class="n">N_AF1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_AF</span> <span class="o">*</span> <span class="n">T_EG</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_AF</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_AF</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EG</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_AF1</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_AF</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_A</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="BrowningAmerica"><a class="viewcode-back" href="../../api.html#stdpopsim.homo_sapiens.BrowningAmerica">[docs]</a><span class="k">class</span> <span class="nc">BrowningAmerica</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        BrowningAmerica</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        Demographic model for American admixture, taken from</span>
+<span class="sd">        `Browning et al. &lt;http://dx.doi.org/10.1371/journal.pgen.1007385&gt;`_.</span>
+<span class="sd">        This model extends the `Gravel et al. (2011) &lt;https://doi.org/10.1073/</span>
+<span class="sd">        pnas.1019276108&gt;`_ model of African/European/Asian demographic history to</span>
+<span class="sd">        simulate an admixed population with admixture occurring 12 generations ago. The</span>
+<span class="sd">        admixed population had an initial size of 30,000 and grew at a rate of 5% per</span>
+<span class="sd">        generation, with 1/6 of the population of African ancestry, 1/3 European, and 1</span>
+<span class="sd">        2 Asian. This code was ported over from `Supplementary File 1 &lt;https://doi.org/10.1371/journal.pgen.1007385.s005&gt;`_</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African (AFR): 0</span>
+<span class="sd">        - European (EU): 1</span>
+<span class="sd">        - Asian (ASN): 2</span>
+<span class="sd">        - Admixed (ADMIX): 3</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/homo_sapiens/BrowningAmerica_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim homo-sapiens BrowningAmerica -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Browning, S. R. et al. Ancestry-specific recent effective population size in the</span>
+<span class="sd">        Americas. PLOS Genetics 14, e1007385 (2018).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Browning et al.&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="s2">&quot;2011&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;http://dx.doi.org/10.1371/journal.pgen.1007385&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">N0</span> <span class="o">=</span> <span class="mi">7310</span>  <span class="c1"># initial population size</span>
+        <span class="n">Thum</span> <span class="o">=</span> <span class="mi">5920</span>  <span class="c1"># time (gens) of advent of modern humans</span>
+        <span class="n">Naf</span> <span class="o">=</span> <span class="mi">14474</span>  <span class="c1"># size of african population</span>
+        <span class="n">Tooa</span> <span class="o">=</span> <span class="mi">2040</span>  <span class="c1"># number of generations back to Out of Africa</span>
+        <span class="n">Nb</span> <span class="o">=</span> <span class="mi">1861</span>  <span class="c1"># size of out of Africa population</span>
+        <span class="n">mafb</span> <span class="o">=</span> <span class="mf">1.5e-4</span>  <span class="c1"># migration rate Africa and Out-of-Africa</span>
+        <span class="n">Teu</span> <span class="o">=</span> <span class="mi">920</span>  <span class="c1"># number generations back to Asia-Europe split</span>
+        <span class="n">Neu</span> <span class="o">=</span> <span class="mi">1032</span>  <span class="c1"># bottleneck population sizes</span>
+        <span class="n">Nas</span> <span class="o">=</span> <span class="mi">554</span>
+        <span class="n">mafeu</span> <span class="o">=</span> <span class="mf">2.5e-5</span>  <span class="c1"># mig. rates</span>
+        <span class="n">mafas</span> <span class="o">=</span> <span class="mf">7.8e-6</span>
+        <span class="n">meuas</span> <span class="o">=</span> <span class="mf">3.11e-5</span>
+        <span class="n">reu</span> <span class="o">=</span> <span class="mf">0.0038</span>  <span class="c1"># growth rate per generation in Europe</span>
+        <span class="n">ras</span> <span class="o">=</span> <span class="mf">0.0048</span>  <span class="c1"># growth rate per generation in Asia</span>
+        <span class="n">Tadmix</span> <span class="o">=</span> <span class="mi">12</span>  <span class="c1"># time of admixture</span>
+        <span class="n">Nadmix</span> <span class="o">=</span> <span class="mi">30000</span>  <span class="c1"># initial size of admixed population</span>
+        <span class="n">radmix</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span>  <span class="c1"># growth rate of admixed population</span>
+        <span class="c1"># pop0 is Africa, pop1 is Europe, pop2 is Asia,  pop3 is admixed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">Naf</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">Neu</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">reu</span><span class="o">*</span><span class="n">Teu</span><span class="p">),</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">reu</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">Nas</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">ras</span><span class="o">*</span><span class="n">Teu</span><span class="p">),</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">ras</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">Nadmix</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">radmix</span><span class="o">*</span><span class="n">Tadmix</span><span class="p">),</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">radmix</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">mafeu</span><span class="p">,</span> <span class="n">mafas</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">mafeu</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">meuas</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">mafas</span><span class="p">,</span> <span class="n">meuas</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="c1"># Admixture event, 1/6 Africa, 2/6 Europe, 3/6 Asia</span>
+        <span class="n">admixture_event</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Tadmix</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">6.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Tadmix</span><span class="o">+</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">2.0</span><span class="o">/</span><span class="mf">5.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Tadmix</span><span class="o">+</span><span class="mf">0.0002</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="c1"># Asia and Europe split</span>
+        <span class="n">eu_event</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Teu</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Teu</span><span class="o">+</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Teu</span><span class="o">+</span><span class="mf">0.0002</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">Nb</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Teu</span><span class="o">+</span><span class="mf">0.0003</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">mafb</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Teu</span><span class="o">+</span><span class="mf">0.0003</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">mafb</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="p">]</span>
+        <span class="c1"># Out of Africa event</span>
+        <span class="n">ooa_event</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Tooa</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Tooa</span><span class="o">+</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="c1"># initial population size</span>
+        <span class="n">init_event</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">Thum</span><span class="p">,</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">N0</span><span class="p">,</span>
+                <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="n">admixture_event</span> <span class="o">+</span> <span class="n">eu_event</span> <span class="o">+</span> <span class="n">ooa_event</span> <span class="o">+</span> <span class="n">init_event</span></div>
+
+
+<span class="k">class</span> <span class="nc">RagsdaleArchaic</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model Name:</span>
+<span class="sd">        RagsdaleArchaic</span>
+
+<span class="sd">    Model Description:</span>
+<span class="sd">        The three population out-of-African model popularized by Gutenkunst et al. (2009)</span>
+<span class="sd">        and augmented by archaic contributions to both Eurasian and African populations.</span>
+<span class="sd">        Two archaic populations split early in human history, before the African</span>
+<span class="sd">        expansion, and contribute to Eurasian populations (putative Neanderthal branch)</span>
+<span class="sd">        and to the African branch (a deep diverging branch within Africa). Admixture</span>
+<span class="sd">        is modeled as symmetric migration between the archaic and modern human branches,</span>
+<span class="sd">        with contribution ending at a given time in the past.</span>
+
+<span class="sd">    Model population indexes:</span>
+<span class="sd">        - African (YRI): 0</span>
+<span class="sd">        - European (CEU): 1</span>
+<span class="sd">        - Asian (CHB): 2</span>
+<span class="sd">        - Putative Neanderthal: 3</span>
+<span class="sd">        - Putative archaic African: 4</span>
+
+<span class="sd">    Parameter Table:</span>
+<span class="sd">        .. csv-table::</span>
+<span class="sd">            :widths: 15 8 20</span>
+<span class="sd">            :header: &quot;Parameter Type (units)&quot;, &quot;Value&quot;, &quot;Description&quot;</span>
+<span class="sd">            :file: ../docs/parameter_tables/homo_sapiens/RagsdaleArchaic_params.csv</span>
+
+<span class="sd">    CLI help:</span>
+<span class="sd">        python -m stdpopsim homo-sapiens RagsdaleArchaic -h</span>
+
+<span class="sd">    Citation:</span>
+<span class="sd">        Ragsdale, Aaron P., and Simon Gravel. Models of archaic admixture and</span>
+<span class="sd">        recent history from two-locus statistics. PLoS genetics 15(6), e1008204 (2019).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;Ragsdale and Gravel&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">2019</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;https://doi.org/10.1371/journal.pgen.1008204&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># First we set out the maximum likelihood values of the various parameters</span>
+        <span class="c1"># given in Table 1 (under archaic admixture).</span>
+        <span class="n">N_0</span> <span class="o">=</span> <span class="mi">3600</span>
+        <span class="n">N_YRI</span> <span class="o">=</span> <span class="mi">13900</span>
+        <span class="n">N_B</span> <span class="o">=</span> <span class="mi">880</span>
+        <span class="n">N_CEU0</span> <span class="o">=</span> <span class="mi">2300</span>
+        <span class="n">N_CHB0</span> <span class="o">=</span> <span class="mi">650</span>
+
+        <span class="c1"># Times are provided in years, so we convert into generations.</span>
+        <span class="c1"># In the published model, the authors used a generation time of 29 years to</span>
+        <span class="c1"># convert from genetic to physical units</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="mi">29</span>
+        <span class="n">T_AF</span> <span class="o">=</span> <span class="mf">300e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_B</span> <span class="o">=</span> <span class="mf">60.7e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_EU_AS</span> <span class="o">=</span> <span class="mf">36.0e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_arch_afr_split</span> <span class="o">=</span> <span class="mf">499e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_arch_afr_mig</span> <span class="o">=</span> <span class="mf">125e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_nean_split</span> <span class="o">=</span> <span class="mf">559e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+        <span class="n">T_arch_adm_end</span> <span class="o">=</span> <span class="mf">18.7e3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span>
+
+        <span class="c1"># We need to work out the starting (diploid) population sizes based on</span>
+        <span class="c1"># the growth rates provided for these two populations</span>
+        <span class="n">r_CEU</span> <span class="o">=</span> <span class="mf">0.00125</span>
+        <span class="n">r_CHB</span> <span class="o">=</span> <span class="mf">0.00372</span>
+        <span class="n">N_CEU</span> <span class="o">=</span> <span class="n">N_CEU0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_CEU</span> <span class="o">*</span> <span class="n">T_EU_AS</span><span class="p">)</span>
+        <span class="n">N_CHB</span> <span class="o">=</span> <span class="n">N_CHB0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_CHB</span> <span class="o">*</span> <span class="n">T_EU_AS</span><span class="p">)</span>
+
+        <span class="c1"># Migration rates during the various epochs.</span>
+        <span class="n">m_AF_B</span> <span class="o">=</span> <span class="mf">52.2e-5</span>
+        <span class="n">m_YRI_CEU</span> <span class="o">=</span> <span class="mf">2.48e-5</span>
+        <span class="n">m_YRI_CHB</span> <span class="o">=</span> <span class="mf">0e-5</span>
+        <span class="n">m_CEU_CHB</span> <span class="o">=</span> <span class="mf">11.3e-5</span>
+        <span class="n">m_AF_arch_af</span> <span class="o">=</span> <span class="mf">1.98e-5</span>
+        <span class="n">m_OOA_nean</span> <span class="o">=</span> <span class="mf">0.825e-5</span>
+
+        <span class="c1"># Population IDs correspond to their indexes in the population</span>
+        <span class="c1"># configuration array. Therefore, we have 0=YRI, 1=CEU and 2=CHB</span>
+        <span class="c1"># initially.</span>
+        <span class="c1"># We also have two archaic populations, putative Neanderthals and</span>
+        <span class="c1"># archaicAfrican, which are population indices 3=Nean and 4=arch_afr.</span>
+        <span class="c1"># Their sizes are equal to the ancestral reference population size N_0.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_YRI</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_CEU</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_CEU</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_CHB</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">r_CHB</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N_0</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="o">=</span> <span class="p">[</span>                   <span class="c1"># noqa</span>
+            <span class="p">[</span>      <span class="mi">0</span><span class="p">,</span> <span class="n">m_YRI_CEU</span><span class="p">,</span> <span class="n">m_YRI_CHB</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># noqa</span>
+            <span class="p">[</span><span class="n">m_YRI_CEU</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span> <span class="n">m_CEU_CHB</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># noqa</span>
+            <span class="p">[</span><span class="n">m_YRI_CHB</span><span class="p">,</span> <span class="n">m_CEU_CHB</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># noqa</span>
+            <span class="p">[</span>      <span class="mi">0</span><span class="p">,</span>         <span class="mi">0</span><span class="p">,</span>         <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># noqa</span>
+            <span class="p">[</span>      <span class="mi">0</span><span class="p">,</span>         <span class="mi">0</span><span class="p">,</span>         <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># noqa</span>
+        <span class="p">]</span>                                           <span class="c1"># noqa</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demographic_events</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># first event is migration turned on between modern and archaic humans</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_adm_end</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_arch_af</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_adm_end</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_arch_af</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_adm_end</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_OOA_nean</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_adm_end</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_OOA_nean</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_adm_end</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_OOA_nean</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_adm_end</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_OOA_nean</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+
+            <span class="c1"># CEU and CHB merge into B with rate changes at T_EU_AS</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_B</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_B</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_arch_af</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_arch_af</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_OOA_nean</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_OOA_nean</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_EU_AS</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_B</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+
+            <span class="c1"># Population B merges into YRI at T_B</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_B</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">T_B</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_B</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_arch_af</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_B</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">m_AF_arch_af</span><span class="p">,</span> <span class="n">matrix_index</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+
+            <span class="c1"># Beginning of migration between African and archaic African populations</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MigrationRateChange</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">T_arch_afr_mig</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+
+            <span class="c1"># Size changes to N_0 at T_AF</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationParametersChange</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_AF</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N_0</span><span class="p">,</span> <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+
+            <span class="c1"># Archaic African merges with moderns</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_arch_afr_split</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+
+            <span class="c1"># Neanderthal merges with moderns</span>
+            <span class="n">msprime</span><span class="o">.</span><span class="n">MassMigration</span><span class="p">(</span>
+                <span class="n">time</span><span class="o">=</span><span class="n">T_nean_split</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PopSim Consortium
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stdpopsim.citations &mdash; stdpopsim 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> stdpopsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stdpopsim.citations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stdpopsim.citations</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Citation management for stdpopsim. Provides utilities for printing</span>
+<span class="sd">citation information associated with different entities derived from the</span>
+<span class="sd">literature that are used within a simulation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+
+<span class="kn">import</span> <span class="nn">attr</span>
+
+
+<span class="k">class</span> <span class="nc">CiteReason</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">ENGINE</span> <span class="o">=</span> <span class="s2">&quot;simulation engine&quot;</span>
+    <span class="n">DEM_MODEL</span> <span class="o">=</span> <span class="s2">&quot;demographic model&quot;</span>
+    <span class="n">GEN_MAP</span> <span class="o">=</span> <span class="s2">&quot;genetic map&quot;</span>
+    <span class="n">POP_SIZE</span> <span class="o">=</span> <span class="s2">&quot;population size&quot;</span>
+    <span class="n">GEN_TIME</span> <span class="o">=</span> <span class="s2">&quot;generation time&quot;</span>
+    <span class="n">MUT_RATE</span> <span class="o">=</span> <span class="s2">&quot;mutation rate&quot;</span>
+    <span class="n">REC_RATE</span> <span class="o">=</span> <span class="s2">&quot;recombination rate&quot;</span>
+    <span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="s2">&quot;genome assembly&quot;</span>
+    <span class="n">STDPOPSIM</span> <span class="o">=</span> <span class="s2">&quot;stdpopsim&quot;</span>
+
+
+<div class="viewcode-block" id="Citation"><a class="viewcode-back" href="../../api.html#stdpopsim.Citation">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">Citation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A reference to the literature that should be acknowledged by users of</span>
+<span class="sd">    stdpopsim.</span>
+
+<span class="sd">    :ivar doi: The DOI for the publication providing the definitive reference.</span>
+<span class="sd">    :vartype doi: str</span>
+<span class="sd">    :ivar author: Short author list, .e.g, &quot;Author 1 et. al&quot;.</span>
+<span class="sd">    :vartype author: str</span>
+<span class="sd">    :ivar year: Year of publication as a 4 digit integer, e.g. 2008.</span>
+<span class="sd">    :vartype year: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">reasons</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">set</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">displaystr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">reason</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reasons</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Citation.because"><a class="viewcode-back" href="../../api.html#stdpopsim.Citation.because">[docs]</a>    <span class="k">def</span> <span class="nf">because</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reasons</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a new Citation with the given reasons.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reasons</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="n">reasons</span> <span class="o">=</span> <span class="p">{</span><span class="n">reasons</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+                <span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">,</span>
+                <span class="n">reasons</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reasons</span> <span class="o">|</span> <span class="n">reasons</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Citation.merge"><a class="viewcode-back" href="../../api.html#stdpopsim.Citation.merge">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">citations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a deduplicated list of Citation objects.&quot;&quot;&quot;</span>
+        <span class="n">cset</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">citation</span> <span class="ow">in</span> <span class="n">citations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">citation</span><span class="o">.</span><span class="n">doi</span> <span class="ow">in</span> <span class="n">cset</span><span class="p">:</span>
+                <span class="n">citation</span> <span class="o">=</span> <span class="n">cset</span><span class="p">[</span><span class="n">citation</span><span class="o">.</span><span class="n">doi</span><span class="p">]</span><span class="o">.</span><span class="n">because</span><span class="p">(</span><span class="n">citation</span><span class="o">.</span><span class="n">reasons</span><span class="p">)</span>
+            <span class="n">cset</span><span class="p">[</span><span class="n">citation</span><span class="o">.</span><span class="n">doi</span><span class="p">]</span> <span class="o">=</span> <span class="n">citation</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">cset</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Citation.fetch_bibtex"><a class="viewcode-back" href="../../api.html#stdpopsim.Citation.fetch_bibtex">[docs]</a>    <span class="k">def</span> <span class="nf">fetch_bibtex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the bibtex of a citation from Crossref.&quot;&quot;&quot;</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s2">&quot;Accept&quot;</span><span class="p">,</span> <span class="s2">&quot;text/bibliography; style=bibtex&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span> <span class="k">as</span> <span class="n">con</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">con</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div></div>
+
+
+<span class="n">_stdpopsim_citation</span> <span class="o">=</span> <span class="n">Citation</span><span class="p">(</span>
+    <span class="c1"># biorxiv; update upon publication</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1101/2019.12.20.885129&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2019&quot;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Adrion et al.&quot;</span><span class="p">,</span>
+    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">STDPOPSIM</span><span class="p">})</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, PopSim Consortium
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
