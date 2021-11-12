@@ -100,7 +100,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#calculating-the-allele-frequency-spectrum">Calculating the allele frequency spectrum</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1. Simulating the dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1. Simulating the dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#calculating-the-afs">2. Calculating the AFS</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plotting-the-afs">3. Plotting the AFS</a></li>
 </ul>
@@ -290,7 +290,7 @@ To save time we will specify that the simulation use
 chromosome 22, using the <code class="docutils literal notranslate"><span class="pre">-c</span></code> option. We also specify that the resulting
 tree-sequence formatted output should be written to the file <code class="docutils literal notranslate"><span class="pre">foo.ts</span></code> with the
 <code class="docutils literal notranslate"><span class="pre">-o</span></code> option. For more information on how to use tree-sequence files see
-<a class="reference external" href="https://tskit.readthedocs.io/en/latest/">tskit</a> .</p>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/introduction.html">tskit</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -o foo.ts <span class="m">2</span>
 </pre></div>
 </div>
@@ -414,7 +414,7 @@ a compact and efficient format for storing both genealogies and genome sequence.
 Some examples of analyzing tree sequences are given
 <a class="reference internal" href="#sec-tute-analyses"><span class="std std-ref">below</span></a>.
 If desired, these can be converted to VCF on the command line if the
-<a class="reference external" href="https://tskit.readthedocs.io/">tskit</a> package is installed,
+<a class="reference external" href="https://tskit.dev/tskit/">tskit</a> package is installed,
 with the <code class="docutils literal notranslate"><span class="pre">tskit</span> <span class="pre">vcf</span></code> command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit vcf foo.ts &gt; foo.vcf
 </pre></div>
@@ -448,7 +448,7 @@ but increases time required for processing:</p>
 <h3>Using the SLiM simulation engine<a class="headerlink" href="#using-the-slim-simulation-engine" title="Permalink to this headline"></a></h3>
 <p>The default “simulation engine” -
 i.e., the program that actually does the simulating -
-is <a class="reference external" href="https://msprime.readthedocs.io/en/stable/">msprime</a>,
+is <a class="reference external" href="https://tskit.dev/msprime/">msprime</a>,
 a coalescent simulator.
 However, it is also possible to swap this out for
 <a class="reference external" href="https://messerlab.org/slim/">SLiM</a>,
@@ -564,7 +564,7 @@ actually resembles the data that would be produced without rescaling.</p>
 <p>Nearly all the functionality of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is available through the CLI,
 but for complex situations it may be desirable to use python.
 Furthermore, downstream analysis may happen in python,
-using the <a class="reference external" href="https://tskit.readthedocs.io">tskit</a> tools for working
+using the <a class="reference external" href="https://tskit.dev/tskit/">tskit</a> tools for working
 with tree sequences.
 In order to use the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> API the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package must be
 installed (see <a class="reference internal" href="installation.html#sec-installation"><span class="std std-ref">Installation</span></a>).</p>
@@ -763,7 +763,7 @@ defined above. The simulation results are recorded in a tree sequence object
 <section id="sanity-check-the-tree-sequence-output">
 <h4>Sanity check the tree sequence output<a class="headerlink" href="#sanity-check-the-tree-sequence-output" title="Permalink to this headline"></a></h4>
 <p>Now, we do some simple checks that our simulation worked with
-<a class="reference external" href="https://tskit.readthedocs.io">tskit</a>.</p>
+<a class="reference external" href="https://tskit.dev/tskit/">tskit</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_samples</span><span class="p">)</span>
 <span class="c1"># 10</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">)</span>
@@ -816,7 +816,7 @@ However, <code class="docutils literal notranslate"><span class="pre">stdpopsim<
 simulations with SLiM, a forwards-time, individual-based simulator.
 Using SLiM provides us with a few more options.
 You may also want to install the
-<a class="reference external" href="https://pyslim.readthedocs.io/">pyslim</a> package
+<a class="reference external" href="https://tskit.dev/pyslim/">pyslim</a> package
 to extract the additional SLiM-specific information
 in the tree sequences that are produced.</p>
 <section id="an-example-simulation">
@@ -877,7 +877,7 @@ the amount of time before the first demographic model change that SLiM begins si
 in units of N generations, where N is the population size at the first demographic model change.
 By default, this is set to 10, which is fairly safe.
 History before this period is simulated with an <code class="docutils literal notranslate"><span class="pre">msprime</span></code> coalescent simulation,
-called <a class="reference external" href="https://pyslim.readthedocs.io/en/latest/tutorial.html#recapitation">“recapitation”</a>
+called <a class="reference external" href="https://tskit.dev/pyslim/docs/latest/tutorial.html#recapitation">“recapitation”</a>
 because it attaches tops to any trees that have not yet coalesced.
 For instance, the <code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code> model
 <a class="reference external" href="https://doi.org/10.1126/science.1219240">(Tennesen et al 2012)</a>
@@ -995,7 +995,7 @@ The first, and most essential step, is undoing the rescaling of time
 that the <code class="docutils literal notranslate"><span class="pre">slim_scaling_factor</span></code> has introduced.
 Next is “recapitation”,
 for which the rationale and method is described in detail in the
-<a class="reference external" href="https://pyslim.readthedocs.io/en/latest/tutorial.html#recapitation">pyslim documentation</a>.
+<a class="reference external" href="https://tskit.dev/pyslim/docs/latest/tutorial.html#recapitation">pyslim documentation</a>.
 The third (and least crucial) step is to <em>simplify</em> the tree sequence.
 If as above we ask for 200 samples from a population whose final size is
 1,450 individuals (after rescaling),
@@ -1010,7 +1010,7 @@ because the size of the tree sequence grows very slowly with the number of sampl
 However, for many analyses you will probably want to extract samples
 of realistic size for real data.
 Again, methods to do this are discussed in the
-<a class="reference external" href="https://pyslim.readthedocs.io/en/latest/tutorial.html#simplification">pyslim documentation</a>.</p>
+<a class="reference external" href="https://tskit.dev/pyslim/docs/latest/tutorial.html#simplification">pyslim documentation</a>.</p>
 </section>
 </section>
 </section>
@@ -1398,7 +1398,7 @@ neutral and sweep simulations and plot them side by side.</p>
 <section id="calculating-genetic-divergence">
 <span id="sec-tute-divergence"></span><h3>Calculating genetic divergence<a class="headerlink" href="#calculating-genetic-divergence" title="Permalink to this headline"></a></h3>
 <p>Next we’ll give an example of computing some summaries of the simulation output.
-The <a class="reference external" href="https://tskit.readthedocs.io/en/latest/">tskit</a>  documentation
+The <a class="reference external" href="https://tskit.dev/tskit/docs/stable/">tskit</a>  documentation
 has details on many more statistics that you can compute using the tree sequences.
 We will simulate some samples of human chromosomes
 from different populations,
@@ -1503,7 +1503,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
@@ -1536,7 +1536,7 @@ but with both chromosomes sampled from the same population.
 These quantities can be computed directly from our sample using tskit’s
 <a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.divergence" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.divergence()</span></code></a>.</p>
 <p>By looking at
-<a class="reference external" href="https://tskit.readthedocs.io/en/latest/python-api.html#tskit.TreeSequence.divergence">the documentation</a>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.divergence" title="(in tskit v0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">the</span> <span class="pre">documentation</span></code></a>
 for this method, we can see that we’ll need two inputs: <code class="docutils literal notranslate"><span class="pre">sample_sets</span></code> and
 <code class="docutils literal notranslate"><span class="pre">indexes</span></code>.
 In our case, we want <code class="docutils literal notranslate"><span class="pre">sample_sets</span></code> to give the list
@@ -1628,8 +1628,8 @@ regardless of the populations they come from.</p>
 a non-human (finally!), <em>Arabidopsis thaliana</em>,
 and analyse the allele frequency spectrum (AFS) for each population
 (also called the “site frequency spectrum, or SFS).</p>
-<section id="id4">
-<h4>1. Simulating the dataset<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
+<section id="id3">
+<h4>1. Simulating the dataset<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
 <p>This time, we will use the <a class="reference internal" href="api.html#stdpopsim.IsolationWithMigration" title="stdpopsim.IsolationWithMigration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stdpopsim.IsolationWithMigration()</span></code></a> model.
 Since this is a generic model that can be used for any species, we must use the Python
 interface for this simulation.
@@ -1726,7 +1726,7 @@ these must be alleles fixed in this population but still polymorphic in the othe
 calculate the AFS for derived alleles only, without “folding” the spectrum,
 and the <code class="docutils literal notranslate"><span class="pre">span_normalise=False</span></code> option disables tskit’s
 default behaviour of dividing by the sequence length. See
-<a class="reference external" href="https://tskit.readthedocs.io/en/latest/stats.html#interface">tskit’s documentation</a>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/stats.html#interface">tskit’s documentation</a>
 for more information on these options.</p>
 <p>We will do further analysis in the next section, but you might first wish to convince
 yourself that this output makes sense to you.

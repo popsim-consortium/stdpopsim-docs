@@ -171,7 +171,7 @@ environment and then should be able to install the development requirements usin
 $ conda install --file=requirements/development.txt
 </pre></div>
 </div>
-<p>We do require <code class="docutils literal notranslate"><span class="pre">msprime</span></code>, so please see the the <a class="reference external" href="https://msprime.readthedocs.io/en/stable/installation.html">installation notes</a> if you
+<p>We do require <code class="docutils literal notranslate"><span class="pre">msprime</span></code>, so please see the the <a class="reference external" href="https://tskit.dev/msprime/docs/stable/installation.html">installation notes</a> if you
 encounter problems with it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -549,8 +549,7 @@ beware!</p>
 <li><p><a class="reference internal" href="#submit-a-pull-request-on-github">Submit a Pull Request on GitHub</a></p></li>
 </ol>
 <p>If this is your first time implementing a demographic model in <cite>stdpopsim</cite>, it’s a good
-idea to take some time browsing the
-<a class="reference external" href="https://stdpopsim.readthedocs.io/en/latest/catalog.html">Catalog</a>
+idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
 and species’ demographic models in the
 source code to see how existing models are typically written and documented. If you have
 any questions or confusion about formatting or implementing demographic models, please
@@ -669,7 +668,7 @@ parameters that give the maximum likelihood fit), which are translated into
 <code class="docutils literal notranslate"><span class="pre">population_configurations</span></code>, <code class="docutils literal notranslate"><span class="pre">migration_matrix</span></code>, and <code class="docutils literal notranslate"><span class="pre">demographic_events</span></code>. If this
 is your first time specifying a model using <cite>msprime</cite>, it’s worth taking some time to
 read through the <cite>msprime</cite>
-<a class="reference external" href="https://msprime.readthedocs.io/en/stable/tutorial.html">documentation and tutorials</a>.</p>
+<a class="reference external" href="https://tskit.dev/msprime/docs/stable/quickstart.html">documentation and tutorials</a>.</p>
 </section>
 <section id="write-parameter-table">
 <h3>Write parameter table<a class="headerlink" href="#write-parameter-table" title="Permalink to this headline"></a></h3>
@@ -928,7 +927,7 @@ delimited file with four columns: Chromosome, Position(bp), Rate(cM/Mb), and Map
 Each chromosome should be placed in a separate file and with the chromosome id in the
 file name in such a way that it can be programatically parsed out. IMPORTANT: chromosome
 ids must match those provided in the genome definition exactly! Below is an example start
-to a recombination map file (see <a class="reference external" href="https://msprime.readthedocs.io/en/stable/api.html#msprime.RecombinationMap.read_hapmap">here</a>
+to a recombination map file (see <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap.read_hapmap">here</a>
 for more details):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Chromosome</span> <span class="n">Position</span><span class="p">(</span><span class="n">bp</span><span class="p">)</span> <span class="n">Rate</span><span class="p">(</span><span class="n">cM</span><span class="o">/</span><span class="n">Mb</span><span class="p">)</span> <span class="n">Map</span><span class="p">(</span><span class="n">cM</span><span class="p">)</span>
 <span class="n">chr1</span> <span class="mi">32807</span> <span class="mf">5.016134</span> <span class="mi">0</span>
