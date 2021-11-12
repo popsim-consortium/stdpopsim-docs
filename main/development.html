@@ -82,6 +82,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-a-new-release">Making a new release</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
@@ -1142,6 +1143,27 @@ HTML output in the <code class="docutils literal notranslate"><span class="pre">
 <p class="admonition-title">Note</p>
 <p>You will need <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to be installed for the build to work.</p>
 </div>
+</section>
+<section id="making-a-new-release">
+<h2>Making a new release<a class="headerlink" href="#making-a-new-release" title="Permalink to this headline"></a></h2>
+<p>Here is a list of things to do when making a new release:</p>
+<ol class="arabic simple">
+<li><p>Update the changelog and commit</p></li>
+<li><p>Create a release using the GitHub UI</p></li>
+<li><dl class="simple">
+<dt><cite>git fetch upstream</cite> on your local branch.</dt><dd><p>Then check out <cite>upstream/main</cite> and create a release tarball
+(with <cite>python setup.py sdist</cite>).
+Setuptools_scm will detect the version appopriately.</p>
+</dd>
+</dl>
+</li>
+<li><p>Upload to PyPI: <cite>twine upload dist/{version just tagged}.tar.gz</cite></p></li>
+<li><p>After the release, if everything looks OK,
+update the symlink for <code class="docutils literal notranslate"><span class="pre">stable</span></code> in the
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim-docs">stdpopsim-docs</a>
+repository</p></li>
+<li><p>Check on the conda feedstock PR.</p></li>
+</ol>
 </section>
 </section>
 
