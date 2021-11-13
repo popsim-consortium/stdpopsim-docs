@@ -453,7 +453,7 @@
 <span class="sd">        :param array intervals: A valid set of intervals.</span>
 <span class="sd">        :param DFE dfe: A DFE object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">_check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_intervals</span><span class="p">(</span><span class="n">ints</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DFE</span><span class="p">)</span>
