@@ -255,9 +255,10 @@ can look at the help again as follows.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help
 usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
                         [--help-genetic-maps [HELP_GENETIC_MAPS]] [-D] [-g]
-                        [-c] [-L LENGTH] [-i INCLUSION_MASK]
-                        [-e EXCLUSION_MASK] [-l LENGTH_MULTIPLIER] [-s SEED]
-                        [-d] [-o OUTPUT]
+                        [--help-dfes [HELP_DFES]] [-c] [-L LENGTH]
+                        [-i INCLUSION_MASK] [-e EXCLUSION_MASK]
+                        [-l LENGTH_MULTIPLIER] [-s SEED] [-d] [--dfe]
+                        [--dfe-interval] [-o OUTPUT]
                         samples [samples ...]
 
 Run simulations for Homo sapiens using up-to-date genome information,
@@ -272,7 +273,6 @@ Population size: 10000
 Mutation rate: 1.29e-08
 Recombination rate: 1.205e-08
 
-positional arguments:
 ...
 </pre></div>
 </div>
@@ -1478,7 +1478,7 @@ WARNING: Recombination map has length 249218992.0, which is longer than chromoso
 Simulation information:
     Engine: msprime (1.0.3)
     Model id: AmericanAdmixture_4B11
-    Model desciption: American admixture
+    Model description: American admixture
     Seed: 13
     Population: number_samples (sampling_time_generations):
         0: 4 (0)
@@ -1503,7 +1503,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
