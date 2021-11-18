@@ -187,31 +187,31 @@ usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
                  [--msprime-model {hudson,dtwf,smc,smc_prime}]
                  [--msprime-change-model T MODEL] [--slim-path PATH]
                  [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
-                 {AnoCar,HelMel,AnoGam,EscCol,StrAga,ApiMel,AnaPla,DroMel,DroSec,BosTau,AedAeg,PonAbe,CaeEle,GasAcu,HomSap,CanFam,ChlRei,AraTha,download-genetic-maps}
+                 {PonAbe,GasAcu,BosTau,DroSec,HomSap,ChlRei,AnoCar,CanFam,ApiMel,CaeEle,EscCol,AnoGam,AnaPla,StrAga,AraTha,AedAeg,HelMel,DroMel,download-genetic-maps}
                  ...
 
 Command line interface for stdpopsim.
 
 positional arguments:
-  {AnoCar,HelMel,AnoGam,EscCol,StrAga,ApiMel,AnaPla,DroMel,DroSec,BosTau,AedAeg,PonAbe,CaeEle,GasAcu,HomSap,CanFam,ChlRei,AraTha,download-genetic-maps}
-    AnoCar              Run simulations for Anolis carolinensis.
-    HelMel              Run simulations for Heliconius melpomene.
-    AnoGam              Run simulations for Anopheles gambiae.
-    EscCol              Run simulations for Escherichia coli.
-    StrAga              Run simulations for Streptococcus agalactiae.
-    ApiMel              Run simulations for Apis mellifera.
-    AnaPla              Run simulations for Anas platyrhynchos.
-    DroMel              Run simulations for Drosophila melanogaster.
-    DroSec              Run simulations for Drosophila sechellia.
-    BosTau              Run simulations for Bos taurus.
-    AedAeg              Run simulations for Aedes aegypti.
+  {PonAbe,GasAcu,BosTau,DroSec,HomSap,ChlRei,AnoCar,CanFam,ApiMel,CaeEle,EscCol,AnoGam,AnaPla,StrAga,AraTha,AedAeg,HelMel,DroMel,download-genetic-maps}
     PonAbe              Run simulations for Pongo abelii.
-    CaeEle              Run simulations for Caenorhabditis elegans.
     GasAcu              Run simulations for Gasterosteus aculeatus.
+    BosTau              Run simulations for Bos taurus.
+    DroSec              Run simulations for Drosophila sechellia.
     HomSap              Run simulations for Homo sapiens.
-    CanFam              Run simulations for Canis familiaris.
     ChlRei              Run simulations for Chlamydomonas reinhardtii.
+    AnoCar              Run simulations for Anolis carolinensis.
+    CanFam              Run simulations for Canis familiaris.
+    ApiMel              Run simulations for Apis mellifera.
+    CaeEle              Run simulations for Caenorhabditis elegans.
+    EscCol              Run simulations for Escherichia coli.
+    AnoGam              Run simulations for Anopheles gambiae.
+    AnaPla              Run simulations for Anas platyrhynchos.
+    StrAga              Run simulations for Streptococcus agalactiae.
     AraTha              Run simulations for Arabidopsis thaliana.
+    AedAeg              Run simulations for Aedes aegypti.
+    HelMel              Run simulations for Heliconius melpomene.
+    DroMel              Run simulations for Drosophila melanogaster.
     download-genetic-maps
                         Download genetic maps
 
@@ -259,7 +259,9 @@ usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
                         [--help-dfes [HELP_DFES]] [-c] [-L LENGTH]
                         [-i INCLUSION_MASK] [-e EXCLUSION_MASK]
                         [-l LENGTH_MULTIPLIER] [-s SEED] [-d] [--dfe]
-                        [--dfe-interval] [-o OUTPUT]
+                        [--dfe-interval]
+                        [--help-annotations [HELP_ANNOTATIONS]]
+                        [--dfe-annotation] [-o OUTPUT]
                         samples [samples ...]
 
 Run simulations for Homo sapiens using up-to-date genome information,
@@ -272,8 +274,6 @@ Default population parameters for Homo sapiens:
 Generation time: 30
 Population size: 10000
 Mutation rate: 1.29e-08
-Recombination rate: 1.205e-08
-
 ...
 </pre></div>
 </div>
