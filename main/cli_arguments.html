@@ -271,7 +271,7 @@ Recombination rate: 5.65e-09</p>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -333,6 +333,9 @@ Recombination rate: 5.65e-09</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -354,7 +357,7 @@ Recombination rate: 3.001e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">GasAcu</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -408,6 +411,9 @@ Recombination rate: 3.001e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -429,7 +435,7 @@ Recombination rate: 9.26e-09</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">BosTau</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -484,6 +490,9 @@ Recombination rate: 9.26e-09</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -505,7 +514,7 @@ Recombination rate: 2.165e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">DroSec</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -559,6 +568,9 @@ Recombination rate: 2.165e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -582,8 +594,9 @@ Recombination rate: 1.205e-08</p>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">dfes</span> <span class="p">[</span><span class="n">HELP_DFES</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">annotations</span> <span class="p">[</span><span class="n">HELP_ANNOTATIONS</span><span class="p">]]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">annotation</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">annotations</span> <span class="p">[</span><span class="n">HELP_ANNOTATIONS</span><span class="p">]]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">annotation</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -649,6 +662,9 @@ Recombination rate: 1.205e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>--help-annotations</kbd></dt>
 <dd><p>Print list of annotations and exit. If a annotation ID is given as an argument, show help for this annotation. Otherwise show help for all available annotations</p>
 </dd>
@@ -677,7 +693,7 @@ Recombination rate: 1.459e-10</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">ChlRei</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -731,6 +747,9 @@ Recombination rate: 1.459e-10</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -752,7 +771,7 @@ Recombination rate: 1e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">AnoCar</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -806,6 +825,9 @@ Recombination rate: 1e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -828,7 +850,7 @@ Recombination rate: 9.506e-09</p>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -889,6 +911,9 @@ Recombination rate: 9.506e-09</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -910,7 +935,7 @@ Recombination rate: 2.318e-07</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">ApiMel</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -964,6 +989,9 @@ Recombination rate: 2.318e-07</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -985,7 +1013,7 @@ Recombination rate: 3.325e-11</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">CaeEle</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1039,6 +1067,9 @@ Recombination rate: 3.325e-11</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1060,7 +1091,7 @@ Recombination rate: 0</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">EscCol</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1114,6 +1145,9 @@ Recombination rate: 0</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1135,7 +1169,7 @@ Recombination rate: 1.044e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">AnoGam</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1190,6 +1224,9 @@ Recombination rate: 1.044e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1211,7 +1248,7 @@ Recombination rate: 1.433e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">AnaPla</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1266,6 +1303,9 @@ Recombination rate: 1.433e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1287,7 +1327,7 @@ Recombination rate: 0</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">StrAga</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1341,6 +1381,9 @@ Recombination rate: 0</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1363,7 +1406,7 @@ Recombination rate: 8.029e-10</p>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1425,6 +1468,9 @@ Recombination rate: 8.029e-10</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1446,7 +1492,7 @@ Recombination rate: 2.782e-09</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">AedAeg</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1500,6 +1546,9 @@ Recombination rate: 2.782e-09</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1521,7 +1570,7 @@ Recombination rate: 4.601e-08</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">HelMel</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1575,6 +1624,9 @@ Recombination rate: 4.601e-08</p>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
 </dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
 </dd>
@@ -1598,8 +1650,9 @@ Recombination rate: 2.085e-08</p>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">dfes</span> <span class="p">[</span><span class="n">HELP_DFES</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">annotations</span> <span class="p">[</span><span class="n">HELP_ANNOTATIONS</span><span class="p">]]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">annotation</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">annotations</span> <span class="p">[</span><span class="n">HELP_ANNOTATIONS</span><span class="p">]]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">annotation</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1664,6 +1717,9 @@ Recombination rate: 2.085e-08</p>
 </dd>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
+</dd>
+<dt><kbd>--dfe-bed-file</kbd></dt>
+<dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
 </dd>
 <dt><kbd>--help-annotations</kbd></dt>
 <dd><p>Print list of annotations and exit. If a annotation ID is given as an argument, show help for this annotation. Otherwise show help for all available annotations</p>
