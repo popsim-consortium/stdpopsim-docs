@@ -81,7 +81,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="MutationType"><a class="viewcode-back" href="../../api.html#stdpopsim.MutationType">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">MutationType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a &quot;type&quot; of mutation.  The design closely (exactly)</span>
@@ -222,7 +222,7 @@
 <span class="sd">        be of type &quot;f&quot; and with fitness effect 0.0, and so excludes other situations</span>
 <span class="sd">        that also produce only neutral mutations (e.g., exponential with mean 0).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span></div>
 
 
 <div class="viewcode-block" id="DFE"><a class="viewcode-back" href="../../api.html#stdpopsim.DFE">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -241,7 +241,8 @@
 <span class="sd">    ``proportions`` and ``mutation_types`` must be lists of the same length,</span>
 <span class="sd">    and ``proportions`` should be nonnegative numbers summing to 1.</span>
 
-<span class="sd">    :ivar ~.mutation_types: A list of MutationTypes associated with the DFE.</span>
+<span class="sd">    :ivar ~.mutation_types: A list of :class:`.MutationType` objects associated</span>
+<span class="sd">        with the DFE.</span>
 <span class="sd">    :vartype ~.mutation_types: list</span>
 <span class="sd">    :ivar ~.proportions: A list of the proportions of new mutations that</span>
 <span class="sd">        fall in to each of the mutation types (must sum to 1).</span>

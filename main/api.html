@@ -45,6 +45,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-reference">Quick reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#species-definitions">Species definitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#demographic-models">Demographic Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#selection-and-dfes">Selection and DFEs</a></li>
@@ -82,6 +83,78 @@
              
   <section id="api">
 <span id="sec-api"></span><h1>API<a class="headerlink" href="#api" title="Permalink to this headline"></a></h1>
+<section id="quick-reference">
+<h2>Quick reference<a class="headerlink" href="#quick-reference" title="Permalink to this headline"></a></h2>
+<p>Functions to get things:</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.get_species" title="stdpopsim.get_species"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.get_species</span></code></a>(id)</p></td>
+<td><p>Returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code> object for the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Species.get_contig" title="stdpopsim.Species.get_contig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Species.get_contig</span></code></a>([chromosome, ...])</p></td>
+<td><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that is to be simulated based on empirical information for a given species and chromosome.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.Species.get_demographic_model" title="stdpopsim.Species.get_demographic_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Species.get_demographic_model</span></code></a>(id)</p></td>
+<td><p>Returns a demographic model with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Species.get_dfe" title="stdpopsim.Species.get_dfe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Species.get_dfe</span></code></a>(id)</p></td>
+<td><p>Returns a DFE with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.Species.get_annotations" title="stdpopsim.Species.get_annotations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Species.get_annotations</span></code></a>(id)</p></td>
+<td><p>Returns a set of annotations with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Contig.add_dfe</span></code></a>(intervals, DFE)</p></td>
+<td><p>Adds the provided DFE to the contig, applying to the regions of the contig specified in <code class="docutils literal notranslate"><span class="pre">intervals</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.get_engine" title="stdpopsim.get_engine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.get_engine</span></code></a>(id)</p></td>
+<td><p>Returns the simulation engine with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Classes of objects:</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Species</span></code></a>(*, id, name, common_name, ...)</p></td>
+<td><p>Class representing a species in the catalog.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Genome</span></code></a>([chromosomes, ...])</p></td>
+<td><p>Class representing the genome for a species.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Chromosome</span></code></a>(*, id, length, ...[, ...])</p></td>
+<td><p>Class representing a single chromosome for a species.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Contig</span></code></a>(*, recombination_map, ...)</p></td>
+<td><p>Class representing a contiguous region of genome that is to be simulated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code></a>(*, doi, author, year[, ...])</p></td>
+<td><p>A reference to the literature that should be acknowledged by users of stdpopsim.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Annotation</span></code></a>(*, id, species, url, ...)</p></td>
+<td><p>Class representing an annotation track.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.DFE</span></code></a>(*, id, description, ...[, ...])</p></td>
+<td><p>Class representing a &quot;Distribution of Fitness Effects&quot;, i.e., a DFE.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.MutationType</span></code></a>(*[, dominance_coeff, ...])</p></td>
+<td><p>Class representing a &quot;type&quot; of mutation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.DemographicModel</span></code></a>(*, id, ...[, ...])</p></td>
+<td><p>Class representing a demographic model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Population" title="stdpopsim.Population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Population</span></code></a>(id, description[, ...])</p></td>
+<td><p>Class recording metadata representing a population in a simulation.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="species-definitions">
 <span id="sec-api-species-definitions"></span><h2>Species definitions<a class="headerlink" href="#species-definitions" title="Permalink to this headline"></a></h2>
 <p>The <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> contains a large number of species and simulation
@@ -679,7 +752,8 @@ and <code class="docutils literal notranslate"><span class="pre">proportions</sp
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mutation_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of MutationTypes associated with the DFE.</p></li>
+<li><p><strong>mutation_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutationType</span></code></a> objects associated
+with the DFE.</p></li>
 <li><p><strong>proportions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of the proportions of new mutations that
 fall in to each of the mutation types (must sum to 1).</p></li>
 <li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier for this model. DFE IDs should be
@@ -695,6 +769,46 @@ reference(s) for the DFE model.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stdpopsim.MutationType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">MutationType</span></span><a class="reference internal" href="_modules/stdpopsim/dfe.html#MutationType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.MutationType" title="Permalink to this definition"></a></dt>
+<dd><p>Class representing a “type” of mutation.  The design closely (exactly)
+mirrors SLiM’s MutationType class.</p>
+<p>The main thing that mutation types carry is a way of drawing a selection
+coefficient for each new mutation. This <code class="docutils literal notranslate"><span class="pre">distribution_type</span></code> should be one
+of (see the SLiM manual for more information on these):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: fixed, one parameter (the selection coefficient)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: exponential, one parameter (mean)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">g</span></code>: gamma, two parameters (mean, shape)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: normal, two parameters (mean, SD)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: Weibull, two parameters (scale, shape)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">l</span></code>: logNormal, two parameters (mean and sd on log scale; see rlnorm)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A one-letter abbreviation for the distribution of
+fitness effects that each new mutation of this type draws from (see below).</p></li>
+<li><p><strong>distribution_args</strong> – Arguments for the distribution type.</p></li>
+<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – A single dominance coefficient (negative = underdominance,
+0 = recessive, 0.5 = additive, 1.0 = completely dominant, &gt; 1.0 = overdominant)</p></li>
+<li><p><strong>convert_to_substitution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to retain any fixed mutations in the
+simulation: if not, we cannot ask about their frequency once fixed.
+(Either way, they will remain in the tree sequence).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="stdpopsim.MutationType.is_neutral">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_neutral</span></span><a class="headerlink" href="#stdpopsim.MutationType.is_neutral" title="Permalink to this definition"></a></dt>
+<dd><p>Tests whether the mutation type is strictly neutral. This is defined here to
+be of type “f” and with fitness effect 0.0, and so excludes other situations
+that also produce only neutral mutations (e.g., exponential with mean 0).</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
