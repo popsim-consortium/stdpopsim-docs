@@ -322,8 +322,10 @@
 <span class="s2">    for (i in 0:(num_populations-1)) {</span>
 <span class="s2">        if (N[0,i] &gt; 0) {</span>
 <span class="s2">            check_size(i, N[0,i], sim.generation);</span>
-<span class="s2">            dbg(&quot;sim.addSubpop(&quot;+i+&quot;, &quot;+N[0,i]+&quot;);&quot;);</span>
-<span class="s2">            sim.addSubpop(i, N[0,i]);</span>
+<span class="s2">            dbg(&quot;p = sim.addSubpop(&quot;+i+&quot;, &quot;+N[0,i]+&quot;);&quot;);</span>
+<span class="s2">            p = sim.addSubpop(i, N[0,i]);</span>
+<span class="s2">            dbg(&quot;p.name = &#39;&quot;+pop_names[i]+&quot;&#39;;&quot;);</span>
+<span class="s2">            p.name = pop_names[i];</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 
@@ -414,7 +416,8 @@
 <span class="s2">            check_size(newpop, size, g);</span>
 <span class="s2">            sim.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
-<span class="s2">                &quot;sim.addSubpopSplit(&quot;+newpop+&quot;,&quot;+size+&quot;,&quot;+oldpop+&quot;);}&quot;,</span>
+<span class="s2">                &quot;p = sim.addSubpopSplit(&quot;+newpop+&quot;,&quot;+size+&quot;,&quot;+oldpop+&quot;); &quot; +</span>
+<span class="s2">                &quot;p.name = &#39;&quot;+pop_names[newpop]+&quot;&#39;;}&quot;,</span>
 <span class="s2">                g, g);</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
@@ -1454,7 +1457,9 @@
 
         <span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
-                <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span>
+                <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span>
+                <span class="n">growth_rate</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span><span class="p">,</span>
+                <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">pop</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">recap_epoch</span><span class="o">.</span><span class="n">populations</span>
         <span class="p">]</span>
