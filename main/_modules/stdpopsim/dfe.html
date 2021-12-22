@@ -297,6 +297,10 @@
                     <span class="s2">&quot;mutation_types must be a list of MutationType objects.&quot;</span>
                 <span class="p">)</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">])</span>
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">long_desc_lines</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
