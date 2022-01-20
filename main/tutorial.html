@@ -54,6 +54,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#using-the-slim-simulation-engine">Using the SLiM simulation engine</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#specifying-the-engine">Specifying the engine</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#the-scaling-factor">The scaling factor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simulating-genomes-with-selection">Simulating genomes with selection</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#debugging-output-from-slim">Debugging output from SLiM</a><ul>
@@ -503,6 +504,53 @@ This is particularly true in simulations with large amounts of selection.
 See the SLiM manual and/or
 <a class="reference external" href="https://www.genetics.org/content/197/1/221.short">Urrichio &amp; Hernandez (2014)</a>
 for more discussion.</p>
+</section>
+<section id="simulating-genomes-with-selection">
+<h4>Simulating genomes with selection<a class="headerlink" href="#simulating-genomes-with-selection" title="Permalink to this headline"></a></h4>
+<p>In the example above given a species, recombination map, and demography, a contig
+was simulated assuming strictly neutrality. It is possible to incorporate selection in the
+simulations by (1) specifying the Distribution of Fitness Effects (DFE) for all new mutations
+across the entire contig or a subset of it; or by (2) adding a single mutation under selection,
+as for instance in a selective sweep.</p>
+<p>If a DFE is already described in the catalog, one can incorporate it into the simulation
+with the flag <code class="docutils literal notranslate"><span class="pre">--dfe</span></code>. For instance, HomSap has a DFE described as Gamma_K17.
+To add it the example above we can type as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
+    -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
+</pre></div>
+</div>
+<p>This example will simulate selection following the proportion of sites described in <a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/main/catalog.html#sec_catalog_homsap_dfes_gamma_k17">Gamma_K17</a></p>
+<p>Instead of simulating the whole contig one can simulate only coding sequence (CDS) by using the flag <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code>
+and specifying a CDS annotation:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">20</span> HomSap <span class="se">\</span>
+     -c chr22 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
+     --dfe-annotation ensembl_havana_104_CDS <span class="m">2</span> <span class="m">4</span>
+</pre></div>
+</div>
+<p>If instead of an annotation file one has a bed file (ex.bed) like the one below:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">chr1  100000  145000</span>
+<span class="go">chr1  150000  302425</span>
+<span class="go">chr1  302430  303000</span>
+</pre></div>
+</div>
+<p>then it is possible to simulate selection in all intervals provided by the bed file by using the flag
+<code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code> as follow:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
+     -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
+     --dfe-bed-file ex.bed <span class="m">2</span> <span class="m">4</span>
+</pre></div>
+</div>
+<p>The examples above (using the flags <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code>, to use a named annotation, or <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code> to include a bed file)
+incorporate selection on the specified segments of genome.</p>
+<p>To simulate, however, only a small chunk of contig with selection––as in a selective sweep––one can use the flag
+<code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
+    -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
+    --dfe-interval <span class="m">1000</span>,100000 <span class="m">2</span> <span class="m">4</span>
+</pre></div>
+</div>
+<p>The DFE defined by Gamma_K17 will be incorporated only in positions between 1000 and 100000.</p>
+<p>See also the python API to incorporate <a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/latest/tutorial.html#incorporating-selection">selection</a>.</p>
 </section>
 </section>
 <section id="debugging-output-from-slim">
