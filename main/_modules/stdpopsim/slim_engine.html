@@ -130,6 +130,7 @@
 <span class="kn">import</span> <span class="nn">msprime</span>
 <span class="kn">import</span> <span class="nn">pyslim</span>
 <span class="kn">import</span> <span class="nn">tskit</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -675,12 +676,62 @@
 
 <span class="s2">&quot;&quot;&quot;</span>
 
+<span class="n">_raw_stdpopsim_top_level_schema</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;stdpopsim&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Top-level metadata for a tree sequence produced by stdposim using the SLiM engine&quot;</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;DFEs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                        <span class="s2">&quot;long_description&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                        <span class="s2">&quot;mutation_types&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;dominance_coeff&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">},</span>
+                                    <span class="s2">&quot;distribution_type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                                    <span class="s2">&quot;distribution_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">]},</span>
+                                    <span class="p">},</span>
+                                    <span class="s2">&quot;convert_to_substitution&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
+                                    <span class="s2">&quot;Q_scaled_index&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">},</span>
+                                    <span class="p">},</span>
+                                    <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">},</span>
+                                    <span class="s2">&quot;is_neutral&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
+                                <span class="p">},</span>
+                            <span class="p">},</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;proportions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">}},</span>
+                        <span class="s2">&quot;citations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;object&quot;</span><span class="p">]},</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;intervals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;minItems&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;maxItems&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">},</span>
+                        <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">},</span>
+                    <span class="p">},</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">get_msp_and_slim_mutation_rate_maps</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns a :class:`msprime.RateMap` with the mutation rate map for overlay</span>
-<span class="sd">    of neutral mutations and a tuple with the breakpoints and rates of mutations</span>
-<span class="sd">    for SLiM.</span>
+<span class="sd">    Returns a tuple with the breakpoints and rates of mutations for SLiM.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
     <span class="n">slim_fractions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -698,11 +749,7 @@
     <span class="p">)</span>  <span class="c1"># append 0 for the -1 labels</span>
     <span class="n">slim_rates</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="n">slim_fractions</span><span class="p">[</span><span class="n">dfe_labels</span><span class="p">]</span>
     <span class="n">slim_breaks</span> <span class="o">=</span> <span class="n">breaks</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># SLiM has inclusive right endpoints</span>
-
-    <span class="n">msp_mutation_rate_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span>
-        <span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slim_fractions</span><span class="p">[</span><span class="n">dfe_labels</span><span class="p">])</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">msp_mutation_rate_map</span><span class="p">,</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">slim_array_string</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
@@ -719,6 +766,74 @@
         <span class="p">)</span>
         <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
     <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an iterator which, for every `DFE` in the `contig`, returns a tuple</span>
+<span class="sd">    containing a numeric id for said DFE, the DFE object and the list of</span>
+<span class="sd">    intervals associated with the DFE. We need to assign each DFE a numeric id</span>
+<span class="sd">    both in the slim_makescript and in the _add_dfes_to_metadata, so with this</span>
+<span class="sd">    function we can ensure these two steps assigns numeric ids to the DFEs in the</span>
+<span class="sd">    same way.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ints</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">)):</span>
+        <span class="k">yield</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span>
+
+
+<span class="k">def</span> <span class="nf">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assigns a mutation type id to each of the mutation types contained in this</span>
+<span class="sd">    `Contig`. This function will return a dictionary with `len(contig.dfe_list)`</span>
+<span class="sd">    elements, in which the position of the DFE in `contig.dfe_list` is the key.</span>
+<span class="sd">    For each DFE, the dictionary holds a list of tuples that contain the an</span>
+<span class="sd">    assigned mutation type id (used in  SLiM) and the `MutationType` object.</span>
+<span class="sd">    This is necessary so that we use the same numeric ids to the mutation types</span>
+<span class="sd">    in the _add_dfes_to_metadata and slim_makescript steps.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dfe_to_mtypes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+        <span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
+            <span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">mid</span><span class="p">,</span> <span class="n">mt</span><span class="p">))</span>
+            <span class="n">mid</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">dfe_to_mtypes</span>
+
+
+<span class="k">def</span> <span class="nf">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds the DFEs to the top-level metadata of a tree sequence using</span>
+<span class="sd">    information in the `contig`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_json</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="c1"># recursively flattens an object to a dictionary.</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)))</span>
+        <span class="p">)</span>
+
+    <span class="n">tables</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">dump_tables</span><span class="p">()</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata_schema</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
+    <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_raw_stdpopsim_top_level_schema</span><span class="p">)</span>
+    <span class="n">dfes</span> <span class="o">=</span> <span class="n">_get_json</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span>
+    <span class="n">dfe_to_mtypes</span> <span class="o">=</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+        <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;intervals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ints</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;proportions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">proportions</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">mt</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+            <span class="n">add</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="n">mid</span><span class="p">,</span>
+                <span class="s2">&quot;is_neutral&quot;</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">add</span><span class="p">)</span>
+    <span class="n">new_metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;DFEs&quot;</span><span class="p">:</span> <span class="n">dfes</span><span class="p">}}</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_metadata</span><span class="p">)</span>
+    <span class="n">tables</span><span class="o">.</span><span class="n">metadata_schema</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">MetadataSchema</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="k">return</span> <span class="n">tables</span><span class="o">.</span><span class="n">tree_sequence</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">recombination_map</span><span class="p">):</span>
@@ -744,7 +859,6 @@
     <span class="n">slim_rate_map</span><span class="p">,</span>
 <span class="p">):</span>
 
-    <span class="n">mutation_types</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">()</span>
     <span class="n">pop_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">]</span>
     <span class="c1"># Use copies of these so that the time frobbing below doesn&#39;t have</span>
     <span class="c1"># side-effects in the caller&#39;s model.</span>
@@ -853,14 +967,17 @@
     <span class="n">fitness_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">condition_on_allele_frequency</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">op_id</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_id</span>
+    <span class="n">slim_mutation_ids</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">slim_mutation_ids</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">ee</span> <span class="ow">in</span> <span class="n">extended_events</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;mutation_type_id&quot;</span><span class="p">):</span>
             <span class="n">mt_id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;mutation_type_id&quot;</span><span class="p">)</span>
             <span class="n">cls_name</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">mt_id</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">mt_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">slim_mutation_ids</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">ee</span><span class="o">.</span><span class="n">mutation_type_id</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">mutation_types</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;event with mutation type id </span><span class="si">{</span><span class="n">mt_id</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">contig</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> event with mutation type id &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mt_id</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">contig</span><span class="si">}</span><span class="s2"> with valid IDs </span><span class="si">{</span><span class="n">slim_mutation_ids</span><span class="si">}</span><span class="s2">.&quot;</span>
                 <span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">):</span>
             <span class="c1"># Now that GenerationAfter times have been accounted for, we can</span>
@@ -992,11 +1109,12 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
     <span class="c1"># Genomic element types.</span>
-    <span class="n">next_mutation_type_id</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">):</span>
+    <span class="n">dfe_mtypes</span> <span class="o">=</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
         <span class="c1"># Mutation types.</span>
         <span class="n">mut_type_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe_mtypes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mid</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">dfe_mtypes</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">distrib_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">:</span>
@@ -1007,8 +1125,6 @@
             <span class="c1"># dealing with distributions given by &quot;s&quot; Eidos script,</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">])</span>
-            <span class="n">mid</span> <span class="o">=</span> <span class="n">next_mutation_type_id</span>
-            <span class="n">next_mutation_type_id</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">mut_type_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
             <span class="n">printsc</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;    initializeMutationType(</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">, &quot;</span>
@@ -1018,6 +1134,12 @@
                 <span class="c1"># T is the default for WF simulations.</span>
                 <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
         <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_type_list</span><span class="p">])</span>
+        <span class="c1"># We will assign a proportion of 0.0 to mutation types that are neutral</span>
+        <span class="c1"># unless all the mutation types in a DFE are neutral. In such case,</span>
+        <span class="c1"># SLiM would not allow all mutation types in a genomic element type to</span>
+        <span class="c1"># have 0.0 proportion. And the proportions in SLiM won&#39;t matter anyway,</span>
+        <span class="c1"># because all the intervals in this fully neutral DFE will have 0.0</span>
+        <span class="c1"># mutation rate anyway.</span>
         <span class="n">mut_props_list</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">prop</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">d</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">else</span> <span class="mf">0.0</span>
             <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
@@ -1031,11 +1153,11 @@
                 <span class="sa">f</span><span class="s2">&quot;    // Note: genomic element type </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2"> is entirely neutral,&quot;</span>
                 <span class="s2">&quot; so will not be simulated by SLiM.&quot;</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">element_starts</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ints</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">element_starts</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">ints</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="p">)</span>
             <span class="c1"># stdpopsim intervals are 0-based left inclusive, right exclusive, but</span>
             <span class="c1"># SLiM intervals are right inclusive</span>
-            <span class="n">element_ends</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
+            <span class="n">element_ends</span> <span class="o">=</span> <span class="n">slim_array_string</span><span class="p">(</span><span class="n">ints</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
             <span class="n">printsc</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;    initializeGenomicElement(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_starts</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">element_ends</span><span class="si">}</span><span class="s2">);&quot;</span>
             <span class="p">)</span>
@@ -1263,6 +1385,7 @@
         <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
         <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">_recap_and_rescale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulate the demographic model using SLiM.</span>
@@ -1312,7 +1435,7 @@
 
         <span class="c1"># figuring out mutations in SLiM and neutral mutations to be added</span>
         <span class="c1"># by msprime later</span>
-        <span class="n">msp_rate_map</span><span class="p">,</span> <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_msp_and_slim_mutation_rate_maps</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
+        <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
 
         <span class="c1"># TODO: remove this after a release or two. See #745.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_zigzag</span><span class="p">(</span><span class="n">demographic_model</span><span class="p">)</span>
@@ -1362,9 +1485,11 @@
 
             <span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-            <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">msp_rate_map</span>
-        <span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_recap_and_rescale</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
+                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -1442,27 +1567,49 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="n">filter_populations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">msp_rate_map</span>
-    <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
 <span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Node times come from SLiM generation numbers, which may have been</span>
+        <span class="c1"># Times come from SLiM generation numbers, which may have been</span>
         <span class="c1"># divided by a scaling factor for computational tractability.</span>
         <span class="n">tables</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">dump_tables</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="p">(</span><span class="n">tables</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">tables</span><span class="o">.</span><span class="n">migrations</span><span class="p">,</span> <span class="n">tables</span><span class="o">.</span><span class="n">mutations</span><span class="p">):</span>
             <span class="n">table</span><span class="o">.</span><span class="n">time</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
-        <span class="n">ts_metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="n">ts_metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
-        <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">ts_metadata</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
+        <span class="c1"># Finding what slim id to use in recap DFE</span>
+        <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">]:</span>
+                <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">],</span> <span class="n">max_id</span><span class="p">)</span>
+        <span class="n">recap_dfe</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;recapitation&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;DFE used in recapitation&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;long_description&quot;</span><span class="p">:</span> <span class="s2">&quot;neutral mutations added with msprime.sim_mutations &quot;</span>
+            <span class="s2">&quot;to the recapited portion of the tree sequence&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mutation_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;dominance_coeff&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                    <span class="s2">&quot;distribution_type&quot;</span><span class="p">:</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;distribution_args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s2">&quot;convert_to_substitution&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="s2">&quot;Q_scaled_index&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s2">&quot;is_neutral&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;proportions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">],</span>
+            <span class="s2">&quot;citations&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;intervals&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">]],</span>
+        <span class="p">}</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recap_dfe</span><span class="p">)</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">tree_sequence</span><span class="p">()</span>
-        <span class="n">slim_gen</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
 
         <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">),</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
-
+        <span class="n">s0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
         <span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
                 <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span>
@@ -1481,44 +1628,58 @@
             <span class="n">initial_state</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span>
             <span class="n">demography</span><span class="o">=</span><span class="n">demography</span><span class="p">,</span>
             <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
-            <span class="n">random_seed</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+            <span class="n">random_seed</span><span class="o">=</span><span class="n">s0</span><span class="p">,</span>
         <span class="p">)</span>
-
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simplify_remembered</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
 
-        <span class="c1"># Figuring out SLiM mutation id metadata</span>
-        <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">mutations</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">mut</span><span class="o">.</span><span class="n">derived_state</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
-                <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+        <span class="c1"># Adding neutral mutations to simulation and recapitation periods</span>
+        <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]):</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;proportions&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;proportions&quot;</span><span class="p">],</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">mt</span><span class="p">[</span><span class="s2">&quot;is_neutral&quot;</span><span class="p">]:</span>
+                    <span class="n">mut_seed</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
+                    <span class="c1"># Figuring out SLiM mutation id metadata</span>
 
-        <span class="c1"># Creating a SLiM mutation model</span>
-        <span class="c1"># TODO: fix this up to do the right types? or, share them?</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SLiMMutationModel</span><span class="p">(</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">()),</span> <span class="n">next_id</span><span class="o">=</span><span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="p">)</span>
+                    <span class="k">def</span> <span class="nf">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">):</span>
+                        <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                        <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">mutations</span><span class="p">():</span>
+                            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">mut</span><span class="o">.</span><span class="n">derived_state</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+                                <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+                        <span class="k">return</span> <span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span>
 
-        <span class="c1"># Add mutations to recapitated part of trees.</span>
-        <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_mutations</span><span class="p">(</span>
-            <span class="n">ts</span><span class="p">,</span>
-            <span class="n">rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
-            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-            <span class="n">start_time</span><span class="o">=</span><span class="n">slim_gen</span><span class="p">,</span>
-            <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">random_seed</span><span class="o">=</span><span class="n">s2</span><span class="p">,</span>
-        <span class="p">)</span>
+                    <span class="k">def</span> <span class="nf">_get_msp_rate_map</span><span class="p">(</span><span class="n">breaks</span><span class="p">,</span> <span class="n">is_this_dfe</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+                        <span class="n">rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">is_this_dfe</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                        <span class="n">rates</span><span class="p">[</span><span class="n">is_this_dfe</span><span class="p">]</span> <span class="o">=</span> <span class="n">rate</span>
+                        <span class="k">return</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rates</span><span class="p">)</span>
 
-        <span class="c1"># Adding neutral mutations to the SLiM part</span>
-        <span class="n">s3</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
-        <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_mutations</span><span class="p">(</span>
-            <span class="n">ts</span><span class="p">,</span>
-            <span class="n">rate</span><span class="o">=</span><span class="n">msp_rate_map</span><span class="p">,</span>
-            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-            <span class="n">end_time</span><span class="o">=</span><span class="n">slim_gen</span><span class="p">,</span>
-            <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">random_seed</span><span class="o">=</span><span class="n">s3</span><span class="p">,</span>
-        <span class="p">)</span>
-
+                    <span class="c1"># Add mutations to recapitated part of trees.</span>
+                    <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SLiMMutationModel</span><span class="p">(</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">],</span> <span class="n">next_id</span><span class="o">=</span><span class="n">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">end_time</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;recapitation&quot;</span><span class="p">:</span>
+                        <span class="n">start_time</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+                        <span class="n">msp_rate_map</span> <span class="o">=</span> <span class="n">_get_msp_rate_map</span><span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">]),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">]),</span>
+                            <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">msp_rate_map</span> <span class="o">=</span> <span class="n">_get_msp_rate_map</span><span class="p">(</span>
+                            <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="n">prop</span> <span class="o">*</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
+                        <span class="p">)</span>
+                        <span class="n">end_time</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+                    <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_mutations</span><span class="p">(</span>
+                        <span class="n">ts</span><span class="p">,</span>
+                        <span class="n">rate</span><span class="o">=</span><span class="n">msp_rate_map</span><span class="p">,</span>
+                        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                        <span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span>
+                        <span class="n">end_time</span><span class="o">=</span><span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">random_seed</span><span class="o">=</span><span class="n">mut_seed</span><span class="p">,</span>
+                    <span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span>
 
 <div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span> <span class="nf">recap_and_rescale</span><span class="p">(</span>
@@ -1555,7 +1716,7 @@
 <span class="sd">            should be consulted to determine if the behaviour is appropriate</span>
 <span class="sd">            for your case.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">msp_rate_map</span><span class="p">,</span> <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_msp_and_slim_mutation_rate_maps</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
+        <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
             <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
@@ -1570,9 +1731,7 @@
                 <span class="n">slim_rate_map</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-            <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">msp_rate_map</span>
-        <span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span></div></div>
 
 
