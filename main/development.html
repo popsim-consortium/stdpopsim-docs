@@ -640,7 +640,7 @@ The demographic model function should follow this format:</p>
     <span class="p">]</span>
 
     <span class="n">generation_time</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
-    <span class="n">mutation_rate</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
+    <span class="n">mutation_rate</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>  <span class="c1"># per bp per generation</span>
 
     <span class="c1"># parameter value definitions based on published values</span>
 
@@ -682,9 +682,10 @@ a specified reason for citing this model.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">generation_time</span></code>: The generation time for the species in years. If you are
 implementing a generic model, the generation time should default to 1.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">mutation_rate</span></code>: The mutation rate assumed during the inference of this demographic
-model, if a mutation rate was used. If no mutation rate is associated with this
-demographic model, which is generally uncommon but possible, depending on the
-inference method, the mutation rate should be set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+model, per bp per generation, if a mutation rate was used. If no mutation
+rate is associated with this demographic model, which is generally uncommon
+but possible, depending on the inference method, the mutation rate should be
+set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 <p>Every demographic model has a few necessary features or attributes. First of all,
 demographic models are defined by the population sizes, migration rates, split and
@@ -818,20 +819,24 @@ originates from.</p></li>
 </section>
 <section id="adding-a-new-species">
 <h2>Adding a new species<a class="headerlink" href="#adding-a-new-species" title="Permalink to this headline"></a></h2>
-<p>To add a new species to <cite>stdpopsim</cite> several things are required:
-1. The genome definition
-2. Default species parameters
-3. A genetic map with local recombination rates (optional)</p>
+<p>To add a new species to <cite>stdpopsim</cite> several things are required:</p>
+<ol class="arabic simple">
+<li><p>The genome definition</p></li>
+<li><p>Default species parameters</p></li>
+<li><p>A genetic map with local recombination rates (optional)</p></li>
+</ol>
 <p>Once you have these things the first step is to create a new file in the <cite>catalog</cite>
 directory named for the species (see <a class="reference internal" href="#naming-conventions">Naming conventions</a> for more details). All
 code described below should go in this file unless explicitly specified otherwise.</p>
 <section id="default-species-parameters">
 <h3>Default species parameters<a class="headerlink" href="#default-species-parameters" title="Permalink to this headline"></a></h3>
-<p>Four default parameters are required to create a new species:
-1. Generation time estimate
-2. Mutation rate
-3. Recombination rate
-4. Characteristic population size</p>
+<p>Four default parameters are required to create a new species:</p>
+<ol class="arabic simple">
+<li><p>Generation time estimate</p></li>
+<li><p>Mutation rate (per generation)</p></li>
+<li><p>Recombination rate (per generation)</p></li>
+<li><p>Characteristic population size</p></li>
+</ol>
 <p>These parameters should be based on what values might be drawn from a typical population
 as represented in the literature for that species. Consequently one or more citations for
 each value are expected and will be required for constructing the species object detailed
