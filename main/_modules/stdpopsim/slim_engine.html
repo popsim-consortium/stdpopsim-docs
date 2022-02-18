@@ -599,6 +599,32 @@
 <span class="s2">&quot;&quot;&quot;</span>
 
 
+<span class="n">_slim_logfile</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">// Optional logfile output:</span>
+<span class="s2">// Fitness values are only available in early(),</span>
+<span class="s2">// so logging happens in that stage.</span>
+<span class="s2">1 early () {</span>
+<span class="s2">    defineConstant(&quot;log&quot;, sim.createLogFile(&quot;$logfile&quot;, logInterval=NULL));</span>
+<span class="s2">    log.addGeneration();</span>
+<span class="s2">    for (pop in sim.subpopulations.id) {</span>
+<span class="s2">        log.addCustomColumn(</span>
+<span class="s2">            &quot;mean_fitness_p&quot; + pop,</span>
+<span class="s2">            &quot;mean(p&quot; + pop + &quot;.cachedFitness(NULL));&quot;</span>
+<span class="s2">        );</span>
+<span class="s2">        log.addCustomColumn(</span>
+<span class="s2">            &quot;sd_fitness_p&quot; + pop,</span>
+<span class="s2">            &quot;sd(p&quot; + pop + &quot;.cachedFitness(NULL));&quot;</span>
+<span class="s2">        );</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+<span class="s2">1: early() {</span>
+<span class="s2">    if (sim.generation % $loginterval == 1)</span>
+<span class="s2">        log.logRow();</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
 <span class="n">_slim_debug_output</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="s2">///</span>
@@ -635,7 +661,6 @@
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
-
 
 <span class="s2">// Save genomic element type information in tree sequence metadata</span>
 <span class="s2">// This is for development purposes, and the format of this metadata</span>
@@ -887,6 +912,8 @@
     <span class="n">scaling_factor</span><span class="p">,</span>
     <span class="n">burn_in</span><span class="p">,</span>
     <span class="n">slim_rate_map</span><span class="p">,</span>
+    <span class="n">logfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">logfile_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="n">pop_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">]</span>
@@ -1360,6 +1387,13 @@
     <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_lower</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_functions</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_main</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">logfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">printsc</span><span class="p">(</span>
+            <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">_slim_logfile</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                <span class="n">logfile</span><span class="o">=</span><span class="n">logfile</span><span class="p">,</span>
+                <span class="n">loginterval</span><span class="o">=</span><span class="n">logfile_interval</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span><span class="n">_slim_debug_output</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">epochs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1415,6 +1449,8 @@
         <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
         <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">logfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">logfile_interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
         <span class="n">_recap_and_rescale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1443,6 +1479,10 @@
 <span class="sd">        :param dry_run: If True, run the first generation setup and then end the</span>
 <span class="sd">            simulation.</span>
 <span class="sd">        :type dry_run: bool</span>
+<span class="sd">        :param logfile: Name of file to write a log of summary statistics</span>
+<span class="sd">            (currently, only mean and SD of fitness values per population).</span>
+<span class="sd">            Defaults to None, meaning &quot;do not log&quot;.</span>
+<span class="sd">        :param logfile_interval: How often to write to the log file, in generations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">slim_scaling_factor</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -1495,6 +1535,8 @@
                 <span class="n">slim_scaling_factor</span><span class="p">,</span>
                 <span class="n">slim_burn_in</span><span class="p">,</span>
                 <span class="n">slim_rate_map</span><span class="p">,</span>
+                <span class="n">logfile</span><span class="o">=</span><span class="n">logfile</span><span class="p">,</span>
+                <span class="n">logfile_interval</span><span class="o">=</span><span class="n">logfile_interval</span><span class="p">,</span>
             <span class="p">)</span>
 
             <span class="n">script_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
