@@ -607,13 +607,9 @@
 <span class="s2">    defineConstant(&quot;log&quot;, sim.createLogFile(&quot;$logfile&quot;, logInterval=NULL));</span>
 <span class="s2">    log.addGeneration();</span>
 <span class="s2">    for (pop in sim.subpopulations.id) {</span>
-<span class="s2">        log.addCustomColumn(</span>
-<span class="s2">            &quot;mean_fitness_p&quot; + pop,</span>
-<span class="s2">            &quot;mean(p&quot; + pop + &quot;.cachedFitness(NULL));&quot;</span>
-<span class="s2">        );</span>
-<span class="s2">        log.addCustomColumn(</span>
-<span class="s2">            &quot;sd_fitness_p&quot; + pop,</span>
-<span class="s2">            &quot;sd(p&quot; + pop + &quot;.cachedFitness(NULL));&quot;</span>
+<span class="s2">        log.addMeanSDColumns(</span>
+<span class="s2">            &quot;fitness_p&quot; + pop,</span>
+<span class="s2">            &quot;p&quot; + pop + &quot;.cachedFitness(NULL);&quot;</span>
 <span class="s2">        );</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
