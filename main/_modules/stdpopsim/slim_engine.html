@@ -1677,7 +1677,7 @@
         <span class="n">ts</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">tree_sequence</span><span class="p">()</span>
 
         <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-        <span class="n">s0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="n">s0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">)</span>
         <span class="n">population_configurations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">msprime</span><span class="o">.</span><span class="n">PopulationConfiguration</span><span class="p">(</span>
                 <span class="n">initial_size</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">start_size</span><span class="p">,</span>
@@ -1706,7 +1706,7 @@
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;proportions&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;proportions&quot;</span><span class="p">],</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">]):</span>
                 <span class="k">if</span> <span class="n">mt</span><span class="p">[</span><span class="s2">&quot;is_neutral&quot;</span><span class="p">]:</span>
-                    <span class="n">mut_seed</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span><span class="p">)</span>
+                    <span class="n">mut_seed</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">)</span>
                     <span class="c1"># Figuring out SLiM mutation id metadata</span>
 
                     <span class="k">def</span> <span class="nf">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">):</span>
