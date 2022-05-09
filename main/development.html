@@ -69,8 +69,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-new-species">Adding a new species</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#default-species-parameters">Default species parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-updating-a-genome-definition">Adding/Updating a genome definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests-for-new-species">Tests for new species</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#species-review-process">Species review process</a></li>
 </ul>
 </li>
@@ -822,120 +822,74 @@ originates from.</p></li>
 <p>To add a new species to <cite>stdpopsim</cite> several things are required:</p>
 <ol class="arabic simple">
 <li><p>The genome definition</p></li>
-<li><p>Default species parameters</p></li>
-<li><p>A genetic map with local recombination rates (optional)</p></li>
-</ol>
-<p>Once you have these things the first step is to create a new file in the <cite>catalog</cite>
-directory named for the species (see <a class="reference internal" href="#naming-conventions">Naming conventions</a> for more details). All
-code described below should go in this file unless explicitly specified otherwise.</p>
-<section id="default-species-parameters">
-<h3>Default species parameters<a class="headerlink" href="#default-species-parameters" title="Permalink to this headline"></a></h3>
-<p>Four default parameters are required to create a new species:</p>
-<ol class="arabic simple">
 <li><p>Generation time estimate</p></li>
 <li><p>Mutation rate (per generation)</p></li>
 <li><p>Recombination rate (per generation)</p></li>
 <li><p>Characteristic population size</p></li>
 </ol>
+<p>A genetic map with local recombination rates is optional.</p>
 <p>These parameters should be based on what values might be drawn from a typical population
 as represented in the literature for that species. Consequently one or more citations for
 each value are expected and will be required for constructing the species object detailed
 below.</p>
-</section>
+<p>Once you have these things the first step is to create a new subdirectory of the <cite>catalog/</cite>
+directory named for the species (see <a class="reference internal" href="#naming-conventions">Naming conventions</a> for more details). All
+code described below should go in this directory unless explicitly specified otherwise.</p>
 <section id="adding-updating-a-genome-definition">
 <h3>Adding/Updating a genome definition<a class="headerlink" href="#adding-updating-a-genome-definition" title="Permalink to this headline"></a></h3>
-<p>A genome definition is created with a call to <cite>stdpopsim.Genome()</cite>  which requires a list
-of chromosomes and a citation for the assembly. <cite>stdpopsim</cite> has an automated procedure
-for obtaining this list from ensembl and saving it for automated parsing. First however
-the initial species directory must be created in the <cite>stdpopsim/catalog</cite> directory (e.g.
-<cite>stdpopsim/catalog/AraTha</cite>). Once that is done, run the <cite>update_ensembl_data.py</cite> script
-present in the top level directory providing the ensembl species id(s) as “_” delimited
-name(s) for positional arguments as shown below. If no positional arguments are specified
-then all specified registered in <cite>stdpopsim</cite> will be updated.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python update_ensembl_data.py arabidopsis_thaliana
+<p><cite>stdpopsim</cite> has an automated procedure for generating a genome definition, which is
+accomplished by pulling data from Ensembl and saving it for parsing. To do this,
+hand the <cite>maintenance</cite> command line interface a “_” delimited Ensembl species ID as a
+positional argument as shown below. A partial list of the
+genomes housed on Ensembl can be found <a class="reference external" href="https://metazoa.ensembl.org/species.html">here</a>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m maintenance add-species arabidopsis_thaliana
 </pre></div>
 </div>
-<p>This will write/overwrite the <cite>ensembl_info.py</cite> file in the appropriate catalog
-subdirectory. Then add the following to the head of <cite>catalog/{species_id}/__init__.py</cite>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">genome_data</span>
-</pre></div>
-</div>
-<p>To create the chromosome object that make up a genome add the following code to
-<cite>catalog/{species_id}/__init__.py</cite> and supply default mutation and recombination rates
-along with citations for the assembly (and additional ones for the mutation, and
-recombination rates if necessary). This is then used to create a <cite>genome</cite> object.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># A citation for the chromosome parameters. Additional citations may be needed if</span>
-<span class="c1"># the mutation or recombination rates come from other sources. In that case create</span>
-<span class="c1"># additional citations with the appropriate reasons specified (see API documentation</span>
-<span class="c1"># for stdpopsim.citations)</span>
-
-<span class="n">_assembly_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
-    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
-    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Author et al.&quot;</span><span class="p">,</span>
-    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ASSEMBLY</span><span class="p">},</span>
-<span class="p">)</span>
-
-<span class="c1"># Parse list of chromosomes into a list of Chromosome objects which contain the</span>
-<span class="c1"># chromosome name, length, mutation rate, and recombination rate</span>
-<span class="n">_chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">genome_data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">_chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Chromosome</span><span class="p">(</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-            <span class="n">length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
-            <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;synonyms&quot;</span><span class="p">],</span>
-            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">FILL_ME</span><span class="p">,</span>
-            <span class="n">recombination_rate</span><span class="o">=</span><span class="n">FILL_ME</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-
-<span class="c1"># Create a genome object</span>
-
-<span class="n">_genome</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Genome</span><span class="p">(</span>
-    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span> <span class="n">assembly_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_assembly_citation</span><span class="p">]</span>
+<p>This will generate new files inside <cite>catalog/{species_id}/</cite>:</p>
+<ul class="simple">
+<li><p>genome_data.py</p></li>
+<li><p>species.py</p></li>
+<li><p>__init__.py</p></li>
+</ul>
+<p>The genome_data.py file contains the physical map of the genome; the <cite>maintenance</cite> utility sucks down a whole lot of useful information for free. This genome_data.py essentially puts together a data dictionary which has slots for the assembly accession number, the assembly name, and a dict representing the chromosome names and their associated lengths. If synonyns are defined (e.g., chr2L for 2L) then those are given in the list that follows. There is no reason to edit this file– we are good here.</p>
+<p>Next, the species.py file will need to be edited with the species-specific information and corresponding citations. Inside this file are commented instructions for ech section. Either chromosome-specific or genome-wide recombination rates and mutations rates can be used at this stage; the citations attached to these rates will be filled in inside the code block beginning with <cite>_genome</cite>. For example, below is the _genome code block for <cite>A. thaliana</cite> with citations included:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_genome</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Genome</span><span class="p">(</span>
+    <span class="n">chromosomes</span><span class="o">=</span><span class="n">_chromosomes</span><span class="p">,</span>
+    <span class="n">assembly_name</span><span class="o">=</span><span class="n">genome_data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;assembly_name&quot;</span><span class="p">],</span>
+    <span class="n">assembly_accession</span><span class="o">=</span><span class="n">genome_data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;assembly_accession&quot;</span><span class="p">],</span>
+    <span class="n">citations</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Ossowski et al.&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2010</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1126/science.1180677&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">MUT_RATE</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Huber et al.&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2014</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1093/molbev/msu247&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">REC_RATE</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1093/nar/gkm965&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2007</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Swarbreck et al.&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ASSEMBLY</span><span class="p">},</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Once you have a genome object you can create a new <cite>Species</cite> object which contains
-species identifiers, the genome, and default generation time and population size settings
-along with the relevant citation(s). Below is an example species definition for
-Arabidopsis thaliana and a final line of code that registers the species in the catalog.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_gen_time_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1890/0012-9658(2002)083[1006:GTINSO]2.0.CO;2&quot;</span><span class="p">,</span>
-    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2002&quot;</span><span class="p">,</span>
-    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Donohue&quot;</span><span class="p">,</span>
-    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_TIME</span><span class="p">},</span>
-<span class="p">)</span>
-
-<span class="n">_pop_size_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1016/j.cell.2016.05.063&quot;</span><span class="p">,</span>
-    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2016&quot;</span><span class="p">,</span>
-    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;1001GenomesConsortium&quot;</span><span class="p">,</span>
-    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">POP_SIZE</span><span class="p">},</span>
-<span class="p">)</span>
-
-<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;AraTha&quot;</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Arabidopsis thaliana&quot;</span><span class="p">,</span>
-    <span class="n">common_name</span><span class="o">=</span><span class="s2">&quot;A. thaliana&quot;</span><span class="p">,</span>
-    <span class="n">genome</span><span class="o">=</span><span class="n">_genome</span><span class="p">,</span>
-    <span class="n">generation_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">generation_time_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_gen_time_citation</span><span class="p">],</span>
-    <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="n">population_size_citations</span><span class="o">=</span><span class="p">[</span><span class="n">_pop_size_citation</span><span class="p">],</span>
-<span class="p">)</span>
-
-<span class="n">stdpopsim</span><span class="o">.</span><span class="n">register_species</span><span class="p">(</span><span class="n">_species</span><span class="p">)</span>
+<p>Generation time and population size, along with relevent citations, are filled in inside the code block beginning with <cite>_species</cite>. It may be useful to look at the existing species.py files inside the catalog/ directory for reference.</p>
+<p>Once these fields have been entered, you should be able to load and simulate the newly added species using <cite>stdpopsim</cite>.</p>
+</section>
+<section id="tests-for-new-species">
+<h3>Tests for new species<a class="headerlink" href="#tests-for-new-species" title="Permalink to this headline"></a></h3>
+<p>Basic sanity tests for the new species will be completed through QC over in the <cite>tests/test_{species_id}.py</cite> file, which was also created by the add-species utility. To run the tests in stdpopsim we use the pytest module.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m pytest tests/test_AnoGam.py
 </pre></div>
 </div>
-<p>Once all of this is done, go to the <cite>catalog/__init__.py</cite> file and add a line like the
-one below using the six-letter species identifier. Make sure to keep the comment to
-prevent linting issues.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.catalog</span> <span class="kn">import</span> <span class="n">PonAbe</span>  <span class="c1"># NOQA</span>
-</pre></div>
-</div>
+<p>This test checks for things related to missing information and formatting. For example, it wants the citation year to be of type <cite>int</cite> rather than <cite>str</cite> (i.e. no quotes).</p>
 </section>
 <section id="species-review-process">
 <h3>Species review process<a class="headerlink" href="#species-review-process" title="Permalink to this headline"></a></h3>
