@@ -925,8 +925,9 @@ or the pull request, may be used for review discussion.</p>
 <p>To begin reviewing (i.e., QC’ing) a species, you should state your intention on the
 QC issue (so we don’t duplicate effort) and start a pull request to fill out the code.
 During the process of QC, other developers fill in the tests that are disabled
-in the <cite>tests/test_{species_name}.py</cite> file. For instance, a test for an
-unreviewed species might look like this:</p>
+in the <cite>tests/test_{species_name}.py</cite> file by looking at the original papers
+(not the implementation!) and filling in what they see to be the appropriate
+values. For instance, a test for an unreviewed species might look like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Recombination rate QC not done yet&quot;</span><span class="p">)</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">([</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span> <span class="p">{}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 <span class="k">def</span> <span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
@@ -950,6 +951,14 @@ with <cite>python -m pytest tests/test_AedAeg.py</cite>), this will compare the 
 tests file to the values loaded from stdpopsim (and error if they differ).
 Filling out all these missing values in the tests file should get the species
 entirely QC’ed. When it’s done, we’ll merge the PR and the species will be official!</p>
+<p>Sometimes it’s not clear which values to use (e.g., perhaps there are different
+mutation rates estimated from two different groups of samples); in such cases
+the original author should leave comments in the code explaining the choice,
+and a note in the QC issue. If the values that the reviewer finds still do not
+agree with the ones the original author found, they (and others) should discuss
+on github about the best values to enter; once consensus is reached these can
+be fixed up to agree in the QC pull request (i.e., you don’t need to start
+another pull request to change the values in the catalog itself).</p>
 </section>
 </section>
 <section id="adding-a-genetic-map">
