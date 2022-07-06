@@ -160,7 +160,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_HomSap_genome">Genome</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_HomSap_genetic_maps">Genetic Maps</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch37">HapMapII_GRCh37</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch38">HapMapII_GRCh38</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">DeCodeSexAveraged_GRCh36</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch38">DeCodeSexAveraged_GRCh38</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_pyrhoacb_grch38">PyrhoACB_GRCh38</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_pyrhoasw_grch38">PyrhoASW_GRCh38</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_pyrhobeb_grch38">PyrhoBEB_GRCh38</a></li>
@@ -3823,7 +3825,15 @@ Then, if you feel ready, make an issue on our
 <td><p>2007</p></td>
 <td><p>HapMap Phase II lifted over to GRCh37</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">DeCodeSexAveraged_GRCh36</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch38">HapMapII_GRCh38</a></p></td>
+<td><p>2007</p></td>
+<td><p>HapMap Phase II lifted over to GRCh37 then lifted over to GRCh38</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">DeCodeSexAveraged_GRCh36</a></p></td>
+<td><p>2010</p></td>
+<td><p>Sex averaged map from deCode family study</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch38">DeCodeSexAveraged_GRCh38</a></p></td>
 <td><p>2010</p></td>
 <td><p>Sex averaged map from deCode family study</p></td>
 </tr>
@@ -3951,6 +3961,28 @@ Then, if you feel ready, make an issue on our
 <li><p>The International HapMap Consortium, 2007. <a class="reference external" href="https://doi.org/10.1038/nature06258">https://doi.org/10.1038/nature06258</a></p></li>
 </ul>
 </section>
+<section id="sec_catalog_homsap_genetic_maps_hapmapii_grch38">
+<span id="sec_catalog_homsap_genetic_maps_hapmapii_grch38"></span><h4>HapMapII_GRCh38<a class="headerlink" href="#sec_catalog_homsap_genetic_maps_hapmapii_grch38" title="Permalink to this headline"></a></h4>
+<p>
+        This genetic map is from the Phase II Hapmap project
+        and based on 3.1 million genotyped SNPs
+        from 270 individuals across four populations (YRI, CEU, CHB and JPT).
+        Genome wide recombination rates were estimated using LDHat.
+        This version is lifted over to GRCh38 using liftover from the HapMap Phase II
+        map previously lifted over to GRCh37.
+        Liftover was performed using the liftOver_catalog.py script from
+        stdpopsim/maintainance. Exact command used is as follows:
+        `python &lt;path_to_stdpopsim&gt;/stdpopsim/maintenance/liftOver_catalog.py
+        –species HomSap –map HapMapII_GRCh37
+        –chainFile &lt;path_to_chainfiles&gt;/chainfiles/hg19ToHg38.over.chain.gz
+        –validationChain &lt;path_to_chainfiles&gt;/chainfiles/hg38ToHg19.over.chain.gz
+        –winLen 1000 –useAdjacentAvg –retainIntermediates –gapThresh 1000000`
+        </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>The International HapMap Consortium, 2007. <a class="reference external" href="https://doi.org/10.1038/nature06258">https://doi.org/10.1038/nature06258</a></p></li>
+</ul>
+</section>
 <section id="sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36">
 <span id="sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36"></span><h4>DeCodeSexAveraged_GRCh36<a class="headerlink" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch36" title="Permalink to this headline"></a></h4>
 <p>
@@ -3961,6 +3993,32 @@ Then, if you feel ready, make an issue on our
         density of these events. This is the combined male and female
         (sex averaged) map. See
         https://www.decode.com/addendum/ for more details.</p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Kong et al, 2010. <a class="reference external" href="https://doi.org/10.1038/nature09525">https://doi.org/10.1038/nature09525</a></p></li>
+</ul>
+</section>
+<section id="sec_catalog_homsap_genetic_maps_decodesexaveraged_grch38">
+<span id="sec_catalog_homsap_genetic_maps_decodesexaveraged_grch38"></span><h4>DeCodeSexAveraged_GRCh38<a class="headerlink" href="#sec_catalog_homsap_genetic_maps_decodesexaveraged_grch38" title="Permalink to this headline"></a></h4>
+<p>
+        This genetic map is from the deCode study of recombination
+        events in 15,257 parent-offspring pairs from Iceland.
+        289,658 phased autosomal SNPs were used to call recombinations
+        within these families, and recombination rates computed from the
+        density of these events. This is the combined male and female
+        (sex averaged) map. See
+        https://www.decode.com/addendum/ for more details.
+        This map is further lifted over from the original GRCh36 to
+        GRCh38 using liftover.
+        Liftover was performed using the liftOver_catalog.py script from
+        stdpopsim/maintainance. Exact command used is as follows:
+        `python &lt;path_to_stdpopsim&gt;/stdpopsim/maintenance/liftOver_catalog.py
+        –species HomSap –map DeCodeSexAveraged_GRCh36
+        –chainFile &lt;path_to_chainfiles&gt;/chainfiles/hg18ToHg38.over.chain.gz
+        –winLen 1000 –useAdjacentAvg –retainIntermediates –gapThresh 1000000`
+        Validation chain file does not exist for liftover between these two
+        assemblies hence validation was performed manually separately.
+        </p>
 <p class="rubric">Citations</p>
 <ul class="simple">
 <li><p>Kong et al, 2010. <a class="reference external" href="https://doi.org/10.1038/nature09525">https://doi.org/10.1038/nature09525</a></p></li>
