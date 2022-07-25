@@ -753,7 +753,7 @@ and <code class="docutils literal notranslate"><span class="pre">proportions</sp
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mutation_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutationType</span></code></a> objects associated
-with the DFE.</p></li>
+with the DFE. Defaults to an empty list.</p></li>
 <li><p><strong>proportions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of the proportions of new mutations that
 fall in to each of the mutation types (must sum to 1).</p></li>
 <li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier for this model. DFE IDs should be
@@ -769,6 +769,12 @@ reference(s) for the DFE model.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.DFE.register_qc">
+<span class="sig-name descname"><span class="pre">register_qc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc_dfe</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/dfe.html#DFE.register_qc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DFE.register_qc" title="Permalink to this definition"></a></dt>
+<dd><p>Register a QC model implementation for this DFE.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">

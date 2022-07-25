@@ -188,34 +188,34 @@ usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
                  [--msprime-model {hudson,dtwf,smc,smc_prime}]
                  [--msprime-change-model T MODEL] [--slim-path PATH]
                  [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
-                 {EscCol,AnoCar,ChlRei,CanFam,PonAbe,AedAeg,GasAcu,HomSap,DroMel,StrAga,PanTro,BosTau,HelAnn,PapAnu,HelMel,AraTha,AnaPla,CaeEle,ApiMel,AnoGam,DroSec,download-genetic-maps}
+                 {DroSec,DroMel,EscCol,HelAnn,AnoCar,StrAga,HelMel,ChlRei,BosTau,PapAnu,AnaPla,PonAbe,HomSap,AedAeg,AraTha,CaeEle,ApiMel,AnoGam,CanFam,GasAcu,PanTro,download-genetic-maps}
                  ...
 
 Command line interface for stdpopsim.
 
 positional arguments:
-  {EscCol,AnoCar,ChlRei,CanFam,PonAbe,AedAeg,GasAcu,HomSap,DroMel,StrAga,PanTro,BosTau,HelAnn,PapAnu,HelMel,AraTha,AnaPla,CaeEle,ApiMel,AnoGam,DroSec,download-genetic-maps}
-    EscCol              Run simulations for Escherichia coli.
-    AnoCar              Run simulations for Anolis carolinensis.
-    ChlRei              Run simulations for Chlamydomonas reinhardtii.
-    CanFam              Run simulations for Canis familiaris.
-    PonAbe              Run simulations for Pongo abelii.
-    AedAeg              Run simulations for Aedes aegypti.
-    GasAcu              Run simulations for Gasterosteus aculeatus.
-    HomSap              Run simulations for Homo sapiens.
+  {DroSec,DroMel,EscCol,HelAnn,AnoCar,StrAga,HelMel,ChlRei,BosTau,PapAnu,AnaPla,PonAbe,HomSap,AedAeg,AraTha,CaeEle,ApiMel,AnoGam,CanFam,GasAcu,PanTro,download-genetic-maps}
+    DroSec              Run simulations for Drosophila sechellia.
     DroMel              Run simulations for Drosophila melanogaster.
-    StrAga              Run simulations for Streptococcus agalactiae.
-    PanTro              Run simulations for Pan troglodytes.
-    BosTau              Run simulations for Bos taurus.
+    EscCol              Run simulations for Escherichia coli.
     HelAnn              Run simulations for Helianthus annuus.
-    PapAnu              Run simulations for Papio anubis.
+    AnoCar              Run simulations for Anolis carolinensis.
+    StrAga              Run simulations for Streptococcus agalactiae.
     HelMel              Run simulations for Heliconius melpomene.
-    AraTha              Run simulations for Arabidopsis thaliana.
+    ChlRei              Run simulations for Chlamydomonas reinhardtii.
+    BosTau              Run simulations for Bos taurus.
+    PapAnu              Run simulations for Papio anubis.
     AnaPla              Run simulations for Anas platyrhynchos.
+    PonAbe              Run simulations for Pongo abelii.
+    HomSap              Run simulations for Homo sapiens.
+    AedAeg              Run simulations for Aedes aegypti.
+    AraTha              Run simulations for Arabidopsis thaliana.
     CaeEle              Run simulations for Caenorhabditis elegans.
     ApiMel              Run simulations for Apis mellifera.
     AnoGam              Run simulations for Anopheles gambiae.
-    DroSec              Run simulations for Drosophila sechellia.
+    CanFam              Run simulations for Canis familiaris.
+    GasAcu              Run simulations for Gasterosteus aculeatus.
+    PanTro              Run simulations for Pan troglodytes.
     download-genetic-maps
                         Download genetic maps
 
@@ -1555,7 +1555,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
