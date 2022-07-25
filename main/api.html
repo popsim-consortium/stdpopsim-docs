@@ -791,8 +791,13 @@ of (see the SLiM manual for more information on these):</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">g</span></code>: gamma, two parameters (mean, shape)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: normal, two parameters (mean, SD)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: Weibull, two parameters (scale, shape)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">l</span></code>: logNormal, two parameters (mean and sd on log scale; see rlnorm)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lp</span></code>: positive logNormal, two parameters (mean and sd on log scale; see rlnorm)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ln</span></code>: negative logNormal, two parameters (mean and sd on log scale; see rlnorm)</p></li>
 </ul>
+<p>Type “lp” is always positive, and type “ln” is always negative: both use
+the same log-normal distribution, but “ln” is multiplied by -1.  For
+exponential and gamma, a negative mean can be provided, obtaining always
+negative values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
