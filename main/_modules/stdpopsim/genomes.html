@@ -96,7 +96,7 @@
 <span class="sd">    :vartype chromosomes: list</span>
 <span class="sd">    :ivar citations: A list of :class:`.Citation` objects</span>
 <span class="sd">        providing the source for the genome assembly,</span>
-<span class="sd">        mutation rate and recombination rate estimates.</span>
+<span class="sd">        mutation rate, recombination rate, and gene conversion rate estimates.</span>
 <span class="sd">    :vartype citations: list</span>
 <span class="sd">    :ivar length: The total length of the genome.</span>
 <span class="sd">    :vartype length: int</span>
@@ -167,6 +167,34 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chromosome not found&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mean_gene_conversion_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The length-weighted mean gene conversion rate across all chromosomes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">mean_gene_conversion_rate</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
+            <span class="n">normalized_weight</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="n">length</span>
+            <span class="k">if</span> <span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">rate</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rate</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_rate</span>
+            <span class="n">cont</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">normalized_weight</span>
+            <span class="n">mean_gene_conversion_rate</span> <span class="o">+=</span> <span class="n">cont</span>
+        <span class="k">return</span> <span class="n">mean_gene_conversion_rate</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">range_gene_conversion_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The range of gene conversion tract lengths across chromosomes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prelim_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_length</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">]</span>
+        <span class="n">gc_tract_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">gctl</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">gctl</span> <span class="k">for</span> <span class="n">gctl</span> <span class="ow">in</span> <span class="n">prelim_lengths</span><span class="p">]</span>
+        <span class="n">min_gctl</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">gc_tract_lengths</span><span class="p">)</span>
+        <span class="n">max_gctl</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">gc_tract_lengths</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">min_gctl</span> <span class="o">==</span> <span class="n">max_gctl</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">max_gctl</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mean_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean recombination rate across all chromosomes.</span>
@@ -204,6 +232,10 @@
 <span class="sd">        chromosome.</span>
 <span class="sd">    :ivar float recombination_rate: The recombination rate used when simulating</span>
 <span class="sd">        this chromosome (if not using a genetic map).</span>
+<span class="sd">    :ivar float gene_conversion_rate: The gene conversion rate used when</span>
+<span class="sd">        simulating this chromosome.</span>
+<span class="sd">    :ivar float gene_conversion_length: The mean tract length of gene</span>
+<span class="sd">        conversion events used when simulating this chromosome.</span>
 <span class="sd">    :ivar synonyms: List of synonyms that may be used when requesting this</span>
 <span class="sd">        chromosome by ID, e.g. from the command line interface.</span>
 <span class="sd">    :vartype synonyms: list of str</span>
@@ -212,6 +244,8 @@
     <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">recombination_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gene_conversion_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">synonyms</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -221,8 +255,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a contiguous region of genome that is to be simulated.</span>
 <span class="sd">    This contains the information about mutation rates, distributions of</span>
-<span class="sd">    fitness effects (DFEs), and recombination rates that are needed to simulate</span>
-<span class="sd">    this region.</span>
+<span class="sd">    fitness effects (DFEs), gene conversion rates and recombination rates</span>
+<span class="sd">    that are needed to simulate this region.</span>
 
 <span class="sd">    Information about targets of selection are contained in the ``dfe_list``</span>
 <span class="sd">    and ``interval_list``. These must be of the same length, and the k-th DFE</span>
@@ -230,6 +264,11 @@
 
 <span class="sd">    :ivar mutation_rate: The rate of mutation per base per generation.</span>
 <span class="sd">    :vartype mutation_rate: float</span>
+<span class="sd">    :ivar gene_conversion_rate: The rate of gene conversion initiation per base per</span>
+<span class="sd">        generation.</span>
+<span class="sd">    :vartype gene_conversion_rate: float</span>
+<span class="sd">    :ivar gene_conversion_length: The mean tract length of gene conversions.</span>
+<span class="sd">    :vartype gene_conversion_length: float</span>
 <span class="sd">    :ivar recombination_map: The recombination map for the region. See the</span>
 <span class="sd">        :class:`msprime.RateMap` for details.</span>
 <span class="sd">    :vartype recombination_map: msprime.RateMap</span>
@@ -265,6 +304,8 @@
 
     <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">gene_conversion_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">genetic_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">inclusion_mask</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">exclusion_mask</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -278,9 +319,21 @@
         <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">basic_contig</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">recombination_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">basic_contig</span><span class="p">(</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">length</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">recombination_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">gene_conversion_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">gene_conversion_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">recombination_rate</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Contig</span><span class="p">(</span><span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Contig</span><span class="p">(</span>
+            <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span>
+            <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="n">gene_conversion_rate</span><span class="o">=</span><span class="n">gene_conversion_rate</span><span class="p">,</span>
+            <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">,</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="Contig.species_contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.species_contig">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">species_contig</span><span class="p">(</span>
@@ -291,6 +344,9 @@
         <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_species_gene_conversion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">gene_conversion_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">gene_conversion_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">inclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">exclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
@@ -307,6 +363,24 @@
                     <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/406&quot;</span>
                 <span class="p">)</span>
             <span class="p">)</span>
+        <span class="k">if</span> <span class="n">use_species_gene_conversion</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">gene_conversion_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot use species gene conversion rates &quot;</span>
+                    <span class="s2">&quot;and set gene conversion rate or length&quot;</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="n">gene_conversion_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot set gene conversion rate without setting &quot;</span>
+                    <span class="s2">&quot;gene conversion length&quot;</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">gene_conversion_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot set gene conversion length without setting &quot;</span>
+                    <span class="s2">&quot;gene conversion rate&quot;</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use genetic map with generic contig&quot;</span><span class="p">)</span>
@@ -319,18 +393,32 @@
             <span class="n">L_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">r_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">u_tot</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">gc_tot</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">gcl_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">chrom_data</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">non_autosomal_lower</span><span class="p">:</span>
                     <span class="n">L_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span>
                     <span class="n">r_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">recombination_rate</span>
                     <span class="n">u_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">mutation_rate</span>
+                    <span class="k">if</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">gene_conversion_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">local_gc_rate</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">local_gc_rate</span> <span class="o">=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">gene_conversion_rate</span>
+                        <span class="n">gcl_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">gene_conversion_length</span>
+                    <span class="n">gc_tot</span> <span class="o">+=</span> <span class="n">chrom_data</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">local_gc_rate</span>
             <span class="k">if</span> <span class="n">mutation_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">u_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">r_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
+            <span class="k">if</span> <span class="n">use_species_gene_conversion</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gc_tot</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">gcl_tot</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">gene_conversion_rate</span> <span class="o">=</span> <span class="n">gc_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
+                    <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="n">gcl_tot</span> <span class="o">/</span> <span class="n">L_tot</span>
             <span class="n">contig</span> <span class="o">=</span> <span class="n">Contig</span><span class="o">.</span><span class="n">basic_contig</span><span class="p">(</span>
                 <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
                 <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
                 <span class="n">recombination_rate</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+                <span class="n">gene_conversion_rate</span><span class="o">=</span><span class="n">gene_conversion_rate</span><span class="p">,</span>
+                <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -375,10 +463,16 @@
             <span class="k">if</span> <span class="n">mutation_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">mutation_rate</span>
 
+            <span class="k">if</span> <span class="n">use_species_gene_conversion</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">gene_conversion_rate</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_rate</span>
+                <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_length</span>
+
             <span class="n">contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
                 <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span>
                 <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
                 <span class="n">genetic_map</span><span class="o">=</span><span class="n">gm</span><span class="p">,</span>
+                <span class="n">gene_conversion_rate</span><span class="o">=</span><span class="n">gene_conversion_rate</span><span class="p">,</span>
+                <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">,</span>
                 <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_intervals</span><span class="p">,</span>
                 <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_intervals</span><span class="p">,</span>
             <span class="p">)</span>
@@ -512,12 +606,15 @@
         <span class="n">gmap</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;Contig(length=</span><span class="si">{:.2G}</span><span class="s2">, recombination_rate=</span><span class="si">{:.2G}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, genetic_map=</span><span class="si">{}</span><span class="s2">, dfe_list=</span><span class="si">{}</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, gene_conversion_rate=</span><span class="si">{}</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;gene_conversion_length</span><span class="si">{}</span><span class="s2">, genetic_map=</span><span class="si">{}</span><span class="s2">, dfe_list=</span><span class="si">{}</span><span class="s2">, &quot;</span>
             <span class="s2">&quot;interval_list=</span><span class="si">{}</span><span class="s2">)&quot;</span>
         <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gene_conversion_rate</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="p">,</span>
             <span class="n">gmap</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">,</span>
