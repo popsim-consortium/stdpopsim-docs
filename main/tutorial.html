@@ -1318,67 +1318,58 @@ would not be able to reach 80% frequency in just a few generations. Since
 this conditioning works by re-running the simulation until the condition is
 achieved, a nearly impossible condition will result in very long run times.</p>
 </div>
-<p>First, we need to define the mutation type for the selected mutation.
-So we can refer to it later, we need its “mutation type ID”. This is just
-the index of the new mutation type in the contig’s list of mutation types.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mt</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
-    <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>
-    <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
-    <span class="n">convert_to_substitution</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<p>To set things up, we need to first add the site at which the selected mutation
+will occur.  This is like adding a DFE, except to a single site – we’re saying
+that there is a potential mutation at a particular site with defined fitness
+consequences. So that we can refer to the single site later, we give it a
+unique string ID. Here, we’ll add the site in the middle of the contig, with ID
+“hard sweep”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mut_id</span> <span class="o">=</span> <span class="s2">&quot;hard sweep&quot;</span>
+<span class="n">coordinate</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_single_site</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
+    <span class="n">coordinate</span><span class="o">=</span><span class="n">coordinate</span><span class="p">,</span>
+    <span class="n">fitness_coeff</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">dfe</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DFE</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;new_mutation&quot;</span><span class="p">,</span>
-    <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">mt</span><span class="p">],</span>
-    <span class="n">proportions</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span>
-    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;added mutation&quot;</span><span class="p">,</span>
-    <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;mutation type to be added&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span>
-    <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">),</span>
-    <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="k">for</span> <span class="n">mt_info</span> <span class="ow">in</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">mt_info</span><span class="p">[</span><span class="s2">&quot;dfe_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dfe</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
-        <span class="k">break</span>
-
-<span class="n">mut_id</span> <span class="o">=</span> <span class="n">mt_info</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that single site mutations are internally stored as DFEs, and more
+than one DFE cannot apply to the same segment of genome. As a consequence,
+if another DFE is added to the contig over an interval that already
+contains a single site mutation, the single site mutation will be
+“overwritten” and an error will be raised in simulation.</p>
+</div>
 <p>Next, we will set up the “extended events” which will modify the demography.
-The first extended event is placing of the selected mutation,
-which will occur in a random individual from the first population (id 0),
-in the middle of the contig, 1000 generations ago.
-We specify <code class="docutils literal notranslate"><span class="pre">save=True</span></code> to <code class="docutils literal notranslate"><span class="pre">stdpopsim.ext.DrawMutation</span></code>
-so that the simulation can restart from that point if the mutation is lost.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">coordinate</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">T_mut</span> <span class="o">=</span> <span class="mi">1000</span>
+The first extended event is the origination of the selected mutation, which
+will occur in a random individual from the first population (id 0), 1000
+generations ago.  We specify <code class="docutils literal notranslate"><span class="pre">save=True</span></code> to <code class="docutils literal notranslate"><span class="pre">stdpopsim.ext.DrawMutation</span></code> so
+that the simulation can restart from that point if the mutation is lost.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">T_mut</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">extended_events</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">(</span>
         <span class="n">time</span><span class="o">=</span><span class="n">T_mut</span><span class="p">,</span>
-        <span class="n">mutation_type_id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
+        <span class="n">single_site_id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
         <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">coordinate</span><span class="o">=</span><span class="n">coordinate</span><span class="p">,</span>
-        <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>Next, we condition on the mutation not being lost.
-Since in the next step we condition on the mutation being at 80% frequency at
-the end, this is redundant, but it allows the simulation to immediately restart
-from any generation in which the mutation is lost, rather than waiting until the end.
-Note that this conditioning must start one
-generation after the mutation is placed, for which we use
-<code class="docutils literal notranslate"><span class="pre">stdpopsim.ext.GenerationAfter(T_mut)</span></code>.
-We cannot simply specify <code class="docutils literal notranslate"><span class="pre">T_mut</span> <span class="pre">-</span> <span class="pre">1</span></code> if rescaling is present,
-otherwise the conditioning would start
+<p>Next, we condition on the mutation not being lost.  Since in the next step we
+condition on the mutation being at 80% frequency at the end, this is redundant,
+but it allows the simulation to immediately restart from any generation in
+which the mutation is lost, rather than waiting until the end.  Note that this
+conditioning must start one generation after the mutation is placed, for which
+we use <code class="docutils literal notranslate"><span class="pre">stdpopsim.ext.GenerationAfter(T_mut)</span></code>.  We cannot simply specify
+<code class="docutils literal notranslate"><span class="pre">T_mut</span> <span class="pre">-</span> <span class="pre">1</span></code> if rescaling is present, otherwise the conditioning would start
 at the same generation when the mutation is placed.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extended_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
     <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">(</span>
         <span class="n">start_time</span><span class="o">=</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">GenerationAfter</span><span class="p">(</span><span class="n">T_mut</span><span class="p">),</span>
         <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">mutation_type_id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
+        <span class="n">single_site_id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
         <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">op</span><span class="o">=</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
         <span class="n">allele_frequency</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
@@ -1392,7 +1383,7 @@ at the same generation when the mutation is placed.</p>
     <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">(</span>
         <span class="n">start_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">mutation_type_id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
+        <span class="n">single_site_id</span><span class="o">=</span><span class="n">mut_id</span><span class="p">,</span>
         <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">op</span><span class="o">=</span><span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
         <span class="n">allele_frequency</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
