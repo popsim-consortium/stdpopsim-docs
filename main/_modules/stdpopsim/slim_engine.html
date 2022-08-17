@@ -80,7 +80,7 @@
 <span class="sd">demographic model parameters are defined in multi-dimensional arrays at the</span>
 <span class="sd">top of the script, in the `initialize()` block. These arrays define the event</span>
 <span class="sd">generations, and event blocks are subsequently constructed programmatically</span>
-<span class="sd">using `sim.registerLateEvent()`, rather than writing out the blocks verbatim.</span>
+<span class="sd">using `community.registerLateEvent()`, rather than writing out the blocks verbatim.</span>
 <span class="sd">This design is intended to permit modification of demographic parameters in</span>
 <span class="sd">the generated SLiM script, without needing to directly convert event times in</span>
 <span class="sd">the past into forwards-time generations.</span>
@@ -180,7 +180,7 @@
 
 <span class="s2">function (void)dbg(string$ s, [integer$ debug_level = 2]) {</span>
 <span class="s2">    if (verbosity &gt;= debug_level) {</span>
-<span class="s2">        catn(sim.generation + &quot;: &quot; + s);</span>
+<span class="s2">        catn(community.tick + &quot;: &quot; + s);</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
@@ -189,13 +189,13 @@
 <span class="n">_slim_functions</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="s2">// Check that sizes aren&#39;t dangerously low or zero (e.g. due to scaling).</span>
-<span class="s2">function (void)check_size(integer$ pop, integer$ size, integer$ g) {</span>
+<span class="s2">function (void)check_size(integer$ pop, integer$ size, integer$ t) {</span>
 <span class="s2">    if (size == 0) {</span>
 <span class="s2">        err(&quot;The population size of p&quot;+pop+&quot; (&quot;+pop_names[pop]+&quot;) is zero &quot; +</span>
-<span class="s2">            &quot;at generation &quot;+g+&quot;.&quot;);</span>
+<span class="s2">            &quot;at tick &quot;+t+&quot;.&quot;);</span>
 <span class="s2">    } else if (size &lt; 50) {</span>
 <span class="s2">        warn(&quot;p&quot;+pop+&quot; (&quot;+pop_names[pop]+&quot;) has only &quot;+size+&quot; individuals &quot; +</span>
-<span class="s2">             &quot;alive at generation &quot;+g+&quot;.&quot;);</span>
+<span class="s2">             &quot;alive at tick &quot;+t+&quot;.&quot;);</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
 
@@ -265,41 +265,41 @@
 
 <span class="s2">// Restore the simulation state.</span>
 <span class="s2">function (void)restore(void) {</span>
-<span class="s2">    g_restore = sim.generation;</span>
+<span class="s2">    g_restore = community.tick;</span>
 <span class="s2">    n_restores = 1 + sim.getValue(&quot;n_restores&quot;);</span>
 <span class="s2">    sim.setValue(&quot;n_restores&quot;, n_restores);</span>
 <span class="s2">    n_saves = sim.getValue(&quot;n_saves&quot;);</span>
 <span class="s2">    if (n_saves == 0) {</span>
-<span class="s2">        err(&quot;restore() in generation &quot;+g_restore+&quot;, but nothing is saved.&quot;);</span>
+<span class="s2">        err(&quot;restore() in tick &quot;+g_restore+&quot;, but nothing is saved.&quot;);</span>
 <span class="s2">    }</span>
 <span class="s2">    sim.readFromPopulationFile(trees_file);</span>
-<span class="s2">    dbg(&quot;restore() &quot;+n_restores+&quot; from generation &quot;+g_restore+&quot;, returning &quot;+</span>
+<span class="s2">    dbg(&quot;restore() &quot;+n_restores+&quot; from tick &quot;+g_restore+&quot;, returning &quot;+</span>
 <span class="s2">        &quot;to state at save() &quot;+n_saves);</span>
 
 <span class="s2">    /*</span>
-<span class="s2">     * The generation counter sim.generation has now been reset to the</span>
+<span class="s2">     * The tick counter community.tick has now been reset to the</span>
 <span class="s2">     * value it had when save() was called. There are two issues relating</span>
 <span class="s2">     * to event scheduling which must now be dealt with.</span>
 <span class="s2">     *</span>
-<span class="s2">     * 1. There may be additional late events for the generation in which</span>
+<span class="s2">     * 1. There may be additional late events for the tick in which</span>
 <span class="s2">     * restore() was called, and they are still scheduled to run.</span>
 <span class="s2">     * So we deactivate all script blocks to avoid unexpected problems.</span>
 <span class="s2">     * They will be automatically reactivated at the start of the next</span>
-<span class="s2">     * generation (see SLiM manual section 23.10).</span>
+<span class="s2">     * tick (see SLiM manual section 23.10).</span>
 <span class="s2">     */</span>
-<span class="s2">    sim.scriptBlocks.active = F;</span>
+<span class="s2">    community.allScriptBlocks.active = F;</span>
 
 <span class="s2">    /*</span>
-<span class="s2">     * 2. The late events below were run in the save() generation,</span>
+<span class="s2">     * 2. The late events below were run in the save() tick,</span>
 <span class="s2">     * but after the save() call. We execute these again here, because</span>
-<span class="s2">     * the next late events to run will be for sim.generation + 1.</span>
+<span class="s2">     * the next late events to run will be for community.tick + 1.</span>
 <span class="s2">     * Note that the save() event is indistinguishable from the other</span>
-<span class="s2">     * late events in this generation, so we set a flag `restore_function`</span>
+<span class="s2">     * late events in this tick, so we set a flag `restore_function`</span>
 <span class="s2">     * to signal the save() function not to save again.</span>
 <span class="s2">     */</span>
-<span class="s2">    g = sim.generation;</span>
+<span class="s2">    g = community.tick;</span>
 <span class="s2">    sim.setValue(&quot;restore_function&quot;, T);</span>
-<span class="s2">    for (sb in sim.scriptBlocks) {</span>
+<span class="s2">    for (sb in community.allScriptBlocks) {</span>
 <span class="s2">        if (sb.type == &quot;late&quot; &amp; g &gt;= sb.start &amp; g &lt;= sb.end) {</span>
 <span class="s2">            self = sb;</span>
 <span class="s2">            executeLambda(sb.source);</span>
@@ -312,7 +312,7 @@
 
 
 <span class="n">_slim_main</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">1 {</span>
+<span class="s2">1 early() {</span>
 <span class="s2">    // save/restore bookkeeping</span>
 <span class="s2">    sim.setValue(&quot;n_restores&quot;, 0);</span>
 <span class="s2">    sim.setValue(&quot;n_saves&quot;, 0);</span>
@@ -325,7 +325,7 @@
 <span class="s2">    // Initial populations.</span>
 <span class="s2">    for (i in 0:(num_populations-1)) {</span>
 <span class="s2">        if (N[0,i] &gt; 0) {</span>
-<span class="s2">            check_size(i, N[0,i], sim.generation);</span>
+<span class="s2">            check_size(i, N[0,i], community.tick);</span>
 <span class="s2">            dbg(&quot;p = sim.addSubpop(&quot;+i+&quot;, &quot;+N[0,i]+&quot;);&quot;);</span>
 <span class="s2">            p = sim.addSubpop(i, N[0,i]);</span>
 <span class="s2">            dbg(&quot;p.name = &#39;&quot;+pop_names[i]+&quot;&#39;;&quot;);</span>
@@ -334,7 +334,7 @@
 <span class="s2">    }</span>
 
 <span class="s2">    if (length(sim.subpopulations) == 0) {</span>
-<span class="s2">        err(&quot;No populations with non-zero size in generation 1.&quot;);</span>
+<span class="s2">        err(&quot;No populations with non-zero size in tick 1.&quot;);</span>
 <span class="s2">    }</span>
 
 <span class="s2">    // Initial migration rates.</span>
@@ -352,10 +352,10 @@
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 
-<span class="s2">    // The end of the burn-in is the starting generation, and corresponds to</span>
-<span class="s2">    // time T_start. All remaining events are relative to this generation.</span>
+<span class="s2">    // The end of the burn-in is the starting tick, and corresponds to</span>
+<span class="s2">    // time T_start. All remaining events are relative to this tick.</span>
 <span class="s2">    N_max = max(N[0,0:(num_populations-1)]);</span>
-<span class="s2">    G_start = sim.generation + asInteger(round(burn_in * N_max));</span>
+<span class="s2">    G_start = community.tick + asInteger(round(burn_in * N_max));</span>
 <span class="s2">    T_start = max(_T);</span>
 <span class="s2">    G = G_start + gdiff(T_start, _T);</span>
 <span class="s2">    G_end = max(G);</span>
@@ -373,7 +373,7 @@
 <span class="s2">            }</span>
 <span class="s2">            g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
 <span class="s2">            // Unconditionally save the state before the mutation is drawn.</span>
-<span class="s2">            sim.registerLateEvent(NULL, &quot;{save();}&quot;, g, g);</span>
+<span class="s2">            community.registerLateEvent(NULL, &quot;{save();}&quot;, g, g);</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">    if (length(condition_on_allele_frequency) &gt; 0) {</span>
@@ -396,7 +396,7 @@
 <span class="s2">            if (save) {</span>
 <span class="s2">                // Save the state conditional on the allele frequency.</span>
 <span class="s2">                // If the condition isn&#39;t met, we restore.</span>
-<span class="s2">                sim.registerLateEvent(NULL,</span>
+<span class="s2">                community.registerLateEvent(NULL,</span>
 <span class="s2">                    &quot;{if (af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;)&quot; +</span>
 <span class="s2">                    &quot; save(); else restore();}&quot;,</span>
 <span class="s2">                    g_start, g_start);</span>
@@ -404,7 +404,7 @@
 <span class="s2">            }</span>
 
 <span class="s2">            if (g_start &lt;= g_end) {</span>
-<span class="s2">                sim.registerLateEvent(NULL,</span>
+<span class="s2">                community.registerLateEvent(NULL,</span>
 <span class="s2">                    &quot;{if (!(af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;))&quot; +</span>
 <span class="s2">                    &quot; restore();}&quot;,</span>
 <span class="s2">                    g_start, g_end);</span>
@@ -420,7 +420,7 @@
 <span class="s2">            size = asInteger(subpopulation_splits[2,i] / Q);</span>
 <span class="s2">            oldpop = subpopulation_splits[3,i];</span>
 <span class="s2">            check_size(newpop, size, g);</span>
-<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                &quot;p = sim.addSubpopSplit(&quot;+newpop+&quot;,&quot;+size+&quot;,&quot;+oldpop+&quot;); &quot; +</span>
 <span class="s2">                &quot;p.name = &#39;&quot;+pop_names[newpop]+&quot;&#39;;}&quot;,</span>
@@ -437,7 +437,7 @@
 <span class="s2">                // care of by sim.addSubpop() or sim.addSubpopSplit().</span>
 <span class="s2">                if (N[i,j] != N[i-1,j] &amp; N[i-1,j] != 0) {</span>
 <span class="s2">                    check_size(j, N[i,j], g);</span>
-<span class="s2">                    sim.registerLateEvent(NULL,</span>
+<span class="s2">                    community.registerLateEvent(NULL,</span>
 <span class="s2">                        &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                        &quot;p&quot;+j+&quot;.setSubpopulationSize(&quot;+N[i,j]+&quot;);}&quot;,</span>
 <span class="s2">                        g, g);</span>
@@ -448,7 +448,7 @@
 <span class="s2">                    if (i == num_epochs-1) {</span>
 <span class="s2">                        growth_phase_end = G[i];</span>
 <span class="s2">                    } else {</span>
-<span class="s2">                        // We already registered a size change at generation G[i].</span>
+<span class="s2">                        // We already registered a size change at tick G[i].</span>
 <span class="s2">                        growth_phase_end = G[i] - 1;</span>
 <span class="s2">                    }</span>
 
@@ -465,10 +465,10 @@
 
 <span class="s2">                    N0 = N[i,j];</span>
 <span class="s2">                    r = Q * growth_rates[i,j];</span>
-<span class="s2">                    sim.registerLateEvent(NULL,</span>
+<span class="s2">                    community.registerLateEvent(NULL,</span>
 <span class="s2">                        &quot;{&quot; +</span>
 <span class="s2">                            &quot;dbg(self.source); &quot; +</span>
-<span class="s2">                            &quot;gx=sim.generation-&quot;+g+&quot;; &quot; +</span>
+<span class="s2">                            &quot;gx=community.tick-&quot;+g+&quot;; &quot; +</span>
 <span class="s2">                            &quot;size=asInteger(round(&quot;+N0+&quot;*exp(&quot;+r+&quot;*gx))); &quot; +</span>
 <span class="s2">                            &quot;p&quot;+j+&quot;.setSubpopulationSize(size);&quot; +</span>
 <span class="s2">                        &quot;}&quot;,</span>
@@ -492,7 +492,7 @@
 <span class="s2">                        next;</span>
 <span class="s2">                    }</span>
 <span class="s2">                    g = G[i-1];</span>
-<span class="s2">                    sim.registerLateEvent(NULL,</span>
+<span class="s2">                    community.registerLateEvent(NULL,</span>
 <span class="s2">                        &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                        &quot;p&quot;+j+&quot;.setMigrationRates(&quot;+k+&quot;, &quot;+m+&quot;);}&quot;,</span>
 <span class="s2">                        g, g);</span>
@@ -508,11 +508,11 @@
 <span class="s2">            dest = asInteger(admixture_pulses[1,i]);</span>
 <span class="s2">            src = asInteger(admixture_pulses[2,i]);</span>
 <span class="s2">            rate = admixture_pulses[3,i];</span>
-<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                &quot;p&quot;+dest+&quot;.setMigrationRates(&quot;+src+&quot;, &quot;+rate+&quot;);}&quot;,</span>
 <span class="s2">                g, g);</span>
-<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                &quot;p&quot;+dest+&quot;.setMigrationRates(&quot;+src+&quot;, 0);}&quot;,</span>
 <span class="s2">                g+1, g+1);</span>
@@ -526,7 +526,7 @@
 <span class="s2">            mut_type = asInteger(drawn_mutations[1,i]);</span>
 <span class="s2">            pop_id = asInteger(drawn_mutations[2,i]);</span>
 <span class="s2">            coordinate = asInteger(drawn_mutations[3,i]);</span>
-<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
 <span class="s2">                &quot;add_mut(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;, &quot;+coordinate+&quot;);}&quot;,</span>
 <span class="s2">                g, g);</span>
@@ -548,11 +548,11 @@
 <span class="s2">                    g_start+&quot; &gt; g_end=&quot;+g_end);</span>
 <span class="s2">            }</span>
 
-<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(&#39;s=&quot;+selection_coeff+&quot;, h=&quot;+dominance_coeff+</span>
 <span class="s2">                &quot; for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
 <span class="s2">                g_start, g_start);</span>
-<span class="s2">            sim.registerLateEvent(NULL,</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(&#39;s, h defaults for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
 <span class="s2">                g_end, g_end);</span>
 <span class="s2">            /* We explicitly format() here to prevent integral-valued floats</span>
@@ -560,7 +560,7 @@
 <span class="s2">             * (this triggers a type error when the fitness callback runs). */</span>
 <span class="s2">            f_hom = format(&quot;</span><span class="si">%e</span><span class="s2">&quot;, 1 + selection_coeff);</span>
 <span class="s2">            f_het = format(&quot;</span><span class="si">%e</span><span class="s2">&quot;, 1 + selection_coeff * dominance_coeff);</span>
-<span class="s2">            sim.registerFitnessCallback(NULL,</span>
+<span class="s2">            sim.registerMutationEffectCallback(NULL,</span>
 <span class="s2">                &quot;{if (homozygous) return &quot;+f_hom+&quot;; else return &quot;+f_het+&quot;;}&quot;,</span>
 <span class="s2">                mut_type, pop_id, g_start, g_end);</span>
 <span class="s2">        }</span>
@@ -576,20 +576,22 @@
 <span class="s2">        N_g = pop_size_at(G, pop, g);</span>
 <span class="s2">        if (n &gt; N_g) {</span>
 <span class="s2">            err(&quot;Request to sample &quot;+n+&quot; individuals from p&quot;+pop+</span>
-<span class="s2">                &quot; (&quot;+pop_names[pop]+&quot;) at generation &quot;+g+&quot;, but only &quot;+</span>
+<span class="s2">                &quot; (&quot;+pop_names[pop]+&quot;) at tick &quot;+g+&quot;, but only &quot;+</span>
 <span class="s2">                N_g+&quot; individuals will be alive.&quot;);</span>
 <span class="s2">        }</span>
 
-<span class="s2">        sim.registerLateEvent(NULL,</span>
-<span class="s2">            &quot;{dbg(self.source); &quot; +</span>
-<span class="s2">            &quot;inds=p&quot;+pop+&quot;.sampleIndividuals(&quot;+n+&quot;); &quot; +</span>
-<span class="s2">            &quot;sim.treeSeqRememberIndividuals(inds);}&quot;,</span>
-<span class="s2">            g, g);</span>
+<span class="s2">        if (n &gt; 0) {</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{dbg(self.source); &quot; +</span>
+<span class="s2">                &quot;inds=p&quot;+pop+&quot;.sampleIndividuals(&quot;+n+&quot;); &quot; +</span>
+<span class="s2">                &quot;sim.treeSeqRememberIndividuals(inds);}&quot;,</span>
+<span class="s2">                g, g);</span>
+<span class="s2">        }</span>
 <span class="s2">    }</span>
 
-<span class="s2">    sim.registerLateEvent(NULL, &quot;{dbg(self.source); end();}&quot;, G_end, G_end);</span>
+<span class="s2">    community.registerLateEvent(NULL, &quot;{dbg(self.source); end();}&quot;, G_end, G_end);</span>
 
-<span class="s2">    if (G_start &gt; sim.generation) {</span>
+<span class="s2">    if (G_start &gt; community.tick) {</span>
 <span class="s2">        dbg(&quot;Starting burn-in...&quot;);</span>
 <span class="s2">    }</span>
 
@@ -606,8 +608,8 @@
 <span class="s2">// Fitness values are only available in early(),</span>
 <span class="s2">// so logging happens in that stage.</span>
 <span class="s2">1 early () {</span>
-<span class="s2">    defineConstant(&quot;log&quot;, sim.createLogFile(&quot;$logfile&quot;, logInterval=NULL));</span>
-<span class="s2">    log.addGeneration();</span>
+<span class="s2">    defineConstant(&quot;log&quot;, community.createLogFile(&quot;$logfile&quot;, logInterval=NULL));</span>
+<span class="s2">    log.addTick();</span>
 <span class="s2">    for (pop in sim.subpopulations.id) {</span>
 <span class="s2">        log.addMeanSDColumns(</span>
 <span class="s2">            &quot;fitness_p&quot; + pop,</span>
@@ -617,7 +619,7 @@
 <span class="s2">}</span>
 
 <span class="s2">1: early() {</span>
-<span class="s2">    if (sim.generation % $loginterval == 1)</span>
+<span class="s2">    if (community.tick % $loginterval == 1)</span>
 <span class="s2">        log.logRow();</span>
 <span class="s2">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
@@ -649,7 +651,7 @@
 <span class="s2">    // this is for development purposes, and the format of this output</span>
 <span class="s2">    // is subject to change or may even be removed!</span>
 <span class="s2">    if (verbosity &gt;= 3) {</span>
-<span class="s2">        new = (sim.mutations.originGeneration == sim.generation);</span>
+<span class="s2">        new = (sim.mutations.originTick == community.tick);</span>
 <span class="s2">        for (mut in sim.mutations[new]) {</span>
 <span class="s2">            dbg(paste(c(&quot;dbg_selection_coeff:&quot;,</span>
 <span class="s2">                        mut.selectionCoeff,</span>
@@ -663,7 +665,7 @@
 <span class="s2">// Save genomic element type information in tree sequence metadata</span>
 <span class="s2">// This is for development purposes, and the format of this metadata</span>
 <span class="s2">// is subject to change or may even be removed!</span>
-<span class="s2">1 {</span>
+<span class="s2">1 early() {</span>
 <span class="s2">    if (verbosity &gt;= 3) {</span>
 <span class="s2">        // recombination map</span>
 <span class="s2">        metadata.setValue(</span>
@@ -923,7 +925,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">extended_events</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">extended_events</span><span class="p">)</span>
 
-    <span class="c1"># Reassign event times according to integral SLiM generations.</span>
+    <span class="c1"># Reassign event times according to integral SLiM ticks.</span>
     <span class="c1"># This collapses the time deltas used in HomSap/AmericanAdmixture_4B11,</span>
     <span class="c1"># and calculates times for GenerationAfter objects.</span>
     <span class="k">def</span> <span class="nf">fix_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
@@ -1005,7 +1007,7 @@
                         <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;_T[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_N[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
                     <span class="p">)</span>
 
-                    <span class="c1"># Zero out the population size for generations before this</span>
+                    <span class="c1"># Zero out the population size for ticks before this</span>
                     <span class="c1"># epoch, to avoid simulating invididuals that contribute no</span>
                     <span class="c1"># genealogy.</span>
                     <span class="n">N</span><span class="p">[</span><span class="n">lm</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1507,8 +1509,7 @@
 <span class="sd">        :param slim_burn_in: Length of the burn-in phase, in units of N</span>
 <span class="sd">            generations.</span>
 <span class="sd">        :type slim_burn_in: float</span>
-<span class="sd">        :param dry_run: If True, run the first generation setup and then end the</span>
-<span class="sd">            simulation.</span>
+<span class="sd">        :param dry_run: If True, run the setup and then end the simulation.</span>
 <span class="sd">        :type dry_run: bool</span>
 <span class="sd">        :param logfile: Name of file to write a log of summary statistics</span>
 <span class="sd">            (currently, only mean and SD of fitness values per population).</span>
@@ -1681,7 +1682,7 @@
         <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="p">(</span><span class="n">tables</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">tables</span><span class="o">.</span><span class="n">migrations</span><span class="p">,</span> <span class="n">tables</span><span class="o">.</span><span class="n">mutations</span><span class="p">):</span>
             <span class="n">table</span><span class="o">.</span><span class="n">time</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;tick&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
         <span class="c1"># Finding what slim id to use in recap DFE</span>
         <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]:</span>
@@ -1763,7 +1764,7 @@
                     <span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="n">end_time</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">if</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;recapitation&quot;</span><span class="p">:</span>
-                        <span class="n">start_time</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+                        <span class="n">start_time</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;tick&quot;</span><span class="p">]</span>
                         <span class="n">msp_rate_map</span> <span class="o">=</span> <span class="n">_get_msp_rate_map</span><span class="p">(</span>
                             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">]),</span>
                             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">]),</span>
@@ -1773,7 +1774,7 @@
                         <span class="n">msp_rate_map</span> <span class="o">=</span> <span class="n">_get_msp_rate_map</span><span class="p">(</span>
                             <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="n">prop</span> <span class="o">*</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
                         <span class="p">)</span>
-                        <span class="n">end_time</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+                        <span class="n">end_time</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;tick&quot;</span><span class="p">]</span>
                     <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_mutations</span><span class="p">(</span>
                         <span class="n">ts</span><span class="p">,</span>
                         <span class="n">rate</span><span class="o">=</span><span class="n">msp_rate_map</span><span class="p">,</span>
