@@ -1466,7 +1466,9 @@ Gene conversion tract length: 0</p>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">annotations</span> <span class="p">[</span><span class="n">HELP_ANNOTATIONS</span><span class="p">]]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">annotation</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT</span><span class="p">]</span>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1530,6 +1532,13 @@ Gene conversion tract length: 0</p>
 </dd>
 <dt><kbd>--dfe-bed-file</kbd></dt>
 <dd><p>A bed file specifing the intervals where selection (given a DFE) is simulated. Non-overlaping intervals belonging to the same chromosome are required. If no interval is specified, selection is simulated across the entire contig. See also –dfe-interval and –dfe-annotation.</p>
+</dd>
+<dt><kbd>--help-annotations</kbd></dt>
+<dd><p>Print list of annotations and exit. If a annotation ID is given as an argument, show help for this annotation. Otherwise show help for all available annotations</p>
+</dd>
+<dt><kbd>--dfe-annotation</kbd></dt>
+<dd><p>Possible choices: araport_11_exons, araport_11_CDS</p>
+<p>Specify the intervals over which a given DFE acts using a genomic annotation track Available maps: araport_11_exons, araport_11_CDS.</p>
 </dd>
 <dt><kbd>-o, --output</kbd></dt>
 <dd><p>Where to write the output tree sequence file. Defaults to stdout if not specified</p>
