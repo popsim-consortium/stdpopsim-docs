@@ -366,14 +366,21 @@
 
 <span class="s2">    // Save/restore events. These should come before all other events.</span>
 <span class="s2">    if (length(drawn_mutations) &gt; 0) {</span>
+<span class="s2">        n_checkpoints = 0;</span>
 <span class="s2">        for (i in 0:(ncol(drawn_mutations)-1)) {</span>
 <span class="s2">            save = drawn_mutations[4,i] == 1;</span>
-<span class="s2">            if (!save) {</span>
-<span class="s2">                next;</span>
+<span class="s2">            if (save) {</span>
+<span class="s2">                // Saving the state at more than one timepoint can can cause</span>
+<span class="s2">                // incorrect conditioning in the rejection samples.</span>
+<span class="s2">                if (n_checkpoints &gt; 0) {</span>
+<span class="s2">                    err(&quot;Attempt to save state at more than one checkpoint&quot;);</span>
+<span class="s2">                }</span>
+<span class="s2">                n_checkpoints = n_checkpoints + 1;</span>
+
+<span class="s2">                // Unconditionally save the state before the mutation is drawn.</span>
+<span class="s2">                g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
+<span class="s2">                community.registerLateEvent(NULL, &quot;{save();}&quot;, g, g);</span>
 <span class="s2">            }</span>
-<span class="s2">            g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
-<span class="s2">            // Unconditionally save the state before the mutation is drawn.</span>
-<span class="s2">            community.registerLateEvent(NULL, &quot;{save();}&quot;, g, g);</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">    if (length(condition_on_allele_frequency) &gt; 0) {</span>
@@ -384,31 +391,17 @@
 <span class="s2">            pop_id = asInteger(condition_on_allele_frequency[3,i]);</span>
 <span class="s2">            op = op_types[asInteger(drop(condition_on_allele_frequency[4,i]))];</span>
 <span class="s2">            af = condition_on_allele_frequency[5,i];</span>
-<span class="s2">            save = condition_on_allele_frequency[6,i] == 1;</span>
 
 <span class="s2">            if (g_start &gt; g_end) {</span>
 <span class="s2">                err(&quot;Attempt to register AF conditioning callback with g_start=&quot;+</span>
 <span class="s2">                    g_start+&quot; &gt; g_end=&quot;+g_end);</span>
 <span class="s2">            }</span>
 
-<span class="s2">            // Save the state conditional on the allele frequency.</span>
-<span class="s2">            // If the condition isn&#39;t met, we restore.</span>
-<span class="s2">            if (save) {</span>
-<span class="s2">                // Save the state conditional on the allele frequency.</span>
-<span class="s2">                // If the condition isn&#39;t met, we restore.</span>
-<span class="s2">                community.registerLateEvent(NULL,</span>
-<span class="s2">                    &quot;{if (af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;)&quot; +</span>
-<span class="s2">                    &quot; save(); else restore();}&quot;,</span>
-<span class="s2">                    g_start, g_start);</span>
-<span class="s2">                g_start = g_start + 1;</span>
-<span class="s2">            }</span>
-
-<span class="s2">            if (g_start &lt;= g_end) {</span>
-<span class="s2">                community.registerLateEvent(NULL,</span>
-<span class="s2">                    &quot;{if (!(af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;))&quot; +</span>
-<span class="s2">                    &quot; restore();}&quot;,</span>
-<span class="s2">                    g_start, g_end);</span>
-<span class="s2">            }</span>
+<span class="s2">            // Restore state if AF condition not met.</span>
+<span class="s2">            community.registerLateEvent(NULL,</span>
+<span class="s2">                &quot;{if (!(af(m&quot;+mut_type+&quot;, p&quot;+pop_id+&quot;) &quot;+op+&quot; &quot;+af+&quot;))&quot; +</span>
+<span class="s2">                &quot; restore();}&quot;,</span>
+<span class="s2">                g_start, g_end);</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 
@@ -1090,7 +1083,7 @@
                     <span class="n">mutation_type_id</span><span class="p">,</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
                     <span class="n">coordinate</span><span class="p">,</span>
-                    <span class="nb">int</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">save</span><span class="p">),</span>
+                    <span class="mi">0</span><span class="p">,</span>  <span class="c1"># flag to save state in mutation generation</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">drawn_single_site_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">)</span>
@@ -1115,7 +1108,6 @@
                     <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
                     <span class="n">op_id</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">op</span><span class="p">),</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">allele_frequency</span><span class="p">,</span>
-                    <span class="nb">int</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">save</span><span class="p">),</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">referenced_single_site_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">)</span>
@@ -1125,7 +1117,15 @@
     <span class="c1"># Check that drawn mutations exist for extended events that need them.</span>
     <span class="k">for</span> <span class="n">single_site_id</span> <span class="ow">in</span> <span class="n">referenced_single_site_ids</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">single_site_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drawn_single_site_ids</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No drawn mutation for single site id </span><span class="si">{</span><span class="n">single_site_id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;An extended event requires a mutation at single site id &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">single_site_id</span><span class="si">}</span><span class="s2">, but no mutation is drawn at this site.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Set &quot;save state&quot; flag for the oldest drawn mutation</span>
+    <span class="n">drawn_mutations</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">drawn_mutations</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drawn_mutations</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">drawn_mutations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">drawn_mutations</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
 
     <span class="n">printsc</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="nb">print</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">script_file</span><span class="p">)</span>
 
@@ -1379,7 +1379,7 @@
         <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
             <span class="n">condition_on_allele_frequency</span><span class="p">,</span>
             <span class="n">col_comment</span><span class="o">=</span><span class="s2">&quot;start_time, end_time, mut_type, pop_id, &quot;</span>
-            <span class="s2">&quot;op, allele_frequency, save&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;op, allele_frequency&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
     <span class="p">)</span>

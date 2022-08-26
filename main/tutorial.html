@@ -1345,8 +1345,7 @@ contains a single site mutation, the single site mutation will be
 <p>Next, we will set up the “extended events” which will modify the demography.
 The first extended event is the origination of the selected mutation, which
 will occur in a random individual from the first population (id 0), 1000
-generations ago.  We specify <code class="docutils literal notranslate"><span class="pre">save=True</span></code> to <code class="docutils literal notranslate"><span class="pre">stdpopsim.ext.DrawMutation</span></code> so
-that the simulation can restart from that point if the mutation is lost.</p>
+generations ago.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">T_mut</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">extended_events</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">(</span>
@@ -1546,7 +1545,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
