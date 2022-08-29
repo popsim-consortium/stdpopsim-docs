@@ -1463,8 +1463,9 @@ Recombination rate: 8.029e-10
 Gene conversion rate: 0
 Gene conversion tract length: 0</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">AraTha</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">dfes</span> <span class="p">[</span><span class="n">HELP_DFES</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">annotations</span> <span class="p">[</span><span class="n">HELP_ANNOTATIONS</span><span class="p">]]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">annotation</span><span class="p">]</span>
@@ -1500,6 +1501,9 @@ Gene conversion tract length: 0</p>
 <dd><p>Possible choices: SalomeAveraged_TAIR10</p>
 <p>Specify a particular genetic map. By default, a chromosome-specific uniform recombination rate is used. These default rates are listed in the catalog: &lt;<a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/stable/catalog.html">https://popsim-consortium.github.io/stdpopsim-docs/stable/catalog.html</a>&gt; Available maps: SalomeAveraged_TAIR10.</p>
 </dd>
+<dt><kbd>--help-dfes</kbd></dt>
+<dd><p>Print list of DFEs and exit. If a DFE ID is given as an argument, show help for this DFE. Otherwise show help for all available DFEs</p>
+</dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, Mt, Pt</p>
 <p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: 1, 2, 3, 4, 5, Mt, Pt. Default=None.</p>
@@ -1525,7 +1529,8 @@ Gene conversion tract length: 0</p>
 <p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: SouthMiddleAtlas_1D17, African2Epoch_1H18, African3Epoch_1H18. Please see –help-models for details of these models.</p>
 </dd>
 <dt><kbd>--dfe</kbd></dt>
-<dd><p>Specify a Distribution of Fitness Effects (DFE) model. If no DFE is specified, all mutations are neutral. Available DFE models:. Please see –help-dfes for details of these DFE models.</p>
+<dd><p>Possible choices: Gamma_H18</p>
+<p>Specify a Distribution of Fitness Effects (DFE) model. If no DFE is specified, all mutations are neutral. Available DFE models:Gamma_H18. Please see –help-dfes for details of these DFE models.</p>
 </dd>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral If no interval is specified, selection is simulated across the entire region (contig). Interval (for now) is writen as ‘left,right’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000</p>
