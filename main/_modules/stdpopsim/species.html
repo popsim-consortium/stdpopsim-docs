@@ -248,6 +248,8 @@
         <span class="n">gene_conversion_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">inclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">exclusion_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :class:`.Contig` instance describing a section of genome that</span>
@@ -296,6 +298,12 @@
 <span class="sd">            length of genome sequence for this contig. For a generic contig, mutation</span>
 <span class="sd">            and recombination rates are equal to the genome-wide average across all</span>
 <span class="sd">            autosomal chromosomes.</span>
+<span class="sd">        :param float left: The left coordinate (inclusive) of the region to</span>
+<span class="sd">            keep on the chromosome. Defaults to 0.  Genetic maps and masks are</span>
+<span class="sd">            clipped to this boundary.</span>
+<span class="sd">        :param float right: The right coordinate (exclusive) of the region to</span>
+<span class="sd">            keep on the chromosome. Defaults to the length of the chromosome.</span>
+<span class="sd">            Genetic maps and masks are clipped to this boundary.</span>
 <span class="sd">        :rtype: :class:`.Contig`</span>
 <span class="sd">        :return: A :class:`.Contig` describing the section of the genome.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -311,6 +319,8 @@
             <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">,</span>
             <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_mask</span><span class="p">,</span>
             <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_mask</span><span class="p">,</span>
+            <span class="n">left</span><span class="o">=</span><span class="n">left</span><span class="p">,</span>
+            <span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Species.get_demographic_model"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_demographic_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_demographic_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>

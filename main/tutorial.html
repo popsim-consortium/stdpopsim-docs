@@ -262,8 +262,9 @@ usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
                         [--help-genetic-maps [HELP_GENETIC_MAPS]] [-D] [-g]
                         [--help-dfes [HELP_DFES]] [-c] [-L LENGTH]
                         [-i INCLUSION_MASK] [-e EXCLUSION_MASK]
-                        [-l LENGTH_MULTIPLIER] [-s SEED] [-d] [--dfe]
-                        [--dfe-interval] [--dfe-bed-file]
+                        [-l LENGTH_MULTIPLIER] [--left LEFT] [--right RIGHT]
+                        [-s SEED] [-d] [--dfe] [--dfe-interval]
+                        [--dfe-bed-file]
                         [--help-annotations [HELP_ANNOTATIONS]]
                         [--dfe-annotation] [-o OUTPUT]
                         samples [samples ...]
@@ -277,7 +278,6 @@ specify a filename.
 Default population parameters for Homo sapiens:
 Generation time: 30
 Population size: 10000
-Mutation rate: 1.29e-08
 ...
 </pre></div>
 </div>
@@ -553,7 +553,27 @@ incorporate selection on the specified segments of genome.</p>
 </pre></div>
 </div>
 <p>The DFE defined by Gamma_K17 will be incorporated only in positions between 1000 and 100000.</p>
+<p>Finally, for the sake of efficiency it might be desirable to simulate a region
+of a chromosome rather than the entire chromosome. Regions are specified via
+<code class="docutils literal notranslate"><span class="pre">--left</span></code> and <code class="docutils literal notranslate"><span class="pre">--right</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
+    -c chr22 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
+    --dfe-interval <span class="m">200000</span>,300000 --left <span class="m">150000</span> --right <span class="m">350000</span> <span class="m">2</span> <span class="m">4</span>
+</pre></div>
+</div>
+<p>This will simulate a 200 Kb contig that uses the genetic map from coordinates
+150000 to 350000 along <cite>chr22</cite>; with a DFE applied between coordinates 200000
+and 300000. Note that the coordinate system used for <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code> is that
+of the original chromosome: relative to the <strong>start of the contig</strong>, the DFE
+spans from coordinate 50000 to 150000.</p>
 <p>See also the python API to incorporate <a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/latest/tutorial.html#incorporating-selection">selection</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Simulating a region under selection is <strong>not</strong> the same as simulating a
+chromosome under selection and clipping to the region. This is because
+selected mutations outside of the region can influence ancestry within
+the region, due to linkage.</p>
+</div>
 </section>
 </section>
 <section id="debugging-output-from-slim">
@@ -1279,6 +1299,24 @@ but nonetheless there is lower diversity in exons than outside of them:</p>
 <span class="c1"># and outside of exons it is 0.211 differences per Kb.</span>
 </pre></div>
 </div>
+<p>For the sake of efficiency, we might want to simulate a particular region
+rather than the entire annotated chromosome. This can be done by supplying
+<cite>left</cite> and <cite>right</cite> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">Species.get_contig()</span></code>. For example, to simulate the
+region of chromosome 20 spanning from 30 Mb to 40 Mb (containing roughly 300
+identified genes):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig_region</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">30e6</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">40e6</span><span class="p">)</span>
+<span class="n">contig_region</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">exon_intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The annotation (as well as any supplied masks) will be automatically clipped to
+the region of interest.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Simulating a region under selection is <strong>not</strong> the same as simulating a
+chromosome under selection and clipping to the region. This is because
+selected mutations outside of the region can influence ancestry within
+the region, due to linkage.</p>
+</div>
 </section>
 <section id="sec-tute-selective-sweep">
 <span id="id2"></span><h4>4.  Selective sweep<a class="headerlink" href="#sec-tute-selective-sweep" title="Permalink to this headline"></a></h4>
@@ -1516,7 +1554,7 @@ To check that we have set up the simulation correctly, we may first wish to perf
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
-WARNING: Recombination map has length 249218992.0, which is longer than chromosome length 248956422. The former will be used.
+WARNING: Recombination map has length 249218992.0, which is longer than chromosome length 248956422. The latter will be used.
 Simulation information:
     Engine: msprime (1.2.0)
     Model id: AmericanAdmixture_4B11
@@ -1528,8 +1566,9 @@ Simulation information:
         2: 4 (0)
         3: 4 (0)
 Contig Description:
-    Contig length: 249218992.0
-    Mean recombination rate: 1.1489616300318414e-08
+    Contig origin: chr1:0-248956422
+    Contig length: 248956422.0
+    Mean recombination rate: 1.1495565978013984e-08
     Mean mutation rate: 2.36e-08
     Genetic map: HapMapII_GRCh37
 
@@ -1545,7 +1584,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[genetic map, recombination rate]
+[recombination rate, genetic map]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385

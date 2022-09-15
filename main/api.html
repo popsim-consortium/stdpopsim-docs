@@ -246,7 +246,7 @@ information from Ensembl</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Species.get_contig">
-<span class="sig-name descname"><span class="pre">get_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
@@ -295,6 +295,12 @@ given by the left and right end points of the intervals.</p></li>
 length of genome sequence for this contig. For a generic contig, mutation
 and recombination rates are equal to the genome-wide average across all
 autosomal chromosomes.</p></li>
+<li><p><strong>left</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The left coordinate (inclusive) of the region to
+keep on the chromosome. Defaults to 0.  Genetic maps and masks are
+clipped to this boundary.</p></li>
+<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The right coordinate (exclusive) of the region to
+keep on the chromosome. Defaults to the length of the chromosome.
+Genetic maps and masks are clipped to this boundary.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -453,6 +459,8 @@ that are needed to simulate this region.</p>
 <p>Information about targets of selection are contained in the <code class="docutils literal notranslate"><span class="pre">dfe_list</span></code>
 and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DFE
 applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> for more information.</p>
+<p>The contig may be a segment of a named chromosome. If so, the original
+coordinate system is used for <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> and <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_single_site()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
@@ -468,11 +476,15 @@ and in ascending order. Should have shape Nx2, where N is the number of
 intervals.</p></li>
 <li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
 <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
-<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects.
+<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects.
 By default, the only DFE is completely neutral.</p></li>
 <li><p><strong>interval_list</strong> – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects containing integers.
 By default, the inital interval list spans the whole chromosome with the
 neutral DFE.</p></li>
+<li><p><strong>original_coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – The location of the contig on a named chromosome,
+as a tuple of the form <cite>(chromosome, left, right)</cite>. If <cite>None</cite>, the contig
+is assumed to be generic (i.e. it does not inherit a coordinate system
+from a larger chromosome).</p></li>
 </ul>
 </dd>
 </dl>
@@ -507,8 +519,11 @@ object is added more than once.</p>
 <span class="pre">contig.add_dfe(a1,</span> <span class="pre">dfe1)</span>
 <span class="pre">contig.add_dfe(a2,</span> <span class="pre">dfe2)</span>
 <span class="pre">`</span></code>
-then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies to the
-region from 50 to 120.</p>
+then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies
+to the region from 50 to 120.</p>
+<p>Any of the <code class="docutils literal notranslate"><span class="pre">intervals</span></code> that fall outside of the contig will be
+clipped to the contig boundaries. If no <code class="docutils literal notranslate"><span class="pre">intervals</span></code> overlap the
+contig, an “empty” DFE will be added with a warning.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -580,7 +595,7 @@ intervals).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.dfe_breakpoints">
-<span class="sig-name descname"><span class="pre">dfe_breakpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dfe_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dfe_breakpoints" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">dfe_breakpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dfe_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dfe_breakpoints" title="Permalink to this definition"></a></dt>
 <dd><p>Returns two things: the sorted vector of endpoints of all intervals across
 all DFEs in the contig, and a vector of integer labels for these intervals,
 saying which DFE goes with which interval.
@@ -601,8 +616,13 @@ i.e., if <code class="docutils literal notranslate"><span class="pre">contig.dfe
 <code class="docutils literal notranslate"><span class="pre">breaks[k]</span></code>.  Some intervals may not be covered by a DFE, in which
 case they will have the label <code class="docutils literal notranslate"><span class="pre">-1</span></code> (beware of python indexing!).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A tuple (breaks, dfe_labels).</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>relative_coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the returned breakpoints
+will be relative to the start of the contig, rather than to the
+start of the chromosome to which to contig belongs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple (breaks, dfe_labels).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -639,9 +659,16 @@ each comes from:</p>
 </div>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="stdpopsim.Contig.origin">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#stdpopsim.Contig.origin" title="Permalink to this definition"></a></dt>
+<dd><p>The location of the contig on a named chromosome as a string with format,
+“chromosome:left-right”; or None if a generic contig.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.species_contig">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">species_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.species_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.species_contig" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">species_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.species_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.species_contig" title="Permalink to this definition"></a></dt>
 <dd><p>Build a Contig for a species.</p>
 </dd></dl>
 
