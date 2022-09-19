@@ -1090,7 +1090,8 @@ Mutation rate: 5.7e-09
 Recombination rate: 1.124e-08
 Gene conversion rate: 0
 Gene conversion tract length: 0</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">PapAnu</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">PapAnu</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="n">HELP_GENETIC_MAPS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">left</span> <span class="n">LEFT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">right</span> <span class="n">RIGHT</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span>
@@ -1115,9 +1116,16 @@ Gene conversion tract length: 0</p>
 <dt><kbd>-b, --bibtex-file</kbd></dt>
 <dd><p>Write citations to a given bib file. This will overwrite the file.</p>
 </dd>
+<dt><kbd>--help-genetic-maps</kbd></dt>
+<dd><p>Print list of genetic maps and exit. If a genetic map ID is given as an argument, show help for this map. Otherwise show help for all available genetic maps</p>
+</dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
 <p>Default: False</p>
+</dd>
+<dt><kbd>-g, --genetic-map</kbd></dt>
+<dd><p>Possible choices: Pyrho_PAnubis1_0</p>
+<p>Specify a particular genetic map. By default, a chromosome-specific uniform recombination rate is used. These default rates are listed in the catalog: &lt;<a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/stable/catalog.html">https://popsim-consortium.github.io/stdpopsim-docs/stable/catalog.html</a>&gt; Available maps: Pyrho_PAnubis1_0.</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, X, Y</p>
