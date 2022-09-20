@@ -124,6 +124,7 @@
 <span class="kn">import</span> <span class="nn">textwrap</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">collections</span>
 
 <span class="kn">import</span> <span class="nn">stdpopsim</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -283,11 +284,12 @@
 <span class="s2">     *</span>
 <span class="s2">     * 1. There may be additional late events for the tick in which</span>
 <span class="s2">     * restore() was called, and they are still scheduled to run.</span>
-<span class="s2">     * So we deactivate all script blocks to avoid unexpected problems.</span>
-<span class="s2">     * They will be automatically reactivated at the start of the next</span>
-<span class="s2">     * tick (see SLiM manual section 23.10).</span>
+<span class="s2">     * So we deactivate all script blocks in the &quot;late&quot; cycle to avoid</span>
+<span class="s2">     * unexpected problems. They will be automatically reactivated at the</span>
+<span class="s2">     * start of the next tick.</span>
 <span class="s2">     */</span>
-<span class="s2">    community.allScriptBlocks.active = F;</span>
+<span class="s2">    sb = community.allScriptBlocks;</span>
+<span class="s2">    sb[sb.type == &quot;late&quot;].active = F;</span>
 
 <span class="s2">    /*</span>
 <span class="s2">     * 2. The late events below were run in the save() tick,</span>
@@ -541,21 +543,36 @@
 <span class="s2">                    g_start+&quot; &gt; g_end=&quot;+g_end);</span>
 <span class="s2">            }</span>
 
-<span class="s2">            community.registerLateEvent(NULL,</span>
-<span class="s2">                &quot;{dbg(&#39;s=&quot;+selection_coeff+&quot;, h=&quot;+dominance_coeff+</span>
-<span class="s2">                &quot; for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
-<span class="s2">                g_start, g_start);</span>
-<span class="s2">            community.registerLateEvent(NULL,</span>
-<span class="s2">                &quot;{dbg(&#39;s, h defaults for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
-<span class="s2">                g_end, g_end);</span>
 <span class="s2">            /* We explicitly format() here to prevent integral-valued floats</span>
 <span class="s2">             * from getting converted to integers during string interpolation</span>
 <span class="s2">             * (this triggers a type error when the fitness callback runs). */</span>
 <span class="s2">            f_hom = format(&quot;</span><span class="si">%e</span><span class="s2">&quot;, 1 + selection_coeff);</span>
 <span class="s2">            f_het = format(&quot;</span><span class="si">%e</span><span class="s2">&quot;, 1 + selection_coeff * dominance_coeff);</span>
-<span class="s2">            sim.registerMutationEffectCallback(NULL,</span>
-<span class="s2">                &quot;{if (homozygous) return &quot;+f_hom+&quot;; else return &quot;+f_het+&quot;;}&quot;,</span>
-<span class="s2">                mut_type, pop_id, g_start, g_end);</span>
+
+<span class="s2">            /* &quot;All populations&quot; is encoded by a negative value of pop_id. */</span>
+<span class="s2">            if (pop_id &lt; 0) {</span>
+<span class="s2">                community.registerLateEvent(NULL,</span>
+<span class="s2">                    &quot;{dbg(&#39;s=&quot;+selection_coeff+&quot;, h=&quot;+dominance_coeff+</span>
+<span class="s2">                    &quot; for m&quot;+mut_type+&quot; globally&#39;);}&quot;,</span>
+<span class="s2">                    g_start, g_start);</span>
+<span class="s2">                community.registerLateEvent(NULL,</span>
+<span class="s2">                    &quot;{dbg(&#39;s, h defaults for m&quot;+mut_type+&quot; globally&#39;);}&quot;,</span>
+<span class="s2">                    g_end, g_end);</span>
+<span class="s2">                sim.registerMutationEffectCallback(NULL,</span>
+<span class="s2">                    &quot;{if (homozygous) return &quot;+f_hom+&quot;; else return &quot;+f_het+&quot;;}&quot;,</span>
+<span class="s2">                    mut_type, NULL, g_start, g_end);</span>
+<span class="s2">            } else {</span>
+<span class="s2">                community.registerLateEvent(NULL,</span>
+<span class="s2">                    &quot;{dbg(&#39;s=&quot;+selection_coeff+&quot;, h=&quot;+dominance_coeff+</span>
+<span class="s2">                    &quot; for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
+<span class="s2">                    g_start, g_start);</span>
+<span class="s2">                community.registerLateEvent(NULL,</span>
+<span class="s2">                    &quot;{dbg(&#39;s, h defaults for m&quot;+mut_type+&quot; in p&quot;+pop_id+&quot;&#39;);}&quot;,</span>
+<span class="s2">                    g_end, g_end);</span>
+<span class="s2">                sim.registerMutationEffectCallback(NULL,</span>
+<span class="s2">                    &quot;{if (homozygous) return &quot;+f_hom+&quot;; else return &quot;+f_het+&quot;;}&quot;,</span>
+<span class="s2">                    mut_type, pop_id, g_start, g_end);</span>
+<span class="s2">            }</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 
@@ -603,6 +620,7 @@
 <span class="s2">1 early () {</span>
 <span class="s2">    defineConstant(&quot;log&quot;, community.createLogFile(&quot;$logfile&quot;, logInterval=NULL));</span>
 <span class="s2">    log.addTick();</span>
+<span class="s2">    log.precision = 12;</span>
 <span class="s2">    for (pop in sim.subpopulations.id) {</span>
 <span class="s2">        log.addMeanSDColumns(</span>
 <span class="s2">            &quot;fitness_p&quot; + pop,</span>
@@ -612,7 +630,7 @@
 <span class="s2">}</span>
 
 <span class="s2">1: early() {</span>
-<span class="s2">    if (community.tick % $loginterval == 1)</span>
+<span class="s2">    if ((community.tick - 1) % $loginterval == 0)</span>
 <span class="s2">        log.logRow();</span>
 <span class="s2">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
@@ -1018,13 +1036,17 @@
     <span class="n">condition_on_allele_frequency</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">op_id</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_id</span>
     <span class="n">slim_mutation_ids</span> <span class="o">=</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
-    <span class="n">drawn_single_site_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">drawn_single_site_ids</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">referenced_single_site_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">population_name_to_index</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">populations</span><span class="p">)</span>
+    <span class="p">}</span>
     <span class="k">for</span> <span class="n">ee</span> <span class="ow">in</span> <span class="n">extended_events</span><span class="p">:</span>
+        <span class="n">cls_name</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">mutation_type_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">population_id</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">coordinate</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;single_site_id&quot;</span><span class="p">):</span>
-            <span class="n">cls_name</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
             <span class="n">dfe_index</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span>
             <span class="p">]</span>
@@ -1074,38 +1096,54 @@
             <span class="c1"># Now that GenerationAfter times have been accounted for, we can</span>
             <span class="c1"># properly catch invalid start/end times.</span>
             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">validate_time_range</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">):</span>
+            <span class="c1"># Convert population name to integer index. &quot;-1&quot; is used to encode</span>
+            <span class="c1"># all populations (currently only valid for ChangeMutationFitness).</span>
+            <span class="k">if</span> <span class="n">ee</span><span class="o">.</span><span class="n">population</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">population_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">ee</span><span class="o">.</span><span class="n">population</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">population_name_to_index</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The population </span><span class="si">{</span><span class="n">ee</span><span class="o">.</span><span class="n">population</span><span class="si">}</span><span class="s2"> referenced by &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2"> is not in demographic model &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, with defined populations &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">population_name_to_index</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">population_id</span> <span class="o">=</span> <span class="n">population_name_to_index</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">population</span><span class="p">]</span>
 
         <span class="c1"># Append attributes to lists per event type</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">population_id</span> <span class="o">&gt;=</span> <span class="mi">0</span>
             <span class="n">drawn_mutations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
                     <span class="n">mutation_type_id</span><span class="p">,</span>
-                    <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
+                    <span class="n">population_id</span><span class="p">,</span>
                     <span class="n">coordinate</span><span class="p">,</span>
                     <span class="mi">0</span><span class="p">,</span>  <span class="c1"># flag to save state in mutation generation</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-            <span class="n">drawn_single_site_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">)</span>
+            <span class="n">drawn_single_site_ids</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ChangeMutationFitness</span><span class="p">):</span>
             <span class="n">fitness_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
                     <span class="n">mutation_type_id</span><span class="p">,</span>
-                    <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
+                    <span class="n">population_id</span><span class="p">,</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">selection_coeff</span><span class="p">,</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">referenced_single_site_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">population_id</span> <span class="o">&gt;=</span> <span class="mi">0</span>
             <span class="n">condition_on_allele_frequency</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
                     <span class="n">mutation_type_id</span><span class="p">,</span>
-                    <span class="n">ee</span><span class="o">.</span><span class="n">population_id</span><span class="p">,</span>
+                    <span class="n">population_id</span><span class="p">,</span>
                     <span class="n">op_id</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">op</span><span class="p">),</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">allele_frequency</span><span class="p">,</span>
                 <span class="p">)</span>
@@ -1114,11 +1152,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown extended event type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ee</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+    <span class="c1"># Check that there exists only one drawn mutation per single site.</span>
+    <span class="k">for</span> <span class="n">single_site_id</span><span class="p">,</span> <span class="n">n_drawn_mutations</span> <span class="ow">in</span> <span class="n">drawn_single_site_ids</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">n_drawn_mutations</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The single site </span><span class="si">{</span><span class="n">single_site_id</span><span class="si">}</span><span class="s2"> has </span><span class="si">{</span><span class="n">n_drawn_mutations</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;mutations, but a maximum of one mutation is allowed per &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;single site.&quot;</span>
+            <span class="p">)</span>
+
     <span class="c1"># Check that drawn mutations exist for extended events that need them.</span>
     <span class="k">for</span> <span class="n">single_site_id</span> <span class="ow">in</span> <span class="n">referenced_single_site_ids</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">single_site_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drawn_single_site_ids</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">single_site_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drawn_single_site_ids</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;An extended event requires a mutation at single site id &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;An extended event requires a mutation at single site &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">single_site_id</span><span class="si">}</span><span class="s2">, but no mutation is drawn at this site.&quot;</span>
             <span class="p">)</span>
 
@@ -1493,6 +1540,9 @@
 
 <span class="sd">        :param seed: The seed for the random number generator.</span>
 <span class="sd">        :type seed: int</span>
+<span class="sd">        :param extended_events: A list of :class:`ext.ExtendedEvents` to be</span>
+<span class="sd">            passed to SLiM, e.g. produced by :func:`ext.selective_sweep()`.</span>
+<span class="sd">        :type extended_events: list</span>
 <span class="sd">        :param slim_path: The full path to the slim executable, or the name of</span>
 <span class="sd">            a command in the current PATH.</span>
 <span class="sd">        :type slim_path: str</span>
@@ -1592,7 +1642,7 @@
         <span class="n">ts</span> <span class="o">=</span> <span class="n">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">_recap_and_rescale</span><span class="p">:</span>
             <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span>
+                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">extended_events</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1671,7 +1721,9 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="n">filter_populations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
 <span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
@@ -1683,6 +1735,17 @@
             <span class="n">table</span><span class="o">.</span><span class="n">time</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
         <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;SLiM&quot;</span><span class="p">][</span><span class="s2">&quot;tick&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">slim_scaling_factor</span>
+        <span class="c1"># If a single site DFE is referenced by an extended event, mark the DFE</span>
+        <span class="c1"># as non-neutral so that mutations aren&#39;t simulated over it.</span>
+        <span class="k">if</span> <span class="n">extended_events</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">single_sites</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">ee</span> <span class="ow">in</span> <span class="n">extended_events</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;single_site_id&quot;</span><span class="p">)</span>
+                <span class="n">single_sites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">single_sites</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+                    <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;is_neutral&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="c1"># Finding what slim id to use in recap DFE</span>
         <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]:</span>
@@ -1835,7 +1898,9 @@
                 <span class="n">slim_rate_map</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
+            <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">extended_events</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span></div></div>
 
 

@@ -536,31 +536,21 @@ contig, an “empty” DFE will be added with a warning.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.add_single_site">
-<span class="sig-name descname"><span class="pre">add_single_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_coeff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dominance_coeff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_single_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_single_site" title="Permalink to this definition"></a></dt>
-<dd><p>Adds a model of a single site mutation at the provided coordinate.
+<span class="sig-name descname"><span class="pre">add_single_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_single_site"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_single_site" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a single site mutation class at the provided coordinate.
 The string label of the single site may be referenced by extended
 events passed to the simulation engine.</p>
-<p>For instance, to simulate a selective sweep,</p>
+<p>For instance, to simulate a selective sweep in population <cite>pop_0</cite>
+starting at 1000 generations in the past:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span><span class="o">.</span><span class="n">add_single_site</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;hard_sweep&quot;</span><span class="p">,</span>
-    <span class="n">selection_coeff</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
     <span class="n">coordinate</span><span class="o">=</span><span class="n">mutation_coordinate</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">extended_events</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">(</span>
-        <span class="n">time</span><span class="o">=</span><span class="n">mutation_time</span><span class="p">,</span>
-        <span class="n">single_site_id</span><span class="o">=</span><span class="s2">&quot;hard_sweep&quot;</span><span class="p">,</span>
-        <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="p">),</span>
-    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">(</span>
-        <span class="n">start_time</span><span class="o">=</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">GenerationAfter</span><span class="p">(</span><span class="n">mutation_time</span><span class="p">),</span>
-        <span class="n">end_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">single_site_id</span><span class="o">=</span><span class="s2">&quot;hard_sweep&quot;</span><span class="p">,</span>
-        <span class="n">population_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">op</span><span class="o">=</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
-        <span class="n">allele_frequency</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-    <span class="p">),</span>
-<span class="p">]</span>
+<span class="n">extended_events</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">selective_sweep</span><span class="p">(</span>
+    <span class="n">mutation_generation_ago</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">selection_coeff</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">population</span><span class="o">=</span><span class="s2">&quot;pop_0&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
 <span class="n">ts_sweep</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
     <span class="o">...</span><span class="p">,</span>
@@ -568,15 +558,12 @@ events passed to the simulation engine.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>See <code class="xref py py-func docutils literal notranslate"><span class="pre">ext.selective_sweep()</span></code> for more details on the sweep model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A unique identifier for the single site.</p></li>
 <li><p><strong>coordinate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The coordinate of the site on the contig.</p></li>
-<li><p><strong>selection_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The selection coefficient of the mutation,
-see <a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutationType</span></code></a> for details.</p></li>
-<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The dominance coefficient of the mutation,
-see <a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutationType</span></code></a> for details.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A short description of the single site mutation
 model as it would be used in written text, e.g., “Strong selective
 sweep”.</p></li>
@@ -1185,6 +1172,8 @@ See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpo
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The seed for the random number generator.</p></li>
+<li><p><strong>extended_events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ext.ExtendedEvents</span></code> to be
+passed to SLiM, e.g. produced by <code class="xref py py-func docutils literal notranslate"><span class="pre">ext.selective_sweep()</span></code>.</p></li>
 <li><p><strong>slim_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The full path to the slim executable, or the name of
 a command in the current PATH.</p></li>
 <li><p><strong>slim_script</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, the simulation will not be executed.

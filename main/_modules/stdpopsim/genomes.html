@@ -640,52 +640,38 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="nb">id</span><span class="p">,</span>
         <span class="n">coordinate</span><span class="p">,</span>
-        <span class="n">selection_coeff</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">long_description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds a model of a single site mutation at the provided coordinate.</span>
+<span class="sd">        Adds a single site mutation class at the provided coordinate.</span>
 <span class="sd">        The string label of the single site may be referenced by extended</span>
 <span class="sd">        events passed to the simulation engine.</span>
 
-<span class="sd">        For instance, to simulate a selective sweep,</span>
+<span class="sd">        For instance, to simulate a selective sweep in population `pop_0`</span>
+<span class="sd">        starting at 1000 generations in the past:</span>
 
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            contig.add_single_site(</span>
 <span class="sd">                id=&quot;hard_sweep&quot;,</span>
-<span class="sd">                selection_coeff=0.1,</span>
 <span class="sd">                coordinate=mutation_coordinate,</span>
 <span class="sd">            )</span>
-<span class="sd">            extended_events = [</span>
-<span class="sd">                stdpopsim.ext.DrawMutation(</span>
-<span class="sd">                    time=mutation_time,</span>
-<span class="sd">                    single_site_id=&quot;hard_sweep&quot;,</span>
-<span class="sd">                    population_id=0,</span>
-<span class="sd">                ),</span>
-<span class="sd">                stdpopsim.ext.ConditionOnAlleleFrequency(</span>
-<span class="sd">                    start_time=stdpopsim.ext.GenerationAfter(mutation_time),</span>
-<span class="sd">                    end_time=0,</span>
-<span class="sd">                    single_site_id=&quot;hard_sweep&quot;,</span>
-<span class="sd">                    population_id=0,</span>
-<span class="sd">                    op=&quot;&gt;&quot;,</span>
-<span class="sd">                    allele_frequency=0.0,</span>
-<span class="sd">                ),</span>
-<span class="sd">            ]</span>
+<span class="sd">            extended_events = ext.selective_sweep(</span>
+<span class="sd">                mutation_generation_ago=1000,</span>
+<span class="sd">                selection_coeff=0.1,</span>
+<span class="sd">                population=&quot;pop_0&quot;,</span>
+<span class="sd">            )</span>
 <span class="sd">            engine = stdpopsim.get_engine(&quot;slim&quot;)</span>
 <span class="sd">            ts_sweep = engine.simulate(</span>
 <span class="sd">                ...,</span>
 <span class="sd">                extended_events=extended_events,</span>
 <span class="sd">            )</span>
 
+<span class="sd">        See :func:`ext.selective_sweep` for more details on the sweep model.</span>
+
 <span class="sd">        :param str id: A unique identifier for the single site.</span>
 <span class="sd">        :param int coordinate: The coordinate of the site on the contig.</span>
-<span class="sd">        :param float selection_coeff: The selection coefficient of the mutation,</span>
-<span class="sd">            see :class:`MutationType` for details.</span>
-<span class="sd">        :param float dominance_coeff: The dominance coefficient of the mutation,</span>
-<span class="sd">            see :class:`MutationType` for details.</span>
 <span class="sd">        :param str description: A short description of the single site mutation</span>
 <span class="sd">            model as it would be used in written text, e.g., &quot;Strong selective</span>
 <span class="sd">            sweep&quot;.</span>
@@ -698,10 +684,11 @@
 
         <span class="n">mut_type</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
             <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>
-            <span class="n">dominance_coeff</span><span class="o">=</span><span class="n">dominance_coeff</span><span class="p">,</span>
-            <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="n">selection_coeff</span><span class="p">],</span>
+            <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">],</span>
             <span class="n">convert_to_substitution</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
+
         <span class="n">dfe</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DFE</span><span class="p">(</span>
             <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
             <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">mut_type</span><span class="p">],</span>
