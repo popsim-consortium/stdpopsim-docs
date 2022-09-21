@@ -48,6 +48,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#quick-reference">Quick reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#species-definitions">Species definitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#demographic-models">Demographic Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gene-conversion-and-bacterial-recombination">Gene conversion and bacterial recombination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#selection-and-dfes">Selection and DFEs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generic-models">Generic models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#simulation-engines">Simulation Engines</a></li>
@@ -246,7 +247,7 @@ information from Ensembl</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Species.get_contig">
-<span class="sig-name descname"><span class="pre">get_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/species.html#Species.get_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Species.get_contig" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
@@ -272,17 +273,8 @@ This option cannot currently be used in conjunction with the
 the mutation rate defaults to the rate specified by species chromosomes.</p></li>
 <li><p><strong>use_species_gene_conversion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If set to True the parameters for gene
 conversion of the species chromosome are used if available. For “generic”
-contigs the gene conversion rate is given by the (mean) rate specified by
-species chromosomes and the gene conversion length defaults to the mean
-length specified by species chromosomes.</p></li>
-<li><p><strong>gene_conversion_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The per-base gene conversion rate. Can only
-be set together with gene_conversion_length and if
-use_species_gene_conversion is False; If none is given, and
-use_species_gene_conversion is True the gene conversion rate specified by
-species chromosomes is used. If none and use_species_gene_conversion is
-False gene conversion is disabled.</p></li>
-<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The mean gene conversion length.
-May only be provided if gene_conversion_rate is also specified.</p></li>
+contigs the gene conversion fraction and length are given by the mean
+values across all chromosomes.</p></li>
 <li><p><strong>inclusion_mask</strong> – If specified, simulated genomes are subset to only
 inlude regions given by the mask. The mask can be specified by the
 path and file name of a bed file or as a list or array of intervals
@@ -363,16 +355,19 @@ A complete list of IDs for each species can be found in the
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>chromosomes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> objects.</p></li>
+<li><p><strong>bacterial_recombination</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether recombination is via horizontal gene
+transfer (if this is True) or via crossover and possibly gene
+conversion (if this is False). Default: False.</p></li>
 <li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
 providing the source for the genome assembly,
-mutation rate, recombination rate, and gene conversion rate estimates.</p></li>
+mutation rate, recombination rate, and gene conversion estimates.</p></li>
 <li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The total length of the genome.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Genome.from_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome_data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recombination_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">citations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.from_data" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome_data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recombination_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">citations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterial_recombination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.from_data" title="Permalink to this definition"></a></dt>
 <dd><p>Construct a Genome object from the specified dictionary of
 genome information from Ensembl, recombination_rate and
 mutation_rate dictionaries.</p>
@@ -400,9 +395,10 @@ such as length, mutation rate, and recombination rate.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="stdpopsim.Genome.mean_gene_conversion_rate">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_gene_conversion_rate</span></span><a class="headerlink" href="#stdpopsim.Genome.mean_gene_conversion_rate" title="Permalink to this definition"></a></dt>
-<dd><p>The length-weighted mean gene conversion rate across all chromosomes.</p>
+<dt class="sig sig-object py" id="stdpopsim.Genome.mean_gene_conversion_fraction">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_gene_conversion_fraction</span></span><a class="headerlink" href="#stdpopsim.Genome.mean_gene_conversion_fraction" title="Permalink to this definition"></a></dt>
+<dd><p>The genetic length-weighted mean gene conversion fraction across all
+chromosomes.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -414,7 +410,8 @@ such as length, mutation rate, and recombination rate.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="stdpopsim.Genome.mean_recombination_rate">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_recombination_rate</span></span><a class="headerlink" href="#stdpopsim.Genome.mean_recombination_rate" title="Permalink to this definition"></a></dt>
-<dd><p>The length-weighted mean recombination rate across all chromosomes.</p>
+<dd><p>The length-weighted mean recombination rate across all chromosomes.
+(Note that this is the rate of crossovers, not all double-stranded breaks.)</p>
 </dd></dl>
 
 <dl class="py property">
@@ -428,7 +425,10 @@ such as length, mutation rate, and recombination rate.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="stdpopsim.Chromosome">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">Chromosome</span></span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Chromosome" title="Permalink to this definition"></a></dt>
-<dd><p>Class representing a single chromosome for a species.</p>
+<dd><p>Class representing a single chromosome for a species. Note that although
+the recombination rate for a Chromosome is the rate of crossovers,
+the recombination map for a Contig gives the rate of both crossovers
+and gene conversion, so will differ if the gene conversion fraction is nonzero.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
@@ -436,9 +436,9 @@ such as length, mutation rate, and recombination rate.</p>
 <li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The length of the chromosome.</p></li>
 <li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The mutation rate used when simulating this
 chromosome.</p></li>
-<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The recombination rate used when simulating
+<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The rate of crossovers used when simulating
 this chromosome (if not using a genetic map).</p></li>
-<li><p><strong>gene_conversion_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The gene conversion rate used when
+<li><p><strong>gene_conversion_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The gene conversion fraction used when
 simulating this chromosome.</p></li>
 <li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The mean tract length of gene
 conversion events used when simulating this chromosome.</p></li>
@@ -465,11 +465,24 @@ coordinate system is used for <a class="reference internal" href="#stdpopsim.Con
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
-<li><p><strong>gene_conversion_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The rate of gene conversion initiation per base per
-generation.</p></li>
-<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The mean tract length of gene conversions.</p></li>
-<li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><em>msprime.RateMap</em></a>) – The recombination map for the region. See the
-<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code></a> for details.</p></li>
+<li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><em>msprime.RateMap</em></a>) – The recombination map for the region, that gives
+the rates of double-stranded breaks. Note that if gene conversion
+fraction is nonzero, then this map can have a larger rate than the
+corresponding chromosome’s recombination rate, since the chromosome’s
+rate describes only crossovers. A <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code></a> object.</p></li>
+<li><p><strong>bacterial_recombination</strong> – Whether the model of recombination is
+by horizontal gene transfer or not (default is False, i.e.,
+recombination is by crossovers and possibly gene conversion).</p></li>
+<li><p><strong>gene_conversion_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The fraction of recombinations that resolve
+as gene conversion events. The recombination map gives the rates of
+<em>both</em> crossovers and gene conversions, with a fraction of gene
+conversions given by this value. Defaults to None, i.e., no gene
+conversion. Must be None or between 0 and 1. Must be None if
+bacterial_recombination is True.</p></li>
+<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The mean tract length of gene conversions (if
+bacterial_recombination is False), or horizontally tranferred segments (if
+it is True). Must be present, and above 1 if either gene_conversion_fraction
+is given or bacterial_recombination is True.</p></li>
 <li><p><strong>mask_intervals</strong> (<em>array-like</em><em> (</em><em>?</em><em>)</em>) – Intervals to keep in simulated tree sequence, as a list
 of (left_position, right_position), such that intervals are non-overlapping
 and in ascending order. Should have shape Nx2, where N is the number of
@@ -490,10 +503,11 @@ from a larger chromosome).</p></li>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To run stdpopsim simulations with alternative, user-specified mutation
-or recombination rates, a new contig can be created based on an existing
-one. For instance, the following will create a <code class="docutils literal notranslate"><span class="pre">new_contig</span></code> that,
-when simulated, will have double the mutation rate of the <code class="docutils literal notranslate"><span class="pre">old_contig</span></code>:</p>
+<p>To run stdpopsim simulations with alternative, user-specified mutation,
+recombination, or gene conversion rates, a new contig can be created
+based on an existing one. For instance, the following will create a
+<code class="docutils literal notranslate"><span class="pre">new_contig</span></code> that, when simulated, will have double the mutation rate
+of the <code class="docutils literal notranslate"><span class="pre">old_contig</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
     <span class="n">mutation_rate</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">recombination_map</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
@@ -655,7 +669,7 @@ each comes from:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.species_contig">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">species_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.species_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.species_contig" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">species_contig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chromosome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genetic_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_species_gene_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusion_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.species_contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.species_contig" title="Permalink to this definition"></a></dt>
 <dd><p>Build a Contig for a species.</p>
 </dd></dl>
 
@@ -823,6 +837,61 @@ population (default = 0).</p></li>
 
 </dd></dl>
 
+</section>
+<section id="gene-conversion-and-bacterial-recombination">
+<span id="sec-api-gene-conversion"></span><h2>Gene conversion and bacterial recombination<a class="headerlink" href="#gene-conversion-and-bacterial-recombination" title="Permalink to this headline"></a></h2>
+<p>Some species have estimates of the process of gene conversion.
+However, by default gene conversion does <em>not</em> happen, because
+(unfortunately) it can make simulations take much longer,
+and result in much bigger files.
+This is because the rate of gene conversion is usually much higher than
+the rate of crossing-over, so enabling gene conversion effectively
+increases the rate of recombination, which can have a strong effect on runtimes.
+To enable gene conversion for a species that has estimates,
+pass the <cite>use_species_gene_conversion=True</cite> argument to
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code>.</p>
+<p>Gene conversion attributes are visible through the <cite>gene_conversion_fraction</cite>
+and <cite>gene_conversion_length</cite> properties of the species’ <cite>genome</cite>.
+The “gene conversion fraction” gives the (average) fraction of
+double-stranded breaks that resolve as gene conversion
+(a.k.a non-crossover) events,
+and the “gene conversion length” is the mean length of the gene conversion tracts.
+So, if the rate of crossing over (which is often referred to as
+“recombination rate”) is <cite>r</cite> and the gene conversion fraction is <cite>f</cite>,
+then the <em>total</em> rate of double-stranded breaks is <cite>r / (1-f)</cite>,
+and the gene conversion rate is <cite>r * f / (1-f)</cite>.</p>
+<p>A consequence of this is that
+the <cite>recombination_map</cite> attribute of a <code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code> is the rate of
+double-stranded break initiation, not the rate of crossovers. The terminology
+conflicts somewhat with the <cite>recombination_rate</cite> property of
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code>, which specifies the rate of crossovers. So, creating
+a contig with <cite>use_species_gene_conversion=True</cite> will result in a Contig
+with larger “recombination rates” than otherwise, because these rates
+include gene conversion as well as crossing over:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;DroMel&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;2L&quot;</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
+<span class="c1"># 2.40462600791e-08</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;2L&quot;</span><span class="p">,</span> <span class="n">use_species_gene_conversion</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
+<span class="c1"># 1.414485887005882e-07</span>
+</pre></div>
+</div>
+<p>Different engines implement gene conversion in different ways: at the time
+of writing, msprime only allows a <em>constant</em> rate of gene conversion,
+while SLiM only allows gene conversion to be a fixed fraction of double-stranded
+break events. So, in SLiM we use the recombination map for the local
+rate of double-stranded breaks along the genome, while in msprime
+we specify a constant rate of gene conversion so that the average total number
+is the same as we would get from SLiM.</p>
+<p>In principle, <strong>bacterial recombination</strong> is a completely different issue,
+since bacterial recombination is by horizontal transfer of genomic segments.
+However, bacterial recombination is at present implemented using the engine’s
+gene conversion mechanisms. So, bacterial species have the <cite>bacterial_recombination</cite>
+flag set, and need <cite>gene_conversion_length</cite> to be defined. (It could also be called horizontal
+transfer or homologous recombination segment length, but that would add another
+option.) For such species, gene conversion does not happen, so <cite>gene_conversion_fraction</cite>
+must not be set, and the “recombination rate” is the rate of bacterial recombination.</p>
 </section>
 <section id="selection-and-dfes">
 <span id="sec-api-dfes"></span><h2>Selection and DFEs<a class="headerlink" href="#selection-and-dfes" title="Permalink to this headline"></a></h2>
