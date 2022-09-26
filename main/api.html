@@ -208,6 +208,7 @@ time of this species in years. Note that individual demographic
 models in the catalog may or may not use this estimate: each
 model uses the generation time that was used in the original
 publication(s).</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The ploidy of the organism.</p></li>
 <li><p><strong>population_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The current best estimate for the population
 size of this species. Note that individual demographic
 models in the catalog may or may not use this estimate: each
@@ -367,10 +368,10 @@ mutation rate, recombination rate, and gene conversion estimates.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Genome.from_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome_data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recombination_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">citations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterial_recombination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.from_data" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome_data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recombination_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ploidy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">citations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacterial_recombination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_conversion_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Genome.from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Genome.from_data" title="Permalink to this definition"></a></dt>
 <dd><p>Construct a Genome object from the specified dictionary of
-genome information from Ensembl, recombination_rate and
-mutation_rate dictionaries.</p>
+genome information from Ensembl, recombination_rate,
+mutation_rate, and ploidy dictionaries.</p>
 <p>This method is for internal use only.</p>
 </dd></dl>
 
@@ -444,6 +445,7 @@ simulating this chromosome.</p></li>
 conversion events used when simulating this chromosome.</p></li>
 <li><p><strong>synonyms</strong> (<em>list of str</em>) – List of synonyms that may be used when requesting this
 chromosome by ID, e.g. from the command line interface.</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The ploidy used when simulating this chromosome.</p></li>
 </ul>
 </dd>
 </dl>
@@ -465,6 +467,7 @@ coordinate system is used for <a class="reference internal" href="#stdpopsim.Con
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The ploidy of the contig. Defaults to 2 (diploid).</p></li>
 <li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><em>msprime.RateMap</em></a>) – The recombination map for the region, that gives
 the rates of double-stranded breaks. Note that if gene conversion
 fraction is nonzero, then this map can have a larger rate than the
@@ -786,23 +789,41 @@ If no mutation rate is given, the species’ default mutation rate is used.</p><
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.DemographicModel.get_sample_sets">
+<span class="sig-name descname"><span class="pre">get_sample_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individuals_per_population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ploidy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_sample_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_sample_sets" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of <cite>msprime.SampleSet</cite> objects, using the number of
+individuals sampled from each population as specified in
+<cite>individuals_per_population</cite>.  For instance,
+<code class="docutils literal notranslate"><span class="pre">model.get_sample_sets({&quot;pop_0&quot;:5,</span> <span class="pre">&quot;pop_1&quot;:5}</span></code> would return sample
+sets encompassing 10 individuals, equally split between populations
+named “pop_0” and “pop_1”.  Omitted populations are assumed to have
+zero samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individuals_per_population</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – A dict of the form
+<cite>{population_name:number_of_samples}</cite> giving sample counts per
+population.</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The ploidy of the samples.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.DemographicModel.get_samples">
 <span class="sig-name descname"><span class="pre">get_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/models.html#DemographicModel.get_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DemographicModel.get_samples" title="Permalink to this definition"></a></dt>
-<dd><p>Returns a list of msprime.Sample objects, with the number of samples
-from each population determined by the positional arguments.
-For instance, <code class="docutils literal notranslate"><span class="pre">model.get_samples(2,</span> <span class="pre">5,</span> <span class="pre">7)</span></code> would return a list of 14 samples,
-two of which are from the model’s first population (i.e., with population ID
-<code class="docutils literal notranslate"><span class="pre">model.populations[0].id</span></code>), five are from the model’s second population,
-and seven are from the model’s third population.
-The number of of arguments must be less than or equal to the number of
-“sampling” populations, <code class="docutils literal notranslate"><span class="pre">model.num_sampling_populations</span></code>;
-if the number of arguments is less than the number of sampling populations,
-then remaining numbers are treated as zero.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>This documentation is broken. We’re now returning msprime
-SampleSet objects.</p>
-</div>
+<dd><p>Returns a list of <cite>msprime.SampleSet</cite> objects, with the number of
+haploids from each population determined by the positional arguments.
+For instance, <code class="docutils literal notranslate"><span class="pre">model.get_samples(2,</span> <span class="pre">5,</span> <span class="pre">7)</span></code> would return a list with
+sample sets encompassing 14 samples, two of which are from the model’s
+first population (i.e., with population ID <code class="docutils literal notranslate"><span class="pre">model.populations[0].id</span></code>),
+five are from the model’s second population, and seven are from the
+model’s third population.  The number of of arguments must be less than
+or equal to the number of “sampling” populations,
+<code class="docutils literal notranslate"><span class="pre">model.num_sampling_populations</span></code>; if the number of arguments is less
+than the number of sampling populations, then remaining numbers are
+treated as zero.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1134,7 +1155,7 @@ be implemented. See msprime example in <code class="docutils literal notranslate
 <li><p><strong>demographic_model</strong> (<a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>) – The demographic model to simulate.</p></li>
 <li><p><strong>contig</strong> (<a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a>) – The contig, defining the length, mutation rate,
 and recombination rate(s).</p></li>
-<li><p><strong>samples</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.simulations.Sample</span></code>) – The samples to be obtained from the simulation.</p></li>
+<li><p><strong>samples</strong> (<em>dict containing number of individuals per population</em>) – The samples to be obtained from the simulation.</p></li>
 <li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The seed for the random number generator.</p></li>
 <li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the simulation engine will return None without
 running the simulation.</p></li>

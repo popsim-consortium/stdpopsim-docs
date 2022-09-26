@@ -120,6 +120,7 @@
         <span class="o">*</span><span class="p">,</span>
         <span class="n">recombination_rate</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="p">,</span>
+        <span class="n">ploidy</span><span class="p">,</span>
         <span class="n">citations</span><span class="p">,</span>
         <span class="n">bacterial_recombination</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -127,14 +128,15 @@
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a Genome object from the specified dictionary of</span>
-<span class="sd">        genome information from Ensembl, recombination_rate and</span>
-<span class="sd">        mutation_rate dictionaries.</span>
+<span class="sd">        genome information from Ensembl, recombination_rate,</span>
+<span class="sd">        mutation_rate, and ploidy dictionaries.</span>
 
 <span class="sd">        This method is for internal use only.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">chr_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">recombination_rate</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">mutation_rate</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
+        <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">ploidy</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
         <span class="k">if</span> <span class="n">gene_conversion_fraction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">gene_conversion_fraction</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">chr_names</span><span class="p">}</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">gene_conversion_fraction</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
@@ -150,6 +152,7 @@
                     <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;synonyms&quot;</span><span class="p">],</span>
                     <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                     <span class="n">recombination_rate</span><span class="o">=</span><span class="n">recombination_rate</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
+                    <span class="n">ploidy</span><span class="o">=</span><span class="n">ploidy</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                     <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="n">gene_conversion_fraction</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                     <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                 <span class="p">)</span>
@@ -270,11 +273,13 @@
 <span class="sd">    :ivar synonyms: List of synonyms that may be used when requesting this</span>
 <span class="sd">        chromosome by ID, e.g. from the command line interface.</span>
 <span class="sd">    :vartype synonyms: list of str</span>
+<span class="sd">    :ivar int ploidy: The ploidy used when simulating this chromosome.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">recombination_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ploidy</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">gene_conversion_fraction</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -298,6 +303,8 @@
 
 <span class="sd">    :ivar mutation_rate: The rate of mutation per base per generation.</span>
 <span class="sd">    :vartype mutation_rate: float</span>
+<span class="sd">    :ivar ploidy: The ploidy of the contig. Defaults to 2 (diploid).</span>
+<span class="sd">    :vartype ploidy: int</span>
 <span class="sd">    :ivar recombination_map: The recombination map for the region, that gives</span>
 <span class="sd">        the rates of double-stranded breaks. Note that if gene conversion</span>
 <span class="sd">        fraction is nonzero, then this map can have a larger rate than the</span>
@@ -357,6 +364,7 @@
 
     <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">ploidy</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">bacterial_recombination</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">gene_conversion_fraction</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -382,6 +390,7 @@
         <span class="n">length</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">recombination_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">bacterial_recombination</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">gene_conversion_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -422,6 +431,7 @@
             <span class="n">bacterial_recombination</span><span class="o">=</span><span class="n">bacterial_recombination</span><span class="p">,</span>
             <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="n">gene_conversion_fraction</span><span class="p">,</span>
             <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">,</span>
+            <span class="n">ploidy</span><span class="o">=</span><span class="n">ploidy</span><span class="p">,</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="Contig.species_contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.species_contig">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -513,6 +523,7 @@
                 <span class="n">bacterial_recombination</span><span class="o">=</span><span class="n">species</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">bacterial_recombination</span><span class="p">,</span>
                 <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="n">gene_conversion_fraction</span><span class="p">,</span>
                 <span class="n">gene_conversion_length</span><span class="o">=</span><span class="n">gene_conversion_length</span><span class="p">,</span>
+                <span class="n">ploidy</span><span class="o">=</span><span class="n">species</span><span class="o">.</span><span class="n">ploidy</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Named contig:</span>
@@ -612,6 +623,8 @@
                         <span class="n">rate</span><span class="o">=</span><span class="n">recomb_map</span><span class="o">.</span><span class="n">rate</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gene_conversion_fraction</span><span class="p">),</span>
                     <span class="p">)</span>
 
+            <span class="n">ploidy</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">ploidy</span> <span class="k">if</span> <span class="n">chrom</span><span class="o">.</span><span class="n">ploidy</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">chrom</span><span class="o">.</span><span class="n">ploidy</span>
+
             <span class="n">contig</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Contig</span><span class="p">(</span>
                 <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span>
                 <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">,</span>
@@ -622,6 +635,7 @@
                 <span class="n">inclusion_mask</span><span class="o">=</span><span class="n">inclusion_intervals</span><span class="p">,</span>
                 <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion_intervals</span><span class="p">,</span>
                 <span class="n">original_coordinates</span><span class="o">=</span><span class="p">(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">),</span>
+                <span class="n">ploidy</span><span class="o">=</span><span class="n">ploidy</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">contig</span></div>

@@ -78,6 +78,8 @@
 <span class="kn">import</span> <span class="nn">textwrap</span>
 
 <span class="kn">import</span> <span class="nn">msprime</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">stdpopsim</span>
 
 
 <div class="viewcode-block" id="Population"><a class="viewcode-back" href="../../api.html#stdpopsim.Population">[docs]</a><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
@@ -253,23 +255,81 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QC model already registered for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span></div>
 
+<div class="viewcode-block" id="DemographicModel.get_sample_sets"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_sample_sets">[docs]</a>    <span class="k">def</span> <span class="nf">get_sample_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals_per_population</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of `msprime.SampleSet` objects, using the number of</span>
+<span class="sd">        individuals sampled from each population as specified in</span>
+<span class="sd">        `individuals_per_population`.  For instance,</span>
+<span class="sd">        ``model.get_sample_sets({&quot;pop_0&quot;:5, &quot;pop_1&quot;:5}`` would return sample</span>
+<span class="sd">        sets encompassing 10 individuals, equally split between populations</span>
+<span class="sd">        named &quot;pop_0&quot; and &quot;pop_1&quot;.  Omitted populations are assumed to have</span>
+<span class="sd">        zero samples.</span>
+
+<span class="sd">        :param dict individuals_per_population: A dict of the form</span>
+<span class="sd">            `{population_name:number_of_samples}` giving sample counts per</span>
+<span class="sd">            population.</span>
+<span class="sd">        :param int ploidy: The ploidy of the samples.</span>
+
+<span class="sd">        .. note: This interface is intended for internal use only.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sample_sets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pop_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">pop</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">}</span>
+        <span class="n">pop_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">num_samples</span> <span class="ow">in</span> <span class="n">individuals_per_population</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pop_map</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Population </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not one of the populations &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">pop_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2"> defined for model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">pop</span> <span class="o">=</span> <span class="n">pop_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pop</span><span class="o">.</span><span class="n">allow_samples</span><span class="p">:</span>
+                <span class="n">sample_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">msprime</span><span class="o">.</span><span class="n">SampleSet</span><span class="p">(</span>
+                        <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span>
+                        <span class="n">population</span><span class="o">=</span><span class="n">pop_idx</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
+                        <span class="n">time</span><span class="o">=</span><span class="n">pop</span><span class="o">.</span><span class="n">default_sampling_time</span><span class="p">,</span>
+                        <span class="n">ploidy</span><span class="o">=</span><span class="n">ploidy</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">num_samples</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Individuals requested from non-sampling population </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="n">sample_sets</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sample_sets</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sample_sets</span></div>
+
 <div class="viewcode-block" id="DemographicModel.get_samples"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_samples">[docs]</a>    <span class="k">def</span> <span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a list of msprime.Sample objects, with the number of samples</span>
-<span class="sd">        from each population determined by the positional arguments.</span>
-<span class="sd">        For instance, ``model.get_samples(2, 5, 7)`` would return a list of 14 samples,</span>
-<span class="sd">        two of which are from the model&#39;s first population (i.e., with population ID</span>
-<span class="sd">        ``model.populations[0].id``), five are from the model&#39;s second population,</span>
-<span class="sd">        and seven are from the model&#39;s third population.</span>
-<span class="sd">        The number of of arguments must be less than or equal to the number of</span>
-<span class="sd">        &quot;sampling&quot; populations, ``model.num_sampling_populations``;</span>
-<span class="sd">        if the number of arguments is less than the number of sampling populations,</span>
-<span class="sd">        then remaining numbers are treated as zero.</span>
+<span class="sd">        Returns a list of `msprime.SampleSet` objects, with the number of</span>
+<span class="sd">        haploids from each population determined by the positional arguments.</span>
+<span class="sd">        For instance, ``model.get_samples(2, 5, 7)`` would return a list with</span>
+<span class="sd">        sample sets encompassing 14 samples, two of which are from the model&#39;s</span>
+<span class="sd">        first population (i.e., with population ID ``model.populations[0].id``),</span>
+<span class="sd">        five are from the model&#39;s second population, and seven are from the</span>
+<span class="sd">        model&#39;s third population.  The number of of arguments must be less than</span>
+<span class="sd">        or equal to the number of &quot;sampling&quot; populations,</span>
+<span class="sd">        ``model.num_sampling_populations``; if the number of arguments is less</span>
+<span class="sd">        than the number of sampling populations, then remaining numbers are</span>
+<span class="sd">        treated as zero.</span>
 
-<span class="sd">        .. todo:: This documentation is broken. We&#39;re now returning msprime</span>
-<span class="sd">            SampleSet objects.</span>
+<span class="sd">        .. note: This interface is deprecated. Instead, a dict containing the</span>
+<span class="sd">            number of individuals per population should be directly provided to</span>
+<span class="sd">            :meth:`Engine.simulate`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DeprecatedFeatureWarning</span><span class="p">(</span>
+                <span class="s2">&quot;The use of `DemographicModel.get_samples` (Python API) and &quot;</span>
+                <span class="s2">&quot;positional sample counts (CLI) is deprecated. Instead, supply a &quot;</span>
+                <span class="s2">&quot;{population_name:num_samples} dict to &quot;</span>
+                <span class="s2">&quot;`Engine.simulate(samples=...)` (Python API); or use the syntax &quot;</span>
+                <span class="s2">&quot;`stdpopsim SpeciesName population_name:num_samples` (CLI).&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
         <span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">for</span> <span class="n">pop_index</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">pop_index</span><span class="p">]</span><span class="o">.</span><span class="n">allow_samples</span><span class="p">:</span>
                 <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -277,12 +337,13 @@
                         <span class="n">num_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
                         <span class="n">population</span><span class="o">=</span><span class="n">pop_index</span><span class="p">,</span>
                         <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">pop_index</span><span class="p">]</span><span class="o">.</span><span class="n">default_sampling_time</span><span class="p">,</span>
-                        <span class="n">ploidy</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># Avoid breaking too much at once.</span>
+                        <span class="n">ploidy</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pop_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="n">pop_index</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Samples requested from non-sampling population </span><span class="si">{pop_index}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Samples requested from non-sampling population </span><span class="si">{</span><span class="n">pop_name</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">samples</span></div></div>
 

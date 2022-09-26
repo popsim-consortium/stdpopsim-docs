@@ -285,18 +285,20 @@ Population size: 10000
 different output which shows options for performing the simulation itself and
 the species default parameters. This includes selecting the demographic model,
 chromosome, recombination map, and number of samples.</p>
-<p>The most basic simulation we can run is to simulate two (haploid) genomes
-- i.e., two samples -
+<p>The most basic simulation we can run is to simulate a diploid genome
+- i.e., a single individual -
 using the species’ defaults as seen in the species help (<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">--help</span></code>).
-These defaults include constant size population, a uniform recombination map based
+These defaults include constant size population named <code class="docutils literal notranslate"><span class="pre">pop_0</span></code>, a uniform recombination map based
 on the average recombination rate (either genome-wide or within a chromosome, if
 specified), and the mutation rate shown above.
 To save time we will specify that the simulation use
 chromosome 22, using the <code class="docutils literal notranslate"><span class="pre">-c</span></code> option. We also specify that the resulting
 tree-sequence formatted output should be written to the file <code class="docutils literal notranslate"><span class="pre">foo.ts</span></code> with the
 <code class="docutils literal notranslate"><span class="pre">-o</span></code> option. For more information on how to use tree-sequence files see
-<a class="reference external" href="https://tskit.dev/tskit/docs/stable/introduction.html">tskit</a>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -o foo.ts <span class="m">2</span>
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/introduction.html">tskit</a>. Finally, we
+specify that a single (diploid) sample should be simulated for population
+<code class="docutils literal notranslate"><span class="pre">pop_0</span></code> using the syntax <code class="docutils literal notranslate"><span class="pre">&lt;population_name&gt;:&lt;number_of_samples&gt;</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -o foo.ts pop_0:1
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -349,22 +351,19 @@ the two population out-of-Africa <a class="reference internal" href="catalog.htm
 from <a class="reference external" href="https://doi.org/10.1126/science.1219240">Tennesen et al. (2012)</a> .
 By looking at the model help we find that the name for this model is
 <code class="docutils literal notranslate"><span class="pre">OutOfAfrica_2T12</span></code> and that we can specify it using
-the <code class="docutils literal notranslate"><span class="pre">--demographic-model</span></code> or <code class="docutils literal notranslate"><span class="pre">-d</span></code> option. We choose to draw two samples from the
-“African American” population and three samples from the “European American” population.
+the <code class="docutils literal notranslate"><span class="pre">--demographic-model</span></code> or <code class="docutils literal notranslate"><span class="pre">-d</span></code> option. We choose to draw two diploid sample from the
+<code class="docutils literal notranslate"><span class="pre">AFR</span></code> (“African American”) population and three diploids from the <code class="docutils literal notranslate"><span class="pre">EUR</span></code> (“European American”) population.
 To increase simulation speed we can also choose to simulate a sequence that is
 a fraction of the length of the specified chromosome using the <code class="docutils literal notranslate"><span class="pre">-l</span></code> option
 (e.g. 5%). This is just specifying a sequence length, not actually selecting
 a subset of the chromosome to sequence and as such cannot be used with anything
 other than a uniform recombination map. The command now looks like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 AFR:2 EUR:3
 </pre></div>
 </div>
-<p>Note that the number of samples from each population are simply specified
-as two numbers at the end of the command. There must be <em>two</em> numbers because the
-model has two populations that we can sample from
-The order of those numbers is the same as the order
-specified in the model documentation. In this case, <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">3</span></code> means
-we are simulating two African American samples and three European American samples.</p>
+<p>Note that the number of samples from each population are simply specified as
+<code class="docutils literal notranslate"><span class="pre">&lt;population_name&gt;:&lt;number_of_samples&gt;</span></code> at the end of the command. Omitted
+populations will have no samples in the resulting tree sequence.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Many demographic models were inferred or calibrated using a mutation rate that
@@ -401,12 +400,12 @@ HapMapII_GRCh37
 <a class="reference internal" href="catalog.html#sec_catalog_homsap_genetic_maps_hapmapii_grch37"><span class="std std-ref">HapMapII_GRCh37</span></a> map. Empirical
 recombination maps cannot be used with length multipliers so we have to remove
 the <code class="docutils literal notranslate"><span class="pre">-l</span></code> option. (NOTE: this may a minute or so to run).</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 AFR:2 EUR:3
 </pre></div>
 </div>
 <p>For reproducibility we can also choose set the seed for the simulator using the
 <code class="docutils literal notranslate"><span class="pre">-s</span></code> flag.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">3</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 AFR:2 EUR:3
 </pre></div>
 </div>
 <p>On running these commands, the CLI also outputs the relevant citations for both
@@ -425,12 +424,12 @@ with the <code class="docutils literal notranslate"><span class="pre">tskit</spa
 </pre></div>
 </div>
 <p>For this small example (only five samples), the file sizes are similar,
-but the tree sequence is slightly larger
+but the tree sequence is slightly larger than the VCF
 (it does carry a good bit more information about the trees, after all).
-However, if we up the sample sizes to 2000 and 3000
+However, if we up the sample sizes to 1000 and 1500
 (the simulation is still pretty quick)
 the tree sequence is twenty-three times smaller:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2000</span> <span class="m">3000</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh37 -c chr22 -o foo.ts -d OutOfAfrica_2T12 AFR:1000 EUR:1500
 <span class="gp">$ </span>tskit vcf foo.ts &gt; foo.vcf
 <span class="gp">$ </span>ls -lth foo.*
 <span class="go">-rw-r--r-- 1 peter peter 3139M Apr  3 10:40 foo.vcf</span>
@@ -465,13 +464,10 @@ a forwards-time, individual-based simulator.</p>
 For instance, to use SLiM to simulate the same 5% chunk of chromosome 22
 under the <code class="docutils literal notranslate"><span class="pre">OutOfAfrica_2T12</span></code> model as above,
 we would just run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim HomSap -c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
 </pre></div>
 </div>
-<p>Here we’ve changed the sample sizes to be even:
-SLiM simulates diploid individuals, but sample sizes are in numbers of chromosomes,
-so if you ask for an odd number, it will be rounded up to an even number.
-<strong>But:</strong> this simulation can take quite a while to run,
+<p><strong>But:</strong> this simulation can take quite a while to run,
 so before you try that command out, <strong>read on!</strong></p>
 </section>
 <section id="the-scaling-factor">
@@ -486,7 +482,7 @@ described in more detail below (see <a class="reference internal" href="#sec-sli
 using the <code class="docutils literal notranslate"><span class="pre">--slim-scaling-factor</span></code> option.
 Unlike the previous command, this one should run very fast:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
-<span class="gp">$    </span>-c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
+<span class="gp">$    </span>-c chr22 -l <span class="m">0</span>.05 -o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
 </pre></div>
 </div>
 <p>(Indeed, this example runs in less than a minute,
@@ -519,7 +515,7 @@ as for instance in a selective sweep.</p>
 with the flag <code class="docutils literal notranslate"><span class="pre">--dfe</span></code>. For instance, HomSap has a DFE described as Gamma_K17.
 To add it the example above we can type as follows:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
-    -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="m">2</span> <span class="m">4</span>
+    -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
 </pre></div>
 </div>
 <p>This example will simulate selection following the proportion of sites described in <a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/main/catalog.html#sec_catalog_homsap_dfes_gamma_k17">Gamma_K17</a></p>
@@ -527,7 +523,7 @@ To add it the example above we can type as follows:</p>
 and specifying a CDS annotation:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">20</span> HomSap <span class="se">\</span>
      -c chr22 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
-     --dfe-annotation ensembl_havana_104_CDS <span class="m">2</span> <span class="m">4</span>
+     --dfe-annotation ensembl_havana_104_CDS AFR:1 EUR:2
 </pre></div>
 </div>
 <p>If instead of an annotation file one has a bed file (ex.bed) like the one below:</p>
@@ -540,7 +536,7 @@ and specifying a CDS annotation:</p>
 <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code> as follow:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
      -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
-     --dfe-bed-file ex.bed <span class="m">2</span> <span class="m">4</span>
+     --dfe-bed-file ex.bed AFR:1 EUR:2
 </pre></div>
 </div>
 <p>The examples above (using the flags <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code>, to use a named annotation, or <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code> to include a bed file)
@@ -549,7 +545,7 @@ incorporate selection on the specified segments of genome.</p>
 <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
     -c chr22 -l <span class="m">0</span>.05 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
-    --dfe-interval <span class="m">1000</span>,100000 <span class="m">2</span> <span class="m">4</span>
+    --dfe-interval <span class="m">1000</span>,100000 AFR:1 EUR:2
 </pre></div>
 </div>
 <p>The DFE defined by Gamma_K17 will be incorporated only in positions between 1000 and 100000.</p>
@@ -558,7 +554,7 @@ of a chromosome rather than the entire chromosome. Regions are specified via
 <code class="docutils literal notranslate"><span class="pre">--left</span></code> and <code class="docutils literal notranslate"><span class="pre">--right</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap <span class="se">\</span>
     -c chr22 --dfe Gamma_K17 -o foo.ts -d OutOfAfrica_2T12 <span class="se">\</span>
-    --dfe-interval <span class="m">200000</span>,300000 --left <span class="m">150000</span> --right <span class="m">350000</span> <span class="m">2</span> <span class="m">4</span>
+    --dfe-interval <span class="m">200000</span>,300000 --left <span class="m">150000</span> --right <span class="m">350000</span> AFR:1 EUR:2
 </pre></div>
 </div>
 <p>This will simulate a 200 Kb contig that uses the genetic map from coordinates
@@ -588,7 +584,7 @@ from <em>Drosophila melanogaster</em> individuals with the demographic model
 inferred by <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">Sheehan &amp; Song (2016)</a>,
 using SLiM with a (very large!) scaling factor of 1000, we could run</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel<span class="se">\</span>
-<span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span>
+<span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 AFR:50
 </pre></div>
 </div>
 <p>The scaling factor of 1000 makes this model run very quickly,
@@ -602,7 +598,7 @@ every time a demographic event occurs
 This also outputs a fair bit of other debugging output,
 which can be turned off with <code class="docutils literal notranslate"><span class="pre">--quiet</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -v -e slim --slim-scaling-factor <span class="m">1000</span> DroMel <span class="se">\</span>
-<span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 <span class="m">100</span> --quiet
+<span class="gp">$     </span>-c chr2L -l <span class="m">0</span>.05 -o foo.ts -d African3Epoch_1S16 AFR:50 --quiet
 </pre></div>
 </div>
 <p>Trimming down the output somewhat, we get:</p>
@@ -621,8 +617,7 @@ which can be turned off with <code class="docutils literal notranslate"><span cl
 the population sizes in the three epochs are 652, 145, and 544 individuals,
 respectively.
 No wonder it runs so quickly!
-At the end, fifty (diploid) individuals are sampled,
-to get us our requested 100 genomes.
+At the end, fifty (diploid) individuals are sampled.
 These numbers are not obviously completely wrong,
 as would be for instance if we had population sizes of 1 or 2 individuals.
 However, extensive testing would need to be done to find out
@@ -725,9 +720,9 @@ with the demographic model:</p>
 <h4>Choose a sampling scheme and simulate<a class="headerlink" href="#choose-a-sampling-scheme-and-simulate" title="Permalink to this headline"></a></h4>
 <p>The final ingredient we need before simulating
 is a specification of the number of samples from each population.
-We’ll simulate 10 samples each from YRI and CHB, and zero from CEU,
+We’ll simulate 5 diploids each from YRI and CHB, and zero from CEU,
 using <code class="docutils literal notranslate"><span class="pre">msprime</span></code> as the simulation engine:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_sites</span><span class="p">)</span>
@@ -735,7 +730,7 @@ using <code class="docutils literal notranslate"><span class="pre">msprime</span
 </pre></div>
 </div>
 <p>And that’s it! It’s that easy! We now have a tree sequence
-describing the history and genotypes of 20 genomes,
+describing the history and genotypes of 20 haploid genomes,
 between which there are 88,063 variant sites.
 (We didn’t set the random seed, though, so you’ll get a somewhat
 different number.)</p>
@@ -816,12 +811,12 @@ mutation rate, as no mutation rate was provided when defining the contig.</p>
 </section>
 <section id="id1">
 <h4>Choose a sampling scheme, and simulate<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
-<p>Next, we set the number of samples and set the simulation engine.
-In this case we will simulate genomes of 10 samples
-using the simulation engine <cite>msprime</cite>.
-But, you can go crazy with the sample size!
-<cite>msprime</cite> is great at simulating large samples!</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<p>Next, we set the number of samples and set the simulation engine.  In this case
+we will simulate genomes of 5 diploids using the simulation engine <cite>msprime</cite>
+(note that the generic <cite>PiecewiseConstantSize</cite> model has a single population
+named <cite>pop_0</cite>).  But, you can go crazy with the sample size!  <cite>msprime</cite> is
+great at simulating large samples!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop_0&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -900,15 +895,13 @@ SLiM as the <em>simulation engine</em>.
 Here is a simple example.</p>
 <section id="choose-the-species-contig-and-recombination-map">
 <h5>Choose the species, contig, and recombination map<a class="headerlink" href="#choose-the-species-contig-and-recombination-map" title="Permalink to this headline"></a></h5>
-<p>First, let’s set up a simulation of 10% of human chromosome 22
-with a flat recombination map,
-drawing 200 samples from the Tennesen et al (2012) model of African history,
-<code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code>.
-Since SLiM must simulate the entire population,
-sample size does not affect the run time of the simulation,
-only the size of the output tree sequence
-(and, since the tree sequence format scales well with sample size,
-it doesn’t affect this very much either).</p>
+<p>First, let’s set up a simulation of 10% of human chromosome 22 with a flat
+recombination map, drawing 100 diploids from the Tennesen et al (2012) model of
+African history, <code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code> (which has a single population named <cite>AFR</cite>).
+Since SLiM must simulate the entire population, sample size does not affect the
+run time of the simulation, only the size of the output tree sequence (and,
+since the tree sequence format scales well with sample size, it doesn’t affect
+this very much either).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
@@ -917,7 +910,7 @@ it doesn’t affect this very much either).</p>
     <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
 <span class="p">)</span>
 <span class="c1"># default is a flat genetic map with average rate across chr22</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AFR&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -991,14 +984,14 @@ with a population size of 7,310, if we set <code class="docutils literal notrans
 then we’d run the SLiM simulation starting at 5,920 + 731 = 6,651 generations ago,
 and anything <em>longer ago</em> than that would be simulated
 with a msprime coalescent simulation.</p>
-<p>To simulate 200 samples of all of human chromosome 22 in this way,
+<p>To simulate 100 diploid samples of all of human chromosome 22 in this way,
 with the <code class="docutils literal notranslate"><span class="pre">HapMapII_GRCh37</span></code> genetic map,
 we’d do the following
 (again setting <code class="docutils literal notranslate"><span class="pre">slim_scaling_factor</span></code> to keep this example reasonably-sized):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
     <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="s2">&quot;HapMapII_GRCh37&quot;</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
 <span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AFR&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
@@ -1141,7 +1134,7 @@ specifying which set of <em>intervals</em> it will apply to:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">)]]),</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>Now, we can simulate as usual:</p>
@@ -1189,7 +1182,7 @@ are removed from the intervals associated with previous DFEs.</p>
 <span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">30000</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
 
 <span class="n">gene_interval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">]])</span>
 <span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">gene_interval</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
@@ -1261,7 +1254,7 @@ and use this in <a class="reference internal" href="api.html#stdpopsim.Contig.ad
 <span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># YRI, CEU, CHB</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
 
 <span class="n">exons</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">(</span><span class="s2">&quot;ensembl_havana_104_exons&quot;</span><span class="p">)</span>
 <span class="n">exon_intervals</span> <span class="o">=</span> <span class="n">exons</span><span class="o">.</span><span class="n">get_chromosome_annotations</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
@@ -1336,7 +1329,7 @@ which we will insert later.</p>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;DroMel&quot;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">PiecewiseConstantSize</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop_0&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;2L&quot;</span><span class="p">,</span> <span class="n">length_multiplier</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1518,6 +1511,7 @@ To check that we have set up the simulation correctly, we may first wish to perf
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s 13 -g HapMapII_GRCh37 -d AmericanAdmixture_4B11 4 4 4 4 -D
+WARNING: The use of `DemographicModel.get_samples` (Python API) and positional sample counts (CLI) is deprecated. Instead, supply a {population_name:num_samples} dict to `Engine.simulate(samples=...)` (Python API); or use the syntax `stdpopsim SpeciesName population_name:num_samples` (CLI).
 WARNING: Recombination map has length 249218992.0, which is longer than chromosome length 248956422. The latter will be used.
 Simulation information:
     Engine: msprime (1.2.0)
@@ -1532,6 +1526,7 @@ Simulation information:
 Contig Description:
     Contig origin: chr1:0-248956422
     Contig length: 248956422.0
+    Contig ploidy: 2
     Mean recombination rate: 1.1495565978013984e-08
     Mean mutation rate: 2.36e-08
     Genetic map: HapMapII_GRCh37
@@ -1548,7 +1543,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
@@ -1703,8 +1698,10 @@ and that rates of migration since the split between the populations are both zer
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>We’ll simulate 10 chromosomes from each of the populations using the <code class="docutils literal notranslate"><span class="pre">msprime</span></code> engine.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_samples</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<p>We’ll simulate 5 diploids from each of the populations using the
+<code class="docutils literal notranslate"><span class="pre">msprime</span></code> engine (the populations in this generic model are named
+<code class="docutils literal notranslate"><span class="pre">pop1</span></code> and <code class="docutils literal notranslate"><span class="pre">pop2</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop1&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;pop2&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

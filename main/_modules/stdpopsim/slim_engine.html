@@ -1436,24 +1436,28 @@
     <span class="n">sampling_episodes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">sample_set</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
         <span class="n">pop</span> <span class="o">=</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">sample_set</span><span class="o">.</span><span class="n">population</span><span class="p">]</span>
-        <span class="c1"># We&#39;re currently sampling genomes, and set the ploidy to 1 to make</span>
-        <span class="c1"># sure it all fits together. This is probably confusing though and</span>
-        <span class="c1"># maybe we should change it.</span>
-        <span class="k">assert</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">==</span> <span class="mi">1</span>
-        <span class="c1"># SLiM can only sample individuals, which we assume are diploid.</span>
         <span class="n">count</span> <span class="o">=</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">num_samples</span>
         <span class="n">time</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">time</span>
         <span class="n">time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">)</span>
-        <span class="n">n_inds</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">gen</span> <span class="o">=</span> <span class="n">time</span> <span class="o">/</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="n">stdpopsim</span><span class="o">.</span><span class="n">SLiMOddSampleWarning</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;SLiM simulates diploid individuals, so </span><span class="si">{</span><span class="n">n_inds</span><span class="si">}</span><span class="s2"> &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;individuals will be sampled for the </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> haploids &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;requested from population </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> at time </span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s2">. &quot;</span>
-                    <span class="s2">&quot;See #464.&quot;</span>
+        <span class="k">if</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># SLiM can only sample individuals, which we assume are diploid.</span>
+            <span class="n">n_inds</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">gen</span> <span class="o">=</span> <span class="n">time</span> <span class="o">/</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">SLiMOddSampleWarning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;SLiM simulates diploid individuals, so </span><span class="si">{</span><span class="n">n_inds</span><span class="si">}</span><span class="s2"> &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;individuals will be sampled for the </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> haploids &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;requested from population </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> at time </span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s2">. &quot;</span>
+                        <span class="s2">&quot;See #464.&quot;</span>
+                    <span class="p">)</span>
                 <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sample_set</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">n_inds</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Sample ploidy other than 1 or 2 is not currently supported in &quot;</span>
+                <span class="s2">&quot;the SLiM engine.&quot;</span>
             <span class="p">)</span>
         <span class="n">sampling_episodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pop</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">n_inds</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
 
@@ -1585,6 +1589,18 @@
                 <span class="p">)</span>
             <span class="p">)</span>
 
+        <span class="c1"># handle deprecated samples=[msprime.SampleSet] input</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">sample_sets</span> <span class="o">=</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">get_sample_sets</span><span class="p">(</span>
+                <span class="n">samples</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">all</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SampleSet</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]):</span>
+            <span class="n">sample_sets</span> <span class="o">=</span> <span class="n">samples</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Samples must be a dict of the form {population_name:num_samples}.&quot;</span>
+            <span class="p">)</span>
+
         <span class="c1"># figuring out mutations in SLiM and neutral mutations to be added</span>
         <span class="c1"># by msprime later</span>
         <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
@@ -1612,7 +1628,7 @@
                 <span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">demographic_model</span><span class="p">,</span>
                 <span class="n">contig</span><span class="p">,</span>
-                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">sample_sets</span><span class="p">,</span>
                 <span class="n">extended_events</span><span class="p">,</span>
                 <span class="n">slim_scaling_factor</span><span class="p">,</span>
                 <span class="n">slim_burn_in</span><span class="p">,</span>
@@ -1885,13 +1901,25 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">slim_rate_map</span> <span class="o">=</span> <span class="n">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
 
+        <span class="c1"># handle deprecated samples=[msprime.SampleSet] input</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">sample_sets</span> <span class="o">=</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">get_sample_sets</span><span class="p">(</span>
+                <span class="n">samples</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">all</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SampleSet</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]):</span>
+            <span class="n">sample_sets</span> <span class="o">=</span> <span class="n">samples</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Samples must be a dict of the form {population_name:num_samples}.&quot;</span>
+            <span class="p">)</span>
+
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
             <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
                 <span class="n">script_file</span><span class="p">,</span>
                 <span class="s2">&quot;unused.trees&quot;</span><span class="p">,</span>
                 <span class="n">demographic_model</span><span class="p">,</span>
                 <span class="n">contig</span><span class="p">,</span>
-                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">sample_sets</span><span class="p">,</span>
                 <span class="n">extended_events</span><span class="p">,</span>
                 <span class="n">slim_scaling_factor</span><span class="p">,</span>
                 <span class="mi">1</span><span class="p">,</span>
