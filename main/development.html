@@ -75,7 +75,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lifting-over-a-genetic-map">Lifting over a genetic map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-a-dfe-model">Adding a DFE model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-dfe-model">Adding a DFE model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#write-the-dfe-function-in-the-catalog-source-code">Write the DFE function in the catalog source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#open-a-qc-issue">Open a QC issue</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#coding-standards">Coding standards</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#naming-conventions">Naming conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
@@ -1095,7 +1099,107 @@ and lifting the recombination rates on TAIR7 to TAIR10 with
 </section>
 <section id="adding-a-dfe-model">
 <span id="sec-development-dfe-model"></span><h2>Adding a DFE model<a class="headerlink" href="#adding-a-dfe-model" title="Permalink to this headline"></a></h2>
-<p>TODO: WRITE ME</p>
+<p><cite>stdpopsim</cite> supports distribution of fitness effects (DFE) models from the
+literature. See <a class="reference internal" href="tutorial.html#sec-simulating-sel"><span class="std std-ref">Simulating genomes with selection</span></a>. To add a new DFE model to
+the catalog, you will need to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><a class="reference internal" href="#fork-the-repository-and-create-a-branch">Fork the repository and create a branch</a> (as for demographic models)</p></li>
+<li><p><a class="reference internal" href="#write-the-dfe-function-in-the-catalog-source-code">Write the DFE function in the catalog source code</a></p></li>
+<li><p><a class="reference internal" href="#submit-a-pull-request-on-github">Submit a Pull Request on GitHub</a> (as for demographic models)</p></li>
+<li><p><a class="reference internal" href="#open-a-qc-issue">Open a QC issue</a></p></li>
+</ol>
+</div></blockquote>
+<section id="write-the-dfe-function-in-the-catalog-source-code">
+<h3>Write the DFE function in the catalog source code<a class="headerlink" href="#write-the-dfe-function-in-the-catalog-source-code" title="Permalink to this headline"></a></h3>
+<p>In the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> catalog source code (found in <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/</span></code>),
+each species has a module that defines all of the necessary functions to run
+simulations for that species, including the DFE models. For example, if you
+were to write a new DFE model for <cite>AraTha</cite>, then within <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/AraTha</span></code>
+you should find a file named <code class="docutils literal notranslate"><span class="pre">dfes.py</span></code> with the following header:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+
+<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;AraTha&quot;</span><span class="p">)</span>
+
+<span class="c1">###########################################################</span>
+<span class="c1">#</span>
+<span class="c1"># DFEs</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">dfes.py</span></code> does not exist for your species, then you can create it
+(after adjusting the species name) and you will need to import it in your species
+definition. If <cite>AraTha</cite> were your species of interest then you would edit
+<code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/AraTha/__init__.py</span></code> to add an import statement such as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">dfes</span>  <span class="c1"># noqa: F401</span>
+</pre></div>
+</div>
+<p>Now, you can define your new DFE function following this format:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_dfe_func_name</span><span class="p">():</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;FILL ME&quot;</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    FILL ME</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL ME&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">DFE</span><span class="p">},</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Mutation Types based on the published DFE model, for example:</span>
+    <span class="n">neutral</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">()</span>  <span class="c1"># Neutral mutation type by default</span>
+    <span class="n">negative</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
+        <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>  <span class="c1"># fixed selection coefficient</span>
+        <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.01</span><span class="p">],</span>  <span class="c1"># selection coefficient</span>
+    <span class="p">)</span>
+    <span class="n">positive</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
+        <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>
+        <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="c1"># Defining some example proportions of each mutation type</span>
+    <span class="n">p_neutral</span> <span class="o">=</span> <span class="mf">0.7</span>
+    <span class="n">p_negative</span> <span class="o">=</span> <span class="mf">0.299</span>
+    <span class="n">p_positive</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p_neutral</span> <span class="o">-</span> <span class="n">p_negative</span>
+
+    <span class="c1"># Example return statement for this example DFE with three mutation types.</span>
+    <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DFE</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">neutral</span><span class="p">,</span> <span class="n">negative</span><span class="p">,</span> <span class="n">positive</span><span class="p">],</span>
+        <span class="n">proportions</span><span class="o">=</span><span class="p">[</span><span class="n">p_neutral</span><span class="p">,</span> <span class="n">p_negative</span><span class="p">,</span> <span class="n">p_positive</span><span class="p">],</span>
+        <span class="n">citations</span><span class="o">=</span><span class="n">citations</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="n">_species</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">_dfe_func_name</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>See the detailed documentation of <a class="reference internal" href="api.html#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.DFE</span></code></a>
+and <a class="reference internal" href="api.html#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.MutationType</span></code></a>.</p>
+</section>
+<section id="open-a-qc-issue">
+<h3>Open a QC issue<a class="headerlink" href="#open-a-qc-issue" title="Permalink to this headline"></a></h3>
+<p>Open a new issue requesting a quality control check on your newly implemented
+DFE model. You should structure the issue as follows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>PR for new model:</strong></p></li>
+<li><p><strong>Original paper:</strong></p></li>
+<li><p><strong>Parameter values:</strong></p></li>
+<li><p><strong>Potential issues:</strong></p></li>
+<li><p><strong>QC’er requests:</strong></p></li>
+</ol>
+</div></blockquote>
+<p>The QC process or DFEs follows that of demographic models (see <a class="reference internal" href="#demographic-model-review-process">Demographic model review process</a>).</p>
+</section>
 </section>
 <section id="coding-standards">
 <h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this headline"></a></h2>
