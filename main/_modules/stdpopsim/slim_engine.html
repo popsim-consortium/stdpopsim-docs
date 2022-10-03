@@ -1270,6 +1270,12 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">:</span>
                 <span class="c1"># T is the default for WF simulations.</span>
                 <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
+            <span class="c1"># TODO: when msprime.SLiMMutationModel supports stacking policy,</span>
+            <span class="c1"># set policy such that there&#39;s at most a single mutation per-site</span>
+            <span class="c1"># and individual</span>
+            <span class="c1"># printsc(f&quot;    m{mid}.mutationStackGroup = 0;&quot;)</span>
+            <span class="c1"># printsc(f&quot;    m{mid}.mutationStackPolicy = &#39;l&#39;;&quot;)</span>
+        <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_type_list</span><span class="p">])</span>
         <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_type_list</span><span class="p">])</span>
         <span class="c1"># We will assign a proportion of 0.0 to mutation types that are neutral</span>
         <span class="c1"># unless all the mutation types in a DFE are neutral. In such case,</span>
@@ -1535,6 +1541,7 @@
         <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">logfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">logfile_interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">keep_mutation_ids_as_alleles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">_recap_and_rescale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1569,6 +1576,10 @@
 <span class="sd">            (currently, only mean and SD of fitness values per population).</span>
 <span class="sd">            Defaults to None, meaning &quot;do not log&quot;.</span>
 <span class="sd">        :param logfile_interval: How often to write to the log file, in generations.</span>
+<span class="sd">        :param keep_mutation_ids_as_alleles: If true, alleles will be coded by integer</span>
+<span class="sd">            mutation ids (assigned by SLiM) rather than by randomly-generated</span>
+<span class="sd">            nucleotides.</span>
+<span class="sd">        :type keep_mutation_ids_as_alleles: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">slim_scaling_factor</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -1658,7 +1669,13 @@
         <span class="n">ts</span> <span class="o">=</span> <span class="n">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">_recap_and_rescale</span><span class="p">:</span>
             <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-                <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">extended_events</span>
+                <span class="n">ts</span><span class="p">,</span>
+                <span class="n">seed</span><span class="p">,</span>
+                <span class="n">recap_epoch</span><span class="p">,</span>
+                <span class="n">contig</span><span class="p">,</span>
+                <span class="n">slim_scaling_factor</span><span class="p">,</span>
+                <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
+                <span class="n">extended_events</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1738,11 +1755,19 @@
         <span class="k">return</span> <span class="n">ts</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="n">filter_populations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ts</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">,</span>
+        <span class="n">recap_epoch</span><span class="p">,</span>
+        <span class="n">contig</span><span class="p">,</span>
+        <span class="n">slim_scaling_factor</span><span class="p">,</span>
+        <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
+        <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
-<span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
+<span class="sd">        does recapitation, simplification, adds neutral mutations, and converts</span>
+<span class="sd">        alleles to nucleotides.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Times come from SLiM generation numbers, which may have been</span>
         <span class="c1"># divided by a scaling factor for computational tractability.</span>
@@ -1836,10 +1861,18 @@
                         <span class="n">rates</span><span class="p">[</span><span class="n">is_this_dfe</span><span class="p">]</span> <span class="o">=</span> <span class="n">rate</span>
                         <span class="k">return</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rates</span><span class="p">)</span>
 
-                    <span class="c1"># Add mutations to recapitated part of trees.</span>
+                    <span class="c1"># Use msprime.SLiMMutationModel rather than msprime.JC69</span>
+                    <span class="c1"># for neutral DFEs.  This ensures that there will be a</span>
+                    <span class="c1"># &#39;selection_coef&#39; key in the mutation metadata (e.g. the</span>
+                    <span class="c1"># mutation metadata structure will be consistent across the</span>
+                    <span class="c1"># tree sequence).</span>
+                    <span class="c1"># TODO: set stacking policy to &quot;l&quot; when supported</span>
                     <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SLiMMutationModel</span><span class="p">(</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">],</span> <span class="n">next_id</span><span class="o">=</span><span class="n">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">],</span>
+                        <span class="n">next_id</span><span class="o">=</span><span class="n">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span>
                     <span class="p">)</span>
+
+                    <span class="c1"># Add mutations to recapitated part of trees.</span>
                     <span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="n">end_time</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">if</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;recapitation&quot;</span><span class="p">:</span>
@@ -1863,6 +1896,16 @@
                         <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="n">random_seed</span><span class="o">=</span><span class="n">mut_seed</span><span class="p">,</span>
                     <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">keep_mutation_ids_as_alleles</span><span class="p">:</span>
+            <span class="n">nuc_seed</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">)</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">pyslim</span><span class="o">.</span><span class="n">convert_alleles</span><span class="p">(</span>
+                <span class="n">pyslim</span><span class="o">.</span><span class="n">generate_nucleotides</span><span class="p">(</span>
+                    <span class="n">ts</span><span class="p">,</span>
+                    <span class="n">seed</span><span class="o">=</span><span class="n">nuc_seed</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="k">return</span> <span class="n">ts</span>
 
 <div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span> <span class="nf">recap_and_rescale</span><span class="p">(</span>
@@ -1874,6 +1917,7 @@
         <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">keep_mutation_ids_as_alleles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1927,7 +1971,13 @@
             <span class="p">)</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-            <span class="n">ts</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">recap_epoch</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="p">,</span> <span class="n">extended_events</span>
+            <span class="n">ts</span><span class="p">,</span>
+            <span class="n">seed</span><span class="p">,</span>
+            <span class="n">recap_epoch</span><span class="p">,</span>
+            <span class="n">contig</span><span class="p">,</span>
+            <span class="n">slim_scaling_factor</span><span class="p">,</span>
+            <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
+            <span class="n">extended_events</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span></div></div>
 
