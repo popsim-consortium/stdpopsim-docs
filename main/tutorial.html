@@ -188,34 +188,34 @@ usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
                  [--msprime-model {hudson,dtwf,smc,smc_prime}]
                  [--msprime-change-model T MODEL] [--slim-path PATH]
                  [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
-                 {BosTau,EscCol,GasAcu,DroSec,ApiMel,CanFam,CaeEle,AedAeg,ChlRei,AnaPla,HelMel,AnoGam,PanTro,HomSap,DroMel,AnoCar,StrAga,PapAnu,HelAnn,PonAbe,AraTha,download-genetic-maps}
+                 {AedAeg,AnaPla,AnoCar,AnoGam,ApiMel,AraTha,BosTau,CaeEle,CanFam,ChlRei,DroMel,DroSec,EscCol,GasAcu,HelAnn,HelMel,HomSap,PanTro,PapAnu,PonAbe,StrAga,download-genetic-maps}
                  ...
 
 Command line interface for stdpopsim.
 
 positional arguments:
-  {BosTau,EscCol,GasAcu,DroSec,ApiMel,CanFam,CaeEle,AedAeg,ChlRei,AnaPla,HelMel,AnoGam,PanTro,HomSap,DroMel,AnoCar,StrAga,PapAnu,HelAnn,PonAbe,AraTha,download-genetic-maps}
+  {AedAeg,AnaPla,AnoCar,AnoGam,ApiMel,AraTha,BosTau,CaeEle,CanFam,ChlRei,DroMel,DroSec,EscCol,GasAcu,HelAnn,HelMel,HomSap,PanTro,PapAnu,PonAbe,StrAga,download-genetic-maps}
+    AedAeg              Run simulations for Aedes aegypti.
+    AnaPla              Run simulations for Anas platyrhynchos.
+    AnoCar              Run simulations for Anolis carolinensis.
+    AnoGam              Run simulations for Anopheles gambiae.
+    ApiMel              Run simulations for Apis mellifera.
+    AraTha              Run simulations for Arabidopsis thaliana.
     BosTau              Run simulations for Bos taurus.
+    CaeEle              Run simulations for Caenorhabditis elegans.
+    CanFam              Run simulations for Canis familiaris.
+    ChlRei              Run simulations for Chlamydomonas reinhardtii.
+    DroMel              Run simulations for Drosophila melanogaster.
+    DroSec              Run simulations for Drosophila sechellia.
     EscCol              Run simulations for Escherichia coli.
     GasAcu              Run simulations for Gasterosteus aculeatus.
-    DroSec              Run simulations for Drosophila sechellia.
-    ApiMel              Run simulations for Apis mellifera.
-    CanFam              Run simulations for Canis familiaris.
-    CaeEle              Run simulations for Caenorhabditis elegans.
-    AedAeg              Run simulations for Aedes aegypti.
-    ChlRei              Run simulations for Chlamydomonas reinhardtii.
-    AnaPla              Run simulations for Anas platyrhynchos.
-    HelMel              Run simulations for Heliconius melpomene.
-    AnoGam              Run simulations for Anopheles gambiae.
-    PanTro              Run simulations for Pan troglodytes.
-    HomSap              Run simulations for Homo sapiens.
-    DroMel              Run simulations for Drosophila melanogaster.
-    AnoCar              Run simulations for Anolis carolinensis.
-    StrAga              Run simulations for Streptococcus agalactiae.
-    PapAnu              Run simulations for Papio anubis.
     HelAnn              Run simulations for Helianthus annuus.
+    HelMel              Run simulations for Heliconius melpomene.
+    HomSap              Run simulations for Homo sapiens.
+    PanTro              Run simulations for Pan troglodytes.
+    PapAnu              Run simulations for Papio anubis.
     PonAbe              Run simulations for Pongo abelii.
-    AraTha              Run simulations for Arabidopsis thaliana.
+    StrAga              Run simulations for Streptococcus agalactiae.
     download-genetic-maps
                         Download genetic maps
 
@@ -316,33 +316,33 @@ using the <code class="docutils literal notranslate"><span class="pre">--help-mo
 
 All simulation models for Homo sapiens
 
-OutOfAfricaExtendedNeandertalAdmixturePulse_3I21: Three population out-of-Africa with an extended pulse of         Neandertal admixture into Europeans
-     Demographic model of an extended admixture pulse from Neandertals
-    into Europeans taken from Iasi et al. (2021), specifically the
-    simple model of Supplementary Figure 1a with a gamma-shaped pulse.
-    This model simulates 3 populations: Africans, Europeans and
-    Neandertals with an Out-of-Africa event. The population sizes are
-    constant with an unidirectional admixture from Neandertals into
-    Europeans after the split between Europeans and Africans. The
-    admixture event is modelled as an 800 generation (20 ky) long
-    extended admixture pulse.
+Africa_1B08: African-americans population
+     African-American two-epoch instantaneous growth model from Boyko
+    et al 2008, fit to the synonymous SFS for the 11 of 15 African
+    Americans showing the least European ancestry, using coalescent
+    simulations with recombination with the maximum likelihood method
+    of Williamson et al 2005; times were calibrated assuming 3e5
+    generations since human-chimp divergence and fitting the number of
+    synonymous human-chimp differences. Mutation and recombination
+    rates were assumed to be the same (1.8e-8).
 
     Populations:
-        0: 1000 Genomes YRI (Yoruba)
-        1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
-        2: Neandertals
+        African_Americans: African-Americans from Boyko et al 2008
 
-OutOfAfrica_3G09: Three population out-of-Africa
-     The three population Out-of-Africa model from Gutenkunst et al.
-    2009. It describes the ancestral human population in Africa, the
-    out of Africa event, and the subsequent European-Asian population
-    split. Model parameters are the maximum likelihood values of the
-    various parameters given in Table 1 of Gutenkunst et al.
+Africa_1T12: African population
+     The model is a simplification of the two population Tennesen et
+    al. model with the European-American population removed so that we
+    are modeling the African population in isolation.
 
     Populations:
-        0: 1000 Genomes YRI (Yoruba)
-        1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
-        2: 1000 Genomes CHB (Han Chinese in Beijing, China)
+        AFR: African
+
+AmericanAdmixture_4B11: American admixture
+     Demographic model for American admixture, taken from Browning et
+    al. 2011. This model extends the Gravel et al. (2011) model of
+    African/European/Asian demographic history to simulate an admixed
+    population with admixture occurring 12 generations ago. The
+    admixed population had an initial size of 30,000 and grew at a
 ...
 </pre></div>
 </div>
@@ -381,18 +381,18 @@ realistic. We can look up the available recombination maps using the
 
 All genetic maps for Homo sapiens
 
-HapMapII_GRCh37
-     This genetic map is from the Phase II Hapmap project and based on
-    3.1 million genotyped SNPs from 270 individuals across four
-    populations (YRI, CEU, CHB and JPT). Genome wide recombination
-    rates were estimated using LDHat. This version of the HapMap
-    genetic map was lifted over to GRCh37 (and adjusted in regions
-    where the genome assembly had rearranged) for use in the 1000
-    Genomes project. Please see the README file on the 1000 Genomes
-    download site for details of these adjustments. ftp://ftp-trace.nc
-    bi.nih.gov/1000genomes/ftp/technical/working/20110106_recombinatio
-    n_hotspots
+DeCodeSexAveraged_GRCh36
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details.
 
+DeCodeSexAveraged_GRCh38
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
 ...
 </pre></div>
 </div>
@@ -1448,23 +1448,23 @@ models available to us:</p>
 
 All simulation models for Homo sapiens
 
-OutOfAfricaExtendedNeandertalAdmixturePulse_3I21: Three population out-of-Africa with an extended pulse of         Neandertal admixture into Europeans
-     Demographic model of an extended admixture pulse from Neandertals
-    into Europeans taken from Iasi et al. (2021), specifically the
-    simple model of Supplementary Figure 1a with a gamma-shaped pulse.
-    This model simulates 3 populations: Africans, Europeans and
-    Neandertals with an Out-of-Africa event. The population sizes are
-    constant with an unidirectional admixture from Neandertals into
-    Europeans after the split between Europeans and Africans. The
-    admixture event is modelled as an 800 generation (20 ky) long
-    extended admixture pulse.
+Africa_1B08: African-americans population
+     African-American two-epoch instantaneous growth model from Boyko
+    et al 2008, fit to the synonymous SFS for the 11 of 15 African
+    Americans showing the least European ancestry, using coalescent
+    simulations with recombination with the maximum likelihood method
+    of Williamson et al 2005; times were calibrated assuming 3e5
+    generations since human-chimp divergence and fitting the number of
+    synonymous human-chimp differences. Mutation and recombination
+    rates were assumed to be the same (1.8e-8).
 
     Populations:
-        0: 1000 Genomes YRI (Yoruba)
-        1: 1000 Genomes CEU (Utah Residents (CEPH) with Northern and Western European Ancestry
-        2: Neandertals
+        African_Americans: African-Americans from Boyko et al 2008
 
-OutOfAfrica_3G09: Three population out-of-Africa
+Africa_1T12: African population
+     The model is a simplification of the two population Tennesen et
+    al. model with the European-American population removed so that we
+    are modeling the African population in isolation.
 ...
 </pre></div>
 </div>
@@ -1482,23 +1482,23 @@ are available:</p>
 
 All genetic maps for Homo sapiens
 
-HapMapII_GRCh37
-     This genetic map is from the Phase II Hapmap project and based on
-    3.1 million genotyped SNPs from 270 individuals across four
-    populations (YRI, CEU, CHB and JPT). Genome wide recombination
-    rates were estimated using LDHat. This version of the HapMap
-    genetic map was lifted over to GRCh37 (and adjusted in regions
-    where the genome assembly had rearranged) for use in the 1000
-    Genomes project. Please see the README file on the 1000 Genomes
-    download site for details of these adjustments. ftp://ftp-trace.nc
-    bi.nih.gov/1000genomes/ftp/technical/working/20110106_recombinatio
-    n_hotspots
+DeCodeSexAveraged_GRCh36
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details.
 
-HapMapII_GRCh38
-     This genetic map is from the Phase II Hapmap project and based on
-    3.1 million genotyped SNPs from 270 individuals across four
-    populations (YRI, CEU, CHB and JPT). Genome wide recombination
-    rates were estimated using LDHat. This version is lifted over to
+DeCodeSexAveraged_GRCh38
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details. This
+    map is further lifted over from the original GRCh36 to GRCh38
+    using liftover. Liftover was performed using the
 ...
 </pre></div>
 </div>
@@ -1519,10 +1519,10 @@ Simulation information:
     Model description: American admixture
     Seed: 13
     Population: number_samples (sampling_time_generations):
-        0: 4 (0)
-        1: 4 (0)
-        2: 4 (0)
-        3: 4 (0)
+        AFR: 4 (0)
+        EUR: 4 (0)
+        ASIA: 4 (0)
+        ADMIX: 4 (0)
 Contig Description:
     Contig origin: chr1:0-248956422
     Contig length: 248956422.0
@@ -1543,7 +1543,7 @@ Tremblay and Vézina, 2000: https://doi.org/10.1086/302770
 Takahata, 1993: https://doi.org/10.1093/oxfordjournals.molbev.a039995
 [genome assembly]
 International Human Genome Sequencing Consortium, 2001: http://dx.doi.org/10.1038/35057062
-[recombination rate, genetic map]
+[genetic map, recombination rate]
 The International HapMap Consortium, 2007: https://doi.org/10.1038/nature06258
 [demographic model]
 Browning et al., 2018: http://dx.doi.org/10.1371/journal.pgen.1007385
