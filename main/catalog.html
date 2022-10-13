@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catalog &mdash; stdpopsim 0.1.1 documentation</title>
+  <title>Catalog &mdash; stdpopsim 0.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -313,16 +313,22 @@ It is organised around a number of choices that you’ll need to make about the
 <li><p>Which <strong>chromosome</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> object?)</p></li>
 <li><p>Which <strong>genetic map</strong>? (ie. which <code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticMap</span></code> object?)</p></li>
 <li><p>Which <strong>model of demographic history</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> object)</p></li>
+<li><p>Which <strong>distribution of fitness effects</strong> (ie. which <a class="reference internal" href="api.html#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> object) within</p></li>
+<li><p>which <strong>annotation track</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> object)</p></li>
 </ol>
 <p>For instance, suppose you are interested in simulating modern human samples of</p>
 <ol class="arabic simple">
 <li><p>chromosome 22, using</p></li>
 <li><p>the HapMapII genetic map, under</p></li>
-<li><p>a 3-population Out-of-Africa model.</p></li>
+<li><p>a 3-population Out-of-Africa model, with</p></li>
+<li><p>background selection acting within</p></li>
+<li><p>exons from the Ensembl Havana 104 annotations.</p></li>
 </ol>
 <p>The following command simulates 2 samples from each of the three populations,
-and saves the output to a file called <code class="docutils literal notranslate"><span class="pre">test.trees</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -o test.trees -g HapMapII_GRCh37 -d OutOfAfrica_3G09 <span class="m">2</span> <span class="m">2</span> <span class="m">2</span>
+(named YRI, CEU, and CHB) and saves the output to a file called <code class="docutils literal notranslate"><span class="pre">test.trees</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim HomSap -c chr22 -o test.trees -g HapMapII_GRCh38 <span class="se">\</span>
+<span class="gp">$    </span>--dfe Gamma_K17 --dfe-annotation ensembl_havana_104_exons <span class="se">\</span>
+<span class="gp">$    </span>-d OutOfAfrica_3G09 YRI:2 CEU:2 CHB:2
 </pre></div>
 </div>
 <p>(To learn more about using <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> via the command-line, read our
@@ -8069,7 +8075,7 @@ Simulations using these generic models must be run via the Python interface; see
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2020, PopSim Consortium.</p>
+    <p>&#169; Copyright 2019-2022, PopSim Consortium.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

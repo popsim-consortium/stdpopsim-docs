@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.genomes &mdash; stdpopsim 0.1.1 documentation</title>
+  <title>stdpopsim.genomes &mdash; stdpopsim 0.2.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -544,8 +544,8 @@
                 <span class="n">left</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Left coordinate </span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2"> falls outside chromosome &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> with length </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">.&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Left coordinate </span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2"> must be greater than or equal &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;to 0 and less than the length of </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">).&quot;</span>
                     <span class="p">)</span>
             <span class="k">if</span> <span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">right</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">length_multiplier</span><span class="p">)</span>
@@ -553,8 +553,9 @@
                 <span class="n">right</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Right coordinate </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2"> falls outside chromosome &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> with length </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">.&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Right coordinate </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2"> must be greater than the &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;left coordinate (</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">) and less than or equal to &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;the length of </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">).&quot;</span>
                     <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -883,7 +884,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2020, PopSim Consortium.</p>
+    <p>&#169; Copyright 2019-2022, PopSim Consortium.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
