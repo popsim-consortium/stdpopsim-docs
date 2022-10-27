@@ -973,7 +973,10 @@
     <span class="n">growth_rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epoch</span><span class="o">.</span><span class="n">populations</span><span class="p">):</span>
-            <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">end_size</span><span class="p">)</span>
+            <span class="c1"># SLiM simulates a diploid population, so rescale population size</span>
+            <span class="c1"># depending on contig ploidy. If/when the SLiM simulation is</span>
+            <span class="c1"># converted to a haploid model, this rescaling should be removed.</span>
+            <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">end_size</span> <span class="o">*</span> <span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">growth_rates</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span>
 
     <span class="n">admixture_pulses</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1766,8 +1769,8 @@
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
-<span class="sd">        does recapitation, simplification, adds neutral mutations, and converts</span>
-<span class="sd">        alleles to nucleotides.</span>
+<span class="sd">        does recapitation, simplification, adds neutral mutations, converts</span>
+<span class="sd">        alleles to nucleotides, and rebuilds the individual table for haploids.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Times come from SLiM generation numbers, which may have been</span>
         <span class="c1"># divided by a scaling factor for computational tractability.</span>
@@ -1832,10 +1835,14 @@
             <span class="n">migration_matrix</span><span class="o">=</span><span class="n">recap_epoch</span><span class="o">.</span><span class="n">migration_matrix</span><span class="p">,</span>
         <span class="p">)</span>
 
+        <span class="c1"># `recap_epoch` contains population sizes from the demographic model,</span>
+        <span class="c1"># that are the number of individuals regardless of ploidy. Thus,</span>
+        <span class="c1"># ploidy must be set here, as is done in `_MsprimeEngine.simulate`</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">sim_ancestry</span><span class="p">(</span>
             <span class="n">initial_state</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span>
             <span class="n">demography</span><span class="o">=</span><span class="n">demography</span><span class="p">,</span>
             <span class="n">recombination_rate</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
+            <span class="n">ploidy</span><span class="o">=</span><span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span><span class="p">,</span>
             <span class="n">random_seed</span><span class="o">=</span><span class="n">s0</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simplify_remembered</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
@@ -1905,6 +1912,10 @@
                     <span class="n">seed</span><span class="o">=</span><span class="n">nuc_seed</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
+
+        <span class="c1"># If haploid, rebuild individual table so each sample is an individual</span>
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">haploidize_individuals</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ts</span>
 

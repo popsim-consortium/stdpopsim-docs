@@ -634,6 +634,7 @@ Furthermore, if your species of interest does not have direct estimates of recom
 we recommend using estimates for some other species (hopefully closely related).</p></li>
 <li><p>The <strong>effective population size</strong> should represent the historical average effective population size,
 and should ideally produce simulated data that matches the average observed genetic diversity in that species.
+Population size is defined as the number of individuals, regardless of ploidy.
 However, this will often not capture features of genetic variation that are caused by recent changes in population size and the presence of population structure.
 To capture those, one should also provide a demographic model (or multiple models) for the species
 (see <a class="reference internal" href="#adding-a-new-demographic-model">Adding a new demographic model</a>).</p></li>
@@ -1163,6 +1164,7 @@ before you set the mutation rate to <code class="docutils literal notranslate"><
 describe the inferred demographic history that you wish to code.
 This history consists of ancestral population size changes,
 migration rates, split times, and admixture events.
+Note that population size is defined as the number of individuals, regardless of ploidy.
 These attributes should be coded using the standard format of <code class="docutils literal notranslate"><span class="pre">msprime</span></code>.
 If this is your first time specifying a demographic model using <code class="docutils literal notranslate"><span class="pre">msprime</span></code>,
 then we highly recommend that you take some time to read through its
