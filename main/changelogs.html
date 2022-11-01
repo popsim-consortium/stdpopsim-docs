@@ -207,22 +207,22 @@ plus numerous others).</p></li>
 <p><strong>Additions to CLI</strong>:</p>
 <ul class="simple">
 <li><p>Sample specification has switched from positional and haploid (e.g.
-<cite>stdpopsim HomSap -d OutOfAfrica_3G09 6 0 10</cite>) to named with species-specific
-ploidy (equivalent to <cite>stdpopsim HomSap -d OutOfAfrica_3G09 YRI:3 CEU:0
-CHB:5</cite>). Positional sample specification is still supported but will raise a
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">-d</span> <span class="pre">OutOfAfrica_3G09</span> <span class="pre">6</span> <span class="pre">0</span> <span class="pre">10</span></code>) to named with species-specific
+ploidy (equivalent to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">-d</span> <span class="pre">OutOfAfrica_3G09</span> <span class="pre">YRI:3</span> <span class="pre">CEU:0</span>
+<span class="pre">CHB:5</span></code>). Positional sample specification is still supported but will raise a
 deprecation warning.</p></li>
-<li><p>Arguments <cite>–dfe</cite>, <cite>–dfe-interval</cite>, <cite>–dfe-bed-file</cite>, <cite>–help-dfe</cite>
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--dfe</span></code>, <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code>, <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code>, <code class="docutils literal notranslate"><span class="pre">--help-dfe</span></code>
 for specifying DFEs (<a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1052">#1052</a>).</p></li>
-<li><p>Arguments <cite>–help-annotations</cite>, <cite>–dfe-annotation</cite> for associating annotation
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--help-annotations</span></code>, <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code> for associating annotation
 tracks with DFEs (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1117">#1117</a>).</p></li>
-<li><p>Argument <cite>–length</cite> for simulating from a generic contig
+<li><p>Argument <code class="docutils literal notranslate"><span class="pre">--length</span></code> for simulating from a generic contig
 (<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/664">#664</a>).</p></li>
-<li><p>Arguments <cite>–inclusion-mask</cite>, <cite>–exclusion-mask</cite> for masking simulated sequences
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--inclusion-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">--exclusion-mask</span></code> for masking simulated sequences
 (<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/664">#664</a>).</p></li>
-<li><p>Arguments <cite>–left</cite> and <cite>–right</cite> for simulating an interval on a named chromosome
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--left</span></code> and <code class="docutils literal notranslate"><span class="pre">--right</span></code> for simulating an interval on a named chromosome
 (<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1348">#1348</a>)</p></li>
-<li><p>Argument <cite>–keep-mutation-ids-as-alleles</cite> retains SLiM mutation IDs for
-allele codes instead of converting these to nucleotides.</p></li>
+<li><p>Argument <code class="docutils literal notranslate"><span class="pre">--keep-mutation-ids-as-alleles</span></code> retains SLiM mutation IDs for
+allele codes instead of converting these to nucleotides (<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1356">#1356</a>).</p></li>
 </ul>
 <p><strong>Catalog maintenance infrastructure</strong>:</p>
 <ul class="simple">
