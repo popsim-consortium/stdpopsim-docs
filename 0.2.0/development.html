@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development &mdash; stdpopsim 0.2.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelogs" href="changelogs.html" />
+    <link rel="prev" title="API" href="api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> stdpopsim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-a-virtual-environment">Using a Virtual Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#github-workflow">GitHub workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pre-commit-checks">Pre-commit checks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rebasing">Rebasing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#when-rebasing-goes-wrong">When rebasing goes wrong</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-species">Adding a new species</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#which-information-do-i-need-to-have-for-my-species">Which information do I need to have for my species?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-set-up-to-add-a-new-species">Getting set up to add a new species</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coding-the-species-parameters">Coding the species parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-your-species-model-and-submitting-a-pr">Testing your species model and submitting a PR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview-of-the-stdpopsim-review-process">Overview of the stdpopsim review process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-tests-for-the-review-of-new-species">Implementing tests for the review of new species</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-demographic-model">Adding a new demographic model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-models-are-appropriate-to-add">What models are appropriate to add?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-set-up-to-add-a-new-demographic-model">Getting set up to add a new demographic model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coding-the-demographic-model">Coding the demographic model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-parameter-table-to-the-docs">Adding a parameter table to the docs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-your-demographic-model-and-submitting-a-pr">Testing your demographic model and submitting a PR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-tests-for-the-review-of-a-demographic-model">Implementing tests for the review of a demographic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lifting-over-a-genetic-map">Lifting over a genetic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-dfe-model">Adding a DFE model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-set-up-to-add-a-new-dfe-model">Getting set up to add a new DFE model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coding-the-dfe-model">Coding the DFE model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-your-dfe-model-and-submitting-a-pr">Testing your DFE model and submitting a PR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reviewing-a-dfe-model">Reviewing a DFE model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#coding-standards">Coding standards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#naming-conventions">Naming conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-a-new-release">Making a new release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stdpopsim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Development</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/development.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="development">
+<span id="sec-development"></span><h1>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>is a community effort, and we welcome YOU to join us!</strong></p>
+<p>We envision at least three main types of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> developers:</p>
+<ol class="arabic simple">
+<li><p>Contributors of new species, demographic models, and other features
+(such as recombination maps, annotations, DFE models)</p></li>
+<li><p>API developers</p></li>
+<li><p>Documentation and tutorial curators</p></li>
+</ol>
+<p>Contributors add simulation code for new or existing species in the catalog.
+This is the main way we envision biologists to continually add
+to the catalog of available models, and it is a great first step for new
+contributors to learn the ins and outs of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> development.
+See the appropriate sections below:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#adding-a-new-species">Adding a new species</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-new-demographic-model">Adding a new demographic model</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-dfe-model">Adding a DFE model</a></p></li>
+</ul>
+<p><cite>API developers</cite> work on infrastructure development for the PopSim Consortium,
+which could include improvements and additions to the internal code base of
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, establishment of benchmarking pipelines,
+and new projects that align with consortium goals.</p>
+<p><cite>Documentation and tutorial curators</cite> help maintain the documentation and tutorials.
+This can be as easy as pointing out confusing bits of the documentation in a
+GitHub <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">issue</a>., or adding or editing
+the documentation. See the section <a class="reference internal" href="#documentation">Documentation</a>.</p>
+<p>Get into contact with the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> community by subscribing to our
+<a class="reference external" href="https://lists.uoregon.edu/mailman/listinfo/popgen_benchmark">email list serve</a>
+and by creating and commenting on
+Github <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">issue</a>.
+There is a lot of chatter through
+<a class="reference external" href="http://github.com/popgensims/stdpopsim">Github</a>, and we’ve been building code
+there cooperatively.
+If you want to help out and don’t know where to start, you can look through the
+list of
+<a class="reference external" href="https://github.com/popgensims/stdpopsim/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22">Good first issues</a>
+or
+<a class="reference external" href="https://github.com/popgensims/stdpopsim/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22">Help wanted issues</a></p>
+<p>To get started helping with <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> development, please read the
+following sections to learn how to contribute.
+And, importantly, please have a look at our
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
+<section id="installation">
+<span id="sec-development-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>Before installing, be sure to make a fork of the repo and clone it locally
+following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> library requires Python 3.4 or later.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">pip</span></code> users, install the packages required for development using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install -r requirements/development.txt
+</pre></div>
+</div>
+<p>You can then install the development version of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 setup.py install
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">conda</span></code> users, you will need to add the conda-forge channel to your conda
+environment and then should be able to install the development requirements using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --add channels conda-forge
+$ conda install --file=requirements/development.txt
+</pre></div>
+</div>
+<p>We do require <code class="docutils literal notranslate"><span class="pre">msprime</span></code>, so please see the the <a class="reference external" href="https://tskit.dev/msprime/docs/stable/installation.html">installation notes</a> if you
+encounter problems with it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have trouble installing any of the requirements, your <code class="docutils literal notranslate"><span class="pre">pip</span></code> may be the wrong version.
+Try <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/development.txt</span></code></p>
+</div>
+<section id="using-a-virtual-environment">
+<h3>Using a Virtual Environment<a class="headerlink" href="#using-a-virtual-environment" title="Permalink to this headline"></a></h3>
+<p>We encourage the use of a virtual environment.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">pip</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</p>
+<p>First, create the virtual environment (You only need to do this once):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m venv stdpopsim_env
+</pre></div>
+</div>
+<p>Next, activate the virtual environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source stdpopsim_env/bin/activate
+</pre></div>
+</div>
+<p>You will then see the virtual environment in your prompt. Like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $
+</pre></div>
+</div>
+<p>Once the virtual environment is activated, install the requirements:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $ python3 -m pip install -r requirements/development.txt
+</pre></div>
+</div>
+<p>You can then run any of the code in the virtual environment with the packages installed,
+without conflicting with other packages in your local environment.
+To deactivate the virtual environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $ deactivate
+</pre></div>
+</div>
+</section>
+</section>
+<section id="github-workflow">
+<h2>GitHub workflow<a class="headerlink" href="#github-workflow" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Make your own <a class="reference external" href="https://help.github.com/articles/fork-a-repo/">fork</a>
+of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> repository on GitHub, and
+<a class="reference external" href="https://help.github.com/articles/cloning-a-repository/">clone</a>
+a local copy.</p></li>
+<li><p>Install the pre-commit hooks with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pre-commit install
+</pre></div>
+</div>
+</li>
+</ol>
+<ol class="arabic" start="2">
+<li><p>Make sure that your local repository has been configured with an
+<a class="reference external" href="https://help.github.com/articles/configuring-a-remote-for-a-fork/">upstream remote</a>.</p></li>
+<li><p>Create a “topic branch” to work on. One reliable way to do it
+is to follow this recipe:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git fetch upstream
+$ git checkout upstream/main
+$ git checkout -b topic_branch_name
+</pre></div>
+</div>
+</li>
+<li><p>As you work on your topic branch you can add commits to it. Once you’re
+ready to share this, you can then open a <a class="reference external" href="https://help.github.com/articles/about-pull-requests/">pull request</a>. Your PR will
+be reviewed by some of the maintainers, who may ask you to make changes.</p></li>
+<li><p>If your topic branch has been around for a long time and has gotten
+out of date with the main repository, we might ask you to
+<a class="reference external" href="https://help.github.com/articles/about-git-rebase/">rebase</a>. Please
+see the next section on how to rebase.</p></li>
+</ol>
+</div></blockquote>
+<section id="pre-commit-checks">
+<h3>Pre-commit checks<a class="headerlink" href="#pre-commit-checks" title="Permalink to this headline"></a></h3>
+<p>On each commit a <a class="reference external" href="https://pre-commit.com/">pre-commit hook</a>  will run
+that checks for violations of code style and other common problems.
+Where possible, these hooks will try to fix any problems that they find (including reformatting
+your code to conform to the required style). In this case, the commit
+will <em>not complete</em> and report that “files were modified by this hook”.
+To include the changes that the hooks made, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> any
+files that were modified and run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> (or, use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-a</span></code>
+to commit all changed files.)</p>
+<p>If you would like to run the checks without committing, use <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span></code>
+(but, note that this will <em>only</em> check changes that have been <em>staged</em>;
+do <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all</span></code> to check unstaged changes as well).
+To bypass the checks (to save or get feedback on work-in-progress) use
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">--no-verify</span></code></p>
+</section>
+<section id="rebasing">
+<h3>Rebasing<a class="headerlink" href="#rebasing" title="Permalink to this headline"></a></h3>
+<p>Rebasing is used for two basic tasks we might ask for during review:</p>
+<ol class="arabic simple">
+<li><p>Your topic branch has gotten out of date with the tip of <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code>
+and needs to be updated.</p></li>
+<li><p>Your topic branch has lots of messy commits, which need to be cleaned up
+by “squashing”.</p></li>
+</ol>
+<p><a class="reference external" href="https://help.github.com/articles/about-git-rebase/">Rebasing</a> in git
+basically means changing where your branch forked off the main code
+in <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code>. A good way of visualising what’s happening is to
+look at the <a class="reference external" href="https://github.com/popgensims/stdpopsim/network">Network</a> view on
+GitHub. This shows you all the forks and branches that GitHub knows about
+and how they relate to the main repository. Rebasing lets you change where
+your branch splits off.</p>
+<p>To see this for your local repo
+on your computer, you can look at the Git graph output via the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$  git log --decorate --oneline --graph
+</pre></div>
+</div>
+<p>This will show something like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|*   923ab2e Merge pull request #9 from mcveanlab/docs-initial
+|\
+| * 0190a92 (origin/docs-initial, docs-initial) First pass at development docs.
+| * 2a5fc09 Initial outline for docs.
+| * 1ccb970 Initial addition of docs infrastructure.
+|/
+*   c49601f Merge pull request #8 from mcveanlab/better-genomes
+|\
+| * fab9310 (origin/better-genomes, better-genomes) Added pongo tests.
+| * 62c9560 Tidied up example.
+| * 51e21e8 Added basic tests for population models.
+| * 6fff557 Split genetic_maps into own module.
+| * 90d6367 Added Genome concept.
+| * e2aaf95 Changed debug to info for logging on download.
+| * 2fbdfdc Added badges for CircleCI and CodeCov.
+|/
+*   c66b575 Merge pull request #5 from mcveanlab/tests-ci
+|\
+| * 3ae454f (origin/tests-ci, tests-ci) Initial circle CI config.
+| * c39415a Added basic tests for genetic map downloads.
+|/
+*   dd47000 Merge pull request #3 from mcveanlab/recomb-map-infrastructure
+|\
+</pre></div>
+</div>
+<p>This shows a nice, linear git history: we can see four pull requests, each of
+which consists of a small number of meaningful commits. This is the ideal that
+we’re aiming for, and git allows us to achieve it by <em>rewriting history</em> as
+much as we want within our own forks (we never rewrite history in the
+<code class="docutils literal notranslate"><span class="pre">upstream</span></code> repository, as this would cause problems for other developers).
+Having a clean, linear git history is a good idea for lots of reasons, not
+least of which is making <a class="reference external" href="https://git-scm.com/docs/git-bisect">git bisect</a>
+easier.</p>
+<p>One of the most useful things that we can do with rebasing is to “squash” commits
+so that we remove some noise from the git history. For example, this PR
+(on the branch <code class="docutils literal notranslate"><span class="pre">topic_branch_name</span></code>) currently looks like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$  git log --decorate --oneline --graph
+
+* 97a9458 (HEAD -&gt; topic_branch_name) DONE!!!
+* c9c4a28 PLEASE work, CI!
+* ad4c807 Please work, CI!
+* 0fe6dc4 Please work, CI!
+* 520e6ac Add documentation for rebasing.
+*   20fb835 (upstream/main) Merge pull request #22 from mcveanlab/port-tennyson
+|\
+| * b3d45ea (origin/port-tennyson, port-tennyson) Quickly port Tennesen et al model.
+|/
+*   79d26b4 Merge pull request #20 from andrewkern/fly_model
+|\
+</pre></div>
+</div>
+<p>Here, in my initial commit (520e6ac) I’ve added some updated documentation for rebasing.
+Then, there’s four more commits where I’m trying
+to get CI pass. History doesn’t need to know about this, so I can rewrite it
+using rebase:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git fetch upstream
+$ git rebase -i upstream/main
+</pre></div>
+</div>
+<p>We first make sure that we’re rebasing against the most recent version of the
+upstream repo. Then, we ask git to perform an interactive rebase against
+the <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code> branch. This starts up your editor, showing something
+like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pick 520e6ac Add documentation for rebasing.
+pick 0fe6dc4 Please work, CI!
+pick ad4c807 Please work, CI!
+pick c9c4a28 PLEASE work, CI!
+pick 97a9458 DONE!!!
+
+# Rebase 20fb835..97a9458 onto 20fb835 (5 commands)
+#
+# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+</pre></div>
+</div>
+<p>We want git to squash the last five commits, so we edit the rebase instructions
+to look like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pick 520e6ac Add documentation for rebasing.
+s 0fe6dc4 Please work, CI!
+s ad4c807 Please work, CI!
+s c9c4a28 PLEASE work, CI!
+s 97a9458 DONE!!!
+
+# Rebase 20fb835..97a9458 onto 20fb835 (5 commands)
+#
+# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+</pre></div>
+</div>
+<p>After performing these edits, we then save and close. Git will try to do
+the rebasing, and if successful will open another editor screen that
+lets you edit the text of the commit message:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># This is a combination of 5 commits.
+# This is the 1st commit message:
+
+Add documentation for rebasing.
+
+# This is the commit message #2:
+
+Please work, CI!
+
+# This is the commit message #3:
+
+Please work, CI!
+
+# This is the commit message #4:
+
+PLEASE work, CI!
+
+# This is the commit message #5:
+
+DONE!!!
+
+# Please enter the commit message for your changes. Lines starting
+# with &#39;#&#39; will be ignored, and an empty message aborts the commit.
+#
+# Date:      Tue Mar 5 17:00:39 2019 +0000
+#
+# interactive rebase in progress; onto 20fb835
+# Last commands done (5 commands done):
+#    squash c9c4a28 PLEASE work, CI!
+#    squash 97a9458 DONE!!!
+# No commands remaining.
+# You are currently rebasing branch &#39;topic_branch_name&#39; on &#39;20fb835&#39;.
+#
+# Changes to be committed:
+#       modified:   docs/development.rst
+#
+#
+</pre></div>
+</div>
+<p>We don’t care about the commit messages for the squashed commits, so we
+delete them and end up with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Add documentation for rebasing.
+
+# Please enter the commit message for your changes. Lines starting
+# with &#39;#&#39; will be ignored, and an empty message aborts the commit.
+#
+# Date:      Tue Mar 5 17:00:39 2019 +0000
+#
+# interactive rebase in progress; onto 20fb835
+# Last commands done (5 commands done):
+#    squash c9c4a28 PLEASE work, CI!
+#    squash 97a9458 DONE!!!
+# No commands remaining.
+# You are currently rebasing branch &#39;topic_branch_name&#39; on &#39;20fb835&#39;.
+#
+# Changes to be committed:
+#       modified:   docs/development.rst
+</pre></div>
+</div>
+<p>After saving and closing this editor session, we then get something like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[detached HEAD 6b8a2a5] Add documentation for rebasing.
+Date: Tue Mar 5 17:00:39 2019 +0000
+1 file changed, 2 insertions(+), 2 deletions(-)
+Successfully rebased and updated refs/heads/topic_branch_name.
+</pre></div>
+</div>
+<p>Finally, after a successful rebase, you <strong>must force-push</strong>! If you try to
+push without specifying <code class="docutils literal notranslate"><span class="pre">-f</span></code>, you will get a very confusing and misleading
+message:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git push origin topic_branch_name
+To github.com:jeromekelleher/stdpopsim.git
+! [rejected]        topic_branch_name -&gt; topic_branch_name (non-fast-forward)
+error: failed to push some refs to &#39;git@github.com:jeromekelleher/stdpopsim.git&#39;
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: &#39;git pull ...&#39;) before pushing again.
+hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
+</pre></div>
+</div>
+<p><strong>DO NOT LISTEN TO GIT IN THIS CASE!</strong> Git is giving you <strong>terrible advice</strong>
+which will mess up your branch. What we need to do is replace the state of
+the branch <code class="docutils literal notranslate"><span class="pre">topic_branch_name</span></code> on your fork on GitHub (the <code class="docutils literal notranslate"><span class="pre">upstream</span></code> remote)
+with the state of your local branch, <code class="docutils literal notranslate"><span class="pre">topic_branch_name</span></code>. We do this
+by “force-pushing”:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git push -f origin topic_branch_name
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 4.33 KiB | 1.44 MiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:jeromekelleher/stdpopsim.git
+ + 6b8a2a5...d033ffa topic_branch_name -&gt; topic_branch_name (forced update)
+</pre></div>
+</div>
+<p>Success! We can check the history again to see if everything looks OK:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$  git log --decorate --oneline --graph
+
+* d033ffa (HEAD -&gt; topic_branch_name, origin/topic_branch_name) Add documentation for rebasing.
+*   20fb835 (upstream/main) Merge pull request #22 from mcveanlab/port-tennyson
+|\
+| * b3d45ea (origin/port-tennyson, port-tennyson) Quickly port Tennesen et al model.
+|/
+*   79d26b4 Merge pull request #20 from andrewkern/fly_model
+|
+</pre></div>
+</div>
+<p>This looks just right: we have one commit, pointing to the head of <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code>
+and have successfully squashed and rebased.</p>
+</section>
+<section id="when-rebasing-goes-wrong">
+<h3>When rebasing goes wrong<a class="headerlink" href="#when-rebasing-goes-wrong" title="Permalink to this headline"></a></h3>
+<p>Sometimes rebasing goes wrong, and you end up in a frustrating loop of making
+and undoing the same changes over and over again. First, here’s an explanation
+of what’s going on. Let’s say that the branch we’re working on (and trying to
+rebase) is called <code class="docutils literal notranslate"><span class="pre">topic_branch</span></code>, and it branched off from <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code>
+at some point in the past:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>     <span class="n">A1</span><span class="o">---</span><span class="n">A2</span><span class="o">---</span><span class="n">A3</span>  <span class="p">(</span><span class="n">topic_branch</span><span class="p">)</span>
+    <span class="o">/</span>
+<span class="o">---</span><span class="n">M</span><span class="o">---</span><span class="n">o</span><span class="o">---</span><span class="n">o</span><span class="o">---</span><span class="n">o</span><span class="o">---</span><span class="n">o</span><span class="o">---</span><span class="n">B</span>  <span class="p">(</span><span class="n">upstream</span><span class="o">/</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So, what we’d really like to do is to take the commits <code class="docutils literal notranslate"><span class="pre">A1</span></code>, <code class="docutils literal notranslate"><span class="pre">A2</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">A3</span></code> and apply them to the current state of the <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code> branch,
+i.e., on top of commit <code class="docutils literal notranslate"><span class="pre">B</span></code>. If we just do <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">upstream/main</span></code>
+then git will try to first apply <code class="docutils literal notranslate"><span class="pre">A1</span></code>; then <code class="docutils literal notranslate"><span class="pre">A2</span></code>; and finally <code class="docutils literal notranslate"><span class="pre">A3</span></code>.
+If there’s conflicts, this is painful, so we might want to <em>first</em> squash
+the three commits together into one commit, and then rebase that single commit.
+Then we’ll only have to resolve conflicts once. Said another way: we often
+use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span> <span class="pre">upstream/main</span></code> to both squash <em>and</em> rebase; but
+it may be easier to squash first then rebase after.</p>
+<p>We’ll be doing irreversible changes, so first we should make a backup copy of
+the branch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout topic_branch  # make sure we&#39;re on the right branch
+$ git checkout -b topic_backup # make the backup
+$ git checkout topic_branch  # go back to the topic branch
+</pre></div>
+</div>
+<p>Next, we take the diff between the current state of the files and the place
+where your changes last diverged from <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code> (the commit labelled
+<code class="docutils literal notranslate"><span class="pre">M</span></code> in the diagram above), and save it as a patch. To do this, make sure
+you are in the root of the git directory, and:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git diff --merge-base upstream/main &gt; changes.patch
+</pre></div>
+</div>
+<p>After that, we can check out a fresh branch and check if everything works
+as it’s supposed to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b test_branch upstream/main
+$ patch -p1 &lt; changes.patch
+$ git commit -a
+# check things work
+</pre></div>
+</div>
+<p>After we’ve verified that everything works, we then checkout the original
+topic branch and replace it with the state of the <code class="docutils literal notranslate"><span class="pre">test_branch</span></code>, and
+finally force-push to the remote topic branch on your fork:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout topic_branch
+$ git reset --hard test_branch
+$ git push -f origin topic_branch
+</pre></div>
+</div>
+<p>Hard resetting and force pushing are not reversible operations, so please
+beware! After you’ve done this, you can go make sure nothing bad happened
+by checking that the only changes listed under “files changed” in the github
+pull request are changes that you have made. For more on finding the fork
+point, with diagrams, and an alternative workflow, see <a class="reference external" href="https://git-scm.com/docs/git-merge-base">the git docs</a>.</p>
+</section>
+</section>
+<section id="adding-a-new-species">
+<span id="sec-development-demographic-model"></span><h2>Adding a new species<a class="headerlink" href="#adding-a-new-species" title="Permalink to this headline"></a></h2>
+<section id="which-information-do-i-need-to-have-for-my-species">
+<h3>Which information do I need to have for my species?<a class="headerlink" href="#which-information-do-i-need-to-have-for-my-species" title="Permalink to this headline"></a></h3>
+<p>In <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, we aim to be inclusive and facilitate adding a diverse range of species.
+That said, there are certain basic requirements we have
+for every species added to the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
+We specify these requirements below.
+If you are unsure whether your species satisfies these baseline requirements,
+but you still think it will be useful to add it to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>,
+then we encourage you to <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues/new">open an issue</a>
+on the GitHub repository to discuss this.
+Others researchers in the community may be able to help you fill in the missing details
+or find other solutions.</p>
+<p>Every species added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should have the following information available:</p>
+<ol class="arabic simple">
+<li><p>A chromosome-level genome assembly</p></li>
+<li><p>Mutation rate (per generation)</p></li>
+<li><p>Recombination rate (per generation)</p></li>
+<li><p>A characteristic population size</p></li>
+<li><p>An average generation time</p></li>
+</ol>
+<p>Of course, many species do not have precise estimates of each of these
+(e.g., mutation rates are usually not known).
+So, in practice we often have to use approximate estimates.
+We provide below a set of guidelines for each of the five components,
+with a brief discussion of possible courses of action to take when components have incomplete information.</p>
+<ol class="arabic simple">
+<li><p>The <strong>genome assembly</strong> should consist of a list of chromosomes or scaffolds and their lengths.
+Having a good quality assembly with complete chromosomes, or at least very long scaffolds,
+is essential for chromosome-level simulations produced by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+Species with less complete genome builds typically do not have genetic maps
+or good estimates of recombination rates,
+making chromosome-level simulation much less useful.
+Thus, currently, <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> only supports adding species with near-complete
+chromosome-level genome assemblies (i.e., close to one contig per chromosome).</p></li>
+<li><p>An <strong>average mutation rate</strong>
+should be specified for each chromosome (per generation per bp).
+The mutation rate estimate can be based on sequence data from pedigrees, mutation accumulation studies,
+or comparative genomic analysis calibrated by fossil data (i.e., phylogenetic estimates).
+If there is no information on the variation of mutation rates across chromosomes,
+the average genome-wide mutation rate can be specified for all chromosomes.
+Finally, if your species of interest does not have direct estimates of mutation rates,
+we recommend using estimates for some other species (hopefully closely related).</p></li>
+<li><p>An <strong>average recombination rate</strong>
+should be specified for each chromosome (per generation per bp).
+Ideally, one would want to specify a fine-scale chromosome-level <strong>recombination map</strong>,
+since the recombination rate is known to vary widely across chromosomes.
+If a recombination map exists for your species,
+you may specify it separately (see <a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a>).
+Nonetheless, you should specify a default (average) recombination rate for each chromosome.
+As with mutation rates, if there is no information on the variation of recombination rates
+across chromosomes, the average genome-wide recombination rate can be specified for all chromosomes.
+Furthermore, if your species of interest does not have direct estimates of recombination rates,
+we recommend using estimates for some other species (hopefully closely related).</p></li>
+<li><p>The <strong>effective population size</strong> should represent the historical average effective population size,
+and should ideally produce simulated data that matches the average observed genetic diversity in that species.
+Population size is defined as the number of individuals, regardless of ploidy.
+However, this will often not capture features of genetic variation that are caused by recent changes in population size and the presence of population structure.
+To capture those, one should also provide a demographic model (or multiple models) for the species
+(see <a class="reference internal" href="#adding-a-new-demographic-model">Adding a new demographic model</a>).</p></li>
+<li><p>The <strong>average generation time</strong> is an important part of the species’ natural history,
+but its value does not directly affect the simulation, since
+the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> and <code class="docutils literal notranslate"><span class="pre">msprime</span></code> simulation engines operate in time units of generations.
+Thus, the average generation time is only currently used to convert time units to years,
+which is useful when comparing different demographic models.</p></li>
+</ol>
+<p>All values used in the species model should be based on current knowledge for a typical population
+in that species, as represented in the literature.
+Before you add your species to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, see that you can collect the values
+mentioned above from the literature.
+You will later need to specify these citations in your code files
+(see <a class="reference internal" href="#coding-the-species-parameters">Coding the species parameters</a>).
+If you are unsure whether your species of interest satisfies the base requirements above
+(such as a near-complete genome assembly), or have questions about how to set some parameters,
+feel free to <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues/new">open an issue</a>
+on the GitHub repository to get assistance from other members of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> community.</p>
+</section>
+<section id="getting-set-up-to-add-a-new-species">
+<h3>Getting set up to add a new species<a class="headerlink" href="#getting-set-up-to-add-a-new-species" title="Permalink to this headline"></a></h3>
+<p>If this is your first time adding a species to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, it’s a good
+idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
+to see how existing species are typically specified and documented. If you have
+any questions or confusion about the required code, please
+don’t hesitate to
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">open a new issue</a>.
+We’re more than happy to answer any questions and help get you up and running.
+Before you add any code, be sure to have forked the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> repository
+and cloned it locally, following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a> section.</p>
+<p>After you collected the relevant parameters from the literature (see list above),
+the first step is to create a new subdirectory devoted to the new species,
+which you should name using the six-character species identifier
+(see <a class="reference internal" href="#naming-conventions">Naming conventions</a> for more details).
+All code associated with simulation of this species should go into this directory,
+unless explicitly specified otherwise
+(code for documentation and testing  is written in other directories).
+For example, the simulation code for <em>D. melanogaster</em> resides in directory
+<code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/DroMel/</span></code> in the repository.</p>
+<p>Once the species directory is set up, you may use the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility
+of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to generate template files where you can enter
+all relevant information for your species.
+The <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility downloads useful information on a genome build published
+in <a class="reference external" href="https://www.ensembl.org/index.html">Ensembl</a>,
+and uses it to generate initial versions of the required source files.
+A partial list of the
+genomes housed on Ensembl can be found <a class="reference external" href="https://metazoa.ensembl.org/species.html">here</a>.
+To use this utility, execute the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> command with the Ensembl species ID;
+replace spaces in the Ensembl ID with <code class="docutils literal notranslate"><span class="pre">_</span></code> characters.
+For example, the template files for <em>A. thaliana</em> were generated by executing this command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m maintenance add-species arabidopsis_thaliana
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility generates three new files inside the species directory
+(<code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>: a  script that loads all the relevant libraries for your species.
+It should be edited only when you add components to your species, such as demographic models,
+genetic maps, or DFE models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">genome_data.py</span></code>: a file that contains information on the physical map of the genome.
+This file is generated automatically by the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility with a data dictionary
+which has slots for the assembly accession number, the assembly name,
+and a dictionary representing the chromosome names and their associated lengths.
+If synonyms are defined (e.g., chr2L for 2L) then those are given in the list that follows.
+You should double-check the downloaded values, but there is probably no reason to edit this file
+after it has been generated by the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species.py</span></code>: a file containing information about the species’ mutation and recombination rates,
+effective population size, and the average generation time,
+along with all accompanying citations
+(see details in <a class="reference internal" href="#which-information-do-i-need-to-have-for-my-species">Which information do I need to have for my species?</a>).
+The following section provides detailed instructions on how to code information in this file,
+including some specific examples.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility also generates test code for your species in
+the file <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;SPECIES_ID&gt;.py</span></code>.
+This is used later for your local tests and in the review process
+(see <a class="reference internal" href="#testing-your-species-model-and-submitting-a-pr">Testing your species model and submitting a PR</a>
+and <a class="reference internal" href="#implementing-tests-for-the-review-of-new-species">Implementing tests for the review of new species</a>).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your species of interested does not have a published genome in Ensembl,
+you may manually create and edit the three files described above.
+Try to follow an example from the catalog that was downloaded from Ensembl
+to maintain a consistent format.</p>
+</div>
+</section>
+<section id="coding-the-species-parameters">
+<h3>Coding the species parameters<a class="headerlink" href="#coding-the-species-parameters" title="Permalink to this headline"></a></h3>
+<p>Information about a species’ mutation and recombination rates,
+effective population size, and the average generation time,
+is all summarized in the <code class="docutils literal notranslate"><span class="pre">species.py</span></code> file,
+along with all accompanying citations
+(see details in <a class="reference internal" href="#which-information-do-i-need-to-have-for-my-species">Which information do I need to have for my species?</a>).
+The initial version of the file generated by the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility
+contains commented instructions to help you figure out where everything goes.
+Essentially, the information in this file is recorded in two main objects: <code class="docutils literal notranslate"><span class="pre">_genome</span></code> and <code class="docutils literal notranslate"><span class="pre">_species</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">_genome</span></code> object contains chromosome-level information, such as
+<strong>chromosome ids</strong>, <strong>lengths</strong>, <strong>mutation and recombination rates</strong>, and <strong>ploidy</strong>.
+The <code class="docutils literal notranslate"><span class="pre">_species</span></code> object contains the remaining information about the species,
+including its <strong>full name</strong>, <strong>abbreviated name</strong>, <strong>id</strong>, <strong>effective population size</strong>
+and <strong>average generation time</strong>.
+Each value specified in these two object should be accompanied by a
+<code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> object indicating the publication from which it was derived.
+Each <code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> object is initialized with the following information:</p>
+<ul class="simple">
+<li><p>author (<cite>string</cite>): abbreviated author list in a single string,
+such as <cite>“1000GenomesConsortium”</cite> or <cite>“Huber et al.”</cite>.</p></li>
+<li><p>year   (<cite>int</cite>): year of publication.</p></li>
+<li><p>doi (<cite>string</cite>): a URL for the <a class="reference external" href="https://doi.org/">doi.org</a> webpage of the publication.</p></li>
+<li><p>reasons (list of <code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason</span></code>):
+possible reasons to include a citation in <code class="docutils literal notranslate"><span class="pre">species.py</span></code> are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.ASSEMBLY</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.REC_RATE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.MUT_RATE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.POP_SIZE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.GEN_TIME</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>To demonstrate how the <code class="docutils literal notranslate"><span class="pre">_genome</span></code> and <code class="docutils literal notranslate"><span class="pre">_species</span></code> objects are set,
+we provide below a detailed example for <em>A. thaliana</em>
+(see also <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/AraTha/species.py</span></code>).</p>
+<p>We start by defining auxiliary objects that specify the recombination rate,
+mutation rate, and ploidy for each chromosome.
+In the case of <em>A. Thaliana</em>, these objects are defined to associate
+the mitochondrial and plastid genomes (chromsoomes <cite>Mt</cite> and <cite>Pt</cite>)
+with ploidy of 1 and recombination rate of 0.
+All other chromosomes are associated with a ploidy of 2 and the
+genome-wide average recombination rate.
+The genome-wide mutation rate is associated with all chromosomes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># genome-wide recombination rate from Huber et al 2014 MBE</span>
+<span class="c1"># associated with all recombining chromosomes</span>
+<span class="n">_rho</span> <span class="o">=</span> <span class="mi">200</span> <span class="o">/</span> <span class="mf">1e6</span>  <span class="c1"># 200/Mb</span>
+<span class="n">_Ne</span> <span class="o">=</span> <span class="mi">124000</span>
+<span class="n">_mean_recombination_rate</span> <span class="o">=</span> <span class="n">_rho</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">_Ne</span><span class="p">)</span>
+<span class="n">_recombination_rate</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">_mean_recombination_rate</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
+<span class="n">_recombination_rate</span><span class="p">[</span><span class="s2">&quot;Mt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">_recombination_rate</span><span class="p">[</span><span class="s2">&quot;Pt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># genome-wide average mutation rate from Ossowski 2010 Science</span>
+<span class="c1"># associated with all chromosomes</span>
+<span class="n">_mean_mutation_rate</span> <span class="o">=</span> <span class="mf">7e-9</span>
+<span class="n">_mutation_rate</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">_mean_mutation_rate</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
+<span class="n">_mutation_rate</span><span class="p">[</span><span class="s2">&quot;Mt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mean_mutation_rate</span>
+<span class="n">_mutation_rate</span><span class="p">[</span><span class="s2">&quot;Pt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mean_mutation_rate</span>
+
+<span class="c1"># species ploidy and chromosome-specific ploidy</span>
+<span class="n">_species_ploidy</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">_ploidy</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">_species_ploidy</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
+<span class="n">_ploidy</span><span class="p">[</span><span class="s2">&quot;Mt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">_ploidy</span><span class="p">[</span><span class="s2">&quot;Pt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">_genome</span></code> object is then defined by calling the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> function
+<code class="docutils literal notranslate"><span class="pre">stdpopsim.Genome.from_data</span></code>.
+This functions generates the genome object based on information from the
+<code class="docutils literal notranslate"><span class="pre">data</span></code> object defined in the <code class="docutils literal notranslate"><span class="pre">genome_data.py</span></code> file,
+the auxiliary objects defined above,
+and a list of <code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> objects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_genome</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Genome</span><span class="o">.</span><span class="n">from_data</span><span class="p">(</span>
+    <span class="n">genome_data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">recombination_rate</span><span class="o">=</span><span class="n">_recombination_rate</span><span class="p">,</span>
+    <span class="n">mutation_rate</span><span class="o">=</span><span class="n">_mutation_rate</span><span class="p">,</span>
+    <span class="n">ploidy</span><span class="o">=</span><span class="n">_ploidy</span><span class="p">,</span>
+    <span class="n">citations</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Ossowski et al.&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2010</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1126/science.1180677&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">MUT_RATE</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Huber et al.&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2014</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1093/molbev/msu247&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">REC_RATE</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1093/nar/gkm965&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2007</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Swarbreck et al.&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ASSEMBLY</span><span class="p">},</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">_species</span></code> object contains a reference to the <code class="docutils literal notranslate"><span class="pre">_genome</span></code> object and
+the remaining information about the species,
+including the <strong>effective population size</strong> and <strong>average generation time</strong>,
+accompanied by the appropriate <code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> objects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;AraTha&quot;</span><span class="p">,</span>
+    <span class="n">ensembl_id</span><span class="o">=</span><span class="s2">&quot;arabidopsis_thaliana&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Arabidopsis thaliana&quot;</span><span class="p">,</span>
+    <span class="n">common_name</span><span class="o">=</span><span class="s2">&quot;A. thaliana&quot;</span><span class="p">,</span>
+    <span class="n">genome</span><span class="o">=</span><span class="n">_genome</span><span class="p">,</span>
+    <span class="n">generation_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">ploidy</span><span class="o">=</span><span class="n">_species_ploidy</span><span class="p">,</span>
+    <span class="n">citations</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1890/0012-9658(2002)083[1006:GTINSO]2.0.CO;2&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2002</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Donohue&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_TIME</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1016/j.cell.2016.05.063&quot;</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2016</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;1001GenomesConsortium&quot;</span><span class="p">,</span>
+            <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">POP_SIZE</span><span class="p">},</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Once these two objects (<code class="docutils literal notranslate"><span class="pre">_genome</span></code> and <code class="docutils literal notranslate"><span class="pre">_species</span></code>) are specified in the <code class="docutils literal notranslate"><span class="pre">species.py</span></code> file,
+you should be able to load and simulate the newly added species using <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.</p>
+</section>
+<section id="testing-your-species-model-and-submitting-a-pr">
+<h3>Testing your species model and submitting a PR<a class="headerlink" href="#testing-your-species-model-and-submitting-a-pr" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility that generated the three species template files
+in the species directory (<code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>)
+also generates test code for the species in a separate file, <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;SPECIES_ID&gt;.py</span></code>.
+The tests in this file are executed as follows
+(where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character species id):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m pytest tests/test_&lt;SPECIES_ID&gt;.py
+</pre></div>
+</div>
+<p>The tests already implemented in this file when it is generated
+check for basic formatting and missing information.
+For example, there is a test checking that the citation year is of type <cite>int</cite>
+rather than <cite>string</cite> (e.g. 2004 and not <cite>“2014”</cite>).
+Other tests in this file are generated by the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility
+as blank and disabled.
+These tests should <strong>not</strong> be filled out by the person who writes the code in
+the <code class="docutils literal notranslate"><span class="pre">species.py</span></code> file,
+but rather by someone else, as part of the <strong>review process</strong> (see below).
+Once your code passes the basic tests implemented in the automatically generated
+version of the test file,
+you should submit a pull request (PR) with your changes to the catalog.
+See the <a class="reference internal" href="#github-workflow">GitHub workflow</a> for more details about this process.</p>
+<p>At this point, most of your work is done.
+<strong>You have officially joined the</strong> <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>development team. Welcome!!</strong>
+Your code still needs to undergo review by another member (or members)
+of the development team before it is fully incorporated into <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+This will likely require additional feedback from you,
+so, stay tuned for discussion during the review process.</p>
+</section>
+<section id="overview-of-the-stdpopsim-review-process">
+<h3>Overview of the stdpopsim review process<a class="headerlink" href="#overview-of-the-stdpopsim-review-process" title="Permalink to this headline"></a></h3>
+<p>We provide here a general outline for the review process we use in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>,
+including guidelines for how to settle discrepancies that are found during review
+(see Step 6 below).
+The seven steps described below should be followed whenever a <strong>new species</strong> is added,
+or when components such as <strong>demographic models</strong> are added to a species
+already in the catalog.</p>
+<ol class="arabic simple">
+<li><p>After the original contributor submitted a PR with their new code,
+the code is checked by one of the core maintainers of
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> for basic problems or style issues.
+Once the code meets the basic standards, the maintainer merges the PR,
+and the newly added code is considered <strong>provisional</strong>.</p></li>
+<li><p>The original contributor then opens a new <strong>QC issue</strong> on GitHub
+to track the progress of the review.
+One simple way to do this is to use one of the <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new/choose">template issues</a>
+we provide.
+For example, the <code class="docutils literal notranslate"><span class="pre">Species</span> <span class="pre">QC</span> <span class="pre">issue</span> <span class="pre">template</span></code> should be used when adding
+a new species and the <code class="docutils literal notranslate"><span class="pre">Model</span> <span class="pre">QC</span> <span class="pre">issue</span> <span class="pre">template</span></code> should be used when adding
+a new demographic model.
+Simply press  <cite>Get started</cite> for the appropriate template,
+and fill in the required details.
+If you don’t find an appropriate template for your purpose,
+you should simply <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">open a new blank issue</a>
+and add the relevant details manually.
+Make sure to include information about the primary sources (citations)
+you used as well as other considerations you made in your code.
+The <strong>QC issue</strong> contains a checklist and all the items on this list
+should be checked off for the review process to complete.</p></li>
+<li><p>A different member of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> community volunteers to review the
+newly added demographic model.
+If you volunteer to review a model, you should state your intention on the
+<strong>QC issue</strong>, so we don’t duplicate effort.
+Typically, there will be one reviewer assigned to every <strong>QC issue</strong>.
+However, sometimes multiple reviewers may wish to partition tasks between them.
+For examples, when reviewing a new species, one reviewer may wish to test the
+recombination rates, and another may wish to test the effective population size.
+Some aspects of the review, such as examining citations, involve checking the
+code of the original contributor.
+However, most of the review involves implementing tests
+based on the reviewer’s understanding of
+the source publications and additional documentation
+specified by the original contributor in the <strong>QC issue</strong>.
+Ideally, the code for these tests should be written by the reviewer
+<strong>without looking at the original contributor’s code</strong>.
+If the reviewer is uncertain about some aspects of the implementation,
+they can discuss this with the original contributor in the <strong>QC issue</strong>.
+Different types of tests are involved when you are reviewing a <strong>new species</strong>
+added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> or when you are reviewing a <strong>demographic model</strong>
+added to an existing species.
+See the appropriate sections below for specific instructions on how to
+implement the different tests.
+The reviewer should write the testing code on their own fork of the repository,
+as outlined in the <a class="reference internal" href="#github-workflow">GitHub workflow</a>.</p></li>
+<li><p>After writing the appropriate code,
+the reviewer should execute it by running the <a class="reference internal" href="#unit-tests">Unit tests</a>.
+The unit tests will produce error messages if
+inconsistencies are found between the original contributor’s implementation
+and the tests written by the reviewer.</p></li>
+<li><p>Once the reviewer is confident in their tests,
+they should submit a PR with their test code.
+The reviewer may choose to do so even if some tests fail,
+to facilitate discussion with the original contributor (see Step 6 below).</p></li>
+<li><p>If the tests written by the reviewer produce error messages,
+the differences between the implementation of the original contributor and
+the blind tests of the reviewer need to be resolved through discussion
+between the two of them.
+This discussion can take place either in the <strong>review PR</strong> submitted in Step 5,
+or in the <strong>QC issue</strong> opened in Step 2.
+Differences between the two implementations can indicate an error,
+but very often they are a result of different interpretations of the
+data presented in the source publications.
+For example, there might be different mutation rates estimated for a given species
+from two different groups of samples.
+The original contributor and reviewer should reach an agreement
+as to the best (or at least a reasonable) interpretation of the published data.
+If they cannot reach an agreement,
+then the discussion on GitHub should be opened to others in the community.
+It may also be useful to contact the authors of the original publication
+to resolve some of these ambiguities.
+After each difference is resolved, the final decision should be clearly
+noted in the discussion on GitHub,
+and the code should be modified accordingly.
+This could be either the code written by the original contributor or the
+test code written by the reviewer (or both in some cases).
+Since at this point the <strong>review PR</strong> submitted in Step 5 is still open (not merged),
+then we recommend making the code changes using additional commits in this PR.
+In case the review process found different possible interpretations
+of the published data,
+the rationale behind the final (consensus) interpretation should be clearly
+specified in comments above the relevant block of code.
+This documentation will help future contributors in resolving
+ambiguities in similar cases.</p></li>
+<li><p>Once the <strong>review PR</strong> submitted in Step 5 passes all unit tests,
+it is merged, and the <strong>QC issue</strong> opened in Step 2 is closed.
+<strong>The new code is now officially added to the</strong> <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>catalog!</strong></p></li>
+</ol>
+</section>
+<section id="implementing-tests-for-the-review-of-new-species">
+<h3>Implementing tests for the review of new species<a class="headerlink" href="#implementing-tests-for-the-review-of-new-species" title="Permalink to this headline"></a></h3>
+<p>The tests associated with the review of a new species
+should be written by the reviewer in the <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;SPECIES_ID&gt;.py</span></code> file
+as part of Step 3 of the review process described above.
+Recall that this file was generated by the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility, with most
+of the tests disabled.
+The reviewer should enable all the tests and implement them.
+For example, the test for the recombination rates is initialized by the
+<code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility in the following form:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Recombination rate QC not done yet&quot;</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">([</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span> <span class="p">{}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">rate</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When writing the tests for the recombination rates, the reviewer should first
+delete the <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.skip</span></code> line to enable the test.
+Then, they should specify inside the <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code> a valid dictionary:
+a list of <code class="docutils literal notranslate"><span class="pre">key</span></code>:<code class="docutils literal notranslate"><span class="pre">value</span></code> with the name and average
+recombination rate for each chromosome.
+We provide an example below from <em>A. aegypti</em> (see <code class="docutils literal notranslate"><span class="pre">tests/test_AedAeg.py</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span>
+    <span class="p">{</span><span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="mf">0.306e-8</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="mf">0.249e-8</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="mf">0.291e-8</span><span class="p">,</span> <span class="s2">&quot;MT&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">rate</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The tests can be executed by running the complete set of <a class="reference internal" href="#unit-tests">Unit tests</a>,
+or by invoking only the tests in <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;SPECIES_ID&gt;.py</span></code>, as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m pytest tests/test_&lt;SPECIES_ID&gt;.py
+</pre></div>
+</div>
+<p>The tests compare the values specified in the
+test file to the values in the <code class="docutils literal notranslate"><span class="pre">species.py</span></code> and <code class="docutils literal notranslate"><span class="pre">genome_data.py</span></code> files,
+and they produce error messages if differences are found.
+Differences should be resolved using the general process outlined in
+Step 6 of the <a class="reference internal" href="#overview-of-the-stdpopsim-review-process">Overview of the stdpopsim review process</a>.</p>
+</section>
+</section>
+<section id="adding-a-new-demographic-model">
+<h2>Adding a new demographic model<a class="headerlink" href="#adding-a-new-demographic-model" title="Permalink to this headline"></a></h2>
+<p>A demographic model describes ancestral population sizes, split times,
+and migration rates.
+Misspecification of the model can generate unrealistic patterns of genetic
+variation that will affect downstream analyses.
+So, having at least one detailed demographic model is recommended for every species.
+A given species might have more than one demographic model,
+fit from different data or by different methods.</p>
+<section id="what-models-are-appropriate-to-add">
+<h3>What models are appropriate to add?<a class="headerlink" href="#what-models-are-appropriate-to-add" title="Permalink to this headline"></a></h3>
+<p>Any model added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should be based the <strong>published literature</strong>
+and a clear citation to the relevant paper(s) should be provided with the model.
+The demographic model should include, at a minimum,
+a single population with a series of population sizes changes.
+Multi-population models typically include other <strong>demographic events</strong>,
+such as population splits and changes in the amount of gene flow between populations.
+The values of different parameters should be specified in units of “number of individuals”
+(for population sizes) and generations (for times).
+Sometimes, you will need to convert values published in the literature
+to these units by making some assumptions on the mutation rate;
+typically the same assumptions made by the study that published the demographic model.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> also contains a collection of <strong>generic models</strong>,
+which are not associated with a certain species and are primarily used for development
+and testing of demographic inference methods.
+Due to their nature, the rationale for adding such models is different,
+and they are also implemented in a slightly different way.
+If you wish to contribute a new <strong>generic model</strong>,
+then we suggest that you <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">open a new issue</a>
+to discuss your suggestion with others in the community and decide on the best
+way to implement your suggestion.</p>
+</section>
+<section id="getting-set-up-to-add-a-new-demographic-model">
+<h3>Getting set up to add a new demographic model<a class="headerlink" href="#getting-set-up-to-add-a-new-demographic-model" title="Permalink to this headline"></a></h3>
+<p>If this is your first time implementing a demographic model in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, it’s a good
+idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
+to see how existing demographic models are coded and documented.
+If you have any questions or confusion about formatting or implementing demographic models, please
+don’t hesitate to <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">open a new issue</a>.
+We’re more than happy to answer any questions and help get you up and running.
+Before you add any code, be sure to have forked the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> repository
+and cloned it locally, following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a> section.</p>
+<p>All code for a species’ demographic models is written in the <code class="docutils literal notranslate"><span class="pre">demographic_models.py</span></code>
+file in that species directory <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>
+(where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character identifier of the species;
+e.g., CanFam).
+If the species does not currently have any demographic model,
+then you should add this file to <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>,
+with the following three lines of code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">msprime</span>
+<span class="kn">import</span> <span class="nn">stdpopsim</span>
+
+<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Furthermore, to ensure that the demographic model(s) are fully incorporated to the
+species’ code base, you should add the following import to the <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
+in the species directory:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">demographic_models</span>
+</pre></div>
+</div>
+</section>
+<section id="coding-the-demographic-model">
+<h3>Coding the demographic model<a class="headerlink" href="#coding-the-demographic-model" title="Permalink to this headline"></a></h3>
+<p>The demographic model should be coded in the <code class="docutils literal notranslate"><span class="pre">demographic_models.py</span></code> file
+by defining a specialized function, which essentially returns
+a <code class="docutils literal notranslate"><span class="pre">stdpopsim.DemographicModel</span></code> object initialized with the appropriate values.
+This function should then be added to the <code class="docutils literal notranslate"><span class="pre">_species</span></code> object using the <code class="docutils literal notranslate"><span class="pre">add_demographic_model</span></code>
+function.
+We provide below a template block of code for these two operations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_model_func_name</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DemographicModel</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">long_description</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">populations</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">citations</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">generation_time</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">mutation_rate</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">population_configurations</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">migration_matrix</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">demographic_events</span><span class="o">=...</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">_species</span><span class="o">.</span><span class="n">add_demographic_model</span><span class="p">(</span><span class="n">_model_func_name</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>A demographic model is thus defined using ten different attributes.
+The first seven attributes are quite straightforward:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (<cite>string</cite>): A unique, short-hand identifier for this demographic model.
+This id contains a short description written in camel case,
+followed by an underscore, and then four characters:
+(1) a digit character specifying the number of sampled populations;
+(2) the first letter of the name of the first author of the publication;
+(3-4) and two digit characters specifying the year the study was published.
+For example, the “Out of Africa” demographic model for humans published by
+Gutenkunst <em>et al.</em> (2009) has the <code class="docutils literal notranslate"><span class="pre">id</span></code> “OutOfAfrica_3G09”.
+See <a class="reference internal" href="#sec-development-naming-conventions"><span class="std std-ref">Naming conventions</span></a> for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> (<cite>string</cite>): A brief one-line description of the demographic model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_description</span></code> (<cite>string</cite>): A more detailed textual description of the model (short paragraph).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">populations</span></code>: A list of <code class="docutils literal notranslate"><span class="pre">stdpopsim.Population</span></code> objects, which have their own
+<code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">description</span></code>. For example, the Thousand Genomes Project Yoruba panel
+could be defined as <code class="docutils literal notranslate"><span class="pre">stdpopsim.Population(id=&quot;YRI&quot;,</span> <span class="pre">description=&quot;1000</span> <span class="pre">Genomes</span> <span class="pre">YRI</span>
+<span class="pre">(Yorubans)&quot;)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">citations</span></code>: A list of <code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> objects for the publications
+from which this model was derived.
+The citation object requires author, year, and doi information, and
+a specified reason for citing this model (see <a class="reference internal" href="#coding-the-species-parameters">Coding the species parameters</a>).
+The reason associated with demographic model citations will typically be
+<code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.DEM_MODEL</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">generation_time</span></code> (<cite>double</cite>): The generation time for the species in years.
+The value of this parameter does not directly affect the simulation,
+since the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> and <code class="docutils literal notranslate"><span class="pre">msprime</span></code> simulation engines operate in time units of generations.
+The generation time is only currently used to convert time units to years,
+which is useful when comparing among different demographic models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutation_rate</span></code> (<cite>double</cite>): The mutation rate assumed during the inference of this demographic
+model (per bp per generation).
+Most demographic inference methods make some assumption about the average genome-wide
+mutation rate.
+These assumptions are sometimes “baked” into the methods,
+and in other cases are just used to convert parameter values from mutation-scale
+to physical scale (number of individuals for population size and generations for times).
+If you are confident that inference did not make any assumption about mutation rate,
+then set the mutation rate of the demographic model to <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+However, note that this is quite uncommon, so you should make sure this is the case
+before you set the mutation rate to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<p>The final three attributes
+(<code class="docutils literal notranslate"><span class="pre">population_configurations</span></code>, <code class="docutils literal notranslate"><span class="pre">migration_matrix</span></code>, and <code class="docutils literal notranslate"><span class="pre">demographic_events</span></code>)
+describe the inferred demographic history that you wish to code.
+This history consists of ancestral population size changes,
+migration rates, split times, and admixture events.
+Note that population size is defined as the number of individuals, regardless of ploidy.
+These attributes should be coded using the standard format of <code class="docutils literal notranslate"><span class="pre">msprime</span></code>.
+If this is your first time specifying a demographic model using <code class="docutils literal notranslate"><span class="pre">msprime</span></code>,
+then we highly recommend that you take some time to read through its
+<a class="reference external" href="https://tskit.dev/msprime/docs/stable/quickstart.html">documentation and tutorials</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most published demographic models provide a range of plausible values for each
+parameter of interest.
+In your coded model, you should use some reasonable point estimate,
+such as the value associated with the the maximum likelihood fit,
+or the mean posterior (for Bayesian methods).</p>
+</div>
+</section>
+<section id="adding-a-parameter-table-to-the-docs">
+<h3>Adding a parameter table to the docs<a class="headerlink" href="#adding-a-parameter-table-to-the-docs" title="Permalink to this headline"></a></h3>
+<p>The parameters used in the implementation of the demographic model should
+also be specified in the docs in a file  <code class="docutils literal notranslate"><span class="pre">docs/parameter_tables/&lt;SPECIES_ID&gt;/&lt;MODEL_ID&gt;.csv</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character species id,
+and <code class="docutils literal notranslate"><span class="pre">&lt;MODEL_ID&gt;</span></code> is the <code class="docutils literal notranslate"><span class="pre">id</span></code> of the demographic model.
+This provides a straightforward documentation and also helps in the review
+process (see below).
+Each line in this csv file should have the format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">Type</span> <span class="p">(</span><span class="n">units</span><span class="p">),</span> <span class="n">Value</span><span class="p">,</span> <span class="n">Description</span>
+</pre></div>
+</div>
+<p>You may examine csv files currently in  the <code class="docutils literal notranslate"><span class="pre">docs/parameter_tables/</span></code> directory
+for useful examples.
+Once you completed the csv file,
+you can check that the documentation was built properly by running
+<code class="docutils literal notranslate"><span class="pre">make</span></code> in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory and opening the Catalog page in the
+<code class="docutils literal notranslate"><span class="pre">docs/_build/</span></code> directory.
+See <a class="reference internal" href="#documentation">Documentation</a> for more details.</p>
+</section>
+<section id="testing-your-demographic-model-and-submitting-a-pr">
+<h3>Testing your demographic model and submitting a PR<a class="headerlink" href="#testing-your-demographic-model-and-submitting-a-pr" title="Permalink to this headline"></a></h3>
+<p>Once you have written the demographic model function in the <code class="docutils literal notranslate"><span class="pre">demographic_models.py</span></code> file,
+you should test it locally using the development version of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+First, make sure to install the development version of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> and its requirements,
+by following the <a class="reference internal" href="#sec-development-installation"><span class="std std-ref">Installation</span></a> instructions.
+Then, check that your new demographic model function has been imported
+by executing the following Python code,
+where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character species id (e.g., HomSap or AraTha):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This prints the identifiers (<code class="docutils literal notranslate"><span class="pre">id</span></code>; see above) for all demographic models defined for the species.
+You should make sure that the identifier of your newly added model is printed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the identifier of your demographic model is not printed,
+make sure that you included the call <code class="docutils literal notranslate"><span class="pre">_species.add_demographic_model(_model_func_name())</span></code>
+for your newly defined function <code class="docutils literal notranslate"><span class="pre">_model_func_name()</span></code>
+in the end of the <code class="docutils literal notranslate"><span class="pre">demographic_models.py</span></code> file.</p>
+<p>If you are still having trouble, check the
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues?q=is%3Aissue+adding+demographic+model+">GitHub issues</a>
+or <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">open a new issue</a> to get help from others.</p>
+</div>
+<p>After you confirmed that your demographic model was added to the species code,
+you should check that you can successfully simulate it with the Python API.
+See <a class="reference internal" href="tutorial.html#sec-python-tute"><span class="std std-ref">Running stdpopsim with the Python interface (API)</span></a> for more details.
+Finally, once everything looks okay,
+you should submit a pull request (PR) with your changes to the code.
+See the <a class="reference internal" href="#github-workflow">GitHub workflow</a> for more details about this process.</p>
+<p>At this point, most of your work is done.
+<strong>You have officially joined the</strong> <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>development team. Welcome!!</strong>
+Your model still needs to undergo review by another member (or members)
+of the development team before it is fully incorporated into <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+This will likely require additional feedback from you,
+so, stay tuned for discussion during the review process.</p>
+</section>
+<section id="implementing-tests-for-the-review-of-a-demographic-model">
+<h3>Implementing tests for the review of a demographic model<a class="headerlink" href="#implementing-tests-for-the-review-of-a-demographic-model" title="Permalink to this headline"></a></h3>
+<p>After a contributor submits a PR with a new demographic model,
+the code undergoes seven steps of review before it
+is officially added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> (see <a class="reference internal" href="#overview-of-the-stdpopsim-review-process">Overview of the stdpopsim review process</a>).
+In Step 3 of this process, the reviewer writes testing code for the newly
+added demographic model.
+This is done in file <code class="docutils literal notranslate"><span class="pre">stdpopsim/qc/&lt;SPECIES_ID&gt;.py</span></code>
+(where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character identifier of the species).
+If this is the first demographic model added for this species,
+the reviewer should create this file and add an import
+statement for the species to <code class="docutils literal notranslate"><span class="pre">stdpopsim/qc/__init__.py</span></code>.</p>
+<p>The code written by the reviewer in <code class="docutils literal notranslate"><span class="pre">stdpopsim/qc/&lt;SPECIES_ID&gt;.py</span></code>
+should define a function that returns a
+<code class="docutils literal notranslate"><span class="pre">stdpopsim.DemographicModel</span></code> object, parallel to the function defined
+by the original contributor of the demographic model (see <a class="reference internal" href="#coding-the-demographic-model">Coding the demographic model</a>).
+After this function is defined, it should be <strong>registered as the QC function</strong> of the
+original function by adding this bit of code to <code class="docutils literal notranslate"><span class="pre">stdpopsim/qc/&lt;SPECIES_ID&gt;.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="n">_MODEL_ID_</span><span class="p">)</span><span class="o">.</span><span class="n">register_qc</span><span class="p">(</span><span class="n">_your_review_function</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">_MODEL_ID_</span></code> is the string specified by the original contributor as the
+<code class="docutils literal notranslate"><span class="pre">id</span></code> of the demographic model, and <code class="docutils literal notranslate"><span class="pre">_your_review_function()</span></code> is the function
+implemented by the reviewer.</p>
+<p>The original demographic model and its registered QC model are compared as part of
+the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <a class="reference internal" href="#unit-tests">Unit tests</a>.</p>
+</section>
+</section>
+<section id="adding-a-genetic-map">
+<h2>Adding a genetic map<a class="headerlink" href="#adding-a-genetic-map" title="Permalink to this headline"></a></h2>
+<p>Some species have sub-chromosomal recombination maps available. They can be added to
+<cite>stdpopsim</cite> by creating a new <cite>GeneticMap</cite> object and providing a formatted file
+detailing recombination rates to a designated <cite>stdpopsim</cite> maintainer who then uploads
+it to AWS. If there is one for your species that you wish to include, create a space
+delimited file with four columns: Chromosome, Position(bp), Rate(cM/Mb), and Map(cM).
+Each chromosome should be placed in a separate file and with the chromosome id in the
+file name in such a way that it can be programatically parsed out. IMPORTANT: chromosome
+ids must match those provided in the genome definition exactly! Below is an example start
+to a recombination map file (see <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap.read_hapmap">here</a>
+for more details):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Chromosome</span> <span class="n">Position</span><span class="p">(</span><span class="n">bp</span><span class="p">)</span> <span class="n">Rate</span><span class="p">(</span><span class="n">cM</span><span class="o">/</span><span class="n">Mb</span><span class="p">)</span> <span class="n">Map</span><span class="p">(</span><span class="n">cM</span><span class="p">)</span>
+<span class="n">chr1</span> <span class="mi">32807</span> <span class="mf">5.016134</span> <span class="mi">0</span>
+<span class="n">chr1</span> <span class="mi">488426</span> <span class="mf">4.579949</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Once you have the recombination map files formatted, tar and gzip them into a single
+compressed archive. The gzipped tarball must be FLAT (there are no directories in the
+tarball). This file will be sent to one of the <cite>stdpopsim</cite> uploaders for placement in the
+AWS cloud once the new genetic map(s) are approved. Finally, you must add a <cite>GeneticMap</cite>
+object to the file named for your species in the <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code> directory
+(the one that contains all the simulation code for that species,
+see <a class="reference internal" href="#getting-set-up-to-add-a-new-species">Getting set up to add a new species</a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_genetic_map_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_MAP</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The file_pattern argument is a pattern that matches the recombination map filenames,</span>
+<span class="sd">where &#39;{id}&#39; is replaced with the &#39;id&#39; field of a given chromosome.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">_gm</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">(</span>
+    <span class="n">species</span><span class="o">=</span><span class="n">_species</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>  <span class="c1"># ID for genetic map, see naming conventions</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
+    <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;https://stdpopsim.s3-us-west-2.amazonaws.com/genetic_maps/dir/filename&quot;</span><span class="p">),</span>
+    <span class="n">sha256</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
+    <span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;name_</span><span class="si">{id}</span><span class="s2">_more_name.txt&quot;</span><span class="p">,</span>
+    <span class="n">citations</span><span class="o">=</span><span class="p">[</span><span class="n">_genetic_map_citation</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">_species</span><span class="o">.</span><span class="n">add_genetic_map</span><span class="p">(</span><span class="n">_gm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The SHA256 checksum of the the genetic map tarball can be obtained using the
+<code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
+system, the following can instead be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
+</pre></div>
+</div>
+<p>Once all this is done, submit a PR containing the code changes and wait for directions
+on whom to send the compressed archive of genetic maps to (currently Andrew Kern is the
+primary uploader but please wait to send files to him until directed).</p>
+</section>
+<section id="lifting-over-a-genetic-map">
+<h2>Lifting over a genetic map<a class="headerlink" href="#lifting-over-a-genetic-map" title="Permalink to this headline"></a></h2>
+<p>Existing genetic maps will need to be lifted over to a new assembly, if and when the
+current assembly is updated in <cite>stdpopsim</cite>. This process can be partially automated by running
+the liftOver maintenance code.</p>
+<p>First, you must download and install the <code class="docutils literal notranslate"><span class="pre">liftOver</span></code> executable from the
+<a class="reference external" href="https://genome-store.ucsc.edu/">UCSC Genome Browser Store</a>.
+Next, you must download the appropriate chain files, again from UCSC
+(see <a class="reference external" href="http://hgdownload.soe.ucsc.edu/downloads.html#liftover">UCSC Genome Browser downloads</a> for more details).
+To validate the remapping between assemblies it is required to have chain files
+corresponding to both directions of the liftOver
+(e.g. <cite>hg19ToHg38.over.chain.gz</cite> and <cite>hg38ToHg19.over.chain.gz</cite>) as in the
+example below.</p>
+<p>An example of the process for
+lifting over the <cite>GeneticMap</cite> <code class="docutils literal notranslate"><span class="pre">&quot;HapMapII_GRCh37&quot;</span></code> to the <code class="docutils literal notranslate"><span class="pre">&quot;Hg19&quot;</span></code> assembly
+is shown below:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python /maintenance/liftOver_catalog.py <span class="se">\</span>
+    --species HomSap <span class="se">\</span>
+    --map HapMapII_GRCh37 <span class="se">\</span>
+    --chainFile hg19ToHg38.over.chain.gz <span class="se">\</span>
+    --validationChain hg38ToHg19.over.chain.gz <span class="se">\</span>
+    --winLen <span class="m">1000</span> <span class="se">\</span>
+    --useAdjacentAvg <span class="se">\</span>
+    --retainIntermediates <span class="se">\</span>
+    --gapThresh <span class="m">1000000</span>
+</pre></div>
+</div>
+<p>Here, the argument <code class="docutils literal notranslate"><span class="pre">&quot;--winLen&quot;</span></code> corresponds to the size of the window over which a weighted
+average of recombination rates is taken when comparing the original map with the
+back-lifted map (for validation purposes only). The argument <code class="docutils literal notranslate"><span class="pre">&quot;--gapThresh&quot;</span></code> is used to select a threshold for
+which gaps in the new assembly longer than the <code class="docutils literal notranslate"><span class="pre">&quot;--gapThresh&quot;</span></code> will be set with a
+recombination rate equal to 0.0000, instead of an average rate. The type of average rate used for gaps
+shorter than the <code class="docutils literal notranslate"><span class="pre">&quot;--gapThresh&quot;</span></code> is determined either by using the mean rate of two most adjacent windows
+or by using the mean rate for the entire chromosome, using options <code class="docutils literal notranslate"><span class="pre">&quot;--useAdjacentAvg&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;--useChromosomeAvg&quot;`</span></code> respectively.</p>
+<p>Validation plots will automatically be generated in the <code class="docutils literal notranslate"><span class="pre">liftOver_validation/</span></code>
+directory. Intermediate files created by the <code class="docutils literal notranslate"><span class="pre">liftOver</span></code> executable will be saved
+for inspection in the <code class="docutils literal notranslate"><span class="pre">&quot;/liftOver_intermediates/&quot;</span></code>, only if the
+<code class="docutils literal notranslate"><span class="pre">&quot;--retainInermediates&quot;</span></code> option is used. Once the user has inspected the validation plots
+and deemed the liftOver process to be sufficiently accurate, they can proceed to generating
+the SHA256 checksum.</p>
+<p>The SHA256 checksum of the new genetic map tarball can be obtained using the
+<code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
+system, the following can instead be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
+</pre></div>
+</div>
+<p>The newly lifted over maps will be formatted in a compressed archive and
+automatically named using the assembly name from the chain file.
+This file will be sent to one of the <cite>stdpopsim</cite> uploaders for placement in the
+AWS cloud, once the new map is approved. Finally, you must add a <cite>GeneticMap</cite>
+object to the file named for your species in the <cite>stdpopsim/catalog/&lt;SPECIES_ID&gt;/</cite>
+directory, as shown in <a class="reference internal" href="#adding-a-genetic-map">Adding a genetic map</a>.</p>
+<p>Again, once all this is done, submit a PR containing the code changes and wait for
+directions on whom to send the compressed archive of genetic maps to
+(currently Andrew Kern is the primary uploader but please wait to send files
+to him until directed).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">GeneticMap</span></code> named <code class="docutils literal notranslate"><span class="pre">&quot;ComeronCrossoverV2_dm6&quot;</span></code> for <code class="docutils literal notranslate"><span class="pre">&quot;DroMel&quot;</span></code>
+was generated by similar code (albeit slightly different
+compared to that shown above) using the following command:</p>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python /maintenance/liftOver_comeron2012.py <span class="se">\</span>
+    --winLen <span class="m">1000</span> <span class="se">\</span>
+    --gapThresh <span class="m">1000000</span> <span class="se">\</span>
+    --useAdjacentAvg <span class="se">\</span>
+    --retainIntermediates
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">GeneticMap</span></code> named <code class="docutils literal notranslate"><span class="pre">&quot;SalomeAveraged_TAIR10&quot;</span></code> for <code class="docutils literal notranslate"><span class="pre">&quot;AraTha&quot;</span></code>
+was generated by aligning the TAIR7 and TAIR10 with <code class="docutils literal notranslate"><span class="pre">&quot;minimap2&quot;</span></code>,
+and lifting the recombination rates on TAIR7 to TAIR10 with
+<code class="docutils literal notranslate"><span class="pre">&quot;paftools.js</span> <span class="pre">liftover&quot;</span></code>.</p>
+</div>
+</section>
+<section id="adding-a-dfe-model">
+<span id="sec-development-dfe-model"></span><h2>Adding a DFE model<a class="headerlink" href="#adding-a-dfe-model" title="Permalink to this headline"></a></h2>
+<p>A distribution of fitness effects (DFE) describes
+the probability distribution of selection coefficients
+(deleterious, neutral, and beneficial)
+for mutations occurring in a certain set of genomic regions.
+This is a central component of the way that <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>
+incorporates natural selection in its simulations.
+See <a class="reference internal" href="tutorial.html#sec-simulating-sel"><span class="std std-ref">Simulating genomes with selection</span></a>.
+There are various computational methods for estimating DFEs from genomic data
+and you may use published DFEs to code a DFE model, as described below.</p>
+<section id="getting-set-up-to-add-a-new-dfe-model">
+<h3>Getting set up to add a new DFE model<a class="headerlink" href="#getting-set-up-to-add-a-new-dfe-model" title="Permalink to this headline"></a></h3>
+<p>If this is your first time implementing a DFE in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, it’s a good
+idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
+to see how existing DFE models are coded and documented.
+If you have any questions or confusion about formatting or implementing demographic models, please
+don’t hesitate to <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">open a new issue</a>.
+We’re more than happy to answer any questions and help get you up and running.
+Before you add any code, be sure to have forked the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> repository
+and cloned it locally, following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a> section.</p>
+<p>The code for for a species’ DFE models is written in the <code class="docutils literal notranslate"><span class="pre">dfes.py</span></code>
+file in that species directory <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>
+(where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character identifier of the species;
+e.g., AraTha).
+If the species does not currently have any DFE model,
+then you should add this file to <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>,
+with the following two lines of code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+
+<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Furthermore, to ensure that the DFE model is fully incorporated to the
+species’ code base, you should add the following import to the <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
+in the species directory:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">dfes</span>
+</pre></div>
+</div>
+</section>
+<section id="coding-the-dfe-model">
+<h3>Coding the DFE model<a class="headerlink" href="#coding-the-dfe-model" title="Permalink to this headline"></a></h3>
+<p>The DFE model should be coded in the <code class="docutils literal notranslate"><span class="pre">dfes.py</span></code> file
+by defining a specialized function, which essentially returns
+a <code class="docutils literal notranslate"><span class="pre">stdpopsim.DFE</span></code> object initialized with the appropriate values.
+This function should then be added to the <code class="docutils literal notranslate"><span class="pre">_species</span></code> object using the <code class="docutils literal notranslate"><span class="pre">add_dfe</span></code>
+function.
+We provide below a template block of code for these two operations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_dfe_func_name</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DFE</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">long_description</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">citations</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">proportions</span><span class="o">=...</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">_species</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">_dfe_func_name</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>A DFE model is thus defined using six different attributes.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (<cite>string</cite>): A unique, short-hand identifier for this DFE model.
+This id contains a short description of the distribution written in camel case,
+(such as <cite>“LogNormal”</cite> or <cite>“Gamma”</cite>),
+followed by an underscore, and then three characters:
+(1) the first letter of the name of the first author of the publication;
+(2-3) and two digit characters specifying the year the study was published.
+For example, the DFE inferred by Kim <em>et al.</em> (2017) has <code class="docutils literal notranslate"><span class="pre">id</span></code> set to <cite>“Gamma_K17”</cite>.
+See <a class="reference internal" href="#sec-development-naming-conventions"><span class="std std-ref">Naming conventions</span></a> for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> (<cite>string</cite>): A brief one-line description of the demographic model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_description</span></code> (<cite>string</cite>): A more detailed textual description of the model (short paragraph).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">citations</span></code>: A list of <code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> objects for the publications
+from which this model was derived.
+The citation object requires author, year, and doi information, and
+a specified reason for citing this model (see <a class="reference internal" href="#coding-the-species-parameters">Coding the species parameters</a>).
+The reason associated with demographic model citations will typically be
+<code class="docutils literal notranslate"><span class="pre">stdpopsim.CiteReason.DFE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutation_types</span></code>: A list of <code class="docutils literal notranslate"><span class="pre">stdpopsim.MutationType</span></code> objects corresponding to different
+mutation types (such as negative, neutral, or positive).
+For more details, see the example below and the documentation of <a class="reference internal" href="api.html#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">stdpopsim.MutationType</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">proportions</span></code>: A list of positive numbers that sum to 1 of the same length as <code class="docutils literal notranslate"><span class="pre">mutation_types</span></code>.
+This list specifies the proportion of each mutation type.</p></li>
+</ul>
+<p>For example, the code block below demonstrates a DFE model
+with three mutation types: neutral, negative, and positive.
+In this model, negative mutations are assumed to have
+dominance coefficience of <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and a selection
+coefficients distributed according to a Gamma distribution
+with mean <code class="docutils literal notranslate"><span class="pre">-0.0004</span></code> and shape <code class="docutils literal notranslate"><span class="pre">0.27</span></code>.
+The positive mutations also have a dominance coefficience of <code class="docutils literal notranslate"><span class="pre">0.5</span></code>,
+but they have a fixed selection coefficient of <code class="docutils literal notranslate"><span class="pre">0.01</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_dfe_func_name</span><span class="p">():</span>
+
+    <span class="c1"># Default mutation type is neutral</span>
+    <span class="n">neutral</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">()</span>
+    <span class="c1"># Negative mutation type with gamma-distributed selection coefficients</span>
+    <span class="n">negative</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
+        <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>  <span class="c1"># gamma distribution</span>
+        <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.0004</span><span class="p">,</span> <span class="mf">0.27</span><span class="p">],</span>  <span class="c1"># mean and shape of distributoin</span>
+    <span class="p">)</span>
+    <span class="c1"># Positive mutation type with fixed selection coefficient of 0.01</span>
+    <span class="n">positive</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
+        <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>  <span class="c1"># fixed selection coefficient</span>
+        <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">],</span>  <span class="c1"># fixed value</span>
+    <span class="p">)</span>
+
+    <span class="c1"># The proportions of the three mutation types</span>
+    <span class="n">p_neutral</span> <span class="o">=</span> <span class="mf">0.7</span>
+    <span class="n">p_negative</span> <span class="o">=</span> <span class="mf">0.299</span>
+    <span class="n">p_positive</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p_neutral</span> <span class="o">-</span> <span class="n">p_negative</span>
+
+    <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DFE</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">long_description</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">citations</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">neutral</span><span class="p">,</span> <span class="n">negative</span><span class="p">,</span> <span class="n">positive</span><span class="p">],</span>
+        <span class="n">proportions</span><span class="o">=</span><span class="p">[</span><span class="n">p_neutral</span><span class="p">,</span> <span class="n">p_negative</span><span class="p">,</span> <span class="n">p_positive</span><span class="p">],</span>
+    <span class="p">)</span>
+
+
+<span class="n">_species</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">_dfe_func_name</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="testing-your-dfe-model-and-submitting-a-pr">
+<h3>Testing your DFE model and submitting a PR<a class="headerlink" href="#testing-your-dfe-model-and-submitting-a-pr" title="Permalink to this headline"></a></h3>
+<p>After you finished your implementation, and specified all the
+necessary citations,
+we recommend that you run some basic local tests to see that
+the model was successfully loaded to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+You may follow the process outlined for <a class="reference internal" href="#testing-your-demographic-model-and-submitting-a-pr">Testing your demographic model and submitting a PR</a>.</p>
+<p>Once you are convinced that the model was accurately implemented and loaded to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>,
+you should submit a pull request (PR) with your changes to the code.
+See the <a class="reference internal" href="#github-workflow">GitHub workflow</a> for more details about this process.</p>
+<p>At this point, most of your work is done.
+<strong>You have officially joined the</strong> <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>development team. Welcome!!</strong>
+Your DFE model still needs to undergo review by another member
+of the development team before it is fully incorporated into <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+This will likely require additional feedback from you,
+so, stay tuned for discussion during the review process.</p>
+</section>
+<section id="reviewing-a-dfe-model">
+<h3>Reviewing a DFE model<a class="headerlink" href="#reviewing-a-dfe-model" title="Permalink to this headline"></a></h3>
+<p>The review process for DFE models is currently being developed.
+For now, we suggest that you
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">open a new blank issue</a>
+and specify the following information:</p>
+<ol class="arabic simple">
+<li><p><strong>PR for new model:</strong></p></li>
+<li><p><strong>Original paper:</strong></p></li>
+<li><p><strong>Parameter values:</strong></p></li>
+<li><p><strong>Potential issues:</strong></p></li>
+<li><p><strong>QC’er requests:</strong></p></li>
+</ol>
+<p>A reviewer will be assigned to check your implementation and approve it.
+All discussion about the review can be conducted in the <strong>QC issue</strong>
+mentioned above.</p>
+</section>
+</section>
+<section id="coding-standards">
+<h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this headline"></a></h2>
+<p>To ensure that the code in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is as readable as possible
+and follows a reasonably uniform style, we require that all code follows
+the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> style guide.
+Lines of code should be no more than 89 characters.
+Conformance to this style is checked as part of the Continuous Integration
+testing suite.</p>
+</section>
+<section id="naming-conventions">
+<span id="sec-development-naming-conventions"></span><h2>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline"></a></h2>
+<p>To ensure uniformity in naming schemes across objects in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>
+we have strict conventions for species, genetic maps, and demographic
+models.</p>
+<p>Species names follow a <code class="docutils literal notranslate"><span class="pre">${first_3_letters_genus}${first_3_letters_species}</span></code>
+convention with capitilization such that Homo sapiens becomes “HomSap”. This
+is similar to the UCSC Genome Browser naming convention and should be familiar.</p>
+<p>Genetic maps are named using a descriptive name and the assembly version according
+to <code class="docutils literal notranslate"><span class="pre">${CamelCaseDescriptiveName}_${Assembly}</span></code>. e.g., the HapMap phase 2 map on
+the GRCh37 assembly becomes HapMapII_GRCh37.</p>
+<p>Demographic models are named using a combination of a descriptive name,
+information about the simulation, and information about the publication it was
+presented in. Specifically we use
+<code class="docutils literal notranslate"><span class="pre">${SomethingDescriptive}_${number_of_populations}${first_author_initial}${two_digit_date}</span></code>
+where the descriptive text is meant to capture something about the model
+(i.e. an admixture model, a population crash, etc.) and the number of populations
+is the number of populations implemented in the model (not necessarily the number
+from which samples are drawn). For author initial we will use a single letter, the 1st,
+until an ID collision, in which case we will include the 2nd letter, and so forth.</p>
+<p>DFE (Distribution of Fitness Effects) models are similarly named using a string describing
+the distribution, and information about the publication:
+<code class="docutils literal notranslate"><span class="pre">${SomethingDescriptive}_${First_authors_last_name_first_letter}{two_digit_date}</span></code>.
+For instance, if the distribution in question is a lognormal distribution,
+then <code class="docutils literal notranslate"><span class="pre">LogNormal</span></code> might be the descriptive string.</p>
+</section>
+<section id="unit-tests">
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline"></a></h2>
+<p>All code added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should have
+<a class="reference external" href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a>. These are typically
+simple and fast checks to ensure that the code makes basic sense (the
+entire unit test suite should not require more than a few seconds to run).
+Test coverage is checked using <a class="reference external" href="https://codecov.io/gh/popgensims/stdpopsim">CodeCov</a>,
+which generates reports about each pull request.</p>
+<p>It is not practical to test the statistical properties of simulation models
+as part of unit tests.</p>
+<p>The unit test suite is in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> directory. Tests are run using the
+<a class="reference external" href="https://docs.pytest.org/en/stable/">pytest</a> module. Use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pytest
+</pre></div>
+</div>
+<p>from the project root to run the full test suite. Pytest is very powerful and
+has lots of options; please see the <a class="reference external" href="https://tskit.dev/tskit/docs/stable/development.html#tests">tskit documentation</a> for help on
+how to run pytest and some common options.</p>
+<p>It’s useful to run the <code class="docutils literal notranslate"><span class="pre">flake8</span></code> CI tests <em>locally</em> before pushing a commit.
+To set this up use either <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install <code class="docutils literal notranslate"><span class="pre">flake8</span></code></p>
+<p>To run the test simply use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ flake8 --max-line-length 89 stdpopsim tests
+</pre></div>
+</div>
+<p>If you would like to automatically run this test before a commit is permitted,
+add the following line in the file <code class="docutils literal notranslate"><span class="pre">stdpopsim/.git/hooks/pre-commit.sample</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exec</span> <span class="n">flake8</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">line</span><span class="o">-</span><span class="n">length</span> <span class="mi">89</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">stdpopsim</span> <span class="n">tests</span>
+</pre></div>
+</div>
+<p>before:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># If there are whitespace errors, print the offending file names and fail.
+exec git diff-index --check --cached $against --
+</pre></div>
+</div>
+<p>Finally, rename <code class="docutils literal notranslate"><span class="pre">pre-commit.sample</span></code> to simply <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code></p>
+</section>
+<section id="code-coverage">
+<h2>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline"></a></h2>
+<p>As part of the continuous testing suite we have automated checking of how
+well the test units cover the source code. As a result it’s very helpful
+to check locally how well your tests are covering your code by asking
+<cite>pytest</cite> for coverage reports. This can be done with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest --cov-report html --cov=stdpopsim tests/
+</pre></div>
+</div>
+<p>this will output a directory of html files for you to browse test coverage
+for every file in <cite>stdpopsim</cite> in a reasonably straightfoward graphical
+way. To see them, direct your web browser to the <cite>htmlcov/index.html</cite> file.
+You’ll be looking for lines of code that are highlighted yellow or red
+indicated that tests do not currently cover that bit of code.</p>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<p>Documentation is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>
+markup and the <a class="reference external" href="http://www.sphinx-doc.org/en/master/">sphinx</a> documentation system.
+It is defined in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory.</p>
+<p>To build the documentation type <code class="docutils literal notranslate"><span class="pre">make</span></code> in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory. This should build
+HTML output in the <code class="docutils literal notranslate"><span class="pre">docs/_build/html/</span></code> directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to be installed for the build to work.</p>
+</div>
+</section>
+<section id="making-a-new-release">
+<h2>Making a new release<a class="headerlink" href="#making-a-new-release" title="Permalink to this headline"></a></h2>
+<p>Here is a list of things to do when making a new release:</p>
+<ol class="arabic simple">
+<li><p>Update the changelog and commit</p></li>
+<li><p>Create a release using the GitHub UI</p></li>
+<li><dl class="simple">
+<dt><cite>git fetch upstream</cite> on your local branch.</dt><dd><p>Then check out <cite>upstream/main</cite> and create a release tarball
+(with <cite>python setup.py sdist</cite>).
+Setuptools_scm will detect the version appopriately.</p>
+</dd>
+</dl>
+</li>
+<li><p>Upload to PyPI: <cite>twine upload dist/{version just tagged}.tar.gz</cite></p></li>
+<li><p>After the release, if everything looks OK,
+update the symlink for <code class="docutils literal notranslate"><span class="pre">stable</span></code> in the
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim-docs">stdpopsim-docs</a>
+repository</p></li>
+<li><p>Check on the conda feedstock PR.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="changelogs.html" class="btn btn-neutral float-right" title="Changelogs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, PopSim Consortium.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

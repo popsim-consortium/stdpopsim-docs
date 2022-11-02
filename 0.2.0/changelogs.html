@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelogs &mdash; stdpopsim 0.2.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Development" href="development.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> stdpopsim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelogs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">[0.2.0] - 2022-11-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">[0.1.2] - 2020-05-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">[0.1.1] - 2020-01-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">[0.1.0] - 2019-12-18</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stdpopsim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Changelogs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/changelogs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelogs">
+<h1>Changelogs<a class="headerlink" href="#changelogs" title="Permalink to this headline"></a></h1>
+<section id="id1">
+<h2>[0.2.0] - 2022-11-01<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<p>Major feature release adding many new species and models, as well as support
+for simulating selection via SLiM.</p>
+<p><strong>Bug fixes</strong>:</p>
+<ul class="simple">
+<li><p>Parameters in the HomSap/Zigzag_1S14 model now match those in Schiffels &amp;
+Durbin (2014) (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/750">#750</a>).</p></li>
+<li><p>Recombination rate for DroMel chr4 changed to 0
+(<a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1092">#1092</a>).</p></li>
+<li><p>Per-chromosome mean recombination rates for HomSap were incorrectly
+calculated (<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1345">#1345</a>).</p></li>
+</ul>
+<p><strong>Breaking changes</strong>:</p>
+<ul class="simple">
+<li><p>Removed <cite>GeneticMap</cite> class from public API (<a class="reference external" href="https://github.com/jeromekelleher">&#64;jeromekelleher</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/713">#713</a>).</p></li>
+<li><p>Samples are now specified via population/individual pairs, using
+species/chromosome ploidy.  The old API for specifying haploid samples via
+population index has been retained, but is deprecated and will be
+removed at some point (<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1361">#1361</a>).</p></li>
+</ul>
+<p><strong>New species</strong>:</p>
+<ul class="simple">
+<li><p>Aedes aegypti (<a class="reference external" href="https://github.com/manolofperez">&#64;manolofperez</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/871">#871</a>).
+QC’d by <a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/893">#893</a>.</p></li>
+<li><p>Anas platyrhynchos (<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/826">#826</a>).
+QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1070">#1070</a>.</p></li>
+<li><p>Anolis carolinensis (<a class="reference external" href="https://github.com/vcaudill">&#64;vcaudill</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/874">#874</a>).
+QC’d by <a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/896">#896</a>.</p></li>
+<li><p>Anopheles gambiae (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/856">#856</a>).
+QC’d by <a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/906">#906</a>.</p></li>
+<li><p>Apis mellifera (<a class="reference external" href="https://github.com/janaobsteter">&#64;janaobsteter</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1025">#1025</a>).
+QC’d by <a class="reference external" href="https://github.com/manolofperez">&#64;manolofperez</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1268">#1268</a>.</p></li>
+<li><p>Bos taurus (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/600">#600</a>).
+QC’d by <a class="reference external" href="https://github.com/gtsambos">&#64;gtsambos</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1269">#1269</a>.</p></li>
+<li><p>Caenorhabditis elegans (<a class="reference external" href="https://github.com/attrna">&#64;attrna</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/910">#910</a>).
+QC’d by <a class="reference external" href="https://github.com/chriscrsmith">&#64;chriscrsmith</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1265">#1265</a>.</p></li>
+<li><p>Chlamydomonas reinhardtii (<a class="reference external" href="https://github.com/aays">&#64;aays</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/863">#863</a>).
+QC’d by <a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1067">#1067</a>.</p></li>
+<li><p>Drosophila sechellia (<a class="reference external" href="https://github.com/jradrion">&#64;jradrion</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/872">#872</a>).
+QC’d by <a class="reference external" href="https://github.com/vitorpavinato">&#64;vitorpavinato</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1264">#1264</a>.</p></li>
+<li><p>Gasterosteus aculeatus (<a class="reference external" href="https://github.com/vitorpavinato">&#64;vitorpavinato</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1105">#1105</a>).
+QC’d by <a class="reference external" href="https://github.com/manolofperez">&#64;manolofperez</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1253">#1253</a>.</p></li>
+<li><p>Helianthus annuus (<a class="reference external" href="https://github.com/chriscrsmith">&#64;chriscrsmith</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1218">#1218</a>).
+QC’d by <a class="reference external" href="https://github.com/xin-huang">&#64;xin-huang</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1250">#1250</a>.</p></li>
+<li><p>Heliconius melpomene (<a class="reference external" href="https://github.com/percyfal">&#64;percyfal</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/870">#870</a>).
+QC’d by <a class="reference external" href="https://github.com/noscode">&#64;noscode</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1165">#1165</a>.</p></li>
+<li><p>Pan troglodytes (<a class="reference external" href="https://github.com/xin-huang">&#64;xin-huang</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1215">#1215</a>).
+QC’d by <a class="reference external" href="https://github.com/janaobsteter">&#64;janaobsteter</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1291">#1291</a>.</p></li>
+<li><p>Papio anubis (<a class="reference external" href="https://github.com/saurabhbelsare">&#64;saurabhbelsare</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1216">#1216</a>).
+QC’d by <a class="reference external" href="https://github.com/mufernando">&#64;mufernando</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1263">#1263</a>.</p></li>
+<li><p>Streptococcus agalactiae (<a class="reference external" href="https://github.com/jeanrjc">&#64;jeanrjc</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/854">#854</a>).
+QC’d by <a class="reference external" href="https://github.com/vitorpavinato">&#64;vitorpavinato</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1251">#1251</a>.</p></li>
+</ul>
+<p><strong>New models</strong>:</p>
+<ul class="simple">
+<li><p>AnaPla/MallardBlackDuck_2L19 (<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/883">#883</a>).
+QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1021">#1021</a>.</p></li>
+<li><p>AnoGam/GabonAg1000G_1A17 (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/856">#856</a>).
+QC’d by <a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1279">#1279</a>.</p></li>
+<li><p>BosTau/HolsteinFriesian_1M13 (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/600">#600</a>).
+QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1272">#1272</a>.</p></li>
+<li><p>HomSap/OutOfAfricaExtendedNeandertalAdmixturePulse_3I21
+(<a class="reference external" href="https://github.com/leonardolasi">&#64;leonardolasi</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1066">#1066</a>).
+QC’d by <a class="reference external" href="https://github.com/awohns">&#64;awohns</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1259">#1259</a>.</p></li>
+<li><p>HomSap/OutOfAfrica_4J17 (<a class="reference external" href="https://github.com/rwaples">&#64;rwaples</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/726">#726</a>).
+QC’d by <a class="reference external" href="https://github.com/jeffspence">&#64;jeffspence</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1246">#1246</a>.</p></li>
+<li><p>HomSap/Africa_1B08 (<a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/993">#993</a>).
+QC’d by <a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/995">#995</a>.</p></li>
+<li><p>HomSap/AncientEurope_4A21 (<a class="reference external" href="https://github.com/alipearson">&#64;alipearson</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/941">#941</a>).
+QC’d by <a class="reference external" href="https://github.com/mufernando">&#64;mufernando</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1256">#1256</a>.</p></li>
+<li><p>PanTro/BonoboGhost_4K19 (<a class="reference external" href="https://github.com/xin-huang">&#64;xin-huang</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1215">#1215</a>).
+QC’d by <a class="reference external" href="https://github.com/kuhlwilm">&#64;kuhlwilm</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1370">#1370</a>.</p></li>
+<li><p>PapAnu/SinglePopSMCpp_1W22 (<a class="reference external" href="https://github.com/saurabhbelsare">&#64;saurabhbelsare</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1216">#1216</a>).
+QC’d by <a class="reference external" href="https://github.com/attrna">&#64;attrna</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1261">#1261</a>.</p></li>
+</ul>
+<p><strong>New genetic maps</strong>:</p>
+<ul class="simple">
+<li><p>CaeEle/RockmanRIAIL_ce11 (<a class="reference external" href="https://github.com/attrna">&#64;attrna</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/910">#910</a>).</p></li>
+<li><p>DroMel/ComeronCrossoverV2_dm6 liftover (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/592">#592</a>).</p></li>
+<li><p>HomSap/HapMapII_GRCh38 liftover (<a class="reference external" href="https://github.com/saurabhbelsare">&#64;saurabhbelsare</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1301">#1301</a>).</p></li>
+<li><p>HomSap/DeCodeSexAveraged_GRCh38 liftover (<a class="reference external" href="https://github.com/saurabhbelsare">&#64;saurabhbelsare</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1301">#1301</a>).</p></li>
+<li><p>HomSap/PyrhoXXX_GRCh38 (<a class="reference external" href="https://github.com/jeffspence">&#64;jeffspence</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/572">#572</a> and <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/575">#575</a>),
+for XXX in ACB, ASW, BEB, CDX, CEU, CHB, CHS, CLM, ESN, FIN, GBR, GIH, GWD,
+IBS, ITU, JPT, KHV, LWK, MSL, MXL, PEL, PJL, PUR, STU, TSI, and YRI.</p></li>
+<li><p>PapAnu/Pyrho_PAnubis1_0 (<a class="reference external" href="https://github.com/saurabhbelsare">&#64;saurabhbelsare</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1216">#1216</a>)</p></li>
+</ul>
+<p><strong>New features</strong>:</p>
+<ul class="simple">
+<li><p>Distributions of fitness effects (“DFEs”) defined over genomic intervals
+(<a class="reference external" href="https://github.com/mufernando">&#64;mufernando</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/644">#644</a>; <a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1002">#1002</a>;
+plus numerous others).</p></li>
+<li><p>DFE simulation via SLiM
+(<a class="reference external" href="https://github.com/mufernando">&#64;mufernando</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/930">#930</a>; plus numerous others).</p></li>
+<li><p>Metadata for tree sequences produced by SLiM
+(<a class="reference external" href="https://github.com/mufernando">&#64;mufernando</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1152">#1152</a>).</p></li>
+<li><p>Per-generation fitness statistics for SLiM simulations
+(<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1200">#1200</a>).</p></li>
+<li><p>Selective sweep simulation and allele frequency conditioning via SLiM
+(<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/462">#462</a>; <a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1341">#1341</a>).</p></li>
+<li><p>Gene conversion simulation via msprime and SLiM
+(<a class="reference external" href="https://github.com/fbaumdicker">&#64;fbaumdicker</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1106">#1106</a>; <a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1355">#1355</a>).</p></li>
+<li><p>Genome annotation tracks
+(<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/560">#560</a> and <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/960">#960</a>).</p></li>
+<li><p>Masking intervals in simulated data
+(<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/664">#664</a>).</p></li>
+<li><p>Method to get generic contig of arbitrary length for a species
+(<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/664">#664</a>).</p></li>
+<li><p>Method to get contig from a segment of a named chromosome
+(<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1348">#1348</a>).</p></li>
+<li><p>Pass keyworded arguments from simulation engine to msprime
+(<a class="reference external" href="https://github.com/awohns">&#64;awohns</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/736">#736</a>).</p></li>
+<li><p>Use msprime 1.0 for simulation from msprime engine
+(<a class="reference external" href="https://github.com/jeromekelleher">&#64;jeromekelleher</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/764">#764</a>).</p></li>
+<li><p>Use SLiM 4.0 for simulation from SLiM engine
+(<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1326">#1326</a>).</p></li>
+<li><p>Mutation rates can be stored in catalog models
+(<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/839">#839</a>).</p></li>
+<li><p>Ploidy is a species and chromosome attribute
+(<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1361">#1361</a>).</p></li>
+<li><p>Mutations from SLiM simulations converted to nucleotides
+(<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1356">#1356</a>).</p></li>
+<li><p>Various improvements and fixes to the documentation and error messaging.</p></li>
+</ul>
+<p><strong>Additions to CLI</strong>:</p>
+<ul class="simple">
+<li><p>Sample specification has switched from positional and haploid (e.g.
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">-d</span> <span class="pre">OutOfAfrica_3G09</span> <span class="pre">6</span> <span class="pre">0</span> <span class="pre">10</span></code>) to named with species-specific
+ploidy (equivalent to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">-d</span> <span class="pre">OutOfAfrica_3G09</span> <span class="pre">YRI:3</span> <span class="pre">CEU:0</span>
+<span class="pre">CHB:5</span></code>). Positional sample specification is still supported but will raise a
+deprecation warning.</p></li>
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--dfe</span></code>, <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code>, <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code>, <code class="docutils literal notranslate"><span class="pre">--help-dfe</span></code>
+for specifying DFEs (<a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1052">#1052</a>).</p></li>
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--help-annotations</span></code>, <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code> for associating annotation
+tracks with DFEs (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1117">#1117</a>).</p></li>
+<li><p>Argument <code class="docutils literal notranslate"><span class="pre">--length</span></code> for simulating from a generic contig
+(<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/664">#664</a>).</p></li>
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--inclusion-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">--exclusion-mask</span></code> for masking simulated sequences
+(<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/664">#664</a>).</p></li>
+<li><p>Arguments <code class="docutils literal notranslate"><span class="pre">--left</span></code> and <code class="docutils literal notranslate"><span class="pre">--right</span></code> for simulating an interval on a named chromosome
+(<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1348">#1348</a>)</p></li>
+<li><p>Argument <code class="docutils literal notranslate"><span class="pre">--keep-mutation-ids-as-alleles</span></code> retains SLiM mutation IDs for
+allele codes instead of converting these to nucleotides (<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1356">#1356</a>).</p></li>
+</ul>
+<p><strong>Catalog maintenance infrastructure</strong>:</p>
+<ul class="simple">
+<li><p>Quality control infrastructure for DFEs
+(<a class="reference external" href="https://github.com/xin-huang">&#64;xin-huang</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1292">#1292</a>).</p></li>
+<li><p>Pull species information from NCBI
+(<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/875">#875</a>).</p></li>
+<li><p>Automated species addition to catalog
+(<a class="reference external" href="https://github.com/jeromekelleher">&#64;jeromekelleher</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/790">#790</a>).</p></li>
+<li><p>Github issue template for requesting addition of species
+(<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/772">#772</a>).</p></li>
+<li><p>Tools for assembly liftover
+(<a class="reference external" href="https://github.com/jradrion">&#64;jradrion</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/574">#574</a>).</p></li>
+<li><p>Pull genome data from Ensembl
+(<a class="reference external" href="https://github.com/jeromekelleher">&#64;jeromekelleher</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/563">#563</a>).</p></li>
+</ul>
+<p><strong>New annotations</strong>:</p>
+<ul class="simple">
+<li><p>AraTha/araport_11 (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1327">#1327</a>).</p></li>
+<li><p>DroMel/FlyBase_BDGP6.32.51 (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1042">#1042</a>).</p></li>
+<li><p>HomSap/ensembl_havana_104 (<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/960">#960</a>).</p></li>
+</ul>
+<p><strong>New DFEs</strong>:</p>
+<ul class="simple">
+<li><p>DroMel/Gamma_H17 (<a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1046">#1046</a>).</p></li>
+<li><p>DroMel/LognormalPlusPositive_R16 (<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1178">#1178</a>).</p></li>
+<li><p>HomSap/Gamma_K17 (<a class="reference external" href="https://github.com/izabelcavassim">&#64;izabelcavassim</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1002">#1002</a>).</p></li>
+<li><p>HomSap/Gamma_H17 (<a class="reference external" href="https://github.com/chriscrsmith">&#64;chriscrsmith</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1099">#1099</a>).</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>[0.1.2] - 2020-05-29<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<p>Important bugfix and feature release, recommended for all users.</p>
+<p>Significant errors in the HomSap/OutOfAfrica_3G09 and HomSap/OutOfAfrica_2T12
+models have been fixed. <strong>We recommend repeating any analyses performed using
+these models</strong>. See <a class="reference external" href="https://github.com/jeromekelleher/msprime-model-errors">here</a> for more details on
+the error in the three population Out of Africa model and analysis of the
+differences from the correct model.</p>
+<p>The recombination rate for AraTha was also off by a factor of 10.
+<strong>We recommend repeating any analyses performed using this species</strong>.</p>
+<p><strong>Bug fixes</strong>:</p>
+<ul class="simple">
+<li><p>Fix error in HomSap/OutOfAfrica_3G09 model, in which migration between
+ancestral African and European populations was allowed to continue in the
+most ancient time period (<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/496">#496</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/516">#516</a>).</p></li>
+<li><p>Fix similar error in HomSap/OutOfAfrica_2T12 model
+(<a class="reference external" href="https://github.com/ndukler">&#64;ndukler</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/520">#520</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/516">#516</a>).</p></li>
+<li><p>Fix recombination rate estimate for AraTha (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>,
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/537">#537</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/527">#527</a>), which was off by a factor of 10.</p></li>
+<li><p>Require attrs &gt;=19.10 (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/399">#399</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/394">#394</a>)</p></li>
+</ul>
+<p><strong>New species</strong>:</p>
+<ul class="simple">
+<li><p>Canis familiaris (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/375">#375</a>).</p></li>
+<li><p>Pongo abelii (<a class="reference external" href="https://github.com/apragsdale">&#64;apragsdale</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/363">#363</a>).</p></li>
+</ul>
+<p><strong>New models</strong>:</p>
+<ul class="simple">
+<li><p>HomSap/PapuansOutOfAfrica_10J19 model (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/372">#372</a>).
+QC’d by <a class="reference external" href="https://github.com/noscode">&#64;noscode</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/387">#387</a>.</p></li>
+<li><p>HomSap/AshkSub_7G19 model (<a class="reference external" href="https://github.com/agladstein">&#64;agladstein</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/494">#494</a>).
+QC’d by <a class="reference external" href="https://github.com/ndukler">&#64;ndukler</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/536">#536</a>.</p></li>
+</ul>
+<p><strong>New features</strong>:</p>
+<ul class="simple">
+<li><p>SLiM simulation engine (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/409">#409</a>, plus numerous others.
+See e.g. <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/132">#132</a> and <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/133">#133</a> for background.)</p></li>
+<li><p>Support for DTWF, SMC, and SMC’ models in msprime engine
+(<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/398">#398</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/392">#392</a>).</p></li>
+<li><p>Warnings for users running simulations on non-autosomes
+(<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/407">#407</a>).</p></li>
+<li><p>Migrate all genetic map data to AWS (<a class="reference external" href="https://github.com/ndukler">&#64;ndukler</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/514">#514</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/335">#335</a>)</p></li>
+<li><p>Warnings for users running simulations on non QC’d models
+(<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/525">#525</a>).</p></li>
+<li><p>Add <cite>generation_time</cite> (default=1) attribute to generic models
+(<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/477">#477</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/471">#471</a>).</p></li>
+<li><p>Various documentation and citation improvements.</p></li>
+</ul>
+<p><strong>Breaking changes</strong>:</p>
+<ul class="simple">
+<li><p>Move the –quiet/-q command line option to the top-level. Previously
+we would write <code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">-q</span> <span class="pre">10</span></code> whereas we now write
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">-q</span> <span class="pre">HomSap</span></code>. (<a class="reference external" href="https://github.com/jeromekelleher">&#64;jeromekelleher</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/515">#515</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/547">#547</a>)</p></li>
+<li><p>The long form <code class="docutils literal notranslate"><span class="pre">--verbosity</span></code> argument has been changed to <code class="docutils literal notranslate"><span class="pre">--verbose</span></code>
+(<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/547">#547</a>).</p></li>
+<li><p>Removed DroMel chrM (<a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/528">#528</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/405">#405</a>).</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>[0.1.1] - 2020-01-02<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<p>Bugfix release. Fixes some distribution issues and temporarily removes the
+PonPyg species.</p>
+<p><strong>Bug fixes</strong>:</p>
+<ul class="simple">
+<li><p>Pin the msprime and attrs packages to resolve some distribution problems
+(<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/366">#366</a>; <a class="reference external" href="https://github.com/jgallowa07">&#64;jgallowa07</a> and <a class="reference external" href="https://github.com/gtsambos">&#64;gtsambos</a>).</p></li>
+</ul>
+<p><strong>New features</strong>:</p>
+<ul class="simple">
+<li><p>Provide citations for the genome assembly (<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/359">#359</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/360">#360</a>;
+<a class="reference external" href="https://github.com/andrewkern">&#64;andrewkern</a> and <a class="reference external" href="https://github.com/grahamgower">&#64;grahamgower</a>).</p></li>
+</ul>
+<p><strong>Breaking changes</strong>:</p>
+<ul class="simple">
+<li><p>Temporarily remove the PonPyg species from the catalog to provide time
+to fix issues with genomes and multi-species models (<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/365">#365</a>).</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>[0.1.0] - 2019-12-18<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h2>
+<p>Initial release.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="development.html" class="btn btn-neutral float-left" title="Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, PopSim Consortium.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
