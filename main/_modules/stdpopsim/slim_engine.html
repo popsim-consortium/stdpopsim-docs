@@ -778,7 +778,7 @@
 
 
 <span class="k">def</span> <span class="nf">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a tuple with the breakpoints and rates of mutations for SLiM.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
@@ -801,7 +801,7 @@
 
 
 <span class="k">def</span> <span class="nf">slim_array_string</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Format an array as a SLiM c() array and return as a line-wrapped string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
@@ -817,7 +817,7 @@
 
 
 <span class="k">def</span> <span class="nf">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns an iterator which, for every `DFE` in the `contig`, returns a tuple</span>
 <span class="sd">    containing a numeric id for said DFE, the DFE object and the list of</span>
 <span class="sd">    intervals associated with the DFE. We need to assign each DFE a numeric id</span>
@@ -831,7 +831,7 @@
 
 
 <span class="k">def</span> <span class="nf">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Assigns a mutation type id to each of the mutation types contained in this</span>
 <span class="sd">    `Contig`. This function will return a dictionary with `len(contig.dfe_list)`</span>
 <span class="sd">    elements, in which the position of the DFE in `contig.dfe_list` is the key.</span>
@@ -851,7 +851,7 @@
 
 
 <span class="k">def</span> <span class="nf">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds the DFEs to the top-level metadata of a tree sequence using</span>
 <span class="sd">    information in the `contig`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -885,7 +885,7 @@
 
 
 <span class="k">def</span> <span class="nf">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">recombination_map</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert recombination map from start position coords to end position coords.</span>
 
 <span class="sd">    In SLiM, if ends[j-1] = a and ends[j] = b, then the recombination rate rates[j]</span>
@@ -948,7 +948,7 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">GenerationAfter</span><span class="p">):</span>
                 <span class="n">t_rounded</span> <span class="o">-=</span> <span class="n">scaling_factor</span>
             <span class="k">if</span> <span class="n">t_rounded</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bad </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bad </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">attr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">t_rounded</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">demographic_events</span><span class="p">:</span>
@@ -1216,7 +1216,7 @@
     <span class="k">def</span> <span class="nf">matrix2str</span><span class="p">(</span>
         <span class="n">matrix</span><span class="p">,</span> <span class="n">row_comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return an Eidos representation of the matrix as a string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">row_comments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1547,7 +1547,7 @@
         <span class="n">keep_mutation_ids_as_alleles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">_recap_and_rescale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulate the demographic model using SLiM.</span>
 <span class="sd">        See :meth:`.Engine.simulate()` for definitions of the</span>
 <span class="sd">        ``demographic_model``, ``contig``, and ``samples`` parameters.</span>
@@ -1691,7 +1691,7 @@
     <span class="k">def</span> <span class="nf">_run_slim</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run SLiM.</span>
 
 <span class="sd">        We capture the output using Popen&#39;s line-oriented text buffering</span>
@@ -1748,7 +1748,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_simplify_remembered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove all samples except those individuals that were explicity</span>
 <span class="sd">        sampled in SLiM with sim.treeSeqRememberIndividuals().</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1767,7 +1767,7 @@
         <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
         <span class="n">extended_events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
 <span class="sd">        does recapitation, simplification, adds neutral mutations, converts</span>
 <span class="sd">        alleles to nucleotides, and rebuilds the individual table for haploids.</span>
@@ -1931,7 +1931,7 @@
         <span class="n">keep_mutation_ids_as_alleles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply post-SLiM transformations to ``ts``. This rescales node times,</span>
 <span class="sd">        does recapitation, simplification, and adds neutral mutations.</span>
 

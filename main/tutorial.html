@@ -266,7 +266,7 @@ tree-sequence formatted output should be written to the file <code class="docuti
 <a class="reference external" href="https://tskit.dev/tskit/docs/stable/introduction.html">tskit</a>. Finally, we
 specify that a single (diploid) sample should be simulated for population
 <code class="docutils literal notranslate"><span class="pre">pop_0</span></code> using the syntax <code class="docutils literal notranslate"><span class="pre">&lt;population_name&gt;:&lt;number_of_samples&gt;</span></code>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 -o foo.ts pop_0:1
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>pop_0:1
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -327,7 +327,7 @@ via the <code class="docutils literal notranslate"><span class="pre">--left</spa
 If we were using a genetic map and/or annotation track,
 these would be clipped to the contig boundaries.
 The command now looks like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr22 --left <span class="m">10000000</span> --right <span class="m">20000000</span> -o foo.ts -d OutOfAfrica_2T12 AFR:2 EUR:3
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:2<span class="w"> </span>EUR:3
 </pre></div>
 </div>
 <p>Note that the number of samples from each population are simply specified as
@@ -372,13 +372,13 @@ DeCodeSexAveraged_GRCh38
 </div>
 <p>In this case we choose the
 <a class="reference internal" href="catalog.html#sec_catalog_homsap_genetic_maps_hapmapii_grch38"><span class="std std-ref">HapMapII_GRCh38</span></a> map and simulate the entire chromosome.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -g HapMapII_GRCh38 -c chr22 -o foo.ts -d OutOfAfrica_2T12 AFR:2 EUR:3
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:2<span class="w"> </span>EUR:3
 </pre></div>
 </div>
 <p>For reproducibility we can also choose set the seed for the simulator using the
 <code class="docutils literal notranslate"><span class="pre">-s</span></code> flag.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh38 -c chr22 -o foo.ts <span class="se">\</span>
-<span class="gp">$    </span>-d OutOfAfrica_2T12 AFR:2 EUR:3
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-s<span class="w"> </span><span class="m">1046</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:2<span class="w"> </span>EUR:3
 </pre></div>
 </div>
 <p>On running these commands, the CLI also outputs the relevant citations for both
@@ -393,7 +393,7 @@ Some examples of analyzing tree sequences are given
 If desired, these can be converted to VCF on the command line if the
 <a class="reference external" href="https://tskit.dev/software/tskit.html">tskit</a> package is installed,
 with the <code class="docutils literal notranslate"><span class="pre">tskit</span> <span class="pre">vcf</span></code> command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit vcf foo.ts &gt; foo.vcf
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit<span class="w"> </span>vcf<span class="w"> </span>foo.ts<span class="w"> </span>&gt;<span class="w"> </span>foo.vcf
 </pre></div>
 </div>
 <p>For this small example (only five diploid samples), the file sizes are similar,
@@ -402,10 +402,10 @@ but the tree sequence is slightly larger than the VCF
 However, if we up the sample sizes to 1000 and 1500
 (the simulation is still pretty quick)
 the tree sequence is fifty-two times smaller:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -s <span class="m">1046</span> -g HapMapII_GRCh38 -c chr22 -o foo.ts <span class="se">\</span>
-<span class="gp">$    </span>-d OutOfAfrica_2T12 AFR:1000 EUR:1500
-<span class="gp">$ </span>tskit vcf foo.ts &gt; foo.vcf
-<span class="gp">$ </span>ls -lth foo.*
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-s<span class="w"> </span><span class="m">1046</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1000<span class="w"> </span>EUR:1500
+<span class="gp">$ </span>tskit<span class="w"> </span>vcf<span class="w"> </span>foo.ts<span class="w"> </span>&gt;<span class="w"> </span>foo.vcf
+<span class="gp">$ </span>ls<span class="w"> </span>-lth<span class="w"> </span>foo.*
 <span class="go">-rw-rw-r-- 1 natep natep 8.6G Oct  4 12:03 foo.vcf</span>
 <span class="go">-rw-rw-r-- 1 natep natep 163M Oct  4 12:02 foo.ts</span>
 </pre></div>
@@ -413,9 +413,9 @@ the tree sequence is fifty-two times smaller:</p>
 <p>Zipping the files (using the <a class="reference external" href="https://tszip.readthedocs.io/en/latest/">tszip</a>
 package) reduces this difference quite a lot,
 but increases time required for processing:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit vcf foo.ts <span class="p">|</span> gzip -c &gt; foo.vcf.gz
-<span class="gp">$ </span>tszip foo.ts
-<span class="gp">$ </span>ls -lth foo.*
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit<span class="w"> </span>vcf<span class="w"> </span>foo.ts<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>-c<span class="w"> </span>&gt;<span class="w"> </span>foo.vcf.gz
+<span class="gp">$ </span>tszip<span class="w"> </span>foo.ts
+<span class="gp">$ </span>ls<span class="w"> </span>-lth<span class="w"> </span>foo.*
 <span class="go">-rw-rw-r-- 1 natep natep  49M Oct  4 12:06 foo.ts.tsz</span>
 <span class="go">-rw-rw-r-- 1 natep natep 103M Oct  4 12:05 foo.vcf.gz</span>
 </pre></div>
@@ -438,8 +438,8 @@ a forwards-time, individual-based simulator.</p>
 For instance, to use <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> to simulate the same chunk of chromosome 22
 under the <code class="docutils literal notranslate"><span class="pre">OutOfAfrica_2T12</span></code> model as above,
 we would just run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim HomSap -c chr22 --left <span class="m">10000000</span> --right <span class="m">20000000</span> <span class="se">\</span>
-<span class="gp">$    </span>-o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
 </pre></div>
 </div>
 <p><strong>But:</strong> this simulation can take quite a while to run,
@@ -452,8 +452,8 @@ so before you try that command out, <strong>read on!</strong></p>
 To make it run fast enough for a tutorial,
 we can specify a <em>scaling factor</em> (<span class="math notranslate nohighlight">\(Q\)</span>) using the <code class="docutils literal notranslate"><span class="pre">--slim-scaling-factor</span></code> option.
 Unlike the previous command, this one should run very fast:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">10</span> HomSap -c chr22 <span class="se">\</span>
-<span class="gp">$    </span>--left <span class="m">10000000</span> --right <span class="m">20000000</span> -o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">10</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
 </pre></div>
 </div>
 <p>This example runs in less than a minute, wheras without setting the
@@ -485,9 +485,9 @@ as for instance in a selective sweep.</p>
 <p>If a DFE is already described in the catalog, one can incorporate it into the simulation
 with the flag <code class="docutils literal notranslate"><span class="pre">--dfe</span></code>. For instance, HomSap has a DFE named <code class="docutils literal notranslate"><span class="pre">Gamma_K17</span></code>.
 To add it the example above, we can use the command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">20</span> HomSap -c chr22 <span class="se">\</span>
-<span class="gp">$    </span>--left <span class="m">10000000</span> --right <span class="m">20000000</span> --dfe Gamma_K17 <span class="se">\</span>
-<span class="gp">$    </span>-o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
 </pre></div>
 </div>
 <p>which will introduce selected and neutral mutations following the proportions described in
@@ -495,14 +495,14 @@ To add it the example above, we can use the command:</p>
 <p>Instead of simulating a DFE that convers the entire contig,
 one can simulate only coding sequence (CDS) by using the flag <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code>
 and specifying a CDS annotation:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">20</span> HomSap -c chr22 <span class="se">\</span>
-<span class="gp">$    </span>--left <span class="m">10000000</span> --right <span class="m">20000000</span> --dfe Gamma_K17 <span class="se">\</span>
-<span class="gp">$    </span>--dfe-annotation ensembl_havana_104_CDS <span class="se">\</span>
-<span class="gp">$    </span>-o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--dfe-annotation<span class="w"> </span>ensembl_havana_104_CDS<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
 </pre></div>
 </div>
 <p>If instead of an bundled annotation, one has a bed file (e.g. <cite>ex.bed</cite>) like the one below:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat ex.bed
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>ex.bed
 <span class="go">chr1  10000000  14500000</span>
 <span class="go">chr1  15000000  30002425</span>
 <span class="go">chr1  30002430  30003000</span>
@@ -510,16 +510,16 @@ and specifying a CDS annotation:</p>
 </div>
 <p>then a DFE may be applied to all intervals in the bed file by using the option
 <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">20</span> HomSap -c chr22 <span class="se">\</span>
-<span class="gp">$    </span>--left <span class="m">10000000</span> --right <span class="m">20000000</span> --dfe Gamma_K17 <span class="se">\</span>
-<span class="gp">$    </span>--dfe-bed-file ex.bed -o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--dfe-bed-file<span class="w"> </span>ex.bed<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
 </pre></div>
 </div>
 <p>To apply a DFE to a small portion of a contig, the option <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span> <span class="pre">&lt;start&gt;,&lt;end&gt;</span></code>
 may be used:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">20</span> HomSap -c chr22 <span class="se">\</span>
-<span class="gp">$    </span>--left <span class="m">10000000</span> --right <span class="m">20000000</span> --dfe Gamma_K17 <span class="se">\</span>
-<span class="gp">$    </span>--dfe-interval <span class="m">14001000</span>,14005000 -o foo.ts -d OutOfAfrica_2T12 AFR:1 EUR:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--dfe-interval<span class="w"> </span><span class="m">14001000</span>,14005000<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
 </pre></div>
 </div>
 <p>The examples above (using <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code> and <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code>)
@@ -548,8 +548,8 @@ we see that to simulate copies of chromosome arm 2L
 from <em>Drosophila melanogaster</em> individuals with the demographic model
 inferred by <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">Sheehan &amp; Song (2016)</a>,
 using <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> with a (very extreme) scaling factor of 1000, we could run</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -e slim --slim-scaling-factor <span class="m">1000</span> DroMel -c chr2L <span class="se">\</span>
-<span class="gp">$    </span>--right <span class="m">1000000</span> -o foo.ts -d African3Epoch_1S16 AFR:50
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">1000</span><span class="w"> </span>DroMel<span class="w"> </span>-c<span class="w"> </span>chr2L<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--right<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>African3Epoch_1S16<span class="w"> </span>AFR:50
 </pre></div>
 </div>
 <p>The scaling factor of 1000 makes this model run very quickly,
@@ -560,9 +560,9 @@ by asking the simulation to be more verbose.
 Prepending the <code class="docutils literal notranslate"><span class="pre">-vv</span></code> flag will request that <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> print out information
 every time a demographic event occurs
 (helpfully, this also gives us an idea of how quickly the simulation is going):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim -vv -e slim --slim-scaling-factor <span class="m">1000</span> DroMel -c chr2L <span class="se">\</span>
-<span class="gp">$    </span>--right <span class="m">1000000</span> -o foo.ts -d African3Epoch_1S16 AFR:50 <span class="se">\</span>
-<span class="gp">$    </span><span class="p">|</span> grep <span class="s2">&quot;^DEBUG:&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-vv<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">1000</span><span class="w"> </span>DroMel<span class="w"> </span>-c<span class="w"> </span>chr2L<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--right<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>African3Epoch_1S16<span class="w"> </span>AFR:50<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^DEBUG:&quot;</span>
 <span class="go">DEBUG: Making flat contig of length 1000000 from 2L</span>
 <span class="go">DEBUG: // Initial random seed:</span>
 <span class="go">DEBUG: 2214454132353</span>
@@ -1034,7 +1034,7 @@ temporary file. So, for instance, after changing</p>
 <p>we could then run the simulation in <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>’s GUI,
 to do more detailed investigation,
 or we could just run it on the command line:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>slim script.slim
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>slim<span class="w"> </span>script.slim
 </pre></div>
 </div>
 <p>If you go this route, you need to do a few postprocessing steps
@@ -1156,7 +1156,7 @@ resulting simulation:</p>
 <span class="n">num_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">s</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">selection_coeffs</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> neutral mutations, and &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selection_coeffs</span><span class="p">)</span> <span class="o">-</span> <span class="n">num_neutral</span><span class="si">}</span><span class="s2"> nonneutral mutations.&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selection_coeffs</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> nonneutral mutations.&quot;</span>
 <span class="p">)</span>
 
 <span class="c1"># There are 110 neutral mutations, and 167 nonneutral mutations.</span>
@@ -1210,9 +1210,9 @@ are removed from the intervals associated with previous DFEs.</p>
 <span class="k">for</span> <span class="n">region</span><span class="p">,</span> <span class="n">coeffs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selection_coeffs</span><span class="p">):</span>
     <span class="n">num_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;From </span><span class="si">{</span><span class="n">region</span> <span class="o">*</span> <span class="mi">10000</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="p">(</span><span class="n">region</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10000</span><span class="si">}</span><span class="s2">: &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;From </span><span class="si">{</span><span class="n">region</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10000</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="p">(</span><span class="n">region</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10000</span><span class="si">}</span><span class="s2">: &quot;</span>
         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> neutral mutations and &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span> <span class="o">-</span> <span class="n">num_neutral</span><span class="si">}</span><span class="s2"> deleterious mutations.&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> deleterious mutations.&quot;</span>
     <span class="p">)</span>
 
 <span class="c1"># From 0 to 1000: 37 neutral mutations and 0 deleterious mutations.</span>
@@ -1277,8 +1277,8 @@ but nonetheless there is lower diversity in exons than outside of them:</p>
 <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Mean sequence diversity in exons is </span><span class="si">{</span><span class="mi">1000</span> <span class="o">*</span> <span class="n">pi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> differences per Kb,</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;and outside of exons it is </span><span class="si">{</span><span class="mi">1000</span> <span class="o">*</span> <span class="n">pi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> differences per Kb.&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Mean sequence diversity in exons is </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> differences per Kb,</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;and outside of exons it is </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> differences per Kb.&quot;</span>
 <span class="p">)</span>
 
 <span class="c1"># Mean sequence diversity in exons is 0.215 differences per Kb,</span>
@@ -1529,8 +1529,8 @@ Contig Description:
 </div>
 <p>Once we’re sure, we can remove the <code class="docutils literal notranslate"><span class="pre">-D</span></code> flag to run the simulation
 (this took around 8 minutes to run on a laptop).</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s <span class="m">13</span> -g HapMapII_GRCh38 <span class="se">\</span>
-<span class="gp">$    </span>-d AmericanAdmixture_4B11 AFR:2 EUR:2 ASIA:2 ADMIX:2
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr1<span class="w"> </span>-o<span class="w"> </span>afr-america-chr1.trees<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-d<span class="w"> </span>AmericanAdmixture_4B11<span class="w"> </span>AFR:2<span class="w"> </span>EUR:2<span class="w"> </span>ASIA:2<span class="w"> </span>ADMIX:2
 </pre></div>
 </div>
 </section>

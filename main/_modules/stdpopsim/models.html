@@ -85,7 +85,7 @@
 <div class="viewcode-block" id="Population"><a class="viewcode-back" href="../../api.html#stdpopsim.Population">[docs]</a><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
     <span class="c1"># TODO deprecate this - we don&#39;t need any internal definition of what</span>
     <span class="c1"># a population is.</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class recording metadata representing a population in a simulation.</span>
 
 <span class="sd">    :ivar ~.id: The id of the population.</span>
@@ -109,7 +109,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Population.asdict"><a class="viewcode-back" href="../../api.html#stdpopsim.Population.asdict">[docs]</a>    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary representing the metadata about this population.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
@@ -120,7 +120,7 @@
 
 
 <div class="viewcode-block" id="DemographicModel"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel">[docs]</a><span class="k">class</span> <span class="nc">DemographicModel</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a demographic model.</span>
 
 <span class="sd">    Instances of this class are constructed by model implementors, following the</span>
@@ -226,7 +226,7 @@
             <span class="sa">f</span><span class="s2">&quot;║  long_description = </span><span class="si">{</span><span class="n">long_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;║  generation_time  = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;║  mutation_rate    = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span> <span class="k">for</span> <span class="n">cite</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cite</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;║</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span>
@@ -244,7 +244,7 @@
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">allow_samples</span><span class="p">)</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DemographicModel.register_qc"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.register_qc">[docs]</a>    <span class="k">def</span> <span class="nf">register_qc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc_model</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a QC model implementation for this model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">qc_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
@@ -256,7 +256,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span></div>
 
 <div class="viewcode-block" id="DemographicModel.get_sample_sets"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_sample_sets">[docs]</a>    <span class="k">def</span> <span class="nf">get_sample_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals_per_population</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of `msprime.SampleSet` objects, using the number of</span>
 <span class="sd">        individuals sampled from each population as specified in</span>
 <span class="sd">        `individuals_per_population`.  For instance,</span>
@@ -300,7 +300,7 @@
         <span class="k">return</span> <span class="n">sample_sets</span></div>
 
 <div class="viewcode-block" id="DemographicModel.get_samples"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_samples">[docs]</a>    <span class="k">def</span> <span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of `msprime.SampleSet` objects, with the number of</span>
 <span class="sd">        haploids from each population determined by the positional arguments.</span>
 <span class="sd">        For instance, ``model.get_samples(2, 5, 7)`` would return a list with</span>
@@ -349,7 +349,7 @@
 
 
 <div class="viewcode-block" id="PiecewiseConstantSize"><a class="viewcode-back" href="../../api.html#stdpopsim.PiecewiseConstantSize">[docs]</a><span class="k">class</span> <span class="nc">PiecewiseConstantSize</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a generic simulation model that can be run to output a</span>
 <span class="sd">    tree sequence. This is a piecewise constant size model, which allows for</span>
 <span class="sd">    instantaneous population size change over multiple epochs in a single population.</span>
@@ -381,7 +381,7 @@
 
 
 <div class="viewcode-block" id="IsolationWithMigration"><a class="viewcode-back" href="../../api.html#stdpopsim.IsolationWithMigration">[docs]</a><span class="k">class</span> <span class="nc">IsolationWithMigration</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a generic simulation model that can be run to output a tree</span>
 <span class="sd">    sequence. A generic isolation with migration model where a single ancestral</span>
 <span class="sd">    population of size NA splits into two populations of constant size N1</span>

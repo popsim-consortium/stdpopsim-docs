@@ -85,7 +85,7 @@
 
 <div class="viewcode-block" id="Annotation"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Annotation</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing an annotation track.</span>
 
 <span class="sd">    :ivar str ~.id: String that uniquely identifies the annotation.</span>
@@ -137,19 +137,19 @@
         <span class="k">return</span> <span class="n">s</span>
 
 <div class="viewcode-block" id="Annotation.is_cached"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.is_cached">[docs]</a>    <span class="k">def</span> <span class="nf">is_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if this annotation is cached locally.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Annotation.download"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Downloads the intervals URL and stores it in the cache directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">download</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Annotation.get_chromosome_annotations"><a class="viewcode-back" href="../../api.html#stdpopsim.Annotation.get_chromosome_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">get_chromosome_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the numpy interval array for the chromosome with the specified id.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">chrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>

@@ -89,7 +89,7 @@
 
 <div class="viewcode-block" id="Genome"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span> <span class="nc">Genome</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing the genome for a species.</span>
 
 <span class="sd">    :ivar chromosomes: A list of :class:`.Chromosome` objects.</span>
@@ -126,7 +126,7 @@
         <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">gene_conversion_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a Genome object from the specified dictionary of</span>
 <span class="sd">        genome information from Ensembl, recombination_rate,</span>
 <span class="sd">        mutation_rate, and ploidy dictionaries.</span>
@@ -177,7 +177,7 @@
         <span class="k">return</span> <span class="n">s</span>
 
 <div class="viewcode-block" id="Genome.get_chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome.get_chromosome">[docs]</a>    <span class="k">def</span> <span class="nf">get_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the chromosome with the specified ``id``.</span>
 
 <span class="sd">        :param str id: The string ID of the chromosome.</span>
@@ -194,7 +194,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mean_gene_conversion_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The genetic length-weighted mean gene conversion fraction across all</span>
 <span class="sd">        chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -215,7 +215,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">range_gene_conversion_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The range of gene conversion tract lengths across chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prelim_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_length</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">]</span>
@@ -226,7 +226,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mean_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean recombination rate across all chromosomes.</span>
 <span class="sd">        (Note that this is the rate of crossovers, not all double-stranded breaks.)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -240,7 +240,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mean_mutation_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean mutation rate across all chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
@@ -254,7 +254,7 @@
 
 <div class="viewcode-block" id="Chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Chromosome">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span> <span class="nc">Chromosome</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a single chromosome for a species. Note that although</span>
 <span class="sd">    the recombination rate for a Chromosome is the rate of crossovers,</span>
 <span class="sd">    the recombination map for a Contig gives the rate of both crossovers</span>
@@ -288,7 +288,7 @@
 
 <div class="viewcode-block" id="Contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Contig</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a contiguous region of genome that is to be simulated.</span>
 <span class="sd">    This contains the information about mutation rates, distributions of</span>
 <span class="sd">    fitness effects (DFEs), gene conversion rates and recombination rates</span>
@@ -449,7 +449,7 @@
         <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a Contig for a species.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: add non-autosomal support</span>
@@ -566,7 +566,7 @@
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Making flat contig of length </span><span class="si">{</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Making flat contig of length </span><span class="si">{</span><span class="n">right</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">left</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
                     <span class="p">)</span>
                 <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
                     <span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">recombination_rate</span>
@@ -647,7 +647,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The location of the contig on a named chromosome as a string with format,</span>
 <span class="sd">        &quot;chromosome:left-right&quot;; or None if a generic contig.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -658,7 +658,7 @@
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chromosome</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">&quot;</span>
 
 <div class="viewcode-block" id="Contig.dfe_breakpoints"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dfe_breakpoints">[docs]</a>    <span class="k">def</span> <span class="nf">dfe_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns two things: the sorted vector of endpoints of all intervals across</span>
 <span class="sd">        all DFEs in the contig, and a vector of integer labels for these intervals,</span>
 <span class="sd">        saying which DFE goes with which interval.</span>
@@ -698,7 +698,7 @@
         <span class="k">return</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span></div>
 
 <div class="viewcode-block" id="Contig.clear_dfes"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dfes">[docs]</a>    <span class="k">def</span> <span class="nf">clear_dfes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes all DFEs from the contig (as well as the corresponding list of</span>
 <span class="sd">        intervals).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -706,7 +706,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 <div class="viewcode-block" id="Contig.add_dfe"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dfe">[docs]</a>    <span class="k">def</span> <span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the provided DFE to the contig, applying to the regions of the</span>
 <span class="sd">        contig specified in ``intervals``. These intervals are also *removed*</span>
 <span class="sd">        from the intervals of any previously-present DFEs - in other words,</span>
@@ -747,7 +747,7 @@
         <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">long_description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a single site mutation class at the provided coordinate.</span>
 <span class="sd">        The string label of the single site may be referenced by extended</span>
 <span class="sd">        events passed to the simulation engine.</span>
@@ -807,13 +807,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the contig has no non-neutral mutation types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Contig.mutation_types"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.mutation_types">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides information about the MutationTypes assigned to this Contig,</span>
 <span class="sd">        along with information about which DFE they correspond to. This is</span>
 <span class="sd">        useful because when simulating with SLiM, the mutation types are</span>

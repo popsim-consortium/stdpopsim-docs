@@ -83,7 +83,7 @@
 
 <div class="viewcode-block" id="MutationType"><a class="viewcode-back" href="../../api.html#stdpopsim.MutationType">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">MutationType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a &quot;type&quot; of mutation.  The design closely (exactly)</span>
 <span class="sd">    mirrors SLiM&#39;s MutationType class.</span>
 
@@ -234,7 +234,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests whether the mutation type is strictly neutral. This is defined here to</span>
 <span class="sd">        be of type &quot;f&quot; and with fitness effect 0.0, and so excludes other situations</span>
 <span class="sd">        that also produce only neutral mutations (e.g., exponential with mean 0).</span>
@@ -244,7 +244,7 @@
 
 <div class="viewcode-block" id="DFE"><a class="viewcode-back" href="../../api.html#stdpopsim.DFE">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">DFE</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a &quot;Distribution of Fitness Effects&quot;, i.e., a DFE.</span>
 <span class="sd">    The class records the different *mutation types*, and the *proportions*</span>
 <span class="sd">    with which they occur. The overall rate of mutations will be determined</span>
@@ -338,12 +338,12 @@
             <span class="sa">f</span><span class="s2">&quot;║  id               = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;║  description      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;║  long_description = </span><span class="si">{</span><span class="n">long_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span> <span class="k">for</span> <span class="n">cite</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cite</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span>
 
 <div class="viewcode-block" id="DFE.register_qc"><a class="viewcode-back" href="../../api.html#stdpopsim.DFE.register_qc">[docs]</a>    <span class="k">def</span> <span class="nf">register_qc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc_dfe</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a QC model implementation for this DFE.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">qc_dfe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
