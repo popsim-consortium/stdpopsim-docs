@@ -13,6 +13,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -85,11 +86,17 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
+<span class="k">def</span> <span class="nf">_copy_converter</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
 <div class="viewcode-block" id="MutationType"><a class="viewcode-back" href="../../api.html#stdpopsim.MutationType">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">MutationType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class representing a &quot;type&quot; of mutation.  The design closely (exactly)</span>
-<span class="sd">    mirrors SLiM&#39;s MutationType class.</span>
+<span class="sd">    Class representing a &quot;type&quot; of mutation.  The design closely mirrors SLiM&#39;s</span>
+<span class="sd">    MutationType class.</span>
 
 <span class="sd">    The main thing that mutation types carry is a way of drawing a selection</span>
 <span class="sd">    coefficient for each new mutation. This ``distribution_type`` should be one</span>
@@ -109,28 +116,99 @@
 <span class="sd">    exponential and gamma, a negative mean can be provided, obtaining always</span>
 <span class="sd">    negative values.</span>
 
+<span class="sd">    Instead of a single dominance coefficient (which would be specified with</span>
+<span class="sd">    `dominance_coeff`), a discretized relationship between dominance and</span>
+<span class="sd">    selection coefficient can be implemented: if dominance_coeff_list is</span>
+<span class="sd">    provided, mutations with selection coefficient s for which</span>
+<span class="sd">    dominance_coeff_breaks[k-1] &lt;= s &lt;= dominance_coeff_breaks[k] will have</span>
+<span class="sd">    dominance coefficient dominance_coeff[k]. In other words, the first entry</span>
+<span class="sd">    of dominance_coeff_list applies to any mutations with selection coefficient</span>
+<span class="sd">    below the first entry of dominance_coeff_breaks; the second entry of</span>
+<span class="sd">    dominance_coeff_list applies to mutations with selection coefficient</span>
+<span class="sd">    between the first and second entries of dominance_coeff_breaks, and so</span>
+<span class="sd">    forth. The list of breaks must therefore be of length one less than the</span>
+<span class="sd">    list of dominance coefficients.</span>
+
 <span class="sd">    :ivar distribution_type: A one-letter abbreviation for the distribution of</span>
 <span class="sd">        fitness effects that each new mutation of this type draws from (see below).</span>
 <span class="sd">    :vartype distribution_type: str</span>
 <span class="sd">    :ivar distribution_args: Arguments for the distribution type.</span>
 <span class="sd">    :vartype distribution_type: list</span>
-<span class="sd">    :ivar dominance_coeff: A single dominance coefficient (negative = underdominance,</span>
+<span class="sd">    :ivar dominance_coeff: The dominance coefficient (negative = underdominance,</span>
 <span class="sd">        0 = recessive, 0.5 = additive, 1.0 = completely dominant, &gt; 1.0 = overdominant)</span>
+<span class="sd">        Default: 0.5.</span>
 <span class="sd">    :vartype dominance_coeff: float</span>
 <span class="sd">    :ivar convert_to_substitution: Whether to retain any fixed mutations in the</span>
 <span class="sd">        simulation: if not, we cannot ask about their frequency once fixed.</span>
 <span class="sd">        (Either way, they will remain in the tree sequence).</span>
 <span class="sd">    :vartype convert_to_substitution: bool</span>
+<span class="sd">    :ivar dominance_coeff_list: Either None (the default) or a list of floats describing</span>
+<span class="sd">        a list of dominance coefficients, to apply to different selection coefficients</span>
+<span class="sd">        (see details). Cannot be specified along with dominance_coeff.</span>
+<span class="sd">    :vartype dominance_coeff_list: list of floats</span>
+<span class="sd">    :ivar dominance_coeff_breaks: Either None (the default) or a list of floats</span>
+<span class="sd">        describing the intervals of selection coefficient over which each of the entries</span>
+<span class="sd">        of dominance_coeff_list applies (see details). Must be of length one shorter than</span>
+<span class="sd">        dominance_coeff_list.</span>
+<span class="sd">    :vartype dominance_coeff_breaks: list of floats</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">dominance_coeff</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">dominance_coeff</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">distribution_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">distribution_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">distribution_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span>
+        <span class="n">factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span>
+    <span class="p">)</span>
     <span class="n">convert_to_substitution</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">dominance_coeff_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="n">dominance_coeff_breaks</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff must be a number.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot specify both dominance_coeff and dominance_coeff_list.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff must be a number.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># disallow the inefficient and annoying length-one case</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff_list must have at least 2 elements.&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff_list must be a list of numbers.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;A list of dominance coefficients provided but no breaks.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;len(dominance_coeff_list) must be equal &quot;</span>
+                    <span class="s2">&quot;to len(dominance_coeff_breaks) + 1&quot;</span>
+                <span class="p">)</span>
+            <span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;dominance_coeff_breaks must be a list of numbers.&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient break </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">lb</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff_breaks must be nondecreasing.&quot;</span><span class="p">)</span>
+                <span class="n">lb</span> <span class="o">=</span> <span class="n">b</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;distribution_type must be str.&quot;</span><span class="p">)</span>
@@ -146,9 +224,6 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;convert_to_substitution must be bool.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
         <span class="c1"># To add a new distribution type: validate the</span>
         <span class="c1"># distribution_args here, and add unit tests.</span>

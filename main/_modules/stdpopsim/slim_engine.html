@@ -13,6 +13,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -580,6 +581,22 @@
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 
+<span class="s2">    // Setup mutation callbacks.</span>
+<span class="s2">    // For each stdpopsim mutation type with an h-s relationship</span>
+<span class="s2">    // we have a sequence of assigned SLiM mutation types;</span>
+<span class="s2">    // the first is the one that gets produced by mutation,</span>
+<span class="s2">    // and the remainder are assigned by a mutation callback.</span>
+<span class="s2">    for (i in seqAlong(mut_types_with_callbacks)) {</span>
+<span class="s2">        mt = mut_types_with_callbacks[i];</span>
+<span class="s2">        sim.registerMutationCallback(NULL,</span>
+<span class="s2">            &quot;{s = mut.selectionCoeff; &quot;</span>
+<span class="s2">            + &quot;k = findInterval(s, dominance_coeff_breaks_&quot; + mt + &quot;); &quot;</span>
+<span class="s2">            + &quot;mut.setMutationType(dominance_coeff_types_&quot; + mt + &quot;[k]); &quot;</span>
+<span class="s2">            + &quot;return T;}&quot;,</span>
+<span class="s2">            mt</span>
+<span class="s2">        );</span>
+<span class="s2">    }</span>
+
 <span class="s2">    // Sample individuals.</span>
 <span class="s2">    for (i in 0:(ncol(sampling_episodes)-1)) {</span>
 <span class="s2">        pop = drop(sampling_episodes[0,i]);</span>
@@ -615,7 +632,6 @@
 <span class="s2">}</span>
 
 <span class="s2">&quot;&quot;&quot;</span>
-
 
 <span class="n">_slim_logfile</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">// Optional logfile output:</span>
@@ -746,7 +762,11 @@
                             <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
                                 <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
                                 <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                    <span class="s2">&quot;dominance_coeff&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">},</span>
+                                    <span class="s2">&quot;dominance_coeff&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="s2">&quot;null&quot;</span><span class="p">]},</span>
+                                    <span class="s2">&quot;dominance_coeff_list&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;null&quot;</span><span class="p">]},</span>
+                                    <span class="s2">&quot;dominance_coeff_breaks&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;null&quot;</span><span class="p">]</span>
+                                    <span class="p">},</span>
                                     <span class="s2">&quot;distribution_type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
                                     <span class="s2">&quot;distribution_args&quot;</span><span class="p">:</span> <span class="p">{</span>
                                         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
@@ -757,7 +777,7 @@
                                         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
                                         <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">},</span>
                                     <span class="p">},</span>
-                                    <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">},</span>
+                                    <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">},</span>
                                     <span class="s2">&quot;is_neutral&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
                                 <span class="p">},</span>
                             <span class="p">},</span>
@@ -836,21 +856,38 @@
 
 <span class="k">def</span> <span class="nf">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Assigns a mutation type id to each of the mutation types contained in this</span>
+<span class="sd">    Assigns mutation type ids to each of the mutation types contained in this</span>
 <span class="sd">    `Contig`. This function will return a dictionary with `len(contig.dfe_list)`</span>
 <span class="sd">    elements, in which the position of the DFE in `contig.dfe_list` is the key.</span>
-<span class="sd">    For each DFE, the dictionary holds a list of tuples that contain the an</span>
-<span class="sd">    assigned mutation type id (used in  SLiM) and the `MutationType` object.</span>
+<span class="sd">    For each DFE, the dictionary holds a list of tuples that contain the</span>
+<span class="sd">    assigned mutation type ids (used in SLiM) and the `MutationType` object.</span>
 <span class="sd">    This is necessary so that we use the same numeric ids to the mutation types</span>
 <span class="sd">    in the _add_dfes_to_metadata and slim_makescript steps.</span>
+
+<span class="sd">    The assigned mutation type ids is stored as a tuple, that is only of length</span>
+<span class="sd">    greater than one if the mutation type is of a sort that is implemented</span>
+<span class="sd">    using more than one SLiM mutation type; currently, these are only mutation</span>
+<span class="sd">    types with a discretized h-s relationship, and (a) only the first of these</span>
+<span class="sd">    mutation types are actually assigned a positive mutation rate in SLiM, but</span>
+<span class="sd">    (b) all mutations of the first type are transformed to the other mutation</span>
+<span class="sd">    types in the list, and hence never end up in the final tree sequence. (See</span>
+<span class="sd">    Recipe 10.6 in the SLiM manual, &quot;Varying the dominance coefficient among</span>
+<span class="sd">    mutations&quot;.)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mid</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">dfe_to_mtypes</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
         <span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
-            <span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">mid</span><span class="p">,</span> <span class="n">mt</span><span class="p">))</span>
+            <span class="c1"># the first mutation type will be the one that has the mutation rate</span>
+            <span class="c1"># and each new mutation gets converted to one of the *other* types;</span>
+            <span class="n">mid_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">mid</span><span class="p">]</span>
             <span class="n">mid</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">mt</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">mt</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">:</span>
+                    <span class="n">mid_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
+                    <span class="n">mid</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">mid_list</span><span class="p">),</span> <span class="n">mt</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">dfe_to_mtypes</span>
 
 
@@ -875,9 +912,9 @@
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
         <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;intervals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ints</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;proportions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">proportions</span>
-        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">mt</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">mid_list</span><span class="p">,</span> <span class="n">mt</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dfe_to_mtypes</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
             <span class="n">add</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="n">mid</span><span class="p">,</span>
+                <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">mid_list</span><span class="p">),</span>
                 <span class="s2">&quot;is_neutral&quot;</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">,</span>
             <span class="p">}</span>
             <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">add</span><span class="p">)</span>
@@ -1089,7 +1126,7 @@
                     <span class="sa">f</span><span class="s2">&quot;refers to a DFE with intervals </span><span class="si">{</span><span class="n">dfe_intervals</span><span class="si">}</span><span class="s2">, not &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;to a single site.&quot;</span>
                 <span class="p">)</span>
-            <span class="n">mt_id</span><span class="p">,</span> <span class="n">mt</span> <span class="o">=</span> <span class="n">slim_mutation_ids</span><span class="p">[</span><span class="n">dfe_index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">mt_id_list</span><span class="p">,</span> <span class="n">mt</span> <span class="o">=</span> <span class="n">slim_mutation_ids</span><span class="p">[</span><span class="n">dfe_index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;The single site id &#39;</span><span class="si">{</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="si">}</span><span class="s2">&#39; referenced by &quot;</span>
@@ -1098,7 +1135,7 @@
                     <span class="sa">f</span><span class="s2">&quot;fixed fitness coefficient.&quot;</span>
                 <span class="p">)</span>
             <span class="n">coordinate</span> <span class="o">=</span> <span class="n">dfe_intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-            <span class="n">mutation_type_id</span> <span class="o">=</span> <span class="n">mt_id</span>
+            <span class="n">mutation_type_id</span> <span class="o">=</span> <span class="n">mt_id_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">):</span>
             <span class="c1"># Now that GenerationAfter times have been accounted for, we can</span>
             <span class="c1"># properly catch invalid start/end times.</span>
@@ -1253,47 +1290,66 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
     <span class="c1"># Genomic element types.</span>
+    <span class="n">mutation_callbacks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">dfe_mtypes</span> <span class="o">=</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
-        <span class="c1"># Mutation types.</span>
+        <span class="c1"># Mutation types and proportions.</span>
         <span class="n">mut_type_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">mut_props_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe_mtypes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">mid</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">dfe_mtypes</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">distrib_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">:</span>
-                    <span class="n">distrib_args</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="s2">&quot;Q * &quot;</span> <span class="o">+</span> <span class="n">distrib_args</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">mt_index</span><span class="p">,</span> <span class="p">(</span><span class="n">mid_list</span><span class="p">,</span> <span class="n">mt</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dfe_mtypes</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">distrib_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">mt</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">mt</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">:</span>
+                    <span class="n">distrib_args</span><span class="p">[</span><span class="n">mt</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;Q * &quot;</span> <span class="o">+</span> <span class="n">distrib_args</span><span class="p">[</span><span class="n">mt</span><span class="o">.</span><span class="n">Q_scaled_index</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
                     <span class="p">)</span>
                 <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">distrib_args</span><span class="p">)</span>
             <span class="c1"># dealing with distributions given by &quot;s&quot; Eidos script,</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">])</span>
-            <span class="n">mut_type_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
-            <span class="n">printsc</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;    initializeMutationType(</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">distribution_type</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">distrib_args</span><span class="si">}</span><span class="s1">);&#39;</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">:</span>
-                <span class="c1"># T is the default for WF simulations.</span>
-                <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
-            <span class="c1"># TODO: when msprime.SLiMMutationModel supports stacking policy,</span>
-            <span class="c1"># set policy such that there&#39;s at most a single mutation per-site</span>
-            <span class="c1"># and individual</span>
-            <span class="c1"># printsc(f&quot;    m{mid}.mutationStackGroup = 0;&quot;)</span>
-            <span class="c1"># printsc(f&quot;    m{mid}.mutationStackPolicy = &#39;l&#39;;&quot;)</span>
+                <span class="n">distrib_args</span> <span class="o">=</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">mt</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">mt</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">h_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">mt</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># this first value will apply only to mutations that are never kept,</span>
+                <span class="c1"># and so has no effect</span>
+                <span class="n">h_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]</span>
+                <span class="n">h_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">)</span>
+                <span class="c1"># record here what we&#39;ll need to set up the callbacks in script</span>
+                <span class="n">mutation_callbacks</span><span class="p">[</span><span class="n">mid_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;dominance_coeff_breaks&quot;</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span><span class="p">,</span>
+                    <span class="s2">&quot;mutation_types&quot;</span><span class="p">:</span> <span class="n">mid_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                <span class="p">}</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">mid_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">h_list</span><span class="p">)</span>
+            <span class="n">first_mt</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">mid</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mid_list</span><span class="p">,</span> <span class="n">h_list</span><span class="p">):</span>
+                <span class="c1"># We will assign a proportion of 0.0 to mutation types that are neutral</span>
+                <span class="c1"># unless all the mutation types in a DFE are neutral. In such case,</span>
+                <span class="c1"># SLiM would not allow all mutation types in a genomic element type to</span>
+                <span class="c1"># have 0.0 proportion. And the proportions in SLiM won&#39;t matter anyway,</span>
+                <span class="c1"># because all the intervals in this fully neutral DFE will have 0.0</span>
+                <span class="c1"># mutation rate anyway.</span>
+                <span class="c1"># Furthermore, for mutation types with a discretized h-s relationship,</span>
+                <span class="c1"># we only mutate to the first assigned mutation type, and remaining ones</span>
+                <span class="c1"># are produced by a mutation callback.</span>
+                <span class="n">mut_type_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span>
+                <span class="n">use_prop</span> <span class="o">=</span> <span class="n">first_mt</span> <span class="ow">and</span> <span class="p">((</span><span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">d</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">proportions</span><span class="p">[</span><span class="n">mt_index</span><span class="p">]</span> <span class="k">if</span> <span class="n">use_prop</span> <span class="k">else</span> <span class="mf">0.0</span>
+                <span class="n">mut_props_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">printsc</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;    initializeMutationType(</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">, &quot;</span>
+                    <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">mt</span><span class="o">.</span><span class="n">distribution_type</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">distrib_args</span><span class="si">}</span><span class="s1">);&#39;</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">:</span>
+                    <span class="c1"># T is the default for WF simulations.</span>
+                    <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    m</span><span class="si">{</span><span class="n">mid</span><span class="si">}</span><span class="s2">.convertToSubstitution = F;&quot;</span><span class="p">)</span>
+                <span class="c1"># TODO: when msprime.SLiMMutationModel supports stacking policy,</span>
+                <span class="c1"># set policy such that there&#39;s at most a single mutation per-site</span>
+                <span class="c1"># and individual</span>
+                <span class="c1"># printsc(f&quot;    mt{mid}.mutationStackGroup = 0;&quot;)</span>
+                <span class="c1"># printsc(f&quot;    mt{mid}.mutationStackPolicy = &#39;l&#39;;&quot;)</span>
+                <span class="n">first_mt</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_type_list</span><span class="p">])</span>
-        <span class="n">mut_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_type_list</span><span class="p">])</span>
-        <span class="c1"># We will assign a proportion of 0.0 to mutation types that are neutral</span>
-        <span class="c1"># unless all the mutation types in a DFE are neutral. In such case,</span>
-        <span class="c1"># SLiM would not allow all mutation types in a genomic element type to</span>
-        <span class="c1"># have 0.0 proportion. And the proportions in SLiM won&#39;t matter anyway,</span>
-        <span class="c1"># because all the intervals in this fully neutral DFE will have 0.0</span>
-        <span class="c1"># mutation rate anyway.</span>
-        <span class="n">mut_props_list</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">prop</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">d</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">else</span> <span class="mf">0.0</span>
-            <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
-        <span class="p">]</span>
         <span class="n">mut_props</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">mut_props_list</span><span class="p">))</span>
         <span class="n">printsc</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;    initializeGenomicElementType(</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">, c(</span><span class="si">{</span><span class="n">mut_types</span><span class="si">}</span><span class="s2">), c(</span><span class="si">{</span><span class="n">mut_props</span><span class="si">}</span><span class="s2">));&quot;</span>
@@ -1427,6 +1483,30 @@
         <span class="o">+</span> <span class="s2">&quot;);&quot;</span>
     <span class="p">)</span>
     <span class="n">printsc</span><span class="p">()</span>
+
+    <span class="c1"># Mutation callbacks.</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s2">&quot;    // Mutations callbacks for h-s relationships, &quot;</span>
+        <span class="s2">&quot;one variable for each callback.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">mut_types_with_callbacks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mutation_callbacks</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">printsc</span><span class="p">(</span>
+        <span class="s1">&#39;    defineConstant(&quot;mut_types_with_callbacks&quot;, c(&#39;</span>
+        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">mut_types_with_callbacks</span><span class="p">))</span>
+        <span class="o">+</span> <span class="s2">&quot;));&quot;</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">mut_types_with_callbacks</span><span class="p">:</span>
+        <span class="n">printsc</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;    defineConstant(&quot;dominance_coeff_types_</span><span class="si">{</span><span class="n">mt</span><span class="si">}</span><span class="s1">&quot;, c(&#39;</span>
+            <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">mutation_callbacks</span><span class="p">[</span><span class="n">mt</span><span class="p">][</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">]))</span>
+            <span class="o">+</span> <span class="s2">&quot;));&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">printsc</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;    defineConstant(&quot;dominance_coeff_breaks_</span><span class="si">{</span><span class="n">mt</span><span class="si">}</span><span class="s1">&quot;, c(-INF, &#39;</span>
+            <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">mutation_callbacks</span><span class="p">[</span><span class="n">mt</span><span class="p">][</span><span class="s2">&quot;dominance_coeff_breaks&quot;</span><span class="p">]))</span>
+            <span class="o">+</span> <span class="s2">&quot;, INF));&quot;</span>
+        <span class="p">)</span>
 
     <span class="c1"># Allele frequency conditioning</span>
     <span class="n">op_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
@@ -1798,7 +1878,7 @@
         <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">for</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">]:</span>
-                <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">],</span> <span class="n">max_id</span><span class="p">)</span>
+                <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">]),</span> <span class="n">max_id</span><span class="p">)</span>
         <span class="n">recap_dfe</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;recapitation&quot;</span><span class="p">,</span>
             <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;DFE used in recapitation&quot;</span><span class="p">,</span>
@@ -1811,7 +1891,9 @@
                     <span class="s2">&quot;distribution_args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                     <span class="s2">&quot;convert_to_substitution&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                     <span class="s2">&quot;Q_scaled_index&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                    <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="p">],</span>
                     <span class="s2">&quot;is_neutral&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
                 <span class="p">}</span>
             <span class="p">],</span>
@@ -1874,12 +1956,12 @@
 
                     <span class="c1"># Use msprime.SLiMMutationModel rather than msprime.JC69</span>
                     <span class="c1"># for neutral DFEs.  This ensures that there will be a</span>
-                    <span class="c1"># &#39;selection_coef&#39; key in the mutation metadata (e.g. the</span>
+                    <span class="c1"># &#39;selection_coef&#39; key in the mutation metadata (so the</span>
                     <span class="c1"># mutation metadata structure will be consistent across the</span>
                     <span class="c1"># tree sequence).</span>
                     <span class="c1"># TODO: set stacking policy to &quot;l&quot; when supported</span>
                     <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SLiMMutationModel</span><span class="p">(</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">],</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">mt</span><span class="p">[</span><span class="s2">&quot;slim_mutation_type_id&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
                         <span class="n">next_id</span><span class="o">=</span><span class="n">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span>
                     <span class="p">)</span>
 

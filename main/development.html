@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Development &mdash; stdpopsim 0.2.0 documentation</title>
@@ -14,6 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -123,7 +124,7 @@
            <div itemprop="articleBody">
              
   <section id="development">
-<span id="sec-development"></span><h1>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h1>
+<span id="sec-development"></span><h1>Development<a class="headerlink" href="#development" title="Permalink to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>is a community effort, and we welcome YOU to join us!</strong></p>
 <p>We envision at least three main types of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> developers:</p>
 <ol class="arabic simple">
@@ -168,7 +169,7 @@ following sections to learn how to contribute.
 And, importantly, please have a look at our
 <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
 <section id="installation">
-<span id="sec-development-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<span id="sec-development-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>Before installing, be sure to make a fork of the repo and clone it locally
 following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> library requires Python 3.4 or later.</p>
@@ -194,7 +195,7 @@ encounter problems with it.</p>
 Try <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/development.txt</span></code></p>
 </div>
 <section id="using-a-virtual-environment">
-<h3>Using a Virtual Environment<a class="headerlink" href="#using-a-virtual-environment" title="Permalink to this headline"></a></h3>
+<h3>Using a Virtual Environment<a class="headerlink" href="#using-a-virtual-environment" title="Permalink to this heading"></a></h3>
 <p>We encourage the use of a virtual environment.</p>
 <p>For <code class="docutils literal notranslate"><span class="pre">pip</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</p>
 <p>First, create the virtual environment (You only need to do this once):</p>
@@ -222,7 +223,7 @@ To deactivate the virtual environment:</p>
 </section>
 </section>
 <section id="github-workflow">
-<h2>GitHub workflow<a class="headerlink" href="#github-workflow" title="Permalink to this headline"></a></h2>
+<h2>GitHub workflow<a class="headerlink" href="#github-workflow" title="Permalink to this heading"></a></h2>
 <blockquote>
 <div><ol class="arabic">
 <li><p>Make your own <a class="reference external" href="https://help.github.com/articles/fork-a-repo/">fork</a>
@@ -256,7 +257,7 @@ see the next section on how to rebase.</p></li>
 </ol>
 </div></blockquote>
 <section id="pre-commit-checks">
-<h3>Pre-commit checks<a class="headerlink" href="#pre-commit-checks" title="Permalink to this headline"></a></h3>
+<h3>Pre-commit checks<a class="headerlink" href="#pre-commit-checks" title="Permalink to this heading"></a></h3>
 <p>On each commit a <a class="reference external" href="https://pre-commit.com/">pre-commit hook</a>  will run
 that checks for violations of code style and other common problems.
 Where possible, these hooks will try to fix any problems that they find (including reformatting
@@ -272,7 +273,7 @@ To bypass the checks (to save or get feedback on work-in-progress) use
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">--no-verify</span></code></p>
 </section>
 <section id="rebasing">
-<h3>Rebasing<a class="headerlink" href="#rebasing" title="Permalink to this headline"></a></h3>
+<h3>Rebasing<a class="headerlink" href="#rebasing" title="Permalink to this heading"></a></h3>
 <p>Rebasing is used for two basic tasks we might ask for during review:</p>
 <ol class="arabic simple">
 <li><p>Your topic branch has gotten out of date with the tip of <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code>
@@ -524,7 +525,7 @@ To github.com:jeromekelleher/stdpopsim.git
 and have successfully squashed and rebased.</p>
 </section>
 <section id="when-rebasing-goes-wrong">
-<h3>When rebasing goes wrong<a class="headerlink" href="#when-rebasing-goes-wrong" title="Permalink to this headline"></a></h3>
+<h3>When rebasing goes wrong<a class="headerlink" href="#when-rebasing-goes-wrong" title="Permalink to this heading"></a></h3>
 <p>Sometimes rebasing goes wrong, and you end up in a frustrating loop of making
 and undoing the same changes over and over again. First, here’s an explanation
 of what’s going on. Let’s say that the branch we’re working on (and trying to
@@ -582,9 +583,9 @@ point, with diagrams, and an alternative workflow, see <a class="reference exter
 </section>
 </section>
 <section id="adding-a-new-species">
-<span id="sec-development-demographic-model"></span><h2>Adding a new species<a class="headerlink" href="#adding-a-new-species" title="Permalink to this headline"></a></h2>
+<span id="sec-development-demographic-model"></span><h2>Adding a new species<a class="headerlink" href="#adding-a-new-species" title="Permalink to this heading"></a></h2>
 <section id="which-information-do-i-need-to-have-for-my-species">
-<h3>Which information do I need to have for my species?<a class="headerlink" href="#which-information-do-i-need-to-have-for-my-species" title="Permalink to this headline"></a></h3>
+<h3>Which information do I need to have for my species?<a class="headerlink" href="#which-information-do-i-need-to-have-for-my-species" title="Permalink to this heading"></a></h3>
 <p>In <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, we aim to be inclusive and facilitate adding a diverse range of species.
 That said, there are certain basic requirements we have
 for every species added to the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
@@ -660,7 +661,7 @@ feel free to <a class="reference external" href="http://github.com/popgensims/st
 on the GitHub repository to get assistance from other members of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> community.</p>
 </section>
 <section id="getting-set-up-to-add-a-new-species">
-<h3>Getting set up to add a new species<a class="headerlink" href="#getting-set-up-to-add-a-new-species" title="Permalink to this headline"></a></h3>
+<h3>Getting set up to add a new species<a class="headerlink" href="#getting-set-up-to-add-a-new-species" title="Permalink to this heading"></a></h3>
 <p>If this is your first time adding a species to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, it’s a good
 idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
 to see how existing species are typically specified and documented. If you have
@@ -730,7 +731,7 @@ to maintain a consistent format.</p>
 </div>
 </section>
 <section id="coding-the-species-parameters">
-<h3>Coding the species parameters<a class="headerlink" href="#coding-the-species-parameters" title="Permalink to this headline"></a></h3>
+<h3>Coding the species parameters<a class="headerlink" href="#coding-the-species-parameters" title="Permalink to this heading"></a></h3>
 <p>Information about a species’ mutation and recombination rates,
 effective population size, and the average generation time,
 is all summarized in the <code class="docutils literal notranslate"><span class="pre">species.py</span></code> file,
@@ -865,7 +866,7 @@ accompanied by the appropriate <code class="docutils literal notranslate"><span 
 you should be able to load and simulate the newly added species using <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.</p>
 </section>
 <section id="testing-your-species-model-and-submitting-a-pr">
-<h3>Testing your species model and submitting a PR<a class="headerlink" href="#testing-your-species-model-and-submitting-a-pr" title="Permalink to this headline"></a></h3>
+<h3>Testing your species model and submitting a PR<a class="headerlink" href="#testing-your-species-model-and-submitting-a-pr" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility that generated the three species template files
 in the species directory (<code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>)
 also generates test code for the species in a separate file, <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;SPECIES_ID&gt;.py</span></code>.
@@ -895,7 +896,7 @@ This will likely require additional feedback from you,
 so, stay tuned for discussion during the review process.</p>
 </section>
 <section id="overview-of-the-stdpopsim-review-process">
-<h3>Overview of the stdpopsim review process<a class="headerlink" href="#overview-of-the-stdpopsim-review-process" title="Permalink to this headline"></a></h3>
+<h3>Overview of the stdpopsim review process<a class="headerlink" href="#overview-of-the-stdpopsim-review-process" title="Permalink to this heading"></a></h3>
 <p>We provide here a general outline for the review process we use in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>,
 including guidelines for how to settle discrepancies that are found during review
 (see Step 6 below).
@@ -994,7 +995,7 @@ it is merged, and the <strong>QC issue</strong> opened in Step 2 is closed.
 </ol>
 </section>
 <section id="implementing-tests-for-the-review-of-new-species">
-<h3>Implementing tests for the review of new species<a class="headerlink" href="#implementing-tests-for-the-review-of-new-species" title="Permalink to this headline"></a></h3>
+<h3>Implementing tests for the review of new species<a class="headerlink" href="#implementing-tests-for-the-review-of-new-species" title="Permalink to this heading"></a></h3>
 <p>The tests associated with the review of a new species
 should be written by the reviewer in the <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;SPECIES_ID&gt;.py</span></code> file
 as part of Step 3 of the review process described above.
@@ -1036,7 +1037,7 @@ Step 6 of the <a class="reference internal" href="#overview-of-the-stdpopsim-rev
 </section>
 </section>
 <section id="adding-a-new-demographic-model">
-<h2>Adding a new demographic model<a class="headerlink" href="#adding-a-new-demographic-model" title="Permalink to this headline"></a></h2>
+<h2>Adding a new demographic model<a class="headerlink" href="#adding-a-new-demographic-model" title="Permalink to this heading"></a></h2>
 <p>A demographic model describes ancestral population sizes, split times,
 and migration rates.
 Misspecification of the model can generate unrealistic patterns of genetic
@@ -1045,7 +1046,7 @@ So, having at least one detailed demographic model is recommended for every spec
 A given species might have more than one demographic model,
 fit from different data or by different methods.</p>
 <section id="what-models-are-appropriate-to-add">
-<h3>What models are appropriate to add?<a class="headerlink" href="#what-models-are-appropriate-to-add" title="Permalink to this headline"></a></h3>
+<h3>What models are appropriate to add?<a class="headerlink" href="#what-models-are-appropriate-to-add" title="Permalink to this heading"></a></h3>
 <p>Any model added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should be based the <strong>published literature</strong>
 and a clear citation to the relevant paper(s) should be provided with the model.
 The demographic model should include, at a minimum,
@@ -1068,7 +1069,7 @@ to discuss your suggestion with others in the community and decide on the best
 way to implement your suggestion.</p>
 </section>
 <section id="getting-set-up-to-add-a-new-demographic-model">
-<h3>Getting set up to add a new demographic model<a class="headerlink" href="#getting-set-up-to-add-a-new-demographic-model" title="Permalink to this headline"></a></h3>
+<h3>Getting set up to add a new demographic model<a class="headerlink" href="#getting-set-up-to-add-a-new-demographic-model" title="Permalink to this heading"></a></h3>
 <p>If this is your first time implementing a demographic model in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, it’s a good
 idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
 to see how existing demographic models are coded and documented.
@@ -1098,7 +1099,7 @@ in the species directory:</p>
 </div>
 </section>
 <section id="coding-the-demographic-model">
-<h3>Coding the demographic model<a class="headerlink" href="#coding-the-demographic-model" title="Permalink to this headline"></a></h3>
+<h3>Coding the demographic model<a class="headerlink" href="#coding-the-demographic-model" title="Permalink to this heading"></a></h3>
 <p>The demographic model should be coded in the <code class="docutils literal notranslate"><span class="pre">demographic_models.py</span></code> file
 by defining a specialized function, which essentially returns
 a <code class="docutils literal notranslate"><span class="pre">stdpopsim.DemographicModel</span></code> object initialized with the appropriate values.
@@ -1183,7 +1184,7 @@ or the mean posterior (for Bayesian methods).</p>
 </div>
 </section>
 <section id="adding-a-parameter-table-to-the-docs">
-<h3>Adding a parameter table to the docs<a class="headerlink" href="#adding-a-parameter-table-to-the-docs" title="Permalink to this headline"></a></h3>
+<h3>Adding a parameter table to the docs<a class="headerlink" href="#adding-a-parameter-table-to-the-docs" title="Permalink to this heading"></a></h3>
 <p>The parameters used in the implementation of the demographic model should
 also be specified in the docs in a file  <code class="docutils literal notranslate"><span class="pre">docs/parameter_tables/&lt;SPECIES_ID&gt;/&lt;MODEL_ID&gt;.csv</span></code>,
 where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character species id,
@@ -1203,7 +1204,7 @@ you can check that the documentation was built properly by running
 See <a class="reference internal" href="#documentation">Documentation</a> for more details.</p>
 </section>
 <section id="testing-your-demographic-model-and-submitting-a-pr">
-<h3>Testing your demographic model and submitting a PR<a class="headerlink" href="#testing-your-demographic-model-and-submitting-a-pr" title="Permalink to this headline"></a></h3>
+<h3>Testing your demographic model and submitting a PR<a class="headerlink" href="#testing-your-demographic-model-and-submitting-a-pr" title="Permalink to this heading"></a></h3>
 <p>Once you have written the demographic model function in the <code class="docutils literal notranslate"><span class="pre">demographic_models.py</span></code> file,
 you should test it locally using the development version of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
 First, make sure to install the development version of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> and its requirements,
@@ -1244,7 +1245,7 @@ This will likely require additional feedback from you,
 so, stay tuned for discussion during the review process.</p>
 </section>
 <section id="implementing-tests-for-the-review-of-a-demographic-model">
-<h3>Implementing tests for the review of a demographic model<a class="headerlink" href="#implementing-tests-for-the-review-of-a-demographic-model" title="Permalink to this headline"></a></h3>
+<h3>Implementing tests for the review of a demographic model<a class="headerlink" href="#implementing-tests-for-the-review-of-a-demographic-model" title="Permalink to this heading"></a></h3>
 <p>After a contributor submits a PR with a new demographic model,
 the code undergoes seven steps of review before it
 is officially added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> (see <a class="reference internal" href="#overview-of-the-stdpopsim-review-process">Overview of the stdpopsim review process</a>).
@@ -1272,7 +1273,7 @@ the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span
 </section>
 </section>
 <section id="adding-a-genetic-map">
-<h2>Adding a genetic map<a class="headerlink" href="#adding-a-genetic-map" title="Permalink to this headline"></a></h2>
+<h2>Adding a genetic map<a class="headerlink" href="#adding-a-genetic-map" title="Permalink to this heading"></a></h2>
 <p>Some species have sub-chromosomal recombination maps available. They can be added to
 <cite>stdpopsim</cite> by creating a new <cite>GeneticMap</cite> object and providing a formatted file
 detailing recombination rates to a designated <cite>stdpopsim</cite> maintainer who then uploads
@@ -1327,7 +1328,7 @@ on whom to send the compressed archive of genetic maps to (currently Andrew Kern
 primary uploader but please wait to send files to him until directed).</p>
 </section>
 <section id="lifting-over-a-genetic-map">
-<h2>Lifting over a genetic map<a class="headerlink" href="#lifting-over-a-genetic-map" title="Permalink to this headline"></a></h2>
+<h2>Lifting over a genetic map<a class="headerlink" href="#lifting-over-a-genetic-map" title="Permalink to this heading"></a></h2>
 <p>Existing genetic maps will need to be lifted over to a new assembly, if and when the
 current assembly is updated in <cite>stdpopsim</cite>. This process can be partially automated by running
 the liftOver maintenance code.</p>
@@ -1405,7 +1406,7 @@ and lifting the recombination rates on TAIR7 to TAIR10 with
 </div>
 </section>
 <section id="adding-a-dfe-model">
-<span id="sec-development-dfe-model"></span><h2>Adding a DFE model<a class="headerlink" href="#adding-a-dfe-model" title="Permalink to this headline"></a></h2>
+<span id="sec-development-dfe-model"></span><h2>Adding a DFE model<a class="headerlink" href="#adding-a-dfe-model" title="Permalink to this heading"></a></h2>
 <p>A distribution of fitness effects (DFE) describes
 the probability distribution of selection coefficients
 (deleterious, neutral, and beneficial)
@@ -1416,7 +1417,7 @@ See <a class="reference internal" href="tutorial.html#sec-simulating-sel"><span 
 There are various computational methods for estimating DFEs from genomic data
 and you may use published DFEs to code a DFE model, as described below.</p>
 <section id="getting-set-up-to-add-a-new-dfe-model">
-<h3>Getting set up to add a new DFE model<a class="headerlink" href="#getting-set-up-to-add-a-new-dfe-model" title="Permalink to this headline"></a></h3>
+<h3>Getting set up to add a new DFE model<a class="headerlink" href="#getting-set-up-to-add-a-new-dfe-model" title="Permalink to this heading"></a></h3>
 <p>If this is your first time implementing a DFE in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, it’s a good
 idea to take some time browsing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>
 to see how existing DFE models are coded and documented.
@@ -1445,7 +1446,7 @@ in the species directory:</p>
 </div>
 </section>
 <section id="coding-the-dfe-model">
-<h3>Coding the DFE model<a class="headerlink" href="#coding-the-dfe-model" title="Permalink to this headline"></a></h3>
+<h3>Coding the DFE model<a class="headerlink" href="#coding-the-dfe-model" title="Permalink to this heading"></a></h3>
 <p>The DFE model should be coded in the <code class="docutils literal notranslate"><span class="pre">dfes.py</span></code> file
 by defining a specialized function, which essentially returns
 a <code class="docutils literal notranslate"><span class="pre">stdpopsim.DFE</span></code> object initialized with the appropriate values.
@@ -1534,7 +1535,7 @@ but they have a fixed selection coefficient of <code class="docutils literal not
 </div>
 </section>
 <section id="testing-your-dfe-model-and-submitting-a-pr">
-<h3>Testing your DFE model and submitting a PR<a class="headerlink" href="#testing-your-dfe-model-and-submitting-a-pr" title="Permalink to this headline"></a></h3>
+<h3>Testing your DFE model and submitting a PR<a class="headerlink" href="#testing-your-dfe-model-and-submitting-a-pr" title="Permalink to this heading"></a></h3>
 <p>After you finished your implementation, and specified all the
 necessary citations,
 we recommend that you run some basic local tests to see that
@@ -1551,7 +1552,7 @@ This will likely require additional feedback from you,
 so, stay tuned for discussion during the review process.</p>
 </section>
 <section id="reviewing-a-dfe-model">
-<h3>Reviewing a DFE model<a class="headerlink" href="#reviewing-a-dfe-model" title="Permalink to this headline"></a></h3>
+<h3>Reviewing a DFE model<a class="headerlink" href="#reviewing-a-dfe-model" title="Permalink to this heading"></a></h3>
 <p>The review process for DFE models is currently being developed.
 For now, we suggest that you
 <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">open a new blank issue</a>
@@ -1569,7 +1570,7 @@ mentioned above.</p>
 </section>
 </section>
 <section id="coding-standards">
-<h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this headline"></a></h2>
+<h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this heading"></a></h2>
 <p>To ensure that the code in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is as readable as possible
 and follows a reasonably uniform style, we require that all code follows
 the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> style guide.
@@ -1578,7 +1579,7 @@ Conformance to this style is checked as part of the Continuous Integration
 testing suite.</p>
 </section>
 <section id="naming-conventions">
-<span id="sec-development-naming-conventions"></span><h2>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline"></a></h2>
+<span id="sec-development-naming-conventions"></span><h2>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this heading"></a></h2>
 <p>To ensure uniformity in naming schemes across objects in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>
 we have strict conventions for species, genetic maps, and demographic
 models.</p>
@@ -1604,7 +1605,7 @@ For instance, if the distribution in question is a lognormal distribution,
 then <code class="docutils literal notranslate"><span class="pre">LogNormal</span></code> might be the descriptive string.</p>
 </section>
 <section id="unit-tests">
-<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline"></a></h2>
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this heading"></a></h2>
 <p>All code added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should have
 <a class="reference external" href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a>. These are typically
 simple and fast checks to ensure that the code makes basic sense (the
@@ -1640,7 +1641,7 @@ exec git diff-index --check --cached $against --
 <p>Finally, rename <code class="docutils literal notranslate"><span class="pre">pre-commit.sample</span></code> to simply <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code></p>
 </section>
 <section id="code-coverage">
-<h2>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline"></a></h2>
+<h2>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this heading"></a></h2>
 <p>As part of the continuous testing suite we have automated checking of how
 well the test units cover the source code. As a result it’s very helpful
 to check locally how well your tests are covering your code by asking
@@ -1655,7 +1656,7 @@ You’ll be looking for lines of code that are highlighted yellow or red
 indicated that tests do not currently cover that bit of code.</p>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>Documentation is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>
 markup and the <a class="reference external" href="http://www.sphinx-doc.org/en/master/">sphinx</a> documentation system.
 It is defined in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory.</p>
@@ -1667,7 +1668,7 @@ HTML output in the <code class="docutils literal notranslate"><span class="pre">
 </div>
 </section>
 <section id="making-a-new-release">
-<h2>Making a new release<a class="headerlink" href="#making-a-new-release" title="Permalink to this headline"></a></h2>
+<h2>Making a new release<a class="headerlink" href="#making-a-new-release" title="Permalink to this heading"></a></h2>
 <p>Here is a list of things to do when making a new release:</p>
 <ol class="arabic simple">
 <li><p>Update the changelog and commit</p></li>
