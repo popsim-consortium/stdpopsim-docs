@@ -100,6 +100,7 @@
 <span class="sd">    - ``g``: gamma, two parameters (mean, shape)</span>
 <span class="sd">    - ``n``: normal, two parameters (mean, SD)</span>
 <span class="sd">    - ``w``: Weibull, two parameters (scale, shape)</span>
+<span class="sd">    - ``u``: Uniform, two parameters (min, max)</span>
 <span class="sd">    - ``lp``: positive logNormal, two parameters (mean and sd on log scale; see rlnorm)</span>
 <span class="sd">    - ``ln``: negative logNormal, two parameters (mean and sd on log scale; see rlnorm)</span>
 
@@ -219,6 +220,19 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="sa">f</span><span class="s2">&quot;return </span><span class="si">{</span><span class="n">sign</span><span class="si">}</span><span class="s2">rlnorm(1, </span><span class="si">{</span><span class="n">logmean</span><span class="si">}</span><span class="s2"> + log(Q), </span><span class="si">{</span><span class="n">logsd</span><span class="si">}</span><span class="s2">);&quot;</span>
             <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;u&quot;</span><span class="p">:</span>
+            <span class="c1"># Uniform</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Uniformly-distributed sel. coefs. (distribution_type=&#39;u&#39;) &quot;</span>
+                    <span class="s2">&quot;use a (min, max) parameterisation, with min &lt;= max.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">umin</span><span class="p">,</span> <span class="n">umax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;return runif(1, Q * </span><span class="si">{</span><span class="n">umin</span><span class="si">}</span><span class="s2">, Q * </span><span class="si">{</span><span class="n">umax</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
