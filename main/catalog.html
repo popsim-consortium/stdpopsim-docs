@@ -275,6 +275,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sec_catalog_PhoSin">Phocoena sinus</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_PhoSin_genome">Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sec_catalog_PhoSin_models">Demographic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_phosin_models_vaquita2epoch_1r22">Vaquita two epoch model</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sec_catalog_PonAbe">Pongo abelii</a><ul>
@@ -9349,8 +9353,103 @@ Then, if you feel ready, make an issue on our
 </table>
 <p>Mutation and recombination rates are in units of per bp and per generation.</p>
 </section>
-</section>
 <hr class="docutils" />
+<section id="sec_catalog_PhoSin_models">
+<h3>Demographic Models<a class="headerlink" href="#sec_catalog_PhoSin_models" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_phosin_models_vaquita2epoch_1r22">Vaquita2Epoch_1R22</a></p></td>
+<td><p>Vaquita two epoch model</p></td>
+</tr>
+</tbody>
+</table>
+<section id="sec_catalog_phosin_models_vaquita2epoch_1r22">
+<span id="sec_catalog_phosin_models_vaquita2epoch_1r22"></span><h4>Vaquita two epoch model<a class="headerlink" href="#sec_catalog_phosin_models_vaquita2epoch_1r22" title="Permalink to this heading"></a></h4>
+<p>
+            A two-epoch demographic model estimated using dadi from the site
+            frequency spectrum at putatively neutrally evolving regions of
+            the genome identified as those located &gt;10 kb from coding
+            sequences which did not overlap with CpG islands.
+            Population genomic data obtained from 20 individuals sequenced
+            at mean coverage 60x.
+            Robinson et al. (2022) reports several inferred models in Supp
+            Table S2. This is the 2-epoch model inferred by dadi, which is
+            also depicted in Main Figure 1E.
+            Size changes from N_anc to N_curr in time T.
+        </p>
+<p class="rubric">Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">ID<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Vaquita2Epoch_1R22</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>Vaquita two epoch model</p>
+</dd>
+<dt class="field-odd">Num populations<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+<p class="rubric">Populations</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>ID</p></th>
+<th class="head"><p>Sampling time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Vaquita</p></td>
+<td><p>0</p></td>
+<td><p>Vaquita (Phocoena sinus)</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Robinson et al., 2022. <a class="reference external" href="https://doi.org/10.1126/science.abm1742">https://doi.org/10.1126/science.abm1742</a></p></li>
+</ul>
+<p class="rubric">Demographic Model parameters</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter Type (units)</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Population size</p></td>
+<td><p>4,485</p></td>
+<td><p>Ancestral pop. size</p></td>
+</tr>
+<tr class="row-odd"><td><p>Population size</p></td>
+<td><p>2,807</p></td>
+<td><p>Pop. size during second epoch</p></td>
+</tr>
+<tr class="row-even"><td><p>Epoch Time (gen.)</p></td>
+<td><p>2,162</p></td>
+<td><p>Start time of second epoch</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generation time (yrs.)</p></td>
+<td><p>11.9</p></td>
+<td><p>Average generation interval</p></td>
+</tr>
+<tr class="row-even"><td><p>Mutation rate</p></td>
+<td><p>5.83e-9</p></td>
+<td><p>Per-base per-generation mutation rate</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<img alt="_images/sec_catalog_phosin_models_vaquita2epoch_1r22.png" src="_images/sec_catalog_phosin_models_vaquita2epoch_1r22.png" />
+</section>
+</section>
 <section id="sec_catalog_PonAbe">
 <span id="sec_catalog_PonAbe"></span><h2>Pongo abelii<a class="headerlink" href="#sec_catalog_PonAbe" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
