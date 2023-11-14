@@ -94,6 +94,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#simulating-selection-in-a-single-gene">2. Simulating selection in a single gene</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#simulating-selection-on-exons">3. Simulating selection on exons</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#selective-sweeps">4.  Selective sweeps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-a-dfe-from-one-species-in-another-species">5.  Using a DFE from one species in another species</a></li>
 </ul>
 </li>
 </ul>
@@ -1427,6 +1428,50 @@ scaling factor produces data that are similar to those from unscaled simulations
 <p>We can see that diversity is substantially reduced around the beneficial
 mutation (vertical dashed line), relative to what would be expected under
 neutrality.</p>
+</section>
+<section id="using-a-dfe-from-one-species-in-another-species">
+<span id="sec-tute-moving-dfes"></span><h4>5.  Using a DFE from one species in another species<a class="headerlink" href="#using-a-dfe-from-one-species-in-another-species" title="Permalink to this heading"></a></h4>
+<p>There are not very many empirically estimated DFEs in the literature
+(certainly not as many as demographic models!).
+How, then, to add selection to your simulation of a species without a published DFE?
+By diving into <a class="reference internal" href="api.html#sec-api-dfes"><span class="std std-ref">the API</span></a> you could build one yourself.
+However, it’s easier to borrow one from another species,
+and arguably biologically more plausible.
+(At least some aspects of the DFE should be shared at least by some species,
+such as the swath of deleterious mutations due to breakages in cellular machinery.)
+For some discussion of this,
+see <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.08.12.503792v1">Kyriazis et al 2022</a>,
+which proposes a “generic” DFE for use in a variety of contexts.
+This DFE was estimated from human data, so it’s under HomSap:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">homsap</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">dfe</span> <span class="o">=</span> <span class="n">homsap</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Mixed_K23&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dfe</span><span class="o">.</span><span class="n">long_description</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Even though the DFE is stored under HomSap in the catalogue,
+we can apply it to a contig from any species.
+For instance, we could apply it to the first 100Kb
+of the <a class="reference internal" href="catalog.html#sec_catalog_phosin"><span class="std std-ref">Vaquita</span></a> chromosome 1:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vaquita</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;PhoSin&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">vaquita</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">1e5</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">]],</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">vaquita</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Vaquita2Epoch_1R22&quot;</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Vaquita&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">159</span><span class="p">,</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To make the example quick, we’ve only simulated the first 100Kb;
+a more realistic example would apply it to the exons, available
+as a <a class="reference internal" href="catalog.html#sec_catalog_phosin_annotations"><span class="std std-ref">annotation</span></a>.</p>
 </section>
 </section>
 </section>
