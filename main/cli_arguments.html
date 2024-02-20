@@ -2272,8 +2272,9 @@ Generation time: 11.9
 Population size: 3500
 Mutation rate: 5.83e-09
 Recombination rate: 1e-08</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">PhoSin</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
-                 <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">PhoSin</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">models</span> <span class="p">[</span><span class="n">HELP_MODELS</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">BIBTEX_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">dfes</span> <span class="p">[</span><span class="n">HELP_DFES</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">LENGTH</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INCLUSION_MASK</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">EXCLUSION_MASK</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">LENGTH_MULTIPLIER</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">left</span> <span class="n">LEFT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">right</span> <span class="n">RIGHT</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">keep</span><span class="o">-</span><span class="n">mutation</span><span class="o">-</span><span class="n">ids</span><span class="o">-</span><span class="k">as</span><span class="o">-</span><span class="n">alleles</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">interval</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dfe</span><span class="o">-</span><span class="n">bed</span><span class="o">-</span><span class="n">file</span><span class="p">]</span>
@@ -2302,6 +2303,9 @@ Recombination rate: 1e-08</p>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
 <p>Default: False</p>
+</dd>
+<dt><kbd>--help-dfes</kbd></dt>
+<dd><p>Print list of DFEs and exit. If a DFE ID is given as an argument, show help for this DFE. Otherwise show help for all available DFEs</p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, X</p>
@@ -2338,7 +2342,8 @@ Recombination rate: 1e-08</p>
 <p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: Vaquita2Epoch_1R22. Please see –help-models for details of these models.</p>
 </dd>
 <dt><kbd>--dfe</kbd></dt>
-<dd><p>Specify a Distribution of Fitness Effects (DFE) model. If no DFE is specified, all mutations are neutral. Available DFE models:. Please see –help-dfes for details of these DFE models.</p>
+<dd><p>Possible choices: Gamma_R22</p>
+<p>Specify a Distribution of Fitness Effects (DFE) model. If no DFE is specified, all mutations are neutral. Available DFE models:Gamma_R22. Please see –help-dfes for details of these DFE models.</p>
 </dd>
 <dt><kbd>--dfe-interval</kbd></dt>
 <dd><p>Specify the interval where selection (given a DFE) is simulated. Anything outside of the interval is simulated as neutral. If no interval is specified, selection is simulated across the entire contig. The interval is written as ‘start,end’ (separated by a comma, with no space, for instance: –dfe-interval 1000,2000.</p>
