@@ -172,7 +172,7 @@
 <span class="n">_slim_lower</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    defineConstant(&quot;N&quot;, asInteger(_N/Q));</span>
 
-<span class="s2">    initializeTreeSeq();</span>
+<span class="s2">    initializeTreeSeq(timeUnit=&quot;generations&quot;);</span>
 <span class="s2">    initializeRecombinationRate(recombination_rates, recombination_ends);</span>
 <span class="s2">}</span>
 
@@ -1792,7 +1792,7 @@
             <span class="n">slim_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slim_path</span><span class="p">()</span>
 
         <span class="c1"># SLiM v3.6 sends `stop()` output to stderr, which we rely upon.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_min_version</span><span class="p">(</span><span class="s2">&quot;3.6&quot;</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_min_version</span><span class="p">(</span><span class="s2">&quot;4.0&quot;</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">)</span>
 
         <span class="n">slim_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">slim_path</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
