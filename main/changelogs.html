@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelogs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#xx-xx">[0.2.1] - 2023-XX-XX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-2024-07-06">[0.2.1a] - 2024-07-06</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">[0.2.0] - 2022-11-01</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">[0.1.2] - 2020-05-29</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">[0.1.1] - 2020-01-02</a></li>
@@ -86,11 +86,12 @@
              
   <section id="changelogs">
 <h1>Changelogs<a class="headerlink" href="#changelogs" title="Permalink to this heading"></a></h1>
-<section id="xx-xx">
-<h2>[0.2.1] - 2023-XX-XX<a class="headerlink" href="#xx-xx" title="Permalink to this heading"></a></h2>
+<section id="a-2024-07-06">
+<h2>[0.2.1a] - 2024-07-06<a class="headerlink" href="#a-2024-07-06" title="Permalink to this heading"></a></h2>
 <p><strong>Bug fixes</strong>:</p>
 <ul class="simple">
 <li><p>Updates to SLiM support: updated the <cite>active</cite> flag in the SLiM code to be integer.`</p></li>
+<li><p>Factor of two error fixed in HomSap/Gamma_K17 DFE (<a class="reference external" href="https://github.com/RyanGutenkunst">&#64;RyanGutenkunst</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1478">#1478</a>)</p></li>
 </ul>
 <p><strong>Breaking changes</strong>:</p>
 <ul class="simple">
@@ -137,6 +138,35 @@ for DFEs with a discretized relationship between h and s.
 <ul class="simple">
 <li><p>Mus musculus (<a class="reference external" href="https://github.com/peterdfields">&#64;peterdfields</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1437">#1437</a>).
 QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1454">#1454</a>.</p></li>
+<li><p>Orzya sativa (<a class="reference external" href="https://github.com/ornobalam">&#64;ornobalam</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1453">#1453</a>).
+QC’d by <a class="reference external" href="https://github.com/minesrebollo">&#64;minesrebollo</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1461">#1461</a></p></li>
+<li><p>Phocoena sinus (<a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1514">#1514</a>).
+QC’d by <a class="reference external" href="https://github.com/ckyriazis">&#64;ckyriazis</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1538">#1538</a></p></li>
+</ul>
+<p><strong>New DFEs</strong>:</p>
+<ul class="simple">
+<li><p>HomSap/LogNormal_H17 (<a class="reference external" href="https://github.com/RyanGutenkunst">&#64;RyanGutenkunst</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1480">#1480</a>)</p></li>
+<li><p>HomSap/Mixed_K23 (<a class="reference external" href="https://github.com/chriscrsmith">&#64;chriscrsmith</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1505">#1505</a>)</p></li>
+<li><p>PhoSin/Gamma_R22 (<a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1547">#1547</a>)
+QC’d by <a class="reference external" href="https://github.com/ckyriazis">&#64;ckyriazis</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1560">#1560</a></p></li>
+<li><p>Generic “uniform” DFE (<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1492">#1492</a>)</p></li>
+</ul>
+<p><strong>New demographic models</strong>:</p>
+<ul class="simple">
+<li><p>MusMus/DomesticusEurope_1F22 (<a class="reference external" href="https://github.com/peterdfields">&#64;peterdfields</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1485">#1485</a>)
+QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1531">#1531</a></p></li>
+<li><p>MusMus/MusculusKorea_1F22 (<a class="reference external" href="https://github.com/peterdfields">&#64;peterdfields</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1485">#1485</a>)
+QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1531">#1531</a></p></li>
+<li><p>MusMus/CastaneusIndia_1F22 (<a class="reference external" href="https://github.com/peterdfields">&#64;peterdfields</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1485">#1485</a>)
+QC’d by <a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1531">#1531</a></p></li>
+<li><p>OrySat/BottleneckMigration_3C07 (<a class="reference external" href="https://github.com/ornobalam">&#64;ornobalam</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1453">#1453</a>)
+QC’d by <a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1524">#1524</a></p></li>
+<li><p>PhoSin/Vaquita2Epoch_1R22 (<a class="reference external" href="https://github.com/igronau">&#64;igronau</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1526">#1526</a>)
+QC’d by <a class="reference external" href="https://github.com/ckyriazis">&#64;ckyriazis</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1538">#1538</a></p></li>
+</ul>
+<p><strong>New annotations</strong>:</p>
+<ul class="simple">
+<li><p>PhoSin exons and CDS (<a class="reference external" href="https://github.com/chriscrsmith">&#64;chriscrsmith</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1520">#1520</a>)</p></li>
 </ul>
 </section>
 <section id="id1">
