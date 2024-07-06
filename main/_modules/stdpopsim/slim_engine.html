@@ -986,7 +986,7 @@
                 <span class="k">continue</span>
             <span class="n">t</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
             <span class="n">t_rounded</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">scaling_factor</span><span class="p">)</span> <span class="o">*</span> <span class="n">scaling_factor</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">GenerationAfter</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GenerationAfter</span><span class="p">):</span>
                 <span class="n">t_rounded</span> <span class="o">-=</span> <span class="n">scaling_factor</span>
             <span class="k">if</span> <span class="n">t_rounded</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bad </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">attr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1078,7 +1078,7 @@
     <span class="n">drawn_mutations</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fitness_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">condition_on_allele_frequency</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">op_id</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_id</span>
+    <span class="n">op_id</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_id</span>
     <span class="n">slim_mutation_ids</span> <span class="o">=</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
     <span class="n">drawn_single_site_ids</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">referenced_single_site_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -1139,7 +1139,7 @@
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">):</span>
             <span class="c1"># Now that GenerationAfter times have been accounted for, we can</span>
             <span class="c1"># properly catch invalid start/end times.</span>
-            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">validate_time_range</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">validate_time_range</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">ee</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">):</span>
             <span class="c1"># Convert population name to integer index. &quot;-1&quot; is used to encode</span>
             <span class="c1"># all populations (currently only valid for ChangeMutationFitness).</span>
@@ -1156,7 +1156,7 @@
                 <span class="n">population_id</span> <span class="o">=</span> <span class="n">population_name_to_index</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">population</span><span class="p">]</span>
 
         <span class="c1"># Append attributes to lists per event type</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DrawMutation</span><span class="p">):</span>
             <span class="k">assert</span> <span class="n">population_id</span> <span class="o">&gt;=</span> <span class="mi">0</span>
             <span class="n">drawn_mutations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span>
@@ -1168,7 +1168,7 @@
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">drawn_single_site_ids</span><span class="p">[</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ChangeMutationFitness</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ChangeMutationFitness</span><span class="p">):</span>
             <span class="n">fitness_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="n">ee</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
@@ -1180,7 +1180,7 @@
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">referenced_single_site_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="p">):</span>
             <span class="k">assert</span> <span class="n">population_id</span> <span class="o">&gt;=</span> <span class="mi">0</span>
             <span class="n">condition_on_allele_frequency</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span>
@@ -1510,7 +1510,7 @@
 
     <span class="c1"># Allele frequency conditioning</span>
     <span class="n">op_types</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_types</span>
+        <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ConditionOnAlleleFrequency</span><span class="o">.</span><span class="n">op_types</span>
     <span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    defineConstant(&quot;op_types&quot;, c(</span><span class="si">{</span><span class="n">op_types</span><span class="si">}</span><span class="s1">));&#39;</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Allele frequency conditioning, one row for each.&quot;</span><span class="p">)</span>
@@ -1638,8 +1638,8 @@
 
 <span class="sd">        :param seed: The seed for the random number generator.</span>
 <span class="sd">        :type seed: int</span>
-<span class="sd">        :param extended_events: A list of :class:`ext.ExtendedEvents` to be</span>
-<span class="sd">            passed to SLiM, e.g. produced by :func:`ext.selective_sweep()`.</span>
+<span class="sd">        :param extended_events: A list of :class:`ExtendedEvents` to be</span>
+<span class="sd">            passed to SLiM, e.g. produced by :func:`selective_sweep()`.</span>
 <span class="sd">        :type extended_events: list</span>
 <span class="sd">        :param slim_path: The full path to the slim executable, or the name of</span>
 <span class="sd">            a command in the current PATH.</span>

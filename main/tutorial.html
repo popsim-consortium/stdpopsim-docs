@@ -1157,7 +1157,7 @@ specifying the set of <code class="docutils literal notranslate"><span class="pr
 <p>Let’s verify that we have both neutral and deleterious mutations in the
 resulting simulation:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">selection_coeffs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mut</span><span class="p">)</span> <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">mutations</span><span class="p">()</span>
+    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mut</span><span class="p">)</span> <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">mutations</span><span class="p">()</span>
 <span class="p">]</span>
 <span class="n">num_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">s</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">selection_coeffs</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span>
@@ -1210,7 +1210,7 @@ are removed from the intervals associated with previous DFEs.</p>
     <span class="n">region</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">gene_interval</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">mutations</span><span class="p">:</span>
         <span class="n">selection_coeffs</span><span class="p">[</span><span class="n">region</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mut</span><span class="p">)</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mut</span><span class="p">)</span>
         <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">region</span><span class="p">,</span> <span class="n">coeffs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selection_coeffs</span><span class="p">):</span>
@@ -1351,14 +1351,14 @@ contains a single site mutation, the single site mutation will be
 “overwritten” and an error will be raised in simulation.</p>
 </div>
 <p>Next, we will set up the “extended events” which will modify the demography.
-This is done through <code class="xref py py-func docutils literal notranslate"><span class="pre">stdpopsim.ext.selective_sweep()</span></code>, which represents a
+This is done through <a class="reference internal" href="api.html#stdpopsim.selective_sweep" title="stdpopsim.selective_sweep"><code class="xref py py-func docutils literal notranslate"><span class="pre">stdpopsim.selective_sweep()</span></code></a>, which represents a
 general model for a mutation that is beneficial within a single population.  We
 specify that the mutation should originate 1000 generations ago in a random
 individual from the first population (named “pop_0” by default); that the
 selection coefficient for the mutation should be 0.5; and that the frequency of
 the mutation in the present day (e.g. at the end of the sweep) should be
 greater than 0.8.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extended_events</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">selective_sweep</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extended_events</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">selective_sweep</span><span class="p">(</span>
     <span class="n">single_site_id</span><span class="o">=</span><span class="n">locus_id</span><span class="p">,</span>
     <span class="n">population</span><span class="o">=</span><span class="s2">&quot;pop_0&quot;</span><span class="p">,</span>
     <span class="n">selection_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>

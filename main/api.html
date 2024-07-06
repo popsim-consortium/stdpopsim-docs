@@ -55,6 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#demographic-models">Demographic Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gene-conversion-and-bacterial-recombination">Gene conversion and bacterial recombination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#selection-and-dfes">Selection and DFEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selection-and-sweeps">Selection and sweeps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generic-models">Generic models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#simulation-engines">Simulation Engines</a></li>
 </ul>
@@ -1029,8 +1030,164 @@ that also produce only neutral mutations (e.g., exponential with mean 0).</p>
 </dd></dl>
 
 </section>
+<section id="selection-and-sweeps">
+<span id="sec-api-sweeps"></span><span id="sec-api-generic-models"></span><h2>Selection and sweeps<a class="headerlink" href="#selection-and-sweeps" title="Permalink to this heading"></a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtendedEvent</span></code> and subclasses may be used to condition on sequences of
+events at particular loci using the SLiM engine, by passing lists of events to
+the <cite>extended_events</cite> argument in <cite>Engine.simulate</cite>. A simplified API is provided
+to construct the necessary events for selective sweeps.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="stdpopsim.DrawMutation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">DrawMutation</span></span><a class="reference internal" href="_modules/stdpopsim/selection.html#DrawMutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DrawMutation" title="Permalink to this definition"></a></dt>
+<dd><p>Introduce a new mutation with the given mutation type in the given
+population at a given single site. The mutation will be added to one
+randomly chosen chromosome in the given population. Only one mutation
+may be drawn per single site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – The number of generations in the past at which to introduce the
+mutation.</p></li>
+<li><p><strong>single_site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The string ID of the single site at which to
+introduce the mutation, see <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a>.</p></li>
+<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the population in which to introduce
+the mutation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stdpopsim.ChangeMutationFitness">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">ChangeMutationFitness</span></span><a class="reference internal" href="_modules/stdpopsim/selection.html#ChangeMutationFitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.ChangeMutationFitness" title="Permalink to this definition"></a></dt>
+<dd><p>Change the selection and/or dominance coefficients for the given mutation
+type in the given population. The mutation this applies to need not exist
+in the population for all generations between start_time and end_time.
+E.g. if the mutation could be transferred to the population via migration.
+This requires that a <cite>DrawMutation</cite> event with the same <cite>single_site_id</cite> is
+also supplied to the simulation engine.</p>
+<p>See SLiM documentation for registerFitnessCallback().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which the change
+in mutation fitness begins.</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which the change
+in mutation fitness ends.</p></li>
+<li><p><strong>single_site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The string ID of the single site at which to change
+the mutation fitness, see <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a>.</p></li>
+<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the population in which to change
+the mutation fitness. If <cite>None</cite> (the default), then all populations are
+affected.</p></li>
+<li><p><strong>selection_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The new selection coefficient of the mutation.</p></li>
+<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The new dominance coefficient of the mutation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stdpopsim.ConditionOnAlleleFrequency">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">ConditionOnAlleleFrequency</span></span><a class="reference internal" href="_modules/stdpopsim/selection.html#ConditionOnAlleleFrequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.ConditionOnAlleleFrequency" title="Permalink to this definition"></a></dt>
+<dd><p>Condition on the allele frequency of a drawn mutation with the given
+mutation type in the given population. The mutation need not have been
+drawn in the population being conditioned upon.  This requires that a
+<cite>DrawMutation</cite> event for the same single site is also supplied to the
+simulation engine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which to start
+checking the allele frequency condition.</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which to stop
+checking the allele frequency condition.</p></li>
+<li><p><strong>single_site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The string ID of the single site at which to check
+the allele frequency condition, see <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a>.</p></li>
+<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the population in which to check
+the allele frequency condition.</p></li>
+<li><p><strong>op</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The comparison operator used for the allele frequency condition,
+one of <cite>(“&gt;”, “&gt;=”, “&lt;”, “&lt;=”)</cite>.</p></li>
+<li><p><strong>allele_frequency</strong> – The allele frequency to compare against.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stdpopsim.selective_sweep">
+<span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">selective_sweep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">single_site_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_generation_ago</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_coeff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dominance_coeff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_generation_ago</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_generation_ago</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_freq_at_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_freq_at_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globally_adaptive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/selection.html#selective_sweep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.selective_sweep" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a list of extended events corresponding to a selective sweep at a
+single site (see <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a>) that may subsequently be
+passed to the simulation engine. The sequence of events is:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>In generation <cite>mutation_generation_ago</cite>, a <strong>neutral</strong> mutation is
+introduced into <cite>population</cite>.</p></li>
+<li><p>In generation <cite>start_generation_ago</cite>, the mutation becomes
+beneficial (whether globally or locally is controlled by the
+<cite>globally_adaptive</cite> option). If the frequency of the mutation in
+<cite>population</cite> is below <cite>min_freq_at_start</cite> in this generation, the
+simulation will restart from <cite>mutation_generation_ago</cite>.</p></li>
+<li><p>In the generation after <cite>end_generation_ago</cite>, the mutation reverts to
+neutrality in <cite>population</cite>. If the frequency of the mutation in
+<cite>population</cite> is below <cite>min_freq_at_end</cite> in this generation, the
+simulation will restart from <cite>mutation_generation_ago</cite>.</p></li>
+</ol>
+</div></blockquote>
+<p>During the sweep, the fitnesses of individuals that are homozygous or
+heterozygous for the beneficial mutation are <cite>1 + selection_coeff</cite> and  <cite>1
++ selection_coeff * dominance_coeff</cite>, respectively. If <cite>globally_adaptive</cite>
+is <cite>True</cite> (the default), then all individuals carrying the mutation are
+impacted regardless of the population they belong to. Otherwise, the
+mutation only influences fitness within <cite>population</cite>.</p>
+<p>If the mutation is lost in <cite>population</cite> at any point between
+<cite>mutation_generation_ago</cite> and <cite>end_generation_ago</cite>, then the simulation
+will restart from <cite>mutation_generation_ago</cite>. The effect of “restarting”
+(aka “rejection sampling”) is that the resulting simulations are
+conditioned on the mutation being extant after time
+<cite>mutation_generation_ago</cite> with frequency above <cite>min_freq_at_start</cite> at
+<cite>start_generation_ago</cite> and <cite>min_freq_at_end</cite> at <cite>end_generation_ago</cite>.</p>
+<p>Because the simulation will restart until the allele frequency conditions
+are satisfied, care must be taken to ensure that these are reasonable. For
+example, if <cite>start_generation_ago</cite> is very close to
+<cite>mutation_generation_ago</cite> and <cite>min_freq_at_start</cite> is substantially greater
+than zero, the vast majority of proposed allele frequency trajectories will
+be rejected and the simulation may take an infeasibly long time to
+complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>single_site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The string ID of the single site at which to introduce
+the mutation, see <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a>.</p></li>
+<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The name of the population in which the mutation is
+introduced and the sweep occurs.</p></li>
+<li><p><strong>mutation_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which
+to introduce the mutation.</p></li>
+<li><p><strong>selection_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The selection coefficient of the beneficial
+mutation during the sweep.  Must be greater than or equal to zero.</p></li>
+<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The dominance coefficient of the beneficial
+mutation during the sweep.  Defaults to <cite>0.5</cite>.</p></li>
+<li><p><strong>start_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which the
+sweep starts and the mutation switches from neutral to beneficial. Defaults to
+<cite>mutation_generation_ago</cite> (i.e. a “hard” sweep).</p></li>
+<li><p><strong>end_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The number of generations in the past at which the
+sweep ends and the mutation switches from beneficial to neutral. Defaults to
+<cite>0</cite> (i.e. the end of the simulation).</p></li>
+<li><p><strong>min_freq_at_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The minimum allowed frequency for the
+mutation in <cite>population</cite> at the start of the sweep (optional).</p></li>
+<li><p><strong>min_freq_at_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The minimum allowed frequency for the
+mutation in <cite>population</cite> at the end of the sweep (optional).</p></li>
+<li><p><strong>globally_adaptive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If <cite>True</cite> (default), the mutation is beneficial in all
+populations. If <cite>False</cite>, the mutation is beneficial only in the population of
+origin.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="generic-models">
-<span id="sec-api-generic-models"></span><h2>Generic models<a class="headerlink" href="#generic-models" title="Permalink to this heading"></a></h2>
+<h2>Generic models<a class="headerlink" href="#generic-models" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> contains simulation models from the literature
 that are defined for particular species. It is also useful to be able
 to simulate more generic models, which are documented here.
@@ -1280,8 +1437,8 @@ See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpo
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The seed for the random number generator.</p></li>
-<li><p><strong>extended_events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ext.ExtendedEvents</span></code> to be
-passed to SLiM, e.g. produced by <code class="xref py py-func docutils literal notranslate"><span class="pre">ext.selective_sweep()</span></code>.</p></li>
+<li><p><strong>extended_events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ExtendedEvents</span></code> to be
+passed to SLiM, e.g. produced by <code class="xref py py-func docutils literal notranslate"><span class="pre">selective_sweep()</span></code>.</p></li>
 <li><p><strong>slim_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The full path to the slim executable, or the name of
 a command in the current PATH.</p></li>
 <li><p><strong>slim_script</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, the simulation will not be executed.
