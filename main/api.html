@@ -250,6 +250,16 @@ information from Ensembl</p>
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a> instance describing a section of genome that
 is to be simulated based on empirical information for a given species
 and chromosome.</p>
+<p><em>Coordinates:</em> If a particular chunk of a given chromosome is obtained
+(by specifying a <cite>chromosome</cite> ID and <cite>left</cite> and <cite>right</cite> coordinates),
+the resulting genomes will have coordinates matching the original
+(full) genome, and portions of the genome outside of <cite>[left, right)</cite>
+will be masked (and so contain missing data). So, coordinates of
+<cite>genetic_map</cite> and masks should be in coordinates of the original genome
+(so, not shifted to be relative to <cite>left</cite>). If it is desired to have
+output coordinates relative to <cite>left</cite>, use the
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.trim" title="(in Python)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.trim()</span></code></a> method on the result (for instance,
+<cite>ts_shifted = ts.trim()</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -287,11 +297,11 @@ length of genome sequence for this contig. For a generic contig, mutation
 and recombination rates are equal to the genome-wide average across all
 autosomal chromosomes.</p></li>
 <li><p><strong>left</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The left coordinate (inclusive) of the region to
-keep on the chromosome. Defaults to 0.  Genetic maps and masks are
-clipped to this boundary.</p></li>
+keep on the chromosome. Defaults to 0. Remaining regions will have
+missing data when simulated.</p></li>
 <li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The right coordinate (exclusive) of the region to
 keep on the chromosome. Defaults to the length of the chromosome.
-Genetic maps and masks are clipped to this boundary.</p></li>
+Remaining regions will have missing data when simulated.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -459,8 +469,6 @@ that are needed to simulate this region.</p>
 <p>Information about targets of selection are contained in the <code class="docutils literal notranslate"><span class="pre">dfe_list</span></code>
 and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DFE
 applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> for more information.</p>
-<p>The contig may be a segment of a named chromosome. If so, the original
-coordinate system is used for <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> and <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_single_site()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -495,7 +503,7 @@ By default, the only DFE is completely neutral.</p></li>
 <li><p><strong>interval_list</strong> – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects containing integers.
 By default, the inital interval list spans the whole chromosome with the
 neutral DFE.</p></li>
-<li><p><strong>original_coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><em>tuple</em></a>) – The location of the contig on a named chromosome,
+<li><p><strong>coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><em>tuple</em></a>) – The location of the contig on a named chromosome,
 as a tuple of the form <cite>(chromosome, left, right)</cite>. If <cite>None</cite>, the contig
 is assumed to be generic (i.e. it does not inherit a coordinate system
 from a larger chromosome).</p></li>
@@ -597,7 +605,7 @@ intervals).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.dfe_breakpoints">
-<span class="sig-name descname"><span class="pre">dfe_breakpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dfe_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dfe_breakpoints" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">dfe_breakpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dfe_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dfe_breakpoints" title="Permalink to this definition"></a></dt>
 <dd><p>Returns two things: the sorted vector of endpoints of all intervals across
 all DFEs in the contig, and a vector of integer labels for these intervals,
 saying which DFE goes with which interval.
@@ -618,13 +626,8 @@ i.e., if <code class="docutils literal notranslate"><span class="pre">contig.dfe
 <code class="docutils literal notranslate"><span class="pre">breaks[k]</span></code>.  Some intervals may not be covered by a DFE, in which
 case they will have the label <code class="docutils literal notranslate"><span class="pre">-1</span></code> (beware of python indexing!).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>relative_coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the returned breakpoints
-will be relative to the start of the contig, rather than to the
-start of the chromosome to which to contig belongs.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple (breaks, dfe_labels).</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple (breaks, dfe_labels).</p>
 </dd>
 </dl>
 </dd></dl>

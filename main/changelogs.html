@@ -88,8 +88,29 @@
 <h1>Changelogs<a class="headerlink" href="#changelogs" title="Permalink to this heading"></a></h1>
 <section id="xx-xx">
 <h2>[0.2.1] - 2023-XX-XX<a class="headerlink" href="#xx-xx" title="Permalink to this heading"></a></h2>
+<p><strong>Bug fixes</strong>:</p>
+<ul class="simple">
+<li><p>Updates to SLiM support: updated the <cite>active</cite> flag in the SLiM code to be integer.`</p></li>
+</ul>
 <p><strong>Breaking changes</strong>:</p>
 <ul class="simple">
+<li><dl class="simple">
+<dt>The <cite>time_units</cite> attribute of tree sequence metadata is now set to “generations”</dt><dd><p>for SLiM output, avoiding the “time units mismatch warning”.
+(<a class="reference external" href="https://github.com/nspope">&#64;nspope</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1567">#1567</a>)</p>
+</dd>
+</dl>
+</li>
+<li><p>Previously, Contigs specified with <cite>left</cite> and <cite>right</cite> arguments produced
+simulations having coordinates shifted so they were relative to <cite>left</cite>. This
+is no longer the case: coordinates in resulting simulations retain the
+original chromosome’s coordinates. As a result, regions outside <cite>[left,
+right)</cite> will now have missing data. To produce simulation output with the
+previous behavior, use the <cite>.trim()</cite> method of the resulting TreeSequence.
+So, the Contig’s <cite>.original_coordinates</cite> attribute is now called
+<cite>.coordinates</cite>, and several methods (e.g., <cite>Contig.basic_contig()</cite>) now take
+<cite>left</cite> and <cite>right</cite> arguments as well as <cite>length</cite>. Finally, arguments such as
+<cite>relative_coordinates=True/False</cite> to <cite>Contig.dfe_breakpoints()</cite> are no longer
+necessary and are deprecated. (<a class="reference external" href="https://github.com/petrelharp">&#64;petrelharp</a>, <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/pull/1570">#1570</a>)</p></li>
 <li><dl class="simple">
 <dt>To add the possibility for a relationship between dominance and selection</dt><dd><p>coefficient, now each stdpopsim MutationType might have more than one
 underlying SLiM mutation type; so, where this is recorded in top-level
