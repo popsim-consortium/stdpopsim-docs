@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; stdpopsim 0.2.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Welcome to stdpopsim’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            stdpopsim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#first-steps">First steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-involved">Getting involved</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citations">Citations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#licence-and-usage">Licence and usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stdpopsim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<span id="sec-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This documentation is incomplete and under development. If
+you would like to help, please open an issue or pull request at
+<a class="reference external" href="https://github.com/popgensims/stdpopsim">GitHub</a>.</p>
+</div>
+<p>This is the documentation for <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, the standard library for population
+genetic simulation models.</p>
+<p>We designed <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to make it easier for you to run reproducible, bug-free
+simulations of genetic datasets from published demographic histories.
+Under the hood, <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> relies on
+<a class="reference external" href="https://tskit.dev/software/msprime.html">msprime</a> and
+<a class="reference external" href="https://messerlab.org/slim/">SLiM 4</a> to generate sample datasets in the
+<a class="reference external" href="https://tskit.dev/learn/">tree sequence</a> format.</p>
+<section id="first-steps">
+<h2>First steps<a class="headerlink" href="#first-steps" title="Permalink to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>Head to the <a class="reference internal" href="installation.html#sec-installation"><span class="std std-ref">Installation</span></a> page to get <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> installed
+on your computer.</p></li>
+<li><p>Skim the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> to see what simulations are currently supported
+by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.</p></li>
+<li><p>Read the <a class="reference internal" href="tutorial.html#sec-tutorial"><span class="std std-ref">Tutorials</span></a> to see some examples of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> in
+action.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="getting-involved">
+<h2>Getting involved<a class="headerlink" href="#getting-involved" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <strong>is a community effort, and we welcome YOU to join us!</strong></p>
+<p>Are there other features, models or organisms that you’d like to see in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>?
+This software is maintained by the PopSim Consortium,
+an open, global community of scientists and developers who are working together to improve
+standards for benchmarking and testing in population genetics.
+You can get into contact with the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> community by subscribing to our <a class="reference external" href="https://lists.uoregon.edu/mailman/listinfo/popgen_benchmark">email list
+serve</a>
+and by creating and commenting on
+Github <a class="reference external" href="http://github.com/popgensims/stdpopsim/issues">issues</a>.
+There is a lot of chatter through
+Github, and we’ve been building code
+there cooperatively. If you are interested in joining us please read our
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.
+A particular goal of this project is to build a diverse and supportive community,
+and so we especially encourage individuals from underrepresented groups in popgen to join.
+A primary goal of PopSim Consortium is to be inclusive to the largest number of contributors,
+with the most varied and diverse backgrounds possible. As such, we are committed to providing a
+friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, ability,
+ethnicity, socioeconomic status, and religion (or lack thereof).
+Being a member of the Consortium can provide a valuable avenue for career development, through
+building networks, contributing to papers and code, as well as through learning programing standards
+and best practices.</p>
+<p>For further details read the <a class="reference internal" href="development.html#sec-development"><span class="std std-ref">Development</span></a> page to find out how you can join us.</p>
+</section>
+<section id="citations">
+<h2>Citations<a class="headerlink" href="#citations" title="Permalink to this heading"></a></h2>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> in your work, please cite our
+<a class="reference external" href="https://doi.org/10.7554/eLife.54967">original manuscript</a> and/or the
+<a class="reference external" href="https://doi.org/10.1101/2022.10.29.514266">followup manuscript</a> describing
+major additions to the catalog:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Jeffrey R Adrion, Christopher B Cole, Noah Dukler, Jared G Galloway,
+Ariella L Gladstein, Graham Gower, Christopher C Kyriazis, Aaron P Ragsdale,
+Georgia Tsambos, Franz Baumdicker, Jedidiah Carlson, Reed A Cartwright,
+Arun Durvasula, Ilan Gronau, Bernard Y Kim, Patrick McKenzie,
+Philipp W Messer, Ekaterina Noskova, Diego Ortega-Del Vecchyo, Fernando Racimo,
+Travis J Struck, Simon Gravel, Ryan N Gutenkunst, Kirk E Lohmeuller,
+Peter L Ralph, Daniel R Schrider, Adam Siepel, Jerome Kelleher, Andrew D Kern (2020),
+<em>A community-maintained standard library of population genetic models</em>,
+eLife 9:e54967; doi: <a class="reference external" href="https://doi.org/10.7554/eLife.54967">https://doi.org/10.7554/eLife.54967</a></p></li>
+<li><p>M. Elise Lauterbur, Maria Izabel A. Cavassim, Ariella L. Gladstein, Graham Gower,
+Nathaniel S. Pope, Georgia Tsambos, Jeff Adrion, Saurabh Belsare, Arjun Biddanda,
+Victoria Caudill, Jean Cury, Ignacio Echevarria, Benjamin C. Haller, Ahmed R. Hasan,
+Xin Huang, Leonardo Nicola Martin Iasi, Ekaterina Noskova, Jana Obšteter,
+Vitor Antonio Corrêa Pavinato, Alice Pearson, David Peede, Manolo F. Perez,
+Murillo F. Rodrigues, Chris C. R. Smith, Jeffrey P. Spence, Anastasia Teterina,
+Silas Tittes, Per Unneberg, Juan Manuel Vazquez, Ryan K. Waples, Anthony Wilder Wohns,
+Yan Wong, Franz Baumdicker, Reed A. Cartwright, Gregor Gorjanc, Ryan N. Gutenkunst,
+Jerome Kelleher, Andrew D. Kern, Aaron P. Ragsdale, Peter L. Ralph, Daniel R. Schrider,
+Ilan Gronau (2023)
+<em>Expanding the stdpopsim species catalog, and lessons learned for realistic genome simulations</em>,
+eLife 12:RP84874; doi: <a class="reference external" href="https://doi.org/10.7554/eLife.84874.2">https://doi.org/10.7554/eLife.84874.2</a></p></li>
+</ul>
+</div></blockquote>
+<p>Bibtex records:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@article</span> <span class="p">{</span><span class="mf">10.7554</span><span class="o">/</span><span class="n">eLife</span><span class="mf">.54967</span><span class="p">,</span>
+    <span class="n">article_type</span> <span class="o">=</span> <span class="p">{</span><span class="n">journal</span><span class="p">},</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="n">A</span> <span class="n">community</span><span class="o">-</span><span class="n">maintained</span> <span class="n">standard</span> <span class="n">library</span> <span class="n">of</span> <span class="n">population</span> <span class="n">genetic</span> <span class="n">models</span><span class="p">},</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="p">{</span><span class="n">Adrion</span><span class="p">,</span> <span class="n">Jeffrey</span> <span class="n">R</span> <span class="ow">and</span> <span class="n">Cole</span><span class="p">,</span> <span class="n">Christopher</span> <span class="n">B</span> <span class="ow">and</span> <span class="n">Dukler</span><span class="p">,</span> <span class="n">Noah</span> <span class="ow">and</span> <span class="n">Galloway</span><span class="p">,</span> <span class="n">Jared</span>
+        <span class="n">G</span> <span class="ow">and</span> <span class="n">Gladstein</span><span class="p">,</span> <span class="n">Ariella</span> <span class="n">L</span> <span class="ow">and</span> <span class="n">Gower</span><span class="p">,</span> <span class="n">Graham</span> <span class="ow">and</span> <span class="n">Kyriazis</span><span class="p">,</span> <span class="n">Christopher</span> <span class="n">C</span> <span class="ow">and</span> <span class="n">Ragsdale</span><span class="p">,</span>
+        <span class="n">Aaron</span> <span class="n">P</span> <span class="ow">and</span> <span class="n">Tsambos</span><span class="p">,</span> <span class="n">Georgia</span> <span class="ow">and</span> <span class="n">Baumdicker</span><span class="p">,</span> <span class="n">Franz</span> <span class="ow">and</span> <span class="n">Carlson</span><span class="p">,</span> <span class="n">Jedidiah</span> <span class="ow">and</span> <span class="n">Cartwright</span><span class="p">,</span>
+        <span class="n">Reed</span> <span class="n">A</span> <span class="ow">and</span> <span class="n">Durvasula</span><span class="p">,</span> <span class="n">Arun</span> <span class="ow">and</span> <span class="n">Gronau</span><span class="p">,</span> <span class="n">Ilan</span> <span class="ow">and</span> <span class="n">Kim</span><span class="p">,</span> <span class="n">Bernard</span> <span class="n">Y</span> <span class="ow">and</span> <span class="n">McKenzie</span><span class="p">,</span> <span class="n">Patrick</span> <span class="ow">and</span>
+        <span class="n">Messer</span><span class="p">,</span> <span class="n">Philipp</span> <span class="n">W</span> <span class="ow">and</span> <span class="n">Noskova</span><span class="p">,</span> <span class="n">Ekaterina</span> <span class="ow">and</span> <span class="n">Ortega</span><span class="o">-</span><span class="n">Del</span> <span class="n">Vecchyo</span><span class="p">,</span> <span class="n">Diego</span> <span class="ow">and</span> <span class="n">Racimo</span><span class="p">,</span>
+        <span class="n">Fernando</span> <span class="ow">and</span> <span class="n">Struck</span><span class="p">,</span> <span class="n">Travis</span> <span class="n">J</span> <span class="ow">and</span> <span class="n">Gravel</span><span class="p">,</span> <span class="n">Simon</span> <span class="ow">and</span> <span class="n">Gutenkunst</span><span class="p">,</span> <span class="n">Ryan</span> <span class="n">N</span> <span class="ow">and</span> <span class="n">Lohmueller</span><span class="p">,</span>
+        <span class="n">Kirk</span> <span class="n">E</span> <span class="ow">and</span> <span class="n">Ralph</span><span class="p">,</span> <span class="n">Peter</span> <span class="n">L</span> <span class="ow">and</span> <span class="n">Schrider</span><span class="p">,</span> <span class="n">Daniel</span> <span class="n">R</span> <span class="ow">and</span> <span class="n">Siepel</span><span class="p">,</span> <span class="n">Adam</span> <span class="ow">and</span> <span class="n">Kelleher</span><span class="p">,</span> <span class="n">Jerome</span>
+        <span class="ow">and</span> <span class="n">Kern</span><span class="p">,</span> <span class="n">Andrew</span> <span class="n">D</span><span class="p">},</span>
+    <span class="n">editor</span> <span class="o">=</span> <span class="p">{</span><span class="n">Coop</span><span class="p">,</span> <span class="n">Graham</span> <span class="ow">and</span> <span class="n">Wittkopp</span><span class="p">,</span> <span class="n">Patricia</span> <span class="n">J</span> <span class="ow">and</span> <span class="n">Novembre</span><span class="p">,</span> <span class="n">John</span> <span class="ow">and</span> <span class="n">Sethuraman</span><span class="p">,</span> <span class="n">Arun</span>
+        <span class="ow">and</span> <span class="n">Mathieson</span><span class="p">,</span> <span class="n">Sara</span><span class="p">},</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">,</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="p">{</span><span class="n">jun</span><span class="p">},</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="p">},</span>
+    <span class="n">pages</span> <span class="o">=</span> <span class="p">{</span><span class="n">e54967</span><span class="p">},</span>
+    <span class="n">citation</span> <span class="o">=</span> <span class="p">{</span><span class="n">eLife</span> <span class="mi">2020</span><span class="p">;</span><span class="mi">9</span><span class="p">:</span><span class="n">e54967</span><span class="p">},</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="p">{</span><span class="mf">10.7554</span><span class="o">/</span><span class="n">eLife</span><span class="mf">.54967</span><span class="p">},</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">doi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.7554</span><span class="o">/</span><span class="n">eLife</span><span class="mf">.54967</span><span class="p">},</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="p">{</span><span class="n">simulation</span><span class="p">,</span> <span class="n">reproducibility</span><span class="p">,</span> <span class="nb">open</span> <span class="n">source</span><span class="p">},</span>
+    <span class="n">journal</span> <span class="o">=</span> <span class="p">{</span><span class="n">eLife</span><span class="p">},</span>
+    <span class="n">issn</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2050</span><span class="o">-</span><span class="mi">084</span><span class="n">X</span><span class="p">},</span>
+    <span class="n">publisher</span> <span class="o">=</span> <span class="p">{</span><span class="n">eLife</span> <span class="n">Sciences</span> <span class="n">Publications</span><span class="p">,</span> <span class="n">Ltd</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="nd">@article</span><span class="p">{</span><span class="mf">10.7554</span><span class="o">/</span><span class="n">eLife</span><span class="mf">.84874.2</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">Expanding</span> <span class="n">the</span> <span class="n">stdpopsim</span> <span class="n">species</span> <span class="n">catalog</span><span class="p">,</span> <span class="ow">and</span> <span class="n">lessons</span> <span class="n">learned</span> <span class="k">for</span> <span class="n">realistic</span> <span class="n">genome</span> <span class="n">simulations</span><span class="p">},</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="p">{</span><span class="n">M</span><span class="o">.</span> <span class="n">Elise</span> <span class="n">Lauterbur</span> <span class="ow">and</span> <span class="n">Maria</span> <span class="n">Izabel</span> <span class="n">A</span><span class="o">.</span> <span class="n">Cavassim</span> <span class="ow">and</span> <span class="n">Ariella</span> <span class="n">L</span><span class="o">.</span> <span class="n">Gladstein</span> <span class="ow">and</span> <span class="n">Graham</span> <span class="n">Gower</span> <span class="ow">and</span>
+       <span class="n">Nathaniel</span> <span class="n">S</span><span class="o">.</span> <span class="n">Pope</span> <span class="ow">and</span> <span class="n">Georgia</span> <span class="n">Tsambos</span> <span class="ow">and</span> <span class="n">Jeff</span> <span class="n">Adrion</span> <span class="ow">and</span> <span class="n">Saurabh</span> <span class="n">Belsare</span> <span class="ow">and</span> <span class="n">Arjun</span> <span class="n">Biddanda</span> <span class="ow">and</span>
+       <span class="n">Victoria</span> <span class="n">Caudill</span> <span class="ow">and</span> <span class="n">Jean</span> <span class="n">Cury</span> <span class="ow">and</span> <span class="n">Ignacio</span> <span class="n">Echevarria</span> <span class="ow">and</span> <span class="n">Benjamin</span> <span class="n">C</span><span class="o">.</span> <span class="n">Haller</span> <span class="ow">and</span> <span class="n">Ahmed</span> <span class="n">R</span><span class="o">.</span> <span class="n">Hasan</span> <span class="ow">and</span>
+       <span class="n">Xin</span> <span class="n">Huang</span> <span class="ow">and</span> <span class="n">Leonardo</span> <span class="n">Nicola</span> <span class="n">Martin</span> <span class="n">Iasi</span> <span class="ow">and</span> <span class="n">Ekaterina</span> <span class="n">Noskova</span> <span class="ow">and</span> <span class="n">Jana</span> <span class="n">Ob</span><span class="p">{</span>\<span class="n">v</span><span class="p">{</span><span class="n">s</span><span class="p">}}</span><span class="n">teter</span> <span class="ow">and</span>
+       <span class="n">Vitor</span> <span class="n">Antonio</span> <span class="n">Corr</span><span class="p">{</span>\<span class="o">^</span><span class="p">{</span><span class="n">e</span><span class="p">}}</span><span class="n">a</span> <span class="n">Pavinato</span> <span class="ow">and</span> <span class="n">Alice</span> <span class="n">Pearson</span> <span class="ow">and</span> <span class="n">David</span> <span class="n">Peede</span> <span class="ow">and</span> <span class="n">Manolo</span> <span class="n">F</span><span class="o">.</span> <span class="n">Perez</span> <span class="ow">and</span>
+       <span class="n">Murillo</span> <span class="n">F</span><span class="o">.</span> <span class="n">Rodrigues</span> <span class="ow">and</span> <span class="n">Chris</span> <span class="n">C</span><span class="o">.</span> <span class="n">R</span><span class="o">.</span> <span class="n">Smith</span> <span class="ow">and</span> <span class="n">Jeffrey</span> <span class="n">P</span><span class="o">.</span> <span class="n">Spence</span> <span class="ow">and</span> <span class="n">Anastasia</span> <span class="n">Teterina</span> <span class="ow">and</span>
+       <span class="n">Silas</span> <span class="n">Tittes</span> <span class="ow">and</span> <span class="n">Per</span> <span class="n">Unneberg</span> <span class="ow">and</span> <span class="n">Juan</span> <span class="n">Manuel</span> <span class="n">Vazquez</span> <span class="ow">and</span> <span class="n">Ryan</span> <span class="n">K</span><span class="o">.</span> <span class="n">Waples</span> <span class="ow">and</span> <span class="n">Anthony</span> <span class="n">Wilder</span> <span class="n">Wohns</span> <span class="ow">and</span>
+       <span class="n">Yan</span> <span class="n">Wong</span> <span class="ow">and</span> <span class="n">Franz</span> <span class="n">Baumdicker</span> <span class="ow">and</span> <span class="n">Reed</span> <span class="n">A</span><span class="o">.</span> <span class="n">Cartwright</span> <span class="ow">and</span> <span class="n">Gregor</span> <span class="n">Gorjanc</span> <span class="ow">and</span> <span class="n">Ryan</span> <span class="n">N</span><span class="o">.</span> <span class="n">Gutenkunst</span> <span class="ow">and</span>
+       <span class="n">Jerome</span> <span class="n">Kelleher</span> <span class="ow">and</span> <span class="n">Andrew</span> <span class="n">D</span><span class="o">.</span> <span class="n">Kern</span> <span class="ow">and</span> <span class="n">Aaron</span> <span class="n">P</span><span class="o">.</span> <span class="n">Ragsdale</span> <span class="ow">and</span> <span class="n">Peter</span> <span class="n">L</span><span class="o">.</span> <span class="n">Ralph</span> <span class="ow">and</span> <span class="n">Daniel</span> <span class="n">R</span><span class="o">.</span> <span class="n">Schrider</span> <span class="ow">and</span>
+       <span class="n">Ilan</span> <span class="n">Gronau</span><span class="p">},</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="p">{</span><span class="mf">10.7554</span><span class="o">/</span><span class="n">elife</span><span class="mf">.84874.2</span><span class="p">},</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">doi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.7554</span><span class="o">/</span><span class="n">elife</span><span class="mf">.84874.2</span><span class="p">},</span>
+    <span class="n">journal</span> <span class="o">=</span> <span class="p">{</span><span class="n">eLife</span><span class="p">},</span>
+    <span class="n">volume</span><span class="o">=</span><span class="p">{</span><span class="mi">12</span><span class="p">},</span>
+    <span class="n">pages</span><span class="o">=</span><span class="p">{</span><span class="n">RP84874</span><span class="p">},</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">2023</span><span class="p">,</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="p">{</span><span class="n">may</span><span class="p">},</span>
+    <span class="n">publisher</span> <span class="o">=</span> <span class="p">{{</span><span class="n">eLife</span><span class="p">}</span> <span class="n">Sciences</span> <span class="n">Publications</span><span class="p">,</span> <span class="n">Ltd</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="licence-and-usage">
+<h2>Licence and usage<a class="headerlink" href="#licence-and-usage" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is available under the GPLv3 public license.
+The terms of this license can be read
+<a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0.en.html">here</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to stdpopsim’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, PopSim Consortium.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
