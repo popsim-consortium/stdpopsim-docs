@@ -258,7 +258,7 @@ will be masked (and so contain missing data). So, coordinates of
 <cite>genetic_map</cite> and masks should be in coordinates of the original genome
 (so, not shifted to be relative to <cite>left</cite>). If it is desired to have
 output coordinates relative to <cite>left</cite>, use the
-<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.trim" title="(in Python)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.trim()</span></code></a> method on the result (for instance,
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.trim" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.trim()</span></code></a> method on the result (for instance,
 <cite>ts_shifted = ts.trim()</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -474,11 +474,11 @@ applies to the k-th interval; see <a class="reference internal" href="#stdpopsim
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
 <li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The ploidy of the contig. Defaults to 2 (diploid).</p></li>
-<li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><em>msprime.RateMap</em></a>) – The recombination map for the region, that gives
+<li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Project name not set)"><em>msprime.RateMap</em></a>) – The recombination map for the region, that gives
 the rates of double-stranded breaks. Note that if gene conversion
 fraction is nonzero, then this map can have a larger rate than the
 corresponding chromosome’s recombination rate, since the chromosome’s
-rate describes only crossovers. A <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Python)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code></a> object.</p></li>
+rate describes only crossovers. A <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">msprime.RateMap</span></code></a> object.</p></li>
 <li><p><strong>bacterial_recombination</strong> – Whether the model of recombination is
 by horizontal gene transfer or not (default is False, i.e.,
 recombination is by crossovers and possibly gene conversion).</p></li>
@@ -1343,7 +1343,7 @@ running the simulation.</p></li>
 <dd class="field-even"><p>A succinct tree sequence.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in Python)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.trees.TreeSequence</span></code></a> or None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.trees.TreeSequence</span></code></a> or None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1417,7 +1417,7 @@ and <code class="docutils literal notranslate"><span class="pre">slim_scaling_fa
 generate the SLiM script with <a class="reference internal" href="#stdpopsim.slim_engine._SLiMEngine.simulate" title="stdpopsim.slim_engine._SLiMEngine.simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ts</strong> (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in Python)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>) – The tree sequence output by SLiM.</p>
+<dd class="field-odd"><p><strong>ts</strong> (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>) – The tree sequence output by SLiM.</p>
 </dd>
 </dl>
 <div class="admonition warning">
