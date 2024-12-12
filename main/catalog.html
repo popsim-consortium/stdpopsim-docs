@@ -101,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#sec_catalog_BosTau">Bos taurus</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_BosTau_genome">Genome</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sec_catalog_BosTau_models">Demographic Models</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_bostau_models_holsteinfriesian_1m13">Piecewise size changes in Holstein-Friesian cattle.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_bostau_models_holsteinfriesian_1m13">Piecewise size model for Holstein-Friesian cattle (MacLeod et al., 2013).</a></li>
 </ul>
 </li>
 </ul>
@@ -352,11 +352,11 @@ your simulation.
 It is organised around a number of choices that you’ll need to make about the
 <a class="reference internal" href="api.html#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> you wish to simulate:</p>
 <ol class="arabic simple">
-<li><p>Which <strong>chromosome</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> object?)</p></li>
-<li><p>Which <strong>genetic map</strong>? (ie. which <code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticMap</span></code> object?)</p></li>
-<li><p>Which <strong>model of demographic history</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> object)</p></li>
-<li><p>Which <strong>distribution of fitness effects</strong> (ie. which <a class="reference internal" href="api.html#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> object) within</p></li>
-<li><p>which <strong>annotation track</strong>? (ie. which <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> object)</p></li>
+<li><p>Which <strong>chromosome</strong> (<a class="reference internal" href="api.html#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> object)?</p></li>
+<li><p>Which <strong>recombination/genetic map</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticMap</span></code> object)?</p></li>
+<li><p>Which <strong>model of demographic history</strong> (<a class="reference internal" href="api.html#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a> object)?</p></li>
+<li><p>Which <strong>distribution of fitness effects</strong> (<a class="reference internal" href="api.html#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> object) within</p></li>
+<li><p>which <strong>annotation track</strong> (<a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> object)?</p></li>
 </ol>
 <p>For instance, suppose you are interested in simulating modern human samples of</p>
 <ol class="arabic simple">
@@ -2111,16 +2111,24 @@ Then, if you feel ready, make an issue on our
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_bostau_models_holsteinfriesian_1m13">HolsteinFriesian_1M13</a></p></td>
-<td><p>Piecewise size changes in Holstein-Friesian cattle.</p></td>
+<td><p>Piecewise size model for Holstein-Friesian cattle (MacLeod et al., 2013).</p></td>
 </tr>
 </tbody>
 </table>
 <section id="sec_catalog_bostau_models_holsteinfriesian_1m13">
-<span id="sec_catalog_bostau_models_holsteinfriesian_1m13"></span><h4>Piecewise size changes in Holstein-Friesian cattle.<a class="headerlink" href="#sec_catalog_bostau_models_holsteinfriesian_1m13" title="Permalink to this heading"></a></h4>
+<span id="sec_catalog_bostau_models_holsteinfriesian_1m13"></span><h4>Piecewise size model for Holstein-Friesian cattle (MacLeod et al., 2013).<a class="headerlink" href="#sec_catalog_bostau_models_holsteinfriesian_1m13" title="Permalink to this heading"></a></h4>
 <p>
     The piecewise-constant population size model of Holstein-Friesian cattle
-    from MacLeod et al. (2013). Population sizes were estimated from inferred
-    runs of homozygosity, with parameter values taken from Figure 4A and Table S1.
+    from MacLeod et al. (2013). Effective population sizes were estimated based
+    on runs of homozygosity observed in a single individual,
+    using the following assumptions:
+    a generation interval of 5 years (page 2213),
+    a mutation rate of 0.94e-8 (pages 2221 and 2215), and
+    a recombination rate of 1e-8 (pages 2215 and 2221).
+    Effective population sizes are given in Figure 4A and Table S1.
+    The single individual is the bull Walkway Chief Mark.
+    Mark and his father are two of the most influentiual sires in this breed - see
+    Larkin et al. (2012) http://www.pnas.org/cgi/doi/10.1073/pnas.1114546109.
     </p>
 <p class="rubric">Details</p>
 <dl class="field-list simple">
@@ -2128,7 +2136,7 @@ Then, if you feel ready, make an issue on our
 <dd class="field-odd"><p>HolsteinFriesian_1M13</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>Piecewise size changes in Holstein-Friesian cattle.</p>
+<dd class="field-even"><p>Piecewise size model for Holstein-Friesian cattle (MacLeod et al., 2013).</p>
 </dd>
 <dt class="field-odd">Num populations<span class="colon">:</span></dt>
 <dd class="field-odd"><p>1</p>
@@ -2271,6 +2279,10 @@ Then, if you feel ready, make an issue on our
 <tr class="row-even"><td><p>Mutation rate</p></td>
 <td><p>9.4e-9</p></td>
 <td><p>Per-base per-generation mutation rate</p></td>
+</tr>
+<tr class="row-odd"><td><p>Recombination rate</p></td>
+<td><p>1.0e-0</p></td>
+<td><p>Per-base per-generation recombination rate</p></td>
 </tr>
 </tbody>
 </table>

@@ -79,6 +79,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Common infrastructure for specifying demographic models.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">textwrap</span>
 
@@ -152,6 +153,10 @@
 <span class="sd">    :ivar mutation_rate: The mutation rate associated with the demographic model.</span>
 <span class="sd">        If no mutation rate is given, the species&#39; default mutation rate is used.</span>
 <span class="sd">    :vartype mutation_rate: float</span>
+<span class="sd">    :ivar recombination_rate: The recombination rate associated with the demographic</span>
+<span class="sd">        model. If no recombination rate is given, the species&#39; default recombination</span>
+<span class="sd">        rate is used.</span>
+<span class="sd">    :vartype recombination_rate: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -170,12 +175,14 @@
         <span class="n">populations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">recombination_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">generation_time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">generation_time</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">mutation_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recombination_rate</span> <span class="o">=</span> <span class="n">recombination_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">citations</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">citations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span>
 
@@ -226,12 +233,13 @@
         <span class="n">long_desc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">║                     &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">long_desc_lines</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;Demographic model:</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  id               = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  description      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  long_description = </span><span class="si">{</span><span class="n">long_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  generation_time  = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  mutation_rate    = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cite</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  id                 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  description        = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  long_description   = </span><span class="si">{</span><span class="n">long_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  generation_time    = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">generation_time</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  mutation_rate      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  recombination_rate = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">recombination_rate</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  citations          = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cite</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;║</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span>

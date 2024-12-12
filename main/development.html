@@ -79,8 +79,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#implementing-tests-for-the-review-of-a-demographic-model">Implementing tests for the review of a demographic model</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-a-genetic-map-or-annotation">Adding a genetic map or annotation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lifting-over-a-genetic-map">Lifting over a genetic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-recombination-genetic-map-or-annotation">Adding a recombination/genetic map or annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lifting-over-a-recombination-genetic-map">Lifting over a recombination/genetic map</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-dfe-model">Adding a DFE model</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#getting-set-up-to-add-a-new-dfe-model">Getting set up to add a new DFE model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#coding-the-dfe-model">Coding the DFE model</a></li>
@@ -129,7 +129,7 @@
 <p>We envision at least three main types of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> developers:</p>
 <ol class="arabic simple">
 <li><p>Contributors of new species, demographic models, and other features
-(such as recombination maps, annotations, DFE models)</p></li>
+(such as recombination/genetic maps, annotations, DFE models)</p></li>
 <li><p>API developers</p></li>
 <li><p>Documentation and tutorial curators</p></li>
 </ol>
@@ -141,7 +141,7 @@ See the appropriate sections below:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#adding-a-new-species">Adding a new species</a></p></li>
 <li><p><a class="reference internal" href="#adding-a-new-demographic-model">Adding a new demographic model</a></p></li>
-<li><p><a class="reference internal" href="#adding-a-genetic-map-or-annotation">Adding a genetic map or annotation</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-recombination-genetic-map-or-annotation">Adding a recombination/genetic map or annotation</a></p></li>
 <li><p><a class="reference internal" href="#adding-a-dfe-model">Adding a DFE model</a></p></li>
 </ul>
 <p><cite>API developers</cite> work on infrastructure development for the PopSim Consortium,
@@ -613,9 +613,6 @@ with a brief discussion of possible courses of action to take when components ha
 <li><p>The <strong>genome assembly</strong> should consist of a list of chromosomes or scaffolds and their lengths.
 Having a good quality assembly with complete chromosomes, or at least very long scaffolds,
 is essential for chromosome-level simulations produced by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
-Species with less complete genome builds typically do not have genetic maps
-or good estimates of recombination rates,
-making chromosome-level simulation much less useful.
 Thus, currently, <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> only supports adding species with near-complete
 chromosome-level genome assemblies (i.e., close to one contig per chromosome).</p></li>
 <li><p>An <strong>average mutation rate</strong>
@@ -628,11 +625,11 @@ Finally, if your species of interest does not have direct estimates of mutation 
 we recommend using estimates for some other species (hopefully closely related).</p></li>
 <li><p>An <strong>average recombination rate</strong>
 should be specified for each chromosome (per generation per bp).
-Ideally, one would want to specify a fine-scale chromosome-level <strong>recombination map</strong>,
-since the recombination rate is known to vary widely across chromosomes.
-If a recombination map exists for your species,
-you may specify it separately (see <a class="reference internal" href="#adding-a-genetic-map-or-annotation">Adding a genetic map or annotation</a>).
-Nonetheless, you should specify a default (average) recombination rate for each chromosome.
+Ideally, one would want to specify a fine-scale chromosome-level <strong>genetic map</strong>,
+since the recombination rate is known to vary widely across and along chromosomes.
+If a genetic map exists for your species,
+you may specify it separately (see <a class="reference internal" href="#adding-a-recombination-genetic-map-or-annotation">Adding a recombination/genetic map or annotation</a>).
+Nonetheless, you should also specify a default (average) recombination rate for each chromosome.
 As with mutation rates, if there is no information on the variation of recombination rates
 across chromosomes, the average genome-wide recombination rate can be specified for all chromosomes.
 Furthermore, if your species of interest does not have direct estimates of recombination rates,
@@ -843,7 +840,7 @@ accompanied by the appropriate <code class="docutils literal notranslate"><span 
     <span class="n">common_name</span><span class="o">=</span><span class="s2">&quot;A. thaliana&quot;</span><span class="p">,</span>
     <span class="n">genome</span><span class="o">=</span><span class="n">_genome</span><span class="p">,</span>
     <span class="n">generation_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span>
     <span class="n">ploidy</span><span class="o">=</span><span class="n">_species_ploidy</span><span class="p">,</span>
     <span class="n">citations</span><span class="o">=</span><span class="p">[</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
@@ -1044,7 +1041,7 @@ Misspecification of the model can generate unrealistic patterns of genetic
 variation that will affect downstream analyses.
 So, having at least one detailed demographic model is recommended for every species.
 A given species might have more than one demographic model,
-fit from different data or by different methods.</p>
+fit from different data or by different methods or different assumptions/parameters.</p>
 <section id="what-models-are-appropriate-to-add">
 <h3>What models are appropriate to add?<a class="headerlink" href="#what-models-are-appropriate-to-add" title="Permalink to this heading"></a></h3>
 <p>Any model added to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> should be based the <strong>published literature</strong>
@@ -1056,7 +1053,7 @@ such as population splits and changes in the amount of gene flow between populat
 The values of different parameters should be specified in units of “number of individuals”
 (for population sizes) and generations (for times).
 Sometimes, you will need to convert values published in the literature
-to these units by making some assumptions on the mutation rate;
+to these units by making some assumptions on the mutation rate (sometimes even recombination rate);
 typically the same assumptions made by the study that published the demographic model.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> also contains a collection of <strong>generic models</strong>,
 which are not associated with a certain species and are primarily used for development
@@ -1115,6 +1112,7 @@ We provide below a template block of code for these two operations:</p>
         <span class="n">citations</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">generation_time</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=...</span><span class="p">,</span>
+        <span class="n">recombination_rate</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">population_configurations</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">migration_matrix</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">demographic_events</span><span class="o">=...</span><span class="p">,</span>
@@ -1123,8 +1121,8 @@ We provide below a template block of code for these two operations:</p>
     <span class="n">_species</span><span class="o">.</span><span class="n">add_demographic_model</span><span class="p">(</span><span class="n">_model_func_name</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>A demographic model is thus defined using ten different attributes.
-The first seven attributes are quite straightforward:</p>
+<p>A demographic model is thus defined using up to eleven different attributes.
+The first eight attributes are quite straightforward:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (<cite>string</cite>): A unique, short-hand identifier for this demographic model.
 This id contains a short description written in camel case,
@@ -1163,6 +1161,15 @@ If you are confident that inference did not make any assumption about mutation r
 then set the mutation rate of the demographic model to <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 However, note that this is quite uncommon, so you should make sure this is the case
 before you set the mutation rate to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recombination_rate</span></code> (<cite>double</cite>): The recombination rate assumed during the inference
+of this demographic model, if any (per bp per generation).
+While demographic model inference might make less assumptions about recombination rates
+than mutation rates, we provide this option for completness.
+Namely, a demographic model might have been inferred under the assumption of a specific
+recombination rate, which does not match with the species’ recombination rate implemented
+in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
+Also, some demographic models were inferred under the assumptions of a specifc ratio of
+mutation to recombination rates.</p></li>
 </ul>
 <p>The final three attributes
 (<code class="docutils literal notranslate"><span class="pre">population_configurations</span></code>, <code class="docutils literal notranslate"><span class="pre">migration_matrix</span></code>, and <code class="docutils literal notranslate"><span class="pre">demographic_events</span></code>)
@@ -1180,7 +1187,7 @@ then we highly recommend that you take some time to read through its
 parameter of interest.
 In your coded model, you should use some reasonable point estimate,
 such as the value associated with the the maximum likelihood fit,
-or the mean posterior (for Bayesian methods).</p>
+or the mean of posterior distribution for Bayesian methods.</p>
 </div>
 </section>
 <section id="adding-a-parameter-table-to-the-docs">
@@ -1272,9 +1279,18 @@ implemented by the reviewer.</p>
 the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <a class="reference internal" href="#unit-tests">Unit tests</a>.</p>
 </section>
 </section>
-<section id="adding-a-genetic-map-or-annotation">
-<h2>Adding a genetic map or annotation<a class="headerlink" href="#adding-a-genetic-map-or-annotation" title="Permalink to this heading"></a></h2>
-<p>Some species have sub-chromosomal recombination maps or genomic annotations available.
+<section id="adding-a-recombination-genetic-map-or-annotation">
+<h2>Adding a recombination/genetic map or annotation<a class="headerlink" href="#adding-a-recombination-genetic-map-or-annotation" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Recombination map and genetic map are terms used to describe
+maps of recombination rates that vary across and along chromosomes.
+In the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> code and documentation, we use the term
+<strong>genetic map</strong> to refer specifically to a “crossing-over rate map” and
+<strong>recombination map</strong> to refer to a “crossing-over and gene conversion rate map.””
+See <a class="reference internal" href="api.html#sec-api-gene-conversion"><span class="std std-ref">further details</span></a> on this distinction.</p>
+</div>
+<p>Some species have sub-chromosomal genetic maps or genomic annotations available.
 These files are large enough that adding them directly to the package would quickly
 cause slow package installation and loading,
 so these files are downloaded as-needed from AWS
@@ -1283,22 +1299,22 @@ The following documentation describes adding genetic maps;
 the procedure for annotations is similar (but see the important note below).</p>
 <p>Genetic maps can be added to
 <cite>stdpopsim</cite> by creating a new <cite>GeneticMap</cite> object and providing a formatted file
-detailing recombination rates to a designated <cite>stdpopsim</cite> maintainer who then uploads
+detailing recombination rates to a designated <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> maintainer who then uploads
 it to AWS. If there is one for your species that you wish to include, create a space
 delimited file with four columns: Chromosome, Position(bp), Rate(cM/Mb), and Map(cM).
 Each chromosome should be placed in a separate file and with the chromosome id in the
 file name in such a way that it can be programatically parsed out. IMPORTANT: chromosome
 ids must match those provided in the genome definition exactly! Below is an example start
-to a recombination map file (see <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap.read_hapmap">here</a>
+to a genetic map file (see <a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap.read_hapmap">here</a>
 for more details):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Chromosome</span> <span class="n">Position</span><span class="p">(</span><span class="n">bp</span><span class="p">)</span> <span class="n">Rate</span><span class="p">(</span><span class="n">cM</span><span class="o">/</span><span class="n">Mb</span><span class="p">)</span> <span class="n">Map</span><span class="p">(</span><span class="n">cM</span><span class="p">)</span>
 <span class="n">chr1</span> <span class="mi">32807</span> <span class="mf">5.016134</span> <span class="mi">0</span>
 <span class="n">chr1</span> <span class="mi">488426</span> <span class="mf">4.579949</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<p>Once you have the recombination map files formatted, tar and gzip them into a single
+<p>Once you have the genetic map files formatted, tar and gzip them into a single
 compressed archive. The gzipped tarball must be FLAT (there are no directories in the
-tarball). This file will be sent to one of the <cite>stdpopsim</cite> uploaders for placement in the
+tarball). This file will be sent to one of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> uploaders for placement in the
 AWS cloud once the new genetic map(s) are approved. Finally, you must add a <cite>GeneticMap</cite>
 object to the file named for your species in the <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code> directory
 (the one that contains all the simulation code for that species,
@@ -1307,7 +1323,7 @@ see <a class="reference internal" href="#getting-set-up-to-add-a-new-species">Ge
     <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_MAP</span><span class="p">}</span>
 <span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The file_pattern argument is a pattern that matches the recombination map filenames,</span>
+<span class="sd">The file_pattern argument is a pattern that matches the genetic map filenames,</span>
 <span class="sd">where &#39;{id}&#39; is replaced with the &#39;id&#39; field of a given chromosome.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">_gm</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">(</span>
@@ -1355,11 +1371,11 @@ or increment the version number if the previous file already has one.
 When the file is downloaded locally to the cache, it is given a standardized name
 that will be the same regardless of which file is pulled from AWS.</p>
 </section>
-<section id="lifting-over-a-genetic-map">
-<h2>Lifting over a genetic map<a class="headerlink" href="#lifting-over-a-genetic-map" title="Permalink to this heading"></a></h2>
+<section id="lifting-over-a-recombination-genetic-map">
+<h2>Lifting over a recombination/genetic map<a class="headerlink" href="#lifting-over-a-recombination-genetic-map" title="Permalink to this heading"></a></h2>
 <p>Existing genetic maps will need to be lifted over to a new assembly, if and when the
-current assembly is updated in <cite>stdpopsim</cite>. This process can be partially automated by running
-the liftOver maintenance code.</p>
+current assembly is updated in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>. This process can be partially automated by running
+the <code class="docutils literal notranslate"><span class="pre">liftOver</span></code> maintenance code.</p>
 <p>First, you must download and install the <code class="docutils literal notranslate"><span class="pre">liftOver</span></code> executable from the
 <a class="reference external" href="https://genome-store.ucsc.edu/">UCSC Genome Browser Store</a>.
 Next, you must download the appropriate chain files, again from UCSC
@@ -1404,10 +1420,10 @@ system, the following can instead be used:</p>
 </div>
 <p>The newly lifted over maps will be formatted in a compressed archive and
 automatically named using the assembly name from the chain file.
-This file will be sent to one of the <cite>stdpopsim</cite> uploaders for placement in the
+This file will be sent to one of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> uploaders for placement in the
 AWS cloud, once the new map is approved. Finally, you must add a <cite>GeneticMap</cite>
 object to the file named for your species in the <cite>stdpopsim/catalog/&lt;SPECIES_ID&gt;/</cite>
-directory, as shown in <a class="reference internal" href="#adding-a-genetic-map-or-annotation">Adding a genetic map or annotation</a>.</p>
+directory, as shown in <a class="reference internal" href="#adding-a-recombination-genetic-map-or-annotation">Adding a recombination/genetic map or annotation</a>.</p>
 <p>Again, once all this is done, submit a PR containing the code changes and wait for
 directions on whom to send the compressed archive of genetic maps to
 (currently Andrew Kern is the primary uploader but please wait to send files
@@ -1678,7 +1694,7 @@ to check locally how well your tests are covering your code by asking
 </pre></div>
 </div>
 <p>this will output a directory of html files for you to browse test coverage
-for every file in <cite>stdpopsim</cite> in a reasonably straightfoward graphical
+for every file in <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> in a reasonably straightfoward graphical
 way. To see them, direct your web browser to the <cite>htmlcov/index.html</cite> file.
 You’ll be looking for lines of code that are highlighted yellow or red
 indicated that tests do not currently cover that bit of code.</p>

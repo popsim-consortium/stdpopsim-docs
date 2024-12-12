@@ -198,9 +198,24 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s2">&quot;The demographic model has mutation rate &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">, but this simulation used the &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;contig&#39;s mutation rate </span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">. Diversity levels &quot;</span>
-                <span class="s2">&quot;may be different than expected for this species. For details see &quot;</span>
-                <span class="s2">&quot;documentation at &quot;</span>
+                <span class="s2">&quot;contig&#39;s mutation rate &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Diversity levels may be different than expected for this species. &quot;</span>
+                <span class="s2">&quot;For details see documentation at &quot;</span>
+                <span class="s2">&quot;https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_warn_recombination_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span>
+            <span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
+        <span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;The demographic model has recombination rate &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span><span class="si">}</span><span class="s2">, but this simulation used the &quot;</span>
+                <span class="s2">&quot;contig&#39;s recombination rate &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Patterns of linkage may be different than expected for this species. &quot;</span>
+                <span class="s2">&quot;For details see documentation at &quot;</span>
                 <span class="s2">&quot;https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html&quot;</span>
             <span class="p">)</span></div>
 
@@ -337,6 +352,7 @@
         <span class="c1"># TODO: remove this after a release or two. See #745.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_zigzag</span><span class="p">(</span><span class="n">demographic_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_mutation_rate_mismatch</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_recombination_rate_mismatch</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">)</span>
 
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">seeds</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -354,7 +370,7 @@
             <span class="p">)</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">gc_frac</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">gc_frac</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">):</span>
             <span class="c1"># the recombination map is a map of double-stranded breaks,</span>
-            <span class="c1"># so we need to separate out GC from crossovers</span>
+            <span class="c1"># so we need to separate out gene conversion from crossing-over</span>
             <span class="n">gc_rate</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span> <span class="o">*</span> <span class="n">gc_frac</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gc_frac</span><span class="p">)</span>
             <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span>
                 <span class="n">position</span><span class="o">=</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>

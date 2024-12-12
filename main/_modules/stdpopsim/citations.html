@@ -81,6 +81,7 @@
 <span class="sd">citation information associated with different entities derived from the</span>
 <span class="sd">literature that are used within a simulation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">urllib.request</span>
 
@@ -187,6 +188,13 @@
     <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.7554/eLife.54967&quot;</span><span class="p">,</span>
     <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2020&quot;</span><span class="p">,</span>
     <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Adrion et al.&quot;</span><span class="p">,</span>
+    <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">STDPOPSIM</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">_catalog_citation</span> <span class="o">=</span> <span class="n">Citation</span><span class="p">(</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.7554/eLife.84874&quot;</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2023&quot;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Lauterbur et al.&quot;</span><span class="p">,</span>
     <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">STDPOPSIM</span><span class="p">},</span>
 <span class="p">)</span>
 </pre></div>

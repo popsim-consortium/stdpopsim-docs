@@ -78,7 +78,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#running-a-generic-model">Running a generic model</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#choose-a-species">Choose a species</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#set-up-the-generic-model">Set up the generic model</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#choose-a-contig-and-recombination-map">Choose a contig and recombination map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-contig-and-genetic-map">Choose a contig and genetic map</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id1">Choose a sampling scheme, and simulate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sanity-check-the-tree-sequence-output">Sanity check the tree sequence output</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#output-to-vcf">Output to VCF</a></li>
@@ -161,7 +161,7 @@ we need to make several choices about what will be simulated:</p>
 <ol class="arabic simple">
 <li><p>which species</p></li>
 <li><p>which contig (i.e., how much of what chromosome)</p></li>
-<li><p>which genetic map</p></li>
+<li><p>which recombination/genetic map</p></li>
 <li><p>which demographic model</p></li>
 <li><p>how many samples from each population of the model</p></li>
 <li><p>whether to simulate selection (via a distribution of fitness effects),
@@ -169,12 +169,21 @@ and if so <strong>where</strong> to introduce selected mutations (i.e. in an exo
 <li><p>which simulation engine to use</p></li>
 </ol>
 <p>These choices are nested:
-the species determines what contigs, genetic maps, and demographic models are available,
+the species determines what contigs, recombination/genetic maps, and demographic models are available,
 and the demographic model determines how many populations can be sampled from.
 Currently, the two choices of simulation engine are <code class="docutils literal notranslate"><span class="pre">msprime</span></code> and <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>,
 and incorporating selection into simulations is only possible using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine.
 Below are examples of making these choices in various contexts,
 using both CLI and Python interfaces.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Recombination map and genetic map are terms used to describe
+maps of recombination rates that vary across and along chromosomes.
+In the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> code and documentation, we use the term
+<strong>genetic map</strong> to refer specifically to a “crossing-over rate map” and
+<strong>recombination map</strong> to refer to a “crossing-over and gene conversion rate map.””
+See <a class="reference internal" href="api.html#sec-api-gene-conversion"><span class="std std-ref">further details</span></a> on this distinction.</p>
+</div>
 <section id="running-stdpopsim-with-the-command-line-interface-cli">
 <span id="sec-cli-tute"></span><h2>Running stdpopsim with the command-line interface (CLI)<a class="headerlink" href="#running-stdpopsim-with-the-command-line-interface-cli" title="Permalink to this heading"></a></h2>
 <p>In order to use the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> CLI the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package must be
@@ -227,8 +236,8 @@ positional arguments:
 </pre></div>
 </div>
 <p>This shows the species currently supported by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>. This means that
-<code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> knows various traits of these species including chromosome size
-and recombination rates. Once we’ve selected a species, in this case humans, we
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> knows various traits of these species, including chromosome size,
+recombination rate(s), etc. Once we’ve selected a species, in this case humans, we
 can look at the help again as follows.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help
 usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
@@ -257,12 +266,12 @@ Population size: 10000
 <p>For conciseness we do not show all the output here but this time you should see
 a different output which shows options for performing the simulation itself and
 the species default parameters. This includes selecting the demographic model,
-chromosome, recombination map, distribution of fitness effects, and number of
+chromosome, genetic map, distribution of fitness effects, and number of
 samples.</p>
 <p>The most basic simulation we can run is to simulate a diploid genome
 - i.e., a single individual -
 using the species’ defaults as seen in the species help (<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">--help</span></code>).
-These defaults include constant size population named <code class="docutils literal notranslate"><span class="pre">pop_0</span></code>, a uniform recombination map based
+These defaults include constant size population named <code class="docutils literal notranslate"><span class="pre">pop_0</span></code>, a uniform genetic map based
 on the average recombination rate (either genome-wide or within a chromosome, if
 specified), and the mutation rate shown above.
 To save time we will specify that the simulation use
@@ -341,16 +350,17 @@ The command now looks like this:</p>
 Omitted populations will have no samples in the resulting tree sequence.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Many demographic models were inferred or calibrated using a mutation rate that
-differs from the cataloged species’ mutation rate. Simulations using the CLI now
-automatically use the <em>model’s</em> specified mutation rate instead of the species
-rate, so that expected levels of diversity more closely match those observed in
-the data that were used to infer the demographic model. For generic demographic
-models or those without associated mutation rates, the species mutation rate is
-used.</p>
+<p>Many demographic models were inferred or calibrated using a mutation rate
+or recombination rate that differs from the cataloged species’ rate.
+Simulations using the CLI now automatically use the <em>model’s</em> specified
+mutation rate or recombination rate instead of the species rate,
+so that expected levels of diversity more closely match those observed in
+the data that were used to infer the demographic model.
+For generic demographic models or those without associated mutation or
+recombination rates, the species rates are used.</p>
 </div>
-<p>Now we want to add an empirical recombination map to make the simulation more
-realistic. We can look up the available recombination maps using the
+<p>Now we want to add an empirical genetic map to make the simulation more
+realistic. We can look up the available genetic maps using the
 <code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> flag (here, truncated for space):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help-genetic-maps
 
@@ -482,7 +492,7 @@ for more discussion.</p>
 </section>
 <section id="simulating-genomes-with-selection">
 <span id="sec-simulating-sel"></span><h4>Simulating genomes with selection<a class="headerlink" href="#simulating-genomes-with-selection" title="Permalink to this heading"></a></h4>
-<p>The examples above simulate contigs given a species, a recombination map, and a demographic model;
+<p>The examples above simulate contigs given a species, a genetic map, and a demographic model;
 but assume that all genetic variation is neutral (has no impact on fitness).
 It is possible to incorporate selection in the
 simulations by (1) specifying the Distribution of Fitness Effects (DFE) for all new mutations
@@ -671,13 +681,13 @@ sampled from – but that is not the case in this model.</p>
 <h4>Set up the contig<a class="headerlink" href="#set-up-the-contig" title="Permalink to this heading"></a></h4>
 <p>We’ll next define the contig, which contains information about the genome length we
 want to simulate and recombination and mutation rates. Here, we use the human
-chromosome 22. If no recombination map is specified, we assume a uniform genetic map
-based on the average recombination rate for that chromosome.</p>
+chromosome 22. If no genetic map is specified, we assume a
+uniform recombination rate set to the average recombination rate for that chromosome.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">)</span>
 
-<span class="c1"># default is a flat genetic map</span>
+<span class="c1"># default is a uniform genetic map</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean recombination rate:&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="si">:</span><span class="s2">.3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="c1"># mean recombination rate: 1.44e-08</span>
+<span class="c1"># mean recombination rate: 2.11e-08</span>
 
 <span class="c1"># and the default mutation rate is based on the species default</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean mutation rate:&quot;</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
@@ -689,16 +699,17 @@ based on the average recombination rate for that chromosome.</p>
 </pre></div>
 </div>
 <p>The Gutenkunst OOA model was inferred using a mutation rate much larger than the
-default mutation rate in the <cite>stdpopsim</cite> catalog. As such, simulating using this
-model and default rate will result in levels of diversity substantially lower than
-expected for the human population data that this model was inferred from. To match
-observed diversity in humans, we should instead use the mutation rate associated
-with the demographic model:</p>
+default mutation rate for humans in the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> catalog. As such,
+simulating using this model and default rate will result in levels of diversity
+substantially lower than expected for the human population data that this model
+was inferred from. To match observed diversity in humans, we should instead use
+the mutation rate associated with the demographic model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">==</span> <span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
 <span class="c1"># True</span>
 </pre></div>
 </div>
+<p>Similar functionality exists for the recombination rate, if a model specifies one.</p>
 </section>
 <section id="choose-a-sampling-scheme-and-simulate">
 <h4>Choose a sampling scheme and simulate<a class="headerlink" href="#choose-a-sampling-scheme-and-simulate" title="Permalink to this heading"></a></h4>
@@ -739,7 +750,7 @@ to make sure that we’ve got what we want.</p>
 <span id="sec-tutorial-generic-models"></span><h3>Running a generic model<a class="headerlink" href="#running-a-generic-model" title="Permalink to this heading"></a></h3>
 <p>Next, we will simulate using a “generic” model, with piecewise constant
 population size. This time, we will simulate a given genome length under
-a flat recombination map, using an estimate of the
+a uniform genetic map, using an estimate of the
 human effective population size from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 <section id="choose-a-species">
 <h4>Choose a species<a class="headerlink" href="#choose-a-species" title="Permalink to this heading"></a></h4>
@@ -765,8 +776,8 @@ single population of constant over all time.</p>
 <p>Each species has a “default” population size, <code class="docutils literal notranslate"><span class="pre">species.population_size</span></code>,
 which for humans is 10,000.</p>
 </section>
-<section id="choose-a-contig-and-recombination-map">
-<h4>Choose a contig and recombination map<a class="headerlink" href="#choose-a-contig-and-recombination-map" title="Permalink to this heading"></a></h4>
+<section id="choose-a-contig-and-genetic-map">
+<h4>Choose a contig and genetic map<a class="headerlink" href="#choose-a-contig-and-genetic-map" title="Permalink to this heading"></a></h4>
 <p>Next, we set the contig information. Again, we could use any of the chromosomes
 listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> (or a fraction of a chromosome, using the
 <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> arguments), keeping in mind that larger contigs will take
@@ -784,7 +795,7 @@ of length 1 Mb:</p>
 </pre></div>
 </div>
 <p>The “sequence length” is the length in base pairs. Since we are using a generic
-contig, we cannot specify a recombination map so we get a “flat” map of
+contig, we cannot specify a genetic map so we get a uniform map with a
 constant recombination rate. The mutation rate defaults to the species average
 mutation rate, as no mutation rate was provided when defining the contig.</p>
 </section>
@@ -875,10 +886,10 @@ are more or less exchangeable, so that to run an equivalent
 simulation with <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> instead of <code class="docutils literal notranslate"><span class="pre">msprime</span></code> only requires specifying
 <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> as the <em>simulation engine</em>.
 Here is a simple example.</p>
-<section id="choose-the-species-contig-and-recombination-map">
-<h5>Choose the species, contig, and recombination map<a class="headerlink" href="#choose-the-species-contig-and-recombination-map" title="Permalink to this heading"></a></h5>
-<p>First, let’s set up a simulation of 10 Mb of human chromosome 22 with a flat
-recombination map, drawing 100 diploids from the Tennesen et al (2012) model of
+<section id="choose-the-species-contig-and-genetic-map">
+<h5>Choose the species, contig, and genetic map<a class="headerlink" href="#choose-the-species-contig-and-genetic-map" title="Permalink to this heading"></a></h5>
+<p>First, let’s set up a simulation of 10 Mb of human chromosome 22 with a uniform
+genetic map, drawing 100 diploids from the Tennesen et al (2012) model of
 African history, <code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code> (which has a single population named <cite>AFR</cite>).
 Since <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> must simulate the entire population, sample size does not affect the
 run time of the simulation, only the size of the output tree sequence (and,
@@ -891,7 +902,7 @@ this very much either).</p>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
     <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">10e6</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">20e6</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
 <span class="p">)</span>
-<span class="c1"># default is a flat genetic map with average rate across chr22</span>
+<span class="c1"># default is a uniform genetic map with average rate across chr22</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AFR&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
 </pre></div>
 </div>
@@ -1521,7 +1532,7 @@ From the help output (or the <a class="reference internal" href="catalog.html#se
 we can see that this model has id <code class="docutils literal notranslate"><span class="pre">AmericanAdmixture_4B11</span></code>,
 and allows samples to be drawn from 4 contemporary populations representing African,
 European, Asian and African-American groups.</p>
-<p>Using the <code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> option, we can also see what recombination maps
+<p>Using the <code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> option, we can also see what genetic maps
 are available:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help-genetic-maps
 
@@ -1570,8 +1581,8 @@ Contig Description:
     Contig origin: chr1:0-248956422
     Contig length: 248956422.0
     Contig ploidy: 2
-    Mean recombination rate: 1.1523470111585671e-08
     Mean mutation rate: 2.36e-08
+    Mean recombination rate: 1.1523470111585671e-08
     Genetic map: HapMapII_GRCh38
 
 ...
@@ -1711,7 +1722,7 @@ species has the ID <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 <p>After skimming the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> to see our options, we’ll specify our
-desired chromosome <code class="docutils literal notranslate"><span class="pre">chr4</span></code> and recombination map <code class="docutils literal notranslate"><span class="pre">SalomeAveraged_TAIR10</span></code>.</p>
+desired chromosome <code class="docutils literal notranslate"><span class="pre">chr4</span></code> and genetic map <code class="docutils literal notranslate"><span class="pre">SalomeAveraged_TAIR10</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr4&quot;</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="s2">&quot;SalomeAveraged_TAIR10&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
