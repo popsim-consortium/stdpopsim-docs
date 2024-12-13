@@ -680,6 +680,16 @@ We can check how many populations exist in this model, and what they are:</p>
 The number of “sampling” populations could be smaller than the number of populations,
 since some models have ancient populations which are currently not allowed to be
 sampled from – but that is not the case in this model.</p>
+<p>If working in a notebook, it’s also possible to plot a schematic of your chosen model
+using the <a class="reference external" href="https://grahamgower.github.io/demesdraw/">demesdraw</a> python library.
+This provides both a <code class="docutils literal notranslate"><span class="pre">size_history</span></code> plot and a <code class="docutils literal notranslate"><span class="pre">tubes</span></code> visualization. E.g.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">demesdraw</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">()</span>
+<span class="n">demesdraw</span><span class="o">.</span><span class="n">tubes</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>Equivalent plots for all the available demographic models are also
+shown in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 </section>
 <section id="set-up-the-contig">
 <h4>Set up the contig<a class="headerlink" href="#set-up-the-contig" title="Permalink to this heading"></a></h4>
