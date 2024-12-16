@@ -684,6 +684,7 @@ sampled from – but that is not the case in this model.</p>
 using the <a class="reference external" href="https://grahamgower.github.io/demesdraw/">demesdraw</a> python library.
 This provides both a <code class="docutils literal notranslate"><span class="pre">size_history</span></code> plot and a <code class="docutils literal notranslate"><span class="pre">tubes</span></code> visualization. E.g.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">demesdraw</span>
+
 <span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">()</span>
 <span class="n">demesdraw</span><span class="o">.</span><span class="n">tubes</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">())</span>
 </pre></div>
@@ -1600,7 +1601,7 @@ Africa_1T12: African population
 <p>This prints detailed information about all of the available models to
 the terminal.
 In this tutorial, we will use the model of African-American admixture from
-<a class="reference external" href="http://dx.doi.org/10.1371/journal.pgen.1007385">2011 Browning et al</a>.
+<a class="reference external" href="http://dx.doi.org/10.1371/journal.pgen.1007385">Browning et al. (2018)</a>.
 From the help output (or the <a class="reference internal" href="catalog.html#sec_catalog_homsap_models_americanadmixture_4b11"><span class="std std-ref">Catalog</span></a>),
 we can see that this model has id <code class="docutils literal notranslate"><span class="pre">AmericanAdmixture_4B11</span></code>,
 and allows samples to be drawn from 4 contemporary populations representing African,
