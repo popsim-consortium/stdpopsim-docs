@@ -170,7 +170,9 @@
 
 
 <span class="n">_slim_lower</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    defineConstant(&quot;N&quot;, asInteger(_N/Q));</span>
+<span class="s2">    // Note: these are floats because rounding causes error in population</span>
+<span class="s2">    // growth: exp(round(x)*r*t) != round(exp(x*r*t))</span>
+<span class="s2">    defineConstant(&quot;N&quot;, _N/Q);</span>
 
 <span class="s2">    initializeTreeSeq(timeUnit=&quot;generations&quot;);</span>
 <span class="s2">    initializeRecombinationRate(recombination_rates, recombination_ends);</span>
@@ -216,6 +218,8 @@
 <span class="s2">}</span>
 
 <span class="s2">// Return the population size of pop at generation g.</span>
+<span class="s2">// This function returns values consistent with the continuous-time</span>
+<span class="s2">// msprime model, not taking into account discretization effects.</span>
 <span class="s2">function (integer)pop_size_at(integer G, integer$ pop, integer$ g) {</span>
 <span class="s2">    e = epoch(G, g);</span>
 <span class="s2">    N0 = N[e,pop];</span>
@@ -224,14 +228,14 @@
 <span class="s2">        N_g = N0;</span>
 <span class="s2">    } else {</span>
 <span class="s2">        g_diff = g - G[e-1];</span>
-<span class="s2">        N_g = asInteger(round(N0*exp(r*g_diff)));</span>
+<span class="s2">        N_g = N0*exp(r*g_diff);</span>
 <span class="s2">    }</span>
-<span class="s2">    return N_g;</span>
+<span class="s2">    return asInteger(round(N_g));</span>
 <span class="s2">}</span>
 
-<span class="s2">// Return the number of generations that separate t0 and t1.</span>
-<span class="s2">function (integer)gdiff(numeric$ t0, numeric t1) {</span>
-<span class="s2">    return asInteger(round((t0-t1)/generation_time/Q));</span>
+<span class="s2">// Return the tick number for a given number of years ago.</span>
+<span class="s2">function (integer)time_to_tick(numeric t) {</span>
+<span class="s2">    return G0 - asInteger(t/generation_time/Q);</span>
 <span class="s2">}</span>
 
 <span class="s2">// Output tree sequence file and end the simulation.</span>
@@ -332,9 +336,9 @@
 <span class="s2">    // Initial populations.</span>
 <span class="s2">    for (i in 0:(num_populations-1)) {</span>
 <span class="s2">        if (N[0,i] &gt; 0) {</span>
-<span class="s2">            check_size(i, N[0,i], community.tick);</span>
-<span class="s2">            dbg(&quot;p = sim.addSubpop(&quot;+i+&quot;, &quot;+N[0,i]+&quot;);&quot;);</span>
-<span class="s2">            p = sim.addSubpop(i, N[0,i]);</span>
+<span class="s2">            check_size(i, asInteger(round(N[0,i])), community.tick);</span>
+<span class="s2">            dbg(&quot;p = sim.addSubpop(&quot;+i+&quot;, &quot;+asInteger(round(N[0,i]))+&quot;);&quot;);</span>
+<span class="s2">            p = sim.addSubpop(i, asInteger(round(N[0,i])));</span>
 <span class="s2">            dbg(&quot;p.name = &#39;&quot;+pop_names[i]+&quot;&#39;;&quot;);</span>
 <span class="s2">            p.name = pop_names[i];</span>
 <span class="s2">        }</span>
@@ -348,7 +352,7 @@
 <span class="s2">    i = 0;</span>
 <span class="s2">    for (j in 0:(num_populations-1)) {</span>
 <span class="s2">        for (k in 0:(num_populations-1)) {</span>
-<span class="s2">            if (j==k | N[i,j] == 0 | N[i,k] == 0) {</span>
+<span class="s2">            if (j==k | N[i,j] &lt; 1 | N[i,k] &lt; 1) {</span>
 <span class="s2">                next;</span>
 <span class="s2">            }</span>
 
@@ -360,11 +364,11 @@
 <span class="s2">    }</span>
 
 <span class="s2">    // The end of the burn-in is the starting tick, and corresponds to</span>
-<span class="s2">    // time T_start. All remaining events are relative to this tick.</span>
-<span class="s2">    N_max = max(N[0,0:(num_populations-1)]);</span>
-<span class="s2">    G_start = community.tick + asInteger(round(burn_in * N_max));</span>
-<span class="s2">    T_start = max(_T);</span>
-<span class="s2">    G = G_start + gdiff(T_start, _T);</span>
+<span class="s2">    // tick G_start. All remaining events are relative to this tick.</span>
+<span class="s2">    N_max = asInteger(round(max(N[0,0:(num_populations-1)])));</span>
+<span class="s2">    G_start = 1 + asInteger(round(burn_in * N_max));</span>
+<span class="s2">    defineConstant(&quot;G0&quot;, asInteger(max(_T) / generation_time / Q + G_start));</span>
+<span class="s2">    G = time_to_tick(_T);</span>
 <span class="s2">    G_end = max(G);</span>
 
 <span class="s2">    /*</span>
@@ -385,15 +389,15 @@
 <span class="s2">                n_checkpoints = n_checkpoints + 1;</span>
 
 <span class="s2">                // Unconditionally save the state before the mutation is drawn.</span>
-<span class="s2">                g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
+<span class="s2">                g = time_to_tick(drawn_mutations[0,i]);</span>
 <span class="s2">                community.registerLateEvent(NULL, &quot;{save();}&quot;, g, g);</span>
 <span class="s2">            }</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">    if (length(condition_on_allele_frequency) &gt; 0) {</span>
 <span class="s2">        for (i in 0:(ncol(condition_on_allele_frequency)-1)) {</span>
-<span class="s2">            g_start = G_start + gdiff(T_start, condition_on_allele_frequency[0,i]);</span>
-<span class="s2">            g_end = G_start + gdiff(T_start, condition_on_allele_frequency[1,i]);</span>
+<span class="s2">            g_start = time_to_tick(condition_on_allele_frequency[0,i]);</span>
+<span class="s2">            g_end = time_to_tick(condition_on_allele_frequency[1,i]);</span>
 <span class="s2">            mut_type = asInteger(condition_on_allele_frequency[2,i]);</span>
 <span class="s2">            pop_id = asInteger(condition_on_allele_frequency[3,i]);</span>
 <span class="s2">            op = op_types[asInteger(drop(condition_on_allele_frequency[4,i]))];</span>
@@ -415,10 +419,10 @@
 <span class="s2">    // Split events.</span>
 <span class="s2">    if (length(subpopulation_splits) &gt; 0 ) {</span>
 <span class="s2">        for (i in 0:(ncol(subpopulation_splits)-1)) {</span>
-<span class="s2">            g = G_start + gdiff(T_start, subpopulation_splits[0,i]);</span>
-<span class="s2">            newpop = drop(subpopulation_splits[1,i]);</span>
-<span class="s2">            size = asInteger(subpopulation_splits[2,i] / Q);</span>
-<span class="s2">            oldpop = subpopulation_splits[3,i];</span>
+<span class="s2">            g = time_to_tick(subpopulation_splits[0,i]);</span>
+<span class="s2">            newpop = asInteger(drop(subpopulation_splits[1,i]));</span>
+<span class="s2">            size = asInteger(round(subpopulation_splits[2,i] / Q));</span>
+<span class="s2">            oldpop = asInteger(subpopulation_splits[3,i]);</span>
 <span class="s2">            check_size(newpop, size, g);</span>
 <span class="s2">            community.registerLateEvent(NULL,</span>
 <span class="s2">                &quot;{dbg(self.source); &quot; +</span>
@@ -435,22 +439,21 @@
 <span class="s2">            for (j in 0:(num_populations-1)) {</span>
 <span class="s2">                // Change population size if this hasn&#39;t already been taken</span>
 <span class="s2">                // care of by sim.addSubpop() or sim.addSubpopSplit().</span>
-<span class="s2">                if (N[i,j] != N[i-1,j] &amp; N[i-1,j] != 0) {</span>
-<span class="s2">                    check_size(j, N[i,j], g);</span>
+<span class="s2">                if ((N[i,j] != N[i-1,j] | growth_rates[i-1,j] != 0) &amp; N[i-1,j] &gt;= 1) {</span>
+<span class="s2">                    check_size(j, asInteger(N[i,j]), g);</span>
 <span class="s2">                    community.registerLateEvent(NULL,</span>
 <span class="s2">                        &quot;{dbg(self.source); &quot; +</span>
-<span class="s2">                        &quot;p&quot;+j+&quot;.setSubpopulationSize(&quot;+N[i,j]+&quot;);}&quot;,</span>
+<span class="s2">                        &quot;p&quot;+j+&quot;.setSubpopulationSize(&quot;+asInteger(round(N[i,j]))+&quot;);}&quot;,</span>
 <span class="s2">                        g, g);</span>
 <span class="s2">                }</span>
 
 <span class="s2">                if (growth_rates[i,j] != 0) {</span>
 <span class="s2">                    growth_phase_start = g+1;</span>
-<span class="s2">                    if (i == num_epochs-1) {</span>
-<span class="s2">                        growth_phase_end = G[i];</span>
-<span class="s2">                    } else {</span>
-<span class="s2">                        // We already registered a size change at tick G[i].</span>
-<span class="s2">                        growth_phase_end = G[i] - 1;</span>
-<span class="s2">                    }</span>
+<span class="s2">                    growth_phase_end = G[i] - 1;</span>
+<span class="s2">                    // this is the number of ticks that the pop will grow for</span>
+<span class="s2">                    growth_phase_ticks = growth_phase_end - growth_phase_start;</span>
+<span class="s2">                    // but this is the amount of continuous time the pop model grows for</span>
+<span class="s2">                    growth_phase_length = growth_phase_ticks + 1;</span>
 
 <span class="s2">                    if (growth_phase_start &gt;= growth_phase_end) {</span>
 <span class="s2">                        // Demographic models could have duplicate epoch times,</span>
@@ -464,7 +467,7 @@
 <span class="s2">                    check_size(j, N_growth_phase_end, growth_phase_end);</span>
 
 <span class="s2">                    N0 = N[i,j];</span>
-<span class="s2">                    r = Q * growth_rates[i,j];</span>
+<span class="s2">                    r = Q * growth_rates[i,j] * growth_phase_length / growth_phase_ticks;</span>
 <span class="s2">                    community.registerLateEvent(NULL,</span>
 <span class="s2">                        &quot;{&quot; +</span>
 <span class="s2">                            &quot;dbg(self.source); &quot; +</span>
@@ -481,7 +484,7 @@
 <span class="s2">        for (i in 1:(num_epochs-1)) {</span>
 <span class="s2">            for (j in 0:(num_populations-1)) {</span>
 <span class="s2">                for (k in 0:(num_populations-1)) {</span>
-<span class="s2">                    if (j==k | N[i,j] == 0 | N[i,k] == 0) {</span>
+<span class="s2">                    if (j==k | N[i,j] &lt; 1 | N[i,k] &lt; 1) {</span>
 <span class="s2">                        next;</span>
 <span class="s2">                    }</span>
 
@@ -504,7 +507,7 @@
 <span class="s2">    // Admixture pulses.</span>
 <span class="s2">    if (length(admixture_pulses) &gt; 0 ) {</span>
 <span class="s2">        for (i in 0:(ncol(admixture_pulses)-1)) {</span>
-<span class="s2">            g = G_start + gdiff(T_start, admixture_pulses[0,i]);</span>
+<span class="s2">            g = time_to_tick(admixture_pulses[0,i]);</span>
 <span class="s2">            dest = asInteger(admixture_pulses[1,i]);</span>
 <span class="s2">            src = asInteger(admixture_pulses[2,i]);</span>
 <span class="s2">            rate = admixture_pulses[3,i];</span>
@@ -522,7 +525,7 @@
 <span class="s2">    // Draw mutations.</span>
 <span class="s2">    if (length(drawn_mutations) &gt; 0) {</span>
 <span class="s2">        for (i in 0:(ncol(drawn_mutations)-1)) {</span>
-<span class="s2">            g = G_start + gdiff(T_start, drawn_mutations[0,i]);</span>
+<span class="s2">            g = time_to_tick(drawn_mutations[0,i]);</span>
 <span class="s2">            mut_type = asInteger(drawn_mutations[1,i]);</span>
 <span class="s2">            pop_id = asInteger(drawn_mutations[2,i]);</span>
 <span class="s2">            coordinate = asInteger(drawn_mutations[3,i]);</span>
@@ -536,8 +539,8 @@
 <span class="s2">    // Setup fitness callbacks.</span>
 <span class="s2">    if (length(fitness_callbacks) &gt; 0) {</span>
 <span class="s2">        for (i in 0:(ncol(fitness_callbacks)-1)) {</span>
-<span class="s2">            g_start = G_start + gdiff(T_start, fitness_callbacks[0,i]);</span>
-<span class="s2">            g_end = G_start + gdiff(T_start, fitness_callbacks[1,i]);</span>
+<span class="s2">            g_start = time_to_tick(fitness_callbacks[0,i]);</span>
+<span class="s2">            g_end = time_to_tick(fitness_callbacks[1,i]);</span>
 <span class="s2">            mut_type = asInteger(fitness_callbacks[2,i]);</span>
 <span class="s2">            pop_id = asInteger(fitness_callbacks[3,i]);</span>
 <span class="s2">            selection_coeff = Q * fitness_callbacks[4,i];</span>
@@ -599,9 +602,9 @@
 
 <span class="s2">    // Sample individuals.</span>
 <span class="s2">    for (i in 0:(ncol(sampling_episodes)-1)) {</span>
-<span class="s2">        pop = drop(sampling_episodes[0,i]);</span>
+<span class="s2">        pop = drop(asInteger(sampling_episodes[0,i]));</span>
 <span class="s2">        n = sampling_episodes[1,i];</span>
-<span class="s2">        g = G_start + gdiff(T_start, sampling_episodes[2,i]);</span>
+<span class="s2">        g = time_to_tick(sampling_episodes[2,i]);</span>
 
 <span class="s2">        // Check that there will be at least n individuals for sampling.</span>
 <span class="s2">        N_g = pop_size_at(G, pop, g);</span>
@@ -739,6 +742,30 @@
 <span class="s2">            &quot;ends&quot;, sim.chromosome.mutationEndPositions</span>
 <span class="s2">        );</span>
 <span class="s2">        metadata.setValue(&quot;mutationRates&quot;, mr);</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+<span class="s2">// Save populations size information in tree sequence metadata</span>
+<span class="s2">// This is for development purposes, and the format of this metadata</span>
+<span class="s2">// is subject to change or may even be removed!</span>
+<span class="s2">1 first() {</span>
+<span class="s2">    if (verbosity &gt;= 3) {</span>
+<span class="s2">        metadata.setValue(&quot;population_sizes&quot;, Dictionary());</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+<span class="s2">1: late() {</span>
+<span class="s2">    if (verbosity &gt;= 3) {</span>
+<span class="s2">        popsizes = metadata.getValue(&quot;population_sizes&quot;);</span>
+<span class="s2">        for (pop in sim.subpopulations) {</span>
+<span class="s2">            traj = popsizes.getValue(pop.name);</span>
+<span class="s2">            if (isNULL(traj)) {</span>
+<span class="s2">                traj = Dictionary();</span>
+<span class="s2">                popsizes.setValue(pop.name, traj);</span>
+<span class="s2">            }</span>
+<span class="s2">            traj.setValue(&quot;t&quot;, c(traj.getValue(&quot;t&quot;), community.tick));</span>
+<span class="s2">            traj.setValue(&quot;N&quot;, c(traj.getValue(&quot;N&quot;), pop.individualCount));</span>
+<span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">}</span>
 
@@ -1010,14 +1037,14 @@
     <span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">start_time</span> <span class="o">*</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">]</span>
     <span class="n">migration_matrices</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">migration_matrix</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">]</span>
 
-    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">growth_rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epoch</span><span class="o">.</span><span class="n">populations</span><span class="p">):</span>
             <span class="c1"># SLiM simulates a diploid population, so rescale population size</span>
             <span class="c1"># depending on contig ploidy. If/when the SLiM simulation is</span>
             <span class="c1"># converted to a haploid model, this rescaling should be removed.</span>
-            <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">end_size</span> <span class="o">*</span> <span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">end_size</span> <span class="o">*</span> <span class="n">contig</span><span class="o">.</span><span class="n">ploidy</span> <span class="o">/</span> <span class="mi">2</span>
             <span class="n">growth_rates</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">growth_rate</span>
 
     <span class="n">admixture_pulses</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1380,7 +1407,8 @@
     <span class="n">printsc</span><span class="p">()</span>
 
     <span class="c1"># Population sizes.</span>
-    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Population sizes in each epoch.&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // Population sizes at the beginning of each epoch&quot;</span><span class="p">)</span>
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    // (will be rounded).&quot;</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span>
         <span class="s2">&quot;    _N = &quot;</span>
         <span class="o">+</span> <span class="n">matrix2str</span><span class="p">(</span>
