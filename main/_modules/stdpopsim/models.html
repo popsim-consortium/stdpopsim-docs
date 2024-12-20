@@ -328,7 +328,8 @@
 
 <span class="sd">        .. note: This interface is deprecated. Instead, a dict containing the</span>
 <span class="sd">            number of individuals per population should be directly provided to</span>
-<span class="sd">            :meth:`Engine.simulate`.</span>
+<span class="sd">            :meth:`Engine.simulate`. Note that in the updated API, each sample</span>
+<span class="sd">            is an individual of the species&#39; ploidy.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
@@ -337,7 +338,10 @@
                 <span class="s2">&quot;positional sample counts (CLI) is deprecated. Instead, supply a &quot;</span>
                 <span class="s2">&quot;{population_name:num_samples} dict to &quot;</span>
                 <span class="s2">&quot;`Engine.simulate(samples=...)` (Python API); or use the syntax &quot;</span>
-                <span class="s2">&quot;`stdpopsim SpeciesName population_name:num_samples` (CLI).&quot;</span>
+                <span class="s2">&quot;`stdpopsim SpeciesName population_name:num_samples` (CLI). Note &quot;</span>
+                <span class="s2">&quot;that the deprecated API specifies the number of haploids, &quot;</span>
+                <span class="s2">&quot;while the new API specifies the number of individuals of the &quot;</span>
+                <span class="s2">&quot;species&#39; ploidy.&quot;</span>
             <span class="p">)</span>
         <span class="p">)</span>
 
