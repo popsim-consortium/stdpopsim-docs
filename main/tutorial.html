@@ -324,7 +324,7 @@ Africa_1T12: African population
     Populations:
         AFR: African
 
-AmericanAdmixture_4B11: American admixture
+AmericanAdmixture_4B18: American admixture
      Demographic model for American admixture, taken from Browning et
     al. 2018. This model extends the Gravel et al. (2011) model of
     African/European/Asian demographic history to simulate an admixed
@@ -652,7 +652,7 @@ demographic models are available for humans:</p>
 <span class="c1"># OutOfAfrica_3G09</span>
 <span class="c1"># OutOfAfrica_2T12</span>
 <span class="c1"># Africa_1T12</span>
-<span class="c1"># AmericanAdmixture_4B11</span>
+<span class="c1"># AmericanAdmixture_4B18</span>
 <span class="c1"># OutOfAfricaArchaicAdmixture_5R19</span>
 <span class="c1"># Zigzag_1S14</span>
 <span class="c1"># AncientEurasia_9K19</span>
@@ -1602,8 +1602,8 @@ Africa_1T12: African population
 the terminal.
 In this tutorial, we will use the model of African-American admixture from
 <a class="reference external" href="http://dx.doi.org/10.1371/journal.pgen.1007385">Browning et al. (2018)</a>.
-From the help output (or the <a class="reference internal" href="catalog.html#sec_catalog_homsap_models_americanadmixture_4b11"><span class="std std-ref">Catalog</span></a>),
-we can see that this model has id <code class="docutils literal notranslate"><span class="pre">AmericanAdmixture_4B11</span></code>,
+From the help output (or the <a class="reference internal" href="catalog.html#sec_catalog_homsap_models_americanadmixture_4b18"><span class="std std-ref">Catalog</span></a>),
+we can see that this model has id <code class="docutils literal notranslate"><span class="pre">AmericanAdmixture_4B18</span></code>,
 and allows samples to be drawn from 4 contemporary populations representing African,
 European, Asian and African-American groups.</p>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> option, we can also see what genetic maps
@@ -1640,10 +1640,10 @@ For the purposes of this tutorial, we’ll also specify a random seed using the
 To check that we have set up the simulation correctly, we may first wish to perform a
 dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
 This will print information about the simulation to the terminal:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s 13 -g HapMapII_GRCh38 -d AmericanAdmixture_4B11 AFR:2 EUR:2 ASIA:2 ADMIX:2 -D
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s 13 -g HapMapII_GRCh38 -d AmericanAdmixture_4B18 AFR:2 EUR:2 ASIA:2 ADMIX:2 -D
 Simulation information:
     Engine: msprime (1.3.3)
-    Model id: AmericanAdmixture_4B11
+    Model id: AmericanAdmixture_4B18
     Model description: American admixture
     Seed: 13
     Population: number_samples (sampling_time_generations):
@@ -1665,7 +1665,7 @@ Contig Description:
 <p>Once we’re sure, we can remove the <code class="docutils literal notranslate"><span class="pre">-D</span></code> flag to run the simulation
 (this took around 8 minutes to run on a laptop).</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr1<span class="w"> </span>-o<span class="w"> </span>afr-america-chr1.trees<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span><span class="se">\</span>
-<span class="gp">$    </span>-d<span class="w"> </span>AmericanAdmixture_4B11<span class="w"> </span>AFR:2<span class="w"> </span>EUR:2<span class="w"> </span>ASIA:2<span class="w"> </span>ADMIX:2
+<span class="gp">$    </span>-d<span class="w"> </span>AmericanAdmixture_4B18<span class="w"> </span>AFR:2<span class="w"> </span>EUR:2<span class="w"> </span>ASIA:2<span class="w"> </span>ADMIX:2
 </pre></div>
 </div>
 </section>

@@ -82,6 +82,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">attr</span>
 
@@ -335,6 +336,17 @@
             <span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="p">,</span>
         <span class="p">)</span></div>
 
+    <span class="k">def</span> <span class="nf">_warn_browning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s2">&quot;AmericanAdmixture_4B11&quot;</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;In stdpopsim &lt;= 0.2.1, the AmericanAdmixture_4B18 model &quot;</span>
+                <span class="s2">&quot;was named AmericanAdmixture_4B11; but since it comes &quot;</span>
+                <span class="s2">&quot;from a 2018 paper, this is corrected. The model name &quot;</span>
+                <span class="s2">&quot;AmericanAdmixture_4B11 will work for now but is deprecated.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;AmericanAdmixture_4B18&quot;</span>
+        <span class="k">return</span> <span class="n">model_id</span>
+
 <div class="viewcode-block" id="Species.get_demographic_model"><a class="viewcode-back" href="../../api.html#stdpopsim.Species.get_demographic_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_demographic_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a demographic model with the specified ``id``.</span>
@@ -346,6 +358,8 @@
 <span class="sd">        :rtype: :class:`DemographicModel`</span>
 <span class="sd">        :return: A :class:`DemographicModel` that defines the requested model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: remove this after a release or two. See #841.</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_warn_browning</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">model</span>
