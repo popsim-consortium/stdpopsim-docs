@@ -828,9 +828,17 @@ great at simulating large samples!</p>
 <p>Finally, we simulate the model with the contig length and number of samples we
 defined above. The simulation results are recorded in a tree sequence object
 (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">msprime_model</span><span class="o">=</span><span class="s2">&quot;dtwf&quot;</span><span class="p">,</span> <span class="n">msprime_change_model</span><span class="o">=</span><span class="p">[(</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;hudson&quot;</span><span class="p">)]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
+<p>The <cite>msprime_model</cite> argument is optional; it specifies that the most recent 20
+generations be simulated with the discrete time Wright-Fisher (“dtwf”) model
+(followed by a switch to the more efficient “hudson” coalescent model). This is
+good practice for large samples, for which the Hudson model can be an
+<a class="reference external" href="https://doi.org/10.1371/journal.pgen.1008619">inaccurate approximation</a>
+for the most recent few generations.</p>
 </section>
 <section id="sanity-check-the-tree-sequence-output">
 <h4>Sanity check the tree sequence output<a class="headerlink" href="#sanity-check-the-tree-sequence-output" title="Permalink to this heading"></a></h4>
