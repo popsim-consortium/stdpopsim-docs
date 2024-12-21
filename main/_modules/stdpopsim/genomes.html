@@ -467,7 +467,7 @@
         <span class="n">species</span><span class="p">,</span>
         <span class="n">chromosome</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">length_multiplier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">recombination_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -496,6 +496,16 @@
         <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Cannot use species gene conversion with bacterial recombination.&quot;</span>
+            <span class="p">)</span>
+        <span class="c1"># TODO: remove deprecated argument in a release or two, see issue #1349.</span>
+        <span class="k">if</span> <span class="n">length_multiplier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">length_multiplier</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DeprecatedFeatureWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;The &#39;length_multiplier&#39; option is deprecated and will be removed &quot;</span>
+                    <span class="s2">&quot;in a future release. Use &#39;left&#39; and &#39;right&#39; instead.&quot;</span>
+                <span class="p">)</span>
             <span class="p">)</span>
         <span class="n">gene_conversion_fraction</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="kc">None</span>

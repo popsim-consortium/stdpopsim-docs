@@ -250,7 +250,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">chromosome</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">genetic_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">length_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">length_multiplier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">recombination_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -286,11 +286,11 @@
 <span class="sd">            using a default uniform recombination rate on a region with the length of</span>
 <span class="sd">            the specified chromosome. The default rates are species- and chromosome-</span>
 <span class="sd">            specific, and can be found in the :ref:`sec_catalog`. (Default: None)</span>
-<span class="sd">        :param float length_multiplier: If specified, simulate a region of length</span>
-<span class="sd">            `length_multiplier` times the length of the specified chromosome with the</span>
-<span class="sd">            same chromosome-specific mutation and recombination rates.</span>
-<span class="sd">            This option cannot currently be used in conjunction with the</span>
-<span class="sd">            ``genetic_map`` argument.</span>
+<span class="sd">        :param float length_multiplier: Deprecated, use `left` and `right`</span>
+<span class="sd">            instead. If specified, simulate a region of length `length_multiplier`</span>
+<span class="sd">            times the length of the specified chromosome with the same</span>
+<span class="sd">            chromosome-specific mutation and recombination rates.  This option</span>
+<span class="sd">            cannot be used in conjunction with the ``genetic_map`` argument.</span>
 <span class="sd">        :param float mutation_rate: The per-base mutation rate. If none is given,</span>
 <span class="sd">            the mutation rate defaults to the rate specified by species chromosomes.</span>
 <span class="sd">        :param float recombination_rate: The per-base recombination rate. If none is</span>
