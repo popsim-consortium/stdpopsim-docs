@@ -1582,7 +1582,7 @@ but they have a fixed selection coefficient of <code class="docutils literal not
 <h3>Testing your DFE model and submitting a PR<a class="headerlink" href="#testing-your-dfe-model-and-submitting-a-pr" title="Permalink to this heading"></a></h3>
 <p>After you finished your implementation, and specified all the
 necessary citations,
-we recommend that you run some basic local tests to see that
+we recommend that you run some basic local checks to see that
 the model was successfully loaded to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
 You may follow the process outlined for <a class="reference internal" href="#testing-your-demographic-model-and-submitting-a-pr">Testing your demographic model and submitting a PR</a>.</p>
 <p>Once you are convinced that the model was accurately implemented and loaded to <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>,
@@ -1594,23 +1594,27 @@ Your DFE model still needs to undergo review by another member
 of the development team before it is fully incorporated into <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.
 This will likely require additional feedback from you,
 so, stay tuned for discussion during the review process.</p>
+<p>To facilitate this, there is one more step: please open a
+<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">new issue</a>,
+using the “DFE QC” template.
+The template asks for the basic information that someone will need
+to independently verify the implemented DFE.</p>
 </section>
 <section id="reviewing-a-dfe-model">
 <h3>Reviewing a DFE model<a class="headerlink" href="#reviewing-a-dfe-model" title="Permalink to this heading"></a></h3>
-<p>The review process for DFE models is currently being developed.
-For now, we suggest that you
-<a class="reference external" href="https://github.com/popsim-consortium/stdpopsim/issues/new">open a new blank issue</a>
-and specify the following information:</p>
-<ol class="arabic simple">
-<li><p><strong>PR for new model:</strong></p></li>
-<li><p><strong>Original paper:</strong></p></li>
-<li><p><strong>Parameter values:</strong></p></li>
-<li><p><strong>Potential issues:</strong></p></li>
-<li><p><strong>QC’er requests:</strong></p></li>
-</ol>
-<p>A reviewer will be assigned to check your implementation and approve it.
-All discussion about the review can be conducted in the <strong>QC issue</strong>
-mentioned above.</p>
+<p>The process for reviewing a DFE is essentially the same
+as for reviewing a demographic model (see <a class="reference internal" href="#overview-of-the-stdpopsim-review-process">Overview of the stdpopsim review process</a>).
+Briefly, you will re-implement the DFE “blind”, i.e., without looking at the DFE
+implementation already added to the code.
+Then, the unit tests check whether the implementations are equivalent.
+To do this, you add your implementation to <code class="docutils literal notranslate"><span class="pre">stdpopsim/qc/&lt;SPECIES_ID&gt;.py</span></code>,
+followed by a call like</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="n">_MODEL_ID_</span><span class="p">)</span><span class="o">.</span><span class="n">register_qc</span><span class="p">(</span><span class="n">_your_review_function</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">_MODEL_ID_</span></code> is the string specified as the ID for the original DFE,
+and <code class="docutils literal notranslate"><span class="pre">_your_review_function()</span></code> is the function you’ve added to the QC file
+that returns a DFE object.</p>
 </section>
 </section>
 <section id="coding-standards">
