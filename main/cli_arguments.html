@@ -1,21 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Command-line options &mdash; stdpopsim 0.2.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,133 +49,133 @@
 <li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Command-line options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#positional-arguments">Positional Arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#named-arguments">Named Arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#msprime-specific-parameters">msprime specific parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#slim-specific-parameters">SLiM specific parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-named-arguments">Named Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters">msprime specific parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters">SLiM specific parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Sub-commands">Sub-commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#AedAeg">AedAeg</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#AnaPla">AnaPla</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat1">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat1">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AnaPla">AnaPla</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AnoCar">AnoCar</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat2">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat2">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AnoCar">AnoCar</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AnoGam">AnoGam</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat3">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat3">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AnoGam">AnoGam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ApiMel">ApiMel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat4">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat4">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#ApiMel">ApiMel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AraTha">AraTha</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat5">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat5">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AraTha">AraTha</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BosTau">BosTau</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat6">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat6">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#BosTau">BosTau</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#CaeEle">CaeEle</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat7">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat7">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#CaeEle">CaeEle</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#CanFam">CanFam</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat8">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat8">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#CanFam">CanFam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ChlRei">ChlRei</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat9">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat9">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#ChlRei">ChlRei</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#DroMel">DroMel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat10">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat10">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#DroMel">DroMel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#DroSec">DroSec</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat11">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat11">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#DroSec">DroSec</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#EscCol">EscCol</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat12">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat12">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#EscCol">EscCol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#GasAcu">GasAcu</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat13">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat13">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#GasAcu">GasAcu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#HelAnn">HelAnn</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat14">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat14">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#HelAnn">HelAnn</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#HelMel">HelMel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat15">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat15">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#HelMel">HelMel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#HomSap">HomSap</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat16">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat16">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#HomSap">HomSap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#MusMus">MusMus</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat17">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat17">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#MusMus">MusMus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#OrySat">OrySat</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat18">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat18">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#OrySat">OrySat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#PanTro">PanTro</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat19">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat19">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PanTro">PanTro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#PapAnu">PapAnu</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat20">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat20">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PapAnu">PapAnu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#PhoSin">PhoSin</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat21">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat21">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PhoSin">PhoSin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#PonAbe">PonAbe</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat22">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat22">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PonAbe">PonAbe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#StrAga">StrAga</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat23">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat23">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#StrAga">StrAga</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat24">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat24">Named Arguments</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#download-genetic-maps">download-genetic-maps</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat25">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat24">Positional Arguments</a></li>
 </ul>
 </li>
 </ul>
@@ -212,7 +212,7 @@
            <div itemprop="articleBody">
              
   <section id="command-line-options">
-<span id="sec-cli-args"></span><h1>Command-line options<a class="headerlink" href="#command-line-options" title="Permalink to this heading"></a></h1>
+<span id="sec-cli-args"></span><h1>Command-line options<a class="headerlink" href="#command-line-options" title="Link to this heading"></a></h1>
 <p><p>Command line interface for stdpopsim.</p>
 </p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">stdpopsim</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">V</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">CACHE_DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="p">{</span><span class="n">msprime</span><span class="p">,</span><span class="n">slim</span><span class="p">}]</span>
@@ -223,23 +223,23 @@
                  <span class="o">...</span>
 </pre></div>
 </div>
-<section id="positional-arguments">
-<h2>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this heading"></a></h2>
+<section id="stdpopsim.cli-stdpopsim_cli_parser-positional-arguments">
+<h2>Positional Arguments<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-positional-arguments" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>subcommand</kbd></dt>
 <dd><p>Possible choices: AedAeg, AnaPla, AnoCar, AnoGam, ApiMel, AraTha, BosTau, CaeEle, CanFam, ChlRei, DroMel, DroSec, EscCol, GasAcu, HelAnn, HelMel, HomSap, MusMus, OrySat, PanTro, PapAnu, PhoSin, PonAbe, StrAga, download-genetic-maps</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments">
-<h2>Named Arguments<a class="headerlink" href="#named-arguments" title="Permalink to this heading"></a></h2>
+<section id="stdpopsim.cli-stdpopsim_cli_parser-named-arguments">
+<h2>Named Arguments<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-named-arguments" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>-V, --version</kbd></dt>
 <dd><p>show program’s version number and exit</p>
 </dd>
 <dt><kbd>-v, --verbose</kbd></dt>
 <dd><p>Increase logging verbosity (can use be used multiple times).</p>
-<p>Default: 1</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
 </dd>
 <dt><kbd>-q, --quiet</kbd></dt>
 <dd><p>Do not write any non-essential messages</p>
@@ -250,48 +250,48 @@
 <dt><kbd>-e, --engine</kbd></dt>
 <dd><p>Possible choices: msprime, slim</p>
 <p>Specify a simulation engine.</p>
-<p>Default: “msprime”</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'msprime'</span></code></p>
 </dd>
 </dl>
 </section>
-<section id="msprime-specific-parameters">
-<h2>msprime specific parameters<a class="headerlink" href="#msprime-specific-parameters" title="Permalink to this heading"></a></h2>
+<section id="stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters">
+<h2>msprime specific parameters<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>--msprime-model</kbd></dt>
 <dd><p>Possible choices: hudson, dtwf, smc, smc_prime</p>
 <p>Specify the simulation model used by msprime. See msprime API documentation for details.</p>
-<p>Default: “hudson”</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'hudson'</span></code></p>
 </dd>
 <dt><kbd>--msprime-change-model</kbd></dt>
 <dd><p>Change to the specified simulation MODEL at generation T. This option may provided multiple times.</p>
-<p>Default: []</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
 </dd>
 </dl>
 </section>
-<section id="slim-specific-parameters">
-<h2>SLiM specific parameters<a class="headerlink" href="#slim-specific-parameters" title="Permalink to this heading"></a></h2>
+<section id="stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters">
+<h2>SLiM specific parameters<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>--slim-path</kbd></dt>
 <dd><p>Full path to <a href="#id1"><span class="problematic" id="id2">`</span></a>slim’ executable.</p>
 </dd>
 <dt><kbd>--slim-script</kbd></dt>
 <dd><p>Write script to stdout and exit without running SLiM.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>--slim-scaling-factor</kbd></dt>
 <dd><p>Rescale model parameters by Q to speed up simulation. See SLiM manual: <cite>5.5 Rescaling population sizes to improve simulation performance</cite>. [default=1].</p>
-<p>Default: 1</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
 </dd>
 <dt><kbd>--slim-burn-in</kbd></dt>
 <dd><p>Length of the burn-in phase, in units of N generations [default=10].</p>
-<p>Default: 10</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">10</span></code></p>
 </dd>
 </dl>
 </section>
 <section id="Sub-commands">
-<h2>Sub-commands<a class="headerlink" href="#Sub-commands" title="Permalink to this heading"></a></h2>
+<h2>Sub-commands<a class="headerlink" href="#Sub-commands" title="Link to this heading"></a></h2>
 <section id="AedAeg">
-<h3>AedAeg<a class="headerlink" href="#AedAeg" title="Permalink to this heading"></a></h3>
+<h3>AedAeg<a class="headerlink" href="#AedAeg" title="Link to this heading"></a></h3>
 <p>Run simulations for Aedes aegypti using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -310,16 +310,16 @@ Recombination rate: 2.782e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat1">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat1" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat1">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat1" title="Permalink to this heading"></a></h4>
+<section id="named-arguments">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -329,7 +329,7 @@ Recombination rate: 2.782e-09</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, MT, chrM</p>
@@ -358,7 +358,7 @@ Recombination rate: 2.782e-09</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -379,7 +379,7 @@ Recombination rate: 2.782e-09</p>
 </section>
 </section>
 <section id="AnaPla">
-<h3>AnaPla<a class="headerlink" href="#AnaPla" title="Permalink to this heading"></a></h3>
+<h3>AnaPla<a class="headerlink" href="#AnaPla" title="Link to this heading"></a></h3>
 <p>Run simulations for Anas platyrhynchos using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -398,16 +398,16 @@ Recombination rate: 1.433e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat2">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat2" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat1">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat1" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat2">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat2" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat1">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat1" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -417,7 +417,7 @@ Recombination rate: 1.433e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12, 13, chr13, 14, chr14, 15, chr15, 16, chr16, 17, chr17, 18, chr18, 19, chr19, 20, chr20, 21, chr21, 22, chr22, 23, chr23, 24, chr24, 25, chr25, 26, chr26, 27, chr27, 28, chr28, 29, chr29, 30, chr30, Z, chrZ, 31, chr31, 32, chr32, 33, chr33, 34, chr34, 35, chr35, 36, chr36, 37, chr37, 38, chr38, 39, chr39, 40, chr40</p>
@@ -446,7 +446,7 @@ Recombination rate: 1.433e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: MallardBlackDuck_2L19</p>
@@ -468,7 +468,7 @@ Recombination rate: 1.433e-08</p>
 </section>
 </section>
 <section id="AnoCar">
-<h3>AnoCar<a class="headerlink" href="#AnoCar" title="Permalink to this heading"></a></h3>
+<h3>AnoCar<a class="headerlink" href="#AnoCar" title="Link to this heading"></a></h3>
 <p>Run simulations for Anolis carolinensis using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -487,16 +487,16 @@ Recombination rate: 1e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat3">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat3" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat2">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat2" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat3">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat3" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat2">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat2" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -506,7 +506,7 @@ Recombination rate: 1e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, LGa, LGb, LGc, LGd, LGf, LGg, LGh, MT, chrM</p>
@@ -535,7 +535,7 @@ Recombination rate: 1e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -556,7 +556,7 @@ Recombination rate: 1e-08</p>
 </section>
 </section>
 <section id="AnoGam">
-<h3>AnoGam<a class="headerlink" href="#AnoGam" title="Permalink to this heading"></a></h3>
+<h3>AnoGam<a class="headerlink" href="#AnoGam" title="Link to this heading"></a></h3>
 <p>Run simulations for Anopheles gambiae using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -575,16 +575,16 @@ Recombination rate: 1.447e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat4">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat4" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat3">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat3" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat4">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat4" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat3">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat3" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -594,7 +594,7 @@ Recombination rate: 1.447e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 2L, chr2L, 2R, chr2R, 3L, chr3L, 3R, chr3R, X, chrX, Mt</p>
@@ -623,7 +623,7 @@ Recombination rate: 1.447e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: GabonAg1000G_1A17</p>
@@ -645,7 +645,7 @@ Recombination rate: 1.447e-08</p>
 </section>
 </section>
 <section id="ApiMel">
-<h3>ApiMel<a class="headerlink" href="#ApiMel" title="Permalink to this heading"></a></h3>
+<h3>ApiMel<a class="headerlink" href="#ApiMel" title="Link to this heading"></a></h3>
 <p>Run simulations for Apis mellifera using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -664,16 +664,16 @@ Recombination rate: 2.318e-07</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat5">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat5" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat4">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat4" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat5">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat5" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat4">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat4" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -683,7 +683,7 @@ Recombination rate: 2.318e-07</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: CM009931.2, NC_037638.1, 1, CM009932.2, NC_037639.1, 2, CM009933.2, NC_037640.1, 3, CM009934.2, NC_037641.1, 4, CM009935.2, NC_037642.1, 5, CM009936.2, NC_037643.1, 6, CM009937.2, NC_037644.1, 7, CM009938.2, NC_037645.1, 8, CM009939.2, NC_037646.1, 9, CM009940.2, NC_037647.1, 10, CM009941.2, NC_037648.1, 11, CM009942.2, NC_037649.1, 12, CM009943.2, NC_037650.1, 13, CM009944.2, NC_037651.1, 14, CM009945.2, NC_037652.1, 15, CM009946.2, NC_037653.1, 16, CM009947.2, NC_001566.1, MT</p>
@@ -712,7 +712,7 @@ Recombination rate: 2.318e-07</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -733,7 +733,7 @@ Recombination rate: 2.318e-07</p>
 </section>
 </section>
 <section id="AraTha">
-<h3>AraTha<a class="headerlink" href="#AraTha" title="Permalink to this heading"></a></h3>
+<h3>AraTha<a class="headerlink" href="#AraTha" title="Link to this heading"></a></h3>
 <p>Run simulations for Arabidopsis thaliana using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -756,16 +756,16 @@ Recombination rate: 8.029e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat6">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat6" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat5">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat5" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat6">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat6" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat5">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat5" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -778,7 +778,7 @@ Recombination rate: 8.029e-10</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: SalomeAveraged_TAIR10</p>
@@ -814,7 +814,7 @@ Recombination rate: 8.029e-10</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: SouthMiddleAtlas_1D17, African2Epoch_1H18, African3Epoch_1H18</p>
@@ -844,7 +844,7 @@ Recombination rate: 8.029e-10</p>
 </section>
 </section>
 <section id="BosTau">
-<h3>BosTau<a class="headerlink" href="#BosTau" title="Permalink to this heading"></a></h3>
+<h3>BosTau<a class="headerlink" href="#BosTau" title="Link to this heading"></a></h3>
 <p>Run simulations for Bos taurus using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -863,16 +863,16 @@ Recombination rate: 9.26e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat7">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat7" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat6">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat6" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat7">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat7" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat6">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat6" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -882,7 +882,7 @@ Recombination rate: 9.26e-09</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12, 13, chr13, 14, chr14, 15, chr15, 16, chr16, 17, chr17, 18, chr18, 19, chr19, 20, chr20, 21, chr21, 22, chr22, 23, chr23, 24, chr24, 25, chr25, 26, chr26, 27, chr27, 28, chr28, 29, chr29, X, chrX, MT, chrM</p>
@@ -911,7 +911,7 @@ Recombination rate: 9.26e-09</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: HolsteinFriesian_1M13, HolsteinFriesian_1B16, Fleckvieh_1B16, Jersey_1B16, Angus_1B16</p>
@@ -933,7 +933,7 @@ Recombination rate: 9.26e-09</p>
 </section>
 </section>
 <section id="CaeEle">
-<h3>CaeEle<a class="headerlink" href="#CaeEle" title="Permalink to this heading"></a></h3>
+<h3>CaeEle<a class="headerlink" href="#CaeEle" title="Link to this heading"></a></h3>
 <p>Run simulations for Caenorhabditis elegans using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -953,16 +953,16 @@ Recombination rate: 3.053e-11</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat8">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat8" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat7">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat7" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat8">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat8" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat7">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat7" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -975,7 +975,7 @@ Recombination rate: 3.053e-11</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: RockmanRIAIL_ce11</p>
@@ -1008,7 +1008,7 @@ Recombination rate: 3.053e-11</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1029,7 +1029,7 @@ Recombination rate: 3.053e-11</p>
 </section>
 </section>
 <section id="CanFam">
-<h3>CanFam<a class="headerlink" href="#CanFam" title="Permalink to this heading"></a></h3>
+<h3>CanFam<a class="headerlink" href="#CanFam" title="Link to this heading"></a></h3>
 <p>Run simulations for Canis familiaris using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1049,16 +1049,16 @@ Recombination rate: 9.506e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat9">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat9" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat8">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat8" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat9">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat9" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat8">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat8" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1071,7 +1071,7 @@ Recombination rate: 9.506e-09</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: Campbell2016_CanFam3_1</p>
@@ -1104,7 +1104,7 @@ Recombination rate: 9.506e-09</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: EarlyWolfAdmixture_6F14</p>
@@ -1126,7 +1126,7 @@ Recombination rate: 9.506e-09</p>
 </section>
 </section>
 <section id="ChlRei">
-<h3>ChlRei<a class="headerlink" href="#ChlRei" title="Permalink to this heading"></a></h3>
+<h3>ChlRei<a class="headerlink" href="#ChlRei" title="Link to this heading"></a></h3>
 <p>Run simulations for Chlamydomonas reinhardtii using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1145,16 +1145,16 @@ Recombination rate: 1.459e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat10">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat10" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat9">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat9" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat10">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat10" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat9">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat9" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1164,7 +1164,7 @@ Recombination rate: 1.459e-10</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12, 13, chr13, 14, chr14, 15, chr15, 16, chr16, 17, chr17</p>
@@ -1193,7 +1193,7 @@ Recombination rate: 1.459e-10</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1214,7 +1214,7 @@ Recombination rate: 1.459e-10</p>
 </section>
 </section>
 <section id="DroMel">
-<h3>DroMel<a class="headerlink" href="#DroMel" title="Permalink to this heading"></a></h3>
+<h3>DroMel<a class="headerlink" href="#DroMel" title="Link to this heading"></a></h3>
 <p>Run simulations for Drosophila melanogaster using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1237,16 +1237,16 @@ Recombination rate: 2.085e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat11">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat11" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat10">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat10" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat11">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat11" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat10">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat10" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1259,7 +1259,7 @@ Recombination rate: 2.085e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: ComeronCrossover_dm6, ComeronCrossoverV2_dm6</p>
@@ -1295,7 +1295,7 @@ Recombination rate: 2.085e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: African3Epoch_1S16, OutOfAfrica_2L06</p>
@@ -1325,7 +1325,7 @@ Recombination rate: 2.085e-08</p>
 </section>
 </section>
 <section id="DroSec">
-<h3>DroSec<a class="headerlink" href="#DroSec" title="Permalink to this heading"></a></h3>
+<h3>DroSec<a class="headerlink" href="#DroSec" title="Link to this heading"></a></h3>
 <p>Run simulations for Drosophila sechellia using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1344,16 +1344,16 @@ Recombination rate: 2.223e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat12">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat12" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat11">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat11" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat12">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat12" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat11">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat11" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1363,7 +1363,7 @@ Recombination rate: 2.223e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 2L, chr2L, 2R, chr2R, 3L, chr3L, 3R, chr3R, X, chrX, 4, chr4</p>
@@ -1392,7 +1392,7 @@ Recombination rate: 2.223e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1413,7 +1413,7 @@ Recombination rate: 2.223e-08</p>
 </section>
 </section>
 <section id="EscCol">
-<h3>EscCol<a class="headerlink" href="#EscCol" title="Permalink to this heading"></a></h3>
+<h3>EscCol<a class="headerlink" href="#EscCol" title="Link to this heading"></a></h3>
 <p>Run simulations for Escherichia coli using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1433,16 +1433,16 @@ Bacterial recombination with tract length: 542</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat13">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat13" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat12">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat12" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat13">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat13" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat12">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat12" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1452,7 +1452,7 @@ Bacterial recombination with tract length: 542</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: Chromosome</p>
@@ -1481,7 +1481,7 @@ Bacterial recombination with tract length: 542</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1502,7 +1502,7 @@ Bacterial recombination with tract length: 542</p>
 </section>
 </section>
 <section id="GasAcu">
-<h3>GasAcu<a class="headerlink" href="#GasAcu" title="Permalink to this heading"></a></h3>
+<h3>GasAcu<a class="headerlink" href="#GasAcu" title="Link to this heading"></a></h3>
 <p>Run simulations for Gasterosteus aculeatus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1521,16 +1521,16 @@ Recombination rate: 3.001e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat14">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat14" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat13">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat13" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat14">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat14" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat13">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat13" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1540,7 +1540,7 @@ Recombination rate: 3.001e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, Y, MT</p>
@@ -1569,7 +1569,7 @@ Recombination rate: 3.001e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1590,7 +1590,7 @@ Recombination rate: 3.001e-08</p>
 </section>
 </section>
 <section id="HelAnn">
-<h3>HelAnn<a class="headerlink" href="#HelAnn" title="Permalink to this heading"></a></h3>
+<h3>HelAnn<a class="headerlink" href="#HelAnn" title="Link to this heading"></a></h3>
 <p>Run simulations for Helianthus annuus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1609,16 +1609,16 @@ Recombination rate: 4e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat15">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat15" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat14">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat14" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat15">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat15" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat14">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat14" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1628,7 +1628,7 @@ Recombination rate: 4e-09</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17</p>
@@ -1657,7 +1657,7 @@ Recombination rate: 4e-09</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1678,7 +1678,7 @@ Recombination rate: 4e-09</p>
 </section>
 </section>
 <section id="HelMel">
-<h3>HelMel<a class="headerlink" href="#HelMel" title="Permalink to this heading"></a></h3>
+<h3>HelMel<a class="headerlink" href="#HelMel" title="Link to this heading"></a></h3>
 <p>Run simulations for Heliconius melpomene using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1697,16 +1697,16 @@ Recombination rate: 3.966e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat16">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat16" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat15">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat15" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat16">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat16" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat15">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat15" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1716,7 +1716,7 @@ Recombination rate: 3.966e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12, 13, chr13, 14, chr14, 15, chr15, 16, chr16, 17, chr17, 18, chr18, 19, chr19, 20, chr20, 21, chr21</p>
@@ -1745,7 +1745,7 @@ Recombination rate: 3.966e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -1766,7 +1766,7 @@ Recombination rate: 3.966e-08</p>
 </section>
 </section>
 <section id="HomSap">
-<h3>HomSap<a class="headerlink" href="#HomSap" title="Permalink to this heading"></a></h3>
+<h3>HomSap<a class="headerlink" href="#HomSap" title="Link to this heading"></a></h3>
 <p>Run simulations for Homo sapiens using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -1789,16 +1789,16 @@ Recombination rate: 1.253e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat17">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat17" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat16">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat16" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat17">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat17" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat16">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat16" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1811,7 +1811,7 @@ Recombination rate: 1.253e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: HapMapII_GRCh37, HapMapII_GRCh38, DeCodeSexAveraged_GRCh36, DeCodeSexAveraged_GRCh38, PyrhoACB_GRCh38, PyrhoASW_GRCh38, PyrhoBEB_GRCh38, PyrhoCDX_GRCh38, PyrhoCEU_GRCh38, PyrhoCHB_GRCh38, PyrhoCHS_GRCh38, PyrhoCLM_GRCh38, PyrhoESN_GRCh38, PyrhoFIN_GRCh38, PyrhoGBR_GRCh38, PyrhoGIH_GRCh38, PyrhoGWD_GRCh38, PyrhoIBS_GRCh38, PyrhoITU_GRCh38, PyrhoJPT_GRCh38, PyrhoKHV_GRCh38, PyrhoLWK_GRCh38, PyrhoMSL_GRCh38, PyrhoMXL_GRCh38, PyrhoPEL_GRCh38, PyrhoPJL_GRCh38, PyrhoPUR_GRCh38, PyrhoSTU_GRCh38, PyrhoTSI_GRCh38, PyrhoYRI_GRCh38</p>
@@ -1847,7 +1847,7 @@ Recombination rate: 1.253e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: OutOfAfricaExtendedNeandertalAdmixturePulse_3I21, OutOfAfrica_3G09, OutOfAfrica_2T12, Africa_1T12, AmericanAdmixture_4B18, OutOfAfricaArchaicAdmixture_5R19, Zigzag_1S14, AncientEurasia_9K19, PapuansOutOfAfrica_10J19, AshkSub_7G19, OutOfAfrica_4J17, Africa_1B08, AncientEurope_4A21</p>
@@ -1877,7 +1877,7 @@ Recombination rate: 1.253e-08</p>
 </section>
 </section>
 <section id="MusMus">
-<h3>MusMus<a class="headerlink" href="#MusMus" title="Permalink to this heading"></a></h3>
+<h3>MusMus<a class="headerlink" href="#MusMus" title="Link to this heading"></a></h3>
 <p>Run simulations for Mus musculus using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -1897,16 +1897,16 @@ Recombination rate: 5.567e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat18">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat18" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat17">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat17" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat18">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat18" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat17">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat17" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1916,7 +1916,7 @@ Recombination rate: 5.567e-09</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>--help-dfes</kbd></dt>
 <dd><p>Print list of DFEs and exit. If a DFE ID is given as an argument, show help for this DFE. Otherwise show help for all available DFEs</p>
@@ -1948,7 +1948,7 @@ Recombination rate: 5.567e-09</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: DomesticusEurope_1F22, MusculusKorea_1F22, CastaneusIndia_1F22</p>
@@ -1971,7 +1971,7 @@ Recombination rate: 5.567e-09</p>
 </section>
 </section>
 <section id="OrySat">
-<h3>OrySat<a class="headerlink" href="#OrySat" title="Permalink to this heading"></a></h3>
+<h3>OrySat<a class="headerlink" href="#OrySat" title="Link to this heading"></a></h3>
 <p>Run simulations for Oryza sativa using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -1990,16 +1990,16 @@ Recombination rate: 8.955e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat19">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat19" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat18">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat18" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat19">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat19" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat18">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat18" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2009,7 +2009,7 @@ Recombination rate: 8.955e-10</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, Mt, Pt, 2, chr2, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12</p>
@@ -2038,7 +2038,7 @@ Recombination rate: 8.955e-10</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: BottleneckMigration_3C07</p>
@@ -2060,7 +2060,7 @@ Recombination rate: 8.955e-10</p>
 </section>
 </section>
 <section id="PanTro">
-<h3>PanTro<a class="headerlink" href="#PanTro" title="Permalink to this heading"></a></h3>
+<h3>PanTro<a class="headerlink" href="#PanTro" title="Link to this heading"></a></h3>
 <p>Run simulations for Pan troglodytes using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2079,16 +2079,16 @@ Recombination rate: 1.2e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat20">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat20" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat19">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat19" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat20">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat20" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat19">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat19" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2098,7 +2098,7 @@ Recombination rate: 1.2e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, chr1, 2A, chr2A, 2B, chr2B, 3, chr3, 4, chr4, 5, chr5, 6, chr6, 7, chr7, 8, chr8, 9, chr9, 10, chr10, 11, chr11, 12, chr12, 13, chr13, 14, chr14, 15, chr15, 16, chr16, 17, chr17, 18, chr18, 19, chr19, 20, chr20, 21, chr21, 22, chr22, X, chrX, Y, chrY</p>
@@ -2127,7 +2127,7 @@ Recombination rate: 1.2e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: BonoboGhost_4K19</p>
@@ -2149,7 +2149,7 @@ Recombination rate: 1.2e-08</p>
 </section>
 </section>
 <section id="PapAnu">
-<h3>PapAnu<a class="headerlink" href="#PapAnu" title="Permalink to this heading"></a></h3>
+<h3>PapAnu<a class="headerlink" href="#PapAnu" title="Link to this heading"></a></h3>
 <p>Run simulations for Papio anubis using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2169,16 +2169,16 @@ Recombination rate: 1.124e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat21">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat21" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat20">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat20" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat21">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat21" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat20">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat20" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2191,7 +2191,7 @@ Recombination rate: 1.124e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: Pyrho_PAnubis1_0</p>
@@ -2224,7 +2224,7 @@ Recombination rate: 1.124e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: SinglePopSMCpp_1W22</p>
@@ -2246,7 +2246,7 @@ Recombination rate: 1.124e-08</p>
 </section>
 </section>
 <section id="PhoSin">
-<h3>PhoSin<a class="headerlink" href="#PhoSin" title="Permalink to this heading"></a></h3>
+<h3>PhoSin<a class="headerlink" href="#PhoSin" title="Link to this heading"></a></h3>
 <p>Run simulations for Phocoena sinus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2268,16 +2268,16 @@ Recombination rate: 1e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat22">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat22" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat21">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat21" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat22">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat22" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat21">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat21" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2287,7 +2287,7 @@ Recombination rate: 1e-08</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>--help-dfes</kbd></dt>
 <dd><p>Print list of DFEs and exit. If a DFE ID is given as an argument, show help for this DFE. Otherwise show help for all available DFEs</p>
@@ -2319,7 +2319,7 @@ Recombination rate: 1e-08</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: Vaquita2Epoch_1R22</p>
@@ -2349,7 +2349,7 @@ Recombination rate: 1e-08</p>
 </section>
 </section>
 <section id="PonAbe">
-<h3>PonAbe<a class="headerlink" href="#PonAbe" title="Permalink to this heading"></a></h3>
+<h3>PonAbe<a class="headerlink" href="#PonAbe" title="Link to this heading"></a></h3>
 <p>Run simulations for Pongo abelii using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2369,16 +2369,16 @@ Recombination rate: 6.403e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat23">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat23" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat22">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat22" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat23">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat23" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat22">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat22" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2391,7 +2391,7 @@ Recombination rate: 6.403e-09</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-g, --genetic-map</kbd></dt>
 <dd><p>Possible choices: NaterPA_PonAbe3, NaterPP_PonAbe3</p>
@@ -2424,7 +2424,7 @@ Recombination rate: 6.403e-09</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Possible choices: TwoSpecies_2L11</p>
@@ -2446,7 +2446,7 @@ Recombination rate: 6.403e-09</p>
 </section>
 </section>
 <section id="StrAga">
-<h3>StrAga<a class="headerlink" href="#StrAga" title="Permalink to this heading"></a></h3>
+<h3>StrAga<a class="headerlink" href="#StrAga" title="Link to this heading"></a></h3>
 <p>Run simulations for Streptococcus agalactiae using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2466,16 +2466,16 @@ Bacterial recombination with tract length: 120000</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat24">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat24" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat23">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat23" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat24">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat24" title="Permalink to this heading"></a></h4>
+<section id="named-arguments_repeat23">
+<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat23" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2485,7 +2485,7 @@ Bacterial recombination with tract length: 120000</p>
 </dd>
 <dt><kbd>-D, --dry-run</kbd></dt>
 <dd><p>Do not run actual simulation</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
 <dd><p>Possible choices: 1, I, chr1</p>
@@ -2514,7 +2514,7 @@ Bacterial recombination with tract length: 120000</p>
 </dd>
 <dt><kbd>--keep-mutation-ids-as-alleles</kbd></dt>
 <dd><p>If set, mutations in SLiM simulations will have alleles coded as numeric ids rather than random nucleotides.</p>
-<p>Default: False</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-d, --demographic-model</kbd></dt>
 <dd><p>Specify a simulation model. If no model is specified, a single population constant size model is used. Available models: . Please see –help-models for details of these models.</p>
@@ -2535,13 +2535,13 @@ Bacterial recombination with tract length: 120000</p>
 </section>
 </section>
 <section id="download-genetic-maps">
-<h3>download-genetic-maps<a class="headerlink" href="#download-genetic-maps" title="Permalink to this heading"></a></h3>
+<h3>download-genetic-maps<a class="headerlink" href="#download-genetic-maps" title="Link to this heading"></a></h3>
 <p>Download genetic maps and store them in the cache directory. Maps are downloaded regardless of whether they are already in the cache or not. Please use the –cache-dir option to download maps to a specific directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">download</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="p">[</span><span class="n">genetic_maps</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat25">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat25" title="Permalink to this heading"></a></h4>
+<section id="positional-arguments_repeat24">
+<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat24" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>species</kbd></dt>
 <dd><p>Download genetic maps for this species. If not specified download all known genetic maps.</p>

@@ -1,20 +1,20 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>stdpopsim.slim_engine &mdash; stdpopsim 0.2.0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -1608,7 +1608,9 @@
     <span class="k">pass</span>
 
 
-<div class="viewcode-block" id="_SLiMEngine"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">_SLiMEngine</span><span class="p">(</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">Engine</span><span class="p">):</span>
+<div class="viewcode-block" id="_SLiMEngine">
+<a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_SLiMEngine</span><span class="p">(</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">Engine</span><span class="p">):</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;slim&quot;</span>  <span class="c1">#:</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;SLiM forward-time Wright-Fisher simulator&quot;</span>  <span class="c1">#:</span>
     <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
@@ -1640,7 +1642,9 @@
                 <span class="sa">f</span><span class="s2">&quot;but only found version </span><span class="si">{</span><span class="n">current_version</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="_SLiMEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
+<div class="viewcode-block" id="_SLiMEngine.simulate">
+<a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">demographic_model</span><span class="p">,</span>
         <span class="n">contig</span><span class="p">,</span>
@@ -1798,6 +1802,7 @@
             <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ts</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_run_slim</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span>
@@ -2032,7 +2037,9 @@
 
         <span class="k">return</span> <span class="n">ts</span>
 
-<div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">recap_and_rescale</span><span class="p">(</span>
+<div class="viewcode-block" id="_SLiMEngine.recap_and_rescale">
+<a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recap_and_rescale</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">ts</span><span class="p">,</span>
         <span class="n">demographic_model</span><span class="p">,</span>
@@ -2104,7 +2111,9 @@
             <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
             <span class="n">extended_events</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">ts</span></div></div>
+        <span class="k">return</span> <span class="n">ts</span></div>
+</div>
+
 
 
 <span class="c1"># SLiM does not currently work on Windows.</span>
