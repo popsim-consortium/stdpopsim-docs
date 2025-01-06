@@ -81,19 +81,19 @@
 <span class="sd">regions to be simulated.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">attr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">attr</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">msprime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">msprime</span>
 
-<span class="kn">import</span> <span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_uniform_rate_map</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_uniform_rate_map</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes a uniform RateMap</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -113,7 +113,7 @@
 
 
 <div class="viewcode-block" id="Genome"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">Genome</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Genome</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing the genome for a species.</span>
 
@@ -142,7 +142,7 @@
     <span class="n">citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Genome.from_data"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome.from_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_data</span><span class="p">(</span>
         <span class="n">genome_data</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">recombination_rate</span><span class="p">,</span>
@@ -193,17 +193,17 @@
         <span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Chromosomes:</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="n">length_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">length_sorted</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chrom</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span>
 
-<div class="viewcode-block" id="Genome.get_chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome.get_chromosome">[docs]</a>    <span class="k">def</span> <span class="nf">get_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="Genome.get_chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Genome.get_chromosome">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the chromosome with the specified ``id``.</span>
 
@@ -220,7 +220,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chromosome not found&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mean_gene_conversion_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_gene_conversion_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The genetic length-weighted mean gene conversion fraction across all</span>
 <span class="sd">        chromosomes.</span>
@@ -241,7 +241,7 @@
             <span class="k">return</span> <span class="n">total_gc_fraction</span> <span class="o">/</span> <span class="n">total_length</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">range_gene_conversion_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">range_gene_conversion_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The range of gene conversion tract lengths across chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -252,7 +252,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">min_gctl</span> <span class="o">==</span> <span class="n">max_gctl</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">max_gctl</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mean_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean recombination rate across all chromosomes.</span>
 <span class="sd">        (Note that this is the rate of crossing-over, not all double-stranded breaks.)</span>
@@ -266,7 +266,7 @@
         <span class="k">return</span> <span class="n">mean_recombination_rate</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mean_mutation_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_mutation_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length-weighted mean mutation rate across all chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -280,7 +280,7 @@
 
 
 <div class="viewcode-block" id="Chromosome"><a class="viewcode-back" href="../../api.html#stdpopsim.Chromosome">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">Chromosome</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Chromosome</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a single chromosome for a species. Note that although</span>
 <span class="sd">    the recombination rate for a Chromosome is the rate of crossing-over,</span>
@@ -314,7 +314,7 @@
 
 
 <div class="viewcode-block" id="Contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">Contig</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Contig</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a contiguous region of genome that is to be simulated.</span>
 <span class="sd">    This contains the information about mutation rates, distributions of</span>
@@ -402,7 +402,7 @@
     <span class="n">interval_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">coordinates</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">tuple</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
@@ -412,7 +412,7 @@
         <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">basic_contig</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basic_contig</span><span class="p">(</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">length</span><span class="p">,</span>
         <span class="n">mutation_rate</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -462,7 +462,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="Contig.species_contig"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.species_contig">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">species_contig</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">species_contig</span><span class="p">(</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">species</span><span class="p">,</span>
         <span class="n">chromosome</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -691,11 +691,11 @@
         <span class="k">return</span> <span class="n">contig</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">original_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">original_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DeprecatedFeatureWarning</span><span class="p">(</span>
                 <span class="s2">&quot;The original_coordinates property is deprecated, &quot;</span>
@@ -706,7 +706,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The location of the contig on a named chromosome as a string with format,</span>
 <span class="sd">        &quot;chromosome:left-right&quot;; or None if a generic contig.</span>
@@ -717,7 +717,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chromosome</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">&quot;</span>
 
-<div class="viewcode-block" id="Contig.dfe_breakpoints"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dfe_breakpoints">[docs]</a>    <span class="k">def</span> <span class="nf">dfe_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Contig.dfe_breakpoints"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dfe_breakpoints">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">dfe_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns two things: the sorted vector of endpoints of all intervals across</span>
 <span class="sd">        all DFEs in the contig, and a vector of integer labels for these intervals,</span>
@@ -759,7 +759,7 @@
             <span class="n">dfe_labels</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">breaks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="o">=</span> <span class="n">j</span>
         <span class="k">return</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span></div>
 
-<div class="viewcode-block" id="Contig.clear_dfes"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dfes">[docs]</a>    <span class="k">def</span> <span class="nf">clear_dfes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Contig.clear_dfes"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dfes">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">clear_dfes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes all DFEs from the contig (as well as the corresponding list of</span>
 <span class="sd">        intervals).</span>
@@ -767,7 +767,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="Contig.add_dfe"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dfe">[docs]</a>    <span class="k">def</span> <span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
+<div class="viewcode-block" id="Contig.add_dfe"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dfe">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the provided DFE to the contig, applying to the regions of the</span>
 <span class="sd">        contig specified in ``intervals``. These intervals are also *removed*</span>
@@ -802,7 +802,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DFE</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Contig.add_single_site"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_single_site">[docs]</a>    <span class="k">def</span> <span class="nf">add_single_site</span><span class="p">(</span>
+<div class="viewcode-block" id="Contig.add_single_site"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_single_site">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_single_site</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="nb">id</span><span class="p">,</span>
         <span class="n">coordinate</span><span class="p">,</span>
@@ -868,13 +868,13 @@
         <span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the contig has no non-neutral mutation types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Contig.mutation_types"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.mutation_types">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Contig.mutation_types"><a class="viewcode-back" href="../../api.html#stdpopsim.Contig.mutation_types">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides information about the MutationTypes assigned to this Contig,</span>
 <span class="sd">        along with information about which DFE they correspond to. This is</span>
@@ -916,7 +916,7 @@
                 <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">mut_types</span></div>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">gmap</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;Contig(length=</span><span class="si">{:.2G}</span><span class="s2">, mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, &quot;</span>

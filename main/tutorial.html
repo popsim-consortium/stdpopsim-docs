@@ -641,7 +641,7 @@ model to simulated under. In <code class="docutils literal notranslate"><span cl
 taken to match the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">demographic history reported in published papers</span></a>, and <a class="reference internal" href="api.html#sec-api-generic-models"><span class="std std-ref">“generic” models</span></a>. We’ll
 first simulate using a published model from the catalog. Let’s see what
 demographic models are available for humans:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 
@@ -683,7 +683,7 @@ sampled from – but that is not the case in this model.</p>
 <p>If working in a notebook, it’s also possible to plot a schematic of your chosen model
 using the <a class="reference external" href="https://grahamgower.github.io/demesdraw/">demesdraw</a> python library.
 This provides both a <code class="docutils literal notranslate"><span class="pre">size_history</span></code> plot and a <code class="docutils literal notranslate"><span class="pre">tubes</span></code> visualization. E.g.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">demesdraw</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">demesdraw</span>
 
 <span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">()</span>
 <span class="n">demesdraw</span><span class="o">.</span><span class="n">tubes</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">())</span>
@@ -773,7 +773,7 @@ human effective population size from the <a class="reference internal" href="cat
 to get the contig information.
 Again, we’ll use <cite>Homo sapiens</cite>, which has the id “HomSap”.
 (But, you could use any species from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>!)</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 </pre></div>
@@ -918,7 +918,7 @@ Since <code class="docutils literal notranslate"><span class="pre">SLiM</span></
 run time of the simulation, only the size of the output tree sequence (and,
 since the tree sequence format scales well with sample size, it doesn’t affect
 this very much either).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Africa_1T12&quot;</span><span class="p">)</span>
@@ -963,7 +963,7 @@ because it attaches tops to any trees that have not yet coalesced.
 For instance, the <code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code> model
 <a class="reference external" href="https://doi.org/10.1126/science.1219240">(Tennesen et al 2012)</a>
 we used above has three distinct epochs:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="n">demography</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Africa_1T12&quot;</span><span class="p">)</span>
@@ -1043,7 +1043,7 @@ without actually running the model.
 You could then edit the code, to add other features not implemented in stdpopsim.
 To do this, set <code class="docutils literal notranslate"><span class="pre">slim_script=True</span></code> (which prints the script to stdout;
 here we capture it in a file):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">redirect_stdout</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect_stdout</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;script.slim&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="k">with</span> <span class="n">redirect_stdout</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
@@ -1082,7 +1082,7 @@ to the tree sequence that <code class="docutils literal notranslate"><span class
 Happily, these are made available through a single Python function,
 <code class="xref py py-func docutils literal notranslate"><span class="pre">engine.recap_and_rescale</span></code>.
 Back in Python, we could do this by</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tskit</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tskit</span>
 
 <span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;foo.trees&quot;</span><span class="p">)</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">recap_and_rescale</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">demography</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -1149,8 +1149,8 @@ To do this, we need to</p>
 Gutenkunst et al. <code class="docutils literal notranslate"><span class="pre">HomSap/OutOfAfrica_3G09</span></code> model.
 We can see the DFEs available for a species in the catalog,
 and get one using the <a class="reference internal" href="api.html#stdpopsim.Species.get_dfe" title="stdpopsim.Species.get_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Species.get_dfe()</span></code></a> method.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
@@ -1215,8 +1215,8 @@ when a newly added DFE covers a portion of a Contig already covered by
 previous DFEs, the new DFE takes precedence:
 concretely, the intervals to which the new DFE apply
 are removed from the intervals associated with previous DFEs.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
 <span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
@@ -1348,7 +1348,7 @@ small part of chromosome 2L of <em>Drosophila melanogaster</em> (<code class="do
 constant size demography.
 The contig will be fully neutral, with the exception of the sweeping mutation
 which we will insert later.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;DroMel&quot;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">PiecewiseConstantSize</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span>
@@ -1440,7 +1440,7 @@ simulation complete in a reasonable amount of time despite the large
 population size of <em>Drosophila melanogaster</em>.
 In actual applications, it would be necessary to check that this choice of
 scaling factor produces data that are similar to those from unscaled simulations (where <span class="math notranslate nohighlight">\(Q=1\)</span>; see <a class="reference internal" href="#sec-slim-scaling-factor"><span class="std std-ref">SLiM scaling factor</span></a>).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">windows</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">ts_neutral</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">),</span> <span class="mi">10000</span><span class="p">)]</span>
 <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ts_neutral</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">))</span>
@@ -1682,7 +1682,7 @@ Contig Description:
 <p>We should now have a file called <code class="docutils literal notranslate"><span class="pre">afr-america-chr1.trees</span></code>.
 Our work with <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is done; we’ll now switch to a Python console and import
 the <code class="docutils literal notranslate"><span class="pre">tskit</span></code> package to load and analyse this simulated tree sequence file.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tskit</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tskit</span>
 
 <span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;afr-america-chr1.trees&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1751,9 +1751,9 @@ However, instead of simply printing these values to the console, it might be nic
 to create a heatmap of the values.
 Here is some (more advanced) code that does this.
 It relies on the <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> packages.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">seaborn</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">div_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)):</span>
@@ -1798,7 +1798,7 @@ See our <a class="reference internal" href="#sec-python-tute"><span class="std s
 <p>We begin by importing <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> into a Python environment and specifying our desired
 species, <em>Arabidopsis thaliana</em>. From the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>, we can see that this
 species has the ID <code class="docutils literal notranslate"><span class="pre">AraTha</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;AraTha&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1904,8 +1904,8 @@ You might also wish to check that the total number of mutations is the sum of th
 <p>Here is some more advanced code that compares the estimated AFS from each population.
 It relies on the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> packages.
 We will scale each AFS by the number of mutated sites in the corresponding sample set.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.4</span>
 <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.2</span>

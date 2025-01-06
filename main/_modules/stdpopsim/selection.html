@@ -76,12 +76,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for stdpopsim.selection</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">attr</span>
-<span class="kn">import</span> <span class="nn">tskit</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">attr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tskit</span>
 
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">GenerationAfter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenerationAfter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    We often want to do things one generation after another event. This class</span>
 <span class="sd">    is essentially just a marker so that the SLiM engine can calculate the next</span>
@@ -95,21 +95,21 @@
 
     <span class="n">time</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">validate_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">validate_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Negative times are invalid.&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">GenerationAfter</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The generation after time=0 is in the future.&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">validate_time_range</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_time_range</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
     <span class="n">validate_time</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
     <span class="n">validate_time</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_time</span><span class="p">):</span>
@@ -124,7 +124,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ExtendedEvent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExtendedEvent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ExtendedEvent is analogous to msprime.DemographicEvent, but is used here</span>
 <span class="sd">    for explicitly manipulating mutations. Currently, these are only used by</span>
@@ -136,7 +136,7 @@
 
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">DrawMutation</span><span class="p">(</span><span class="n">ExtendedEvent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DrawMutation</span><span class="p">(</span><span class="n">ExtendedEvent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Introduce a new mutation with the given mutation type in the given</span>
 <span class="sd">    population at a given single site. The mutation will be added to one</span>
@@ -158,12 +158,12 @@
     <span class="n">single_site_id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">population</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">validate_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">ChangeMutationFitness</span><span class="p">(</span><span class="n">ExtendedEvent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ChangeMutationFitness</span><span class="p">(</span><span class="n">ExtendedEvent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Change the selection and/or dominance coefficients for the given mutation</span>
 <span class="sd">    type in the given population. The mutation this applies to need not exist</span>
@@ -200,12 +200,12 @@
     <span class="n">selection_coeff</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">dominance_coeff</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">validate_time_range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
 
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">ConditionOnAlleleFrequency</span><span class="p">(</span><span class="n">ExtendedEvent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConditionOnAlleleFrequency</span><span class="p">(</span><span class="n">ExtendedEvent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Condition on the allele frequency of a drawn mutation with the given</span>
 <span class="sd">    mutation type in the given population. The mutation need not have been</span>
@@ -241,7 +241,7 @@
 
     <span class="n">op_types</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">op_types</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid conditioning op `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allele_frequency</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
@@ -263,11 +263,11 @@
         <span class="n">validate_time_range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">op_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">op_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">op_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="selective_sweep"><a class="viewcode-back" href="../../api.html#stdpopsim.selective_sweep">[docs]</a><span class="k">def</span> <span class="nf">selective_sweep</span><span class="p">(</span>
+<div class="viewcode-block" id="selective_sweep"><a class="viewcode-back" href="../../api.html#stdpopsim.selective_sweep">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">selective_sweep</span><span class="p">(</span>
     <span class="n">single_site_id</span><span class="p">,</span>
     <span class="n">population</span><span class="p">,</span>
     <span class="n">mutation_generation_ago</span><span class="p">,</span>
@@ -435,7 +435,7 @@
     <span class="k">return</span> <span class="n">extended_events</span></div>
 
 
-<span class="k">def</span> <span class="nf">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mutation</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mutation</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the selection coefficient of the given mutation.</span>
 

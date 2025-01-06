@@ -1003,7 +1003,7 @@ For example, the test for the recombination rates is initialized by the
 <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility in the following form:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Recombination rate QC not done yet&quot;</span><span class="p">)</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">([</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span> <span class="p">{}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-<span class="k">def</span> <span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">rate</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1017,7 +1017,7 @@ We provide an example below from <em>A. aegypti</em> (see <code class="docutils 
     <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span>
     <span class="p">{</span><span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="mf">0.306e-8</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="mf">0.249e-8</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="mf">0.291e-8</span><span class="p">,</span> <span class="s2">&quot;MT&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
 <span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">rate</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1082,8 +1082,8 @@ e.g., CanFam).
 If the species does not currently have any demographic model,
 then you should add this file to <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>,
 with the following three lines of code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">msprime</span>
-<span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">msprime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1091,7 +1091,7 @@ with the following three lines of code:</p>
 <p>Furthermore, to ensure that the demographic model(s) are fully incorporated to the
 species’ code base, you should add the following import to the <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
 in the species directory:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">demographic_models</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">demographic_models</span>
 </pre></div>
 </div>
 </section>
@@ -1103,7 +1103,7 @@ a <code class="docutils literal notranslate"><span class="pre">stdpopsim.Demogra
 This function should then be added to the <code class="docutils literal notranslate"><span class="pre">_species</span></code> object using the <code class="docutils literal notranslate"><span class="pre">add_demographic_model</span></code>
 function.
 We provide below a template block of code for these two operations:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_model_func_name</span><span class="p">():</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_model_func_name</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DemographicModel</span><span class="p">(</span>
         <span class="nb">id</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=...</span><span class="p">,</span>
@@ -1219,7 +1219,7 @@ by following the <a class="reference internal" href="#sec-development-installati
 Then, check that your new demographic model function has been imported
 by executing the following Python code,
 where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character species id (e.g., HomSap or AraTha):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
@@ -1477,7 +1477,7 @@ e.g., AraTha).
 If the species does not currently have any DFE model,
 then you should add this file to <code class="docutils literal notranslate"><span class="pre">stdpopsim/catalog/&lt;SPECIES_ID&gt;/</span></code>,
 with the following two lines of code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stdpopsim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 <span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1485,7 +1485,7 @@ with the following two lines of code:</p>
 <p>Furthermore, to ensure that the DFE model is fully incorporated to the
 species’ code base, you should add the following import to the <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
 in the species directory:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">dfes</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">dfes</span>
 </pre></div>
 </div>
 </section>
@@ -1497,7 +1497,7 @@ a <code class="docutils literal notranslate"><span class="pre">stdpopsim.DFE</sp
 This function should then be added to the <code class="docutils literal notranslate"><span class="pre">_species</span></code> object using the <code class="docutils literal notranslate"><span class="pre">add_dfe</span></code>
 function.
 We provide below a template block of code for these two operations:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_dfe_func_name</span><span class="p">():</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_dfe_func_name</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DFE</span><span class="p">(</span>
         <span class="nb">id</span><span class="o">=...</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=...</span><span class="p">,</span>
@@ -1542,7 +1542,7 @@ coefficients distributed according to a Gamma distribution
 with mean <code class="docutils literal notranslate"><span class="pre">-0.0004</span></code> and shape <code class="docutils literal notranslate"><span class="pre">0.27</span></code>.
 The positive mutations also have a dominance coefficience of <code class="docutils literal notranslate"><span class="pre">0.5</span></code>,
 but they have a fixed selection coefficient of <code class="docutils literal notranslate"><span class="pre">0.01</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_dfe_func_name</span><span class="p">():</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_dfe_func_name</span><span class="p">():</span>
 
     <span class="c1"># Default mutation type is neutral</span>
     <span class="n">neutral</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">()</span>

@@ -80,15 +80,15 @@
 <span class="sd">Common infrastructure for specifying demographic models.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
 
-<span class="kn">import</span> <span class="nn">msprime</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">msprime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
 
-<div class="viewcode-block" id="Population"><a class="viewcode-back" href="../../api.html#stdpopsim.Population">[docs]</a><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
+<div class="viewcode-block" id="Population"><a class="viewcode-back" href="../../api.html#stdpopsim.Population">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Population</span><span class="p">:</span>
     <span class="c1"># TODO deprecate this - we don&#39;t need any internal definition of what</span>
     <span class="c1"># a population is.</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -105,16 +105,16 @@
 <span class="sd">    :vartype sampling_time: int</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">sampling_time</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">sampling_time</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sampling_time</span> <span class="o">=</span> <span class="n">sampling_time</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">allow_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">allow_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Population.asdict"><a class="viewcode-back" href="../../api.html#stdpopsim.Population.asdict">[docs]</a>    <span class="k">def</span> <span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Population.asdict"><a class="viewcode-back" href="../../api.html#stdpopsim.Population.asdict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary representing the metadata about this population.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -125,7 +125,7 @@
         <span class="p">}</span></div></div>
 
 
-<div class="viewcode-block" id="DemographicModel"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel">[docs]</a><span class="k">class</span> <span class="nc">DemographicModel</span><span class="p">:</span>
+<div class="viewcode-block" id="DemographicModel"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">DemographicModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a demographic model.</span>
 
@@ -159,7 +159,7 @@
 <span class="sd">    :vartype recombination_rate: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="nb">id</span><span class="p">,</span>
@@ -225,7 +225,7 @@
             <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">:</span>
                 <span class="n">pop</span><span class="o">.</span><span class="n">allow_samples</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">long_desc_lines</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">long_description</span><span class="p">))</span>
@@ -245,18 +245,18 @@
         <span class="k">return</span> <span class="n">s</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">populations</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">num_populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">num_populations</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">num_sampling_populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_sampling_populations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">allow_samples</span><span class="p">)</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">populations</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DemographicModel.register_qc"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.register_qc">[docs]</a>    <span class="k">def</span> <span class="nf">register_qc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc_model</span><span class="p">):</span>
+<div class="viewcode-block" id="DemographicModel.register_qc"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.register_qc">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_qc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc_model</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a QC model implementation for this model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -268,7 +268,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QC model already registered for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qc_model</span> <span class="o">=</span> <span class="n">qc_model</span></div>
 
-<div class="viewcode-block" id="DemographicModel.get_sample_sets"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_sample_sets">[docs]</a>    <span class="k">def</span> <span class="nf">get_sample_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals_per_population</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="DemographicModel.get_sample_sets"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_sample_sets">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_sample_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals_per_population</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of `msprime.SampleSet` objects, using the number of</span>
 <span class="sd">        individuals sampled from each population as specified in</span>
@@ -312,7 +312,7 @@
         <span class="n">sample_sets</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sample_sets</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sample_sets</span></div>
 
-<div class="viewcode-block" id="DemographicModel.get_samples"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_samples">[docs]</a>    <span class="k">def</span> <span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="DemographicModel.get_samples"><a class="viewcode-back" href="../../api.html#stdpopsim.DemographicModel.get_samples">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of `msprime.SampleSet` objects, with the number of</span>
 <span class="sd">        haploids from each population determined by the positional arguments.</span>
@@ -365,7 +365,7 @@
         <span class="k">return</span> <span class="n">samples</span></div></div>
 
 
-<div class="viewcode-block" id="PiecewiseConstantSize"><a class="viewcode-back" href="../../api.html#stdpopsim.PiecewiseConstantSize">[docs]</a><span class="k">class</span> <span class="nc">PiecewiseConstantSize</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
+<div class="viewcode-block" id="PiecewiseConstantSize"><a class="viewcode-back" href="../../api.html#stdpopsim.PiecewiseConstantSize">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PiecewiseConstantSize</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a generic simulation model that can be run to output a</span>
 <span class="sd">    tree sequence. This is a piecewise constant size model, which allows for</span>
@@ -383,7 +383,7 @@
 <span class="sd">        model2 = stdpopsim.PiecewiseConstantSize(N0, (t1, N1), (t2, N2))  # Two changes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">Demography</span><span class="o">.</span><span class="n">isolated_model</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="p">[</span><span class="n">N0</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="n">model</span><span class="o">.</span><span class="n">add_population_parameters_change</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">initial_size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
@@ -397,7 +397,7 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IsolationWithMigration"><a class="viewcode-back" href="../../api.html#stdpopsim.IsolationWithMigration">[docs]</a><span class="k">class</span> <span class="nc">IsolationWithMigration</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
+<div class="viewcode-block" id="IsolationWithMigration"><a class="viewcode-back" href="../../api.html#stdpopsim.IsolationWithMigration">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">IsolationWithMigration</span><span class="p">(</span><span class="n">DemographicModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a generic simulation model that can be run to output a tree</span>
 <span class="sd">    sequence. A generic isolation with migration model where a single ancestral</span>
@@ -421,7 +421,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">NA</span><span class="p">,</span> <span class="n">N1</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">M12</span><span class="p">,</span> <span class="n">M21</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">NA</span><span class="p">,</span> <span class="n">N1</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">M12</span><span class="p">,</span> <span class="n">M21</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">Demography</span><span class="p">()</span>
         <span class="n">model</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pop1&quot;</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">initial_size</span><span class="o">=</span><span class="n">N2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pop2&quot;</span><span class="p">)</span>

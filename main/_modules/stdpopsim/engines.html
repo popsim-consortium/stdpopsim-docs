@@ -76,21 +76,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for stdpopsim.engines</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">import</span> <span class="nn">attr</span>
-<span class="kn">import</span> <span class="nn">msprime</span>
-<span class="kn">import</span> <span class="nn">stdpopsim</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">attr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">msprime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">_registered_engines</span> <span class="o">=</span> <span class="p">{}</span>
 
 
-<div class="viewcode-block" id="register_engine"><a class="viewcode-back" href="../../api.html#stdpopsim.register_engine">[docs]</a><span class="k">def</span> <span class="nf">register_engine</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
+<div class="viewcode-block" id="register_engine"><a class="viewcode-back" href="../../api.html#stdpopsim.register_engine">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">register_engine</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registers the specified simulation engine.</span>
 
@@ -103,7 +103,7 @@
     <span class="n">_registered_engines</span><span class="p">[</span><span class="n">engine</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">engine</span></div>
 
 
-<div class="viewcode-block" id="get_engine"><a class="viewcode-back" href="../../api.html#stdpopsim.get_engine">[docs]</a><span class="k">def</span> <span class="nf">get_engine</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="get_engine"><a class="viewcode-back" href="../../api.html#stdpopsim.get_engine">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_engine</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the simulation engine with the specified ``id``.</span>
 
@@ -117,7 +117,7 @@
     <span class="k">return</span> <span class="n">_registered_engines</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span></div>
 
 
-<span class="k">def</span> <span class="nf">all_engines</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">all_engines</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns an iterator over all registered simulation engines.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -126,7 +126,7 @@
 
 
 <div class="viewcode-block" id="Engine"><a class="viewcode-back" href="../../api.html#stdpopsim.Engine">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">Engine</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract class representing a simulation engine.</span>
 
@@ -144,7 +144,7 @@
 <span class="sd">    :vartype citations: list of :class:`.Citation`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Engine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.Engine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
+<div class="viewcode-block" id="Engine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.Engine.simulate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">demographic_model</span><span class="p">,</span>
         <span class="n">contig</span><span class="p">,</span>
@@ -174,7 +174,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Engine.get_version"><a class="viewcode-back" href="../../api.html#stdpopsim.Engine.get_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Engine.get_version"><a class="viewcode-back" href="../../api.html#stdpopsim.Engine.get_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the version of the engine.</span>
 
@@ -182,7 +182,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_warn_mutation_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_warn_mutation_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span>
             <span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
         <span class="p">):</span>
@@ -196,7 +196,7 @@
                 <span class="s2">&quot;https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html&quot;</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_warn_recombination_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_warn_recombination_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span>
             <span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
         <span class="p">):</span>
@@ -211,7 +211,7 @@
             <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_MsprimeEngine"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine">[docs]</a><span class="k">class</span> <span class="nc">_MsprimeEngine</span><span class="p">(</span><span class="n">Engine</span><span class="p">):</span>
+<div class="viewcode-block" id="_MsprimeEngine"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">_MsprimeEngine</span><span class="p">(</span><span class="n">Engine</span><span class="p">):</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;msprime&quot;</span>  <span class="c1">#:</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Msprime coalescent simulator&quot;</span>  <span class="c1">#:</span>
     <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
@@ -243,10 +243,10 @@
     <span class="p">}</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">supported_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">supported_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">_convert_model_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_str</span><span class="p">,</span> <span class="n">model_changes</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_model_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_str</span><span class="p">,</span> <span class="n">model_changes</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert the specified model specification into a form suitable</span>
 <span class="sd">        for sim_ancestry. The model param is a string or None. The</span>
@@ -282,7 +282,7 @@
 
         <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">citations</span>
 
-<div class="viewcode-block" id="_MsprimeEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
+<div class="viewcode-block" id="_MsprimeEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine.simulate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">demographic_model</span><span class="p">,</span>
         <span class="n">contig</span><span class="p">,</span>
@@ -394,14 +394,14 @@
             <span class="n">ts</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">ts</span></div>
 
-    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">msprime</span><span class="o">.</span><span class="n">__version__</span></div>
 
 
 <span class="n">register_engine</span><span class="p">(</span><span class="n">_MsprimeEngine</span><span class="p">())</span>
 
 
-<div class="viewcode-block" id="get_default_engine"><a class="viewcode-back" href="../../api.html#stdpopsim.get_default_engine">[docs]</a><span class="k">def</span> <span class="nf">get_default_engine</span><span class="p">():</span>
+<div class="viewcode-block" id="get_default_engine"><a class="viewcode-back" href="../../api.html#stdpopsim.get_default_engine">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_default_engine</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the default simulation engine (msprime).</span>
 

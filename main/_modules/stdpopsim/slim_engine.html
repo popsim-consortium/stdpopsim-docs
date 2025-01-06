@@ -116,27 +116,27 @@
 <span class="sd">   occur over long time periods. In SLiM, we call `pop.setMigrationRates()`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">contextlib</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">textwrap</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
 
-<span class="kn">import</span> <span class="nn">stdpopsim</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">msprime</span>
-<span class="kn">import</span> <span class="nn">pyslim</span>
-<span class="kn">import</span> <span class="nn">tskit</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">msprime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyslim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tskit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -828,7 +828,7 @@
 <span class="p">}</span>
 
 
-<span class="k">def</span> <span class="nf">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_slim_mutation_rate_map</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a tuple with the breakpoints and rates of mutations for SLiM.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -851,7 +851,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">slim_breaks</span><span class="p">,</span> <span class="n">slim_rates</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">slim_array_string</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">slim_array_string</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Format an array as a SLiM c() array and return as a line-wrapped string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -867,7 +867,7 @@
     <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns an iterator which, for every `DFE` in the `contig`, returns a tuple</span>
 <span class="sd">    containing a numeric id for said DFE, the DFE object and the list of</span>
@@ -881,7 +881,7 @@
         <span class="k">yield</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span>
 
 
-<span class="k">def</span> <span class="nf">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Assigns mutation type ids to each of the mutation types contained in this</span>
 <span class="sd">    `Contig`. This function will return a dictionary with `len(contig.dfe_list)`</span>
@@ -918,13 +918,13 @@
     <span class="k">return</span> <span class="n">dfe_to_mtypes</span>
 
 
-<span class="k">def</span> <span class="nf">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds the DFEs to the top-level metadata of a tree sequence using</span>
 <span class="sd">    information in the `contig`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_get_json</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_json</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="c1"># recursively flattens an object to a dictionary.</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)))</span>
@@ -952,7 +952,7 @@
     <span class="k">return</span> <span class="n">tables</span><span class="o">.</span><span class="n">tree_sequence</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">recombination_map</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">msprime_rm_to_slim_rm</span><span class="p">(</span><span class="n">recombination_map</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert recombination map from start position coords to end position coords.</span>
 
@@ -981,7 +981,7 @@
     <span class="k">return</span> <span class="n">rates</span><span class="p">,</span> <span class="n">ends</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
 
-<span class="k">def</span> <span class="nf">slim_makescript</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">slim_makescript</span><span class="p">(</span>
     <span class="n">script_file</span><span class="p">,</span>
     <span class="n">trees_file</span><span class="p">,</span>
     <span class="n">demographic_model</span><span class="p">,</span>
@@ -1007,7 +1007,7 @@
     <span class="c1"># Reassign event times according to integral SLiM ticks.</span>
     <span class="c1"># This collapses the time deltas used in HomSap/AmericanAdmixture_4B18,</span>
     <span class="c1"># and calculates times for GenerationAfter objects.</span>
-    <span class="k">def</span> <span class="nf">fix_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fix_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
                 <span class="k">continue</span>
@@ -1281,7 +1281,7 @@
         <span class="p">)</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">matrix2str</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matrix2str</span><span class="p">(</span>
         <span class="n">matrix</span><span class="p">,</span> <span class="n">row_comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1604,11 +1604,11 @@
     <span class="k">return</span> <span class="n">epochs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">SLiMException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SLiMException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span>
 
 
-<div class="viewcode-block" id="_SLiMEngine"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine">[docs]</a><span class="k">class</span> <span class="nc">_SLiMEngine</span><span class="p">(</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">Engine</span><span class="p">):</span>
+<div class="viewcode-block" id="_SLiMEngine"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">_SLiMEngine</span><span class="p">(</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">Engine</span><span class="p">):</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;slim&quot;</span>  <span class="c1">#:</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;SLiM forward-time Wright-Fisher simulator&quot;</span>  <span class="c1">#:</span>
     <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
@@ -1620,17 +1620,17 @@
         <span class="p">),</span>
     <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">slim_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">slim_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SLIM&quot;</span><span class="p">,</span> <span class="s2">&quot;slim&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">slim_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">slim_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slim_path</span><span class="p">()</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="n">slim_path</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_assert_min_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_required_version</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">version_split</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assert_min_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_required_version</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">version_split</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)]</span>
 
         <span class="n">current_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">(</span><span class="n">slim_path</span><span class="p">)</span>
@@ -1640,7 +1640,7 @@
                 <span class="sa">f</span><span class="s2">&quot;but only found version </span><span class="si">{</span><span class="n">current_version</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="_SLiMEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
+<div class="viewcode-block" id="_SLiMEngine.simulate"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">demographic_model</span><span class="p">,</span>
         <span class="n">contig</span><span class="p">,</span>
@@ -1739,7 +1739,7 @@
         <span class="n">mktemp</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
 
         <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
-        <span class="k">def</span> <span class="nf">script_file_f</span><span class="p">():</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">script_file_f</span><span class="p">():</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">mktemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.slim&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">slim_script</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
             <span class="k">yield</span> <span class="n">f</span>
             <span class="c1"># Don&#39;t close sys.stdout.</span>
@@ -1799,7 +1799,7 @@
 
         <span class="k">return</span> <span class="n">ts</span></div>
 
-    <span class="k">def</span> <span class="nf">_run_slim</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_slim</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">slim_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1858,7 +1858,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">slim_path</span><span class="si">}</span><span class="s2"> exited with code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_simplify_remembered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_simplify_remembered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove all samples except those individuals that were explicity</span>
 <span class="sd">        sampled in SLiM with sim.treeSeqRememberIndividuals().</span>
@@ -1868,7 +1868,7 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="n">filter_populations</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_recap_and_rescale</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_recap_and_rescale</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">ts</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">,</span>
@@ -1969,14 +1969,14 @@
                     <span class="n">mut_seed</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">)</span>
                     <span class="c1"># Figuring out SLiM mutation id metadata</span>
 
-                    <span class="k">def</span> <span class="nf">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">):</span>
+                    <span class="k">def</span><span class="w"> </span><span class="nf">_get_next_id</span><span class="p">(</span><span class="n">ts</span><span class="p">):</span>
                         <span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
                         <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">mutations</span><span class="p">():</span>
                             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">mut</span><span class="o">.</span><span class="n">derived_state</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
                                 <span class="n">max_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
                         <span class="k">return</span> <span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span>
 
-                    <span class="k">def</span> <span class="nf">_get_msp_rate_map</span><span class="p">(</span><span class="n">breaks</span><span class="p">,</span> <span class="n">is_this_dfe</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+                    <span class="k">def</span><span class="w"> </span><span class="nf">_get_msp_rate_map</span><span class="p">(</span><span class="n">breaks</span><span class="p">,</span> <span class="n">is_this_dfe</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
                         <span class="n">rates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">is_this_dfe</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
                         <span class="n">rates</span><span class="p">[</span><span class="n">is_this_dfe</span><span class="p">]</span> <span class="o">=</span> <span class="n">rate</span>
                         <span class="k">return</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">rates</span><span class="p">)</span>
@@ -2032,7 +2032,7 @@
 
         <span class="k">return</span> <span class="n">ts</span>
 
-<div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span> <span class="nf">recap_and_rescale</span><span class="p">(</span>
+<div class="viewcode-block" id="_SLiMEngine.recap_and_rescale"><a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.recap_and_rescale">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">recap_and_rescale</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">ts</span><span class="p">,</span>
         <span class="n">demographic_model</span><span class="p">,</span>
