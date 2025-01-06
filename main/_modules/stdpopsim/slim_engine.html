@@ -140,6 +140,12 @@
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_escape_eidos</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="c1"># this is for Windows paths passed as strings in Eidos</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">))</span>
+
+
 <span class="n">_slim_upper</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">initialize() {</span>
 <span class="s2">    if (!exists(&quot;dry_run&quot;))</span>
@@ -1276,7 +1282,7 @@
             <span class="n">recombination_rates</span><span class="o">=</span><span class="n">recomb_rates_str</span><span class="p">,</span>
             <span class="n">recombination_ends</span><span class="o">=</span><span class="n">recomb_ends_str</span><span class="p">,</span>
             <span class="n">generation_time</span><span class="o">=</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">generation_time</span><span class="p">,</span>
-            <span class="n">trees_file</span><span class="o">=</span><span class="n">trees_file</span><span class="p">,</span>
+            <span class="n">trees_file</span><span class="o">=</span><span class="n">_escape_eidos</span><span class="p">(</span><span class="n">trees_file</span><span class="p">),</span>
             <span class="n">pop_names</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;c(</span><span class="si">{</span><span class="n">pop_names_str</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="p">)</span>
@@ -1595,7 +1601,7 @@
     <span class="k">if</span> <span class="n">logfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">printsc</span><span class="p">(</span>
             <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">_slim_logfile</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
-                <span class="n">logfile</span><span class="o">=</span><span class="n">logfile</span><span class="p">,</span>
+                <span class="n">logfile</span><span class="o">=</span><span class="n">_escape_eidos</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">logfile</span><span class="p">)),</span>
                 <span class="n">loginterval</span><span class="o">=</span><span class="n">logfile_interval</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
@@ -1740,21 +1746,32 @@
 
         <span class="n">run_slim</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">slim_script</span>
 
-        <span class="n">mktemp</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
-
         <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
-        <span class="k">def</span><span class="w"> </span><span class="nf">script_file_f</span><span class="p">():</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">mktemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.slim&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">slim_script</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
-            <span class="k">yield</span> <span class="n">f</span>
-            <span class="c1"># Don&#39;t close sys.stdout.</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">slim_script</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_slim_tempdir</span><span class="p">():</span>
+            <span class="n">tempdir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">(</span>
+                <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;stdpopsim_&quot;</span><span class="p">,</span> <span class="n">ignore_cleanup_errors</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">ts_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">.trees&quot;</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="n">script_file_f</span><span class="p">()</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">mktemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.ts&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ts_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">run_slim</span><span class="p">:</span>
+                <span class="n">script_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">tempdir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">.slim&quot;</span>
+                <span class="p">)</span>
+                <span class="n">script_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">script_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">script_filename</span> <span class="o">=</span> <span class="s2">&quot;stdout&quot;</span>
+                <span class="n">script_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+            <span class="k">yield</span> <span class="n">script_file</span><span class="p">,</span> <span class="n">script_filename</span><span class="p">,</span> <span class="n">ts_filename</span>
+            <span class="k">if</span> <span class="n">run_slim</span><span class="p">:</span>
+                <span class="n">script_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">tempdir</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="n">_slim_tempdir</span><span class="p">()</span> <span class="k">as</span> <span class="n">st</span><span class="p">:</span>
+            <span class="n">script_file</span><span class="p">,</span> <span class="n">script_filename</span><span class="p">,</span> <span class="n">ts_filename</span> <span class="o">=</span> <span class="n">st</span>
 
             <span class="n">recap_epoch</span> <span class="o">=</span> <span class="n">slim_makescript</span><span class="p">(</span>
                 <span class="n">script_file</span><span class="p">,</span>
-                <span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">ts_filename</span><span class="p">,</span>
                 <span class="n">demographic_model</span><span class="p">,</span>
                 <span class="n">contig</span><span class="p">,</span>
                 <span class="n">sample_sets</span><span class="p">,</span>
@@ -1772,7 +1789,7 @@
                 <span class="k">return</span> <span class="kc">None</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_run_slim</span><span class="p">(</span>
-                <span class="n">script_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">script_filename</span><span class="p">,</span>
                 <span class="n">slim_path</span><span class="o">=</span><span class="n">slim_path</span><span class="p">,</span>
                 <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
                 <span class="n">dry_run</span><span class="o">=</span><span class="n">dry_run</span><span class="p">,</span>
@@ -1782,24 +1799,26 @@
             <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
-            <span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_filename</span><span class="p">)</span>
 
-        <span class="n">ts</span> <span class="o">=</span> <span class="n">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">_recap_and_rescale</span><span class="p">:</span>
-            <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
-                <span class="n">ts</span><span class="p">,</span>
-                <span class="n">seed</span><span class="p">,</span>
-                <span class="n">recap_epoch</span><span class="p">,</span>
-                <span class="n">contig</span><span class="p">,</span>
-                <span class="n">slim_scaling_factor</span><span class="p">,</span>
-                <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
-                <span class="n">extended_events</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">_add_dfes_to_metadata</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_recap_and_rescale</span><span class="p">:</span>
+                <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recap_and_rescale</span><span class="p">(</span>
+                    <span class="n">ts</span><span class="p">,</span>
+                    <span class="n">seed</span><span class="p">,</span>
+                    <span class="n">recap_epoch</span><span class="p">,</span>
+                    <span class="n">contig</span><span class="p">,</span>
+                    <span class="n">slim_scaling_factor</span><span class="p">,</span>
+                    <span class="n">keep_mutation_ids_as_alleles</span><span class="p">,</span>
+                    <span class="n">extended_events</span><span class="p">,</span>
+                <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span>
+                    <span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="kc">False</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ts</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_tree_sequence</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ts</span></div>
 
@@ -1823,7 +1842,6 @@
         <span class="k">if</span> <span class="n">slim_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">slim_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slim_path</span><span class="p">()</span>
 
-        <span class="c1"># SLiM v3.6 sends `stop()` output to stderr, which we rely upon.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_assert_min_version</span><span class="p">(</span><span class="s2">&quot;4.0&quot;</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">)</span>
 
         <span class="n">slim_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">slim_path</span><span class="p">]</span>
@@ -1842,7 +1860,19 @@
             <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
             <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
         <span class="p">)</span> <span class="k">as</span> <span class="n">proc</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+            <span class="n">procout</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># we get procout == None with the patching of suprocess.Popen</span>
+                <span class="c1"># that we do in test_slim_engine.py::TestCLI::test_dry_run</span>
+                <span class="n">outs</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="n">procout</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">UnspecifiedSLiMWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;Cannot get output from SLiM &quot;</span> <span class="s2">&quot;for unknown reasons.&quot;</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">outs</span><span class="p">,</span> <span class="n">errs</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">outs</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;WARNING: &quot;</span><span class="p">):</span>
                     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
@@ -1853,14 +1883,13 @@
                     <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;dbg(self.source); &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-            <span class="n">stderr</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stderr</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">errs</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">):</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">)</span> <span class="p">:])</span>
 
         <span class="k">if</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SLiMException</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">slim_path</span><span class="si">}</span><span class="s2"> exited with code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">slim_path</span><span class="si">}</span><span class="s2"> exited with code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="n">errs</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_simplify_remembered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
@@ -2116,9 +2145,7 @@
 
 
 
-<span class="c1"># SLiM does not currently work on Windows.</span>
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">!=</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
-    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">register_engine</span><span class="p">(</span><span class="n">_SLiMEngine</span><span class="p">())</span>
+<span class="n">stdpopsim</span><span class="o">.</span><span class="n">register_engine</span><span class="p">(</span><span class="n">_SLiMEngine</span><span class="p">())</span>
 </pre></div>
 
            </div>
