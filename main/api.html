@@ -465,6 +465,10 @@ A complete list of IDs for each species can be found in the
 <li><p><strong>chromosomes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> objects.</p></li>
 <li><p><strong>assembly_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the genome assembly.</p></li>
 <li><p><strong>assembly_accession</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the genome assembly accession.</p></li>
+<li><p><strong>assembly_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The source of the genome assembly data.
+(for instance “ensembl”). Use “manual” if manually entered.</p></li>
+<li><p><strong>assembly_build_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The version of the genome assembly build,
+or “None” if manually entered.</p></li>
 <li><p><strong>bacterial_recombination</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether recombination is via horizontal gene
 transfer (if this is True) or via crossing-over and possibly gene
 conversion (if this is False). Default: False.</p></li>
