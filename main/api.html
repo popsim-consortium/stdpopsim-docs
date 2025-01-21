@@ -642,15 +642,16 @@ more recently-added DFEs take precedence. Each DFE added in this way
 carries its own MutationTypes: no mutation types are shared between
 DFEs added by different calls to <code class="docutils literal notranslate"><span class="pre">add_dfe(</span> <span class="pre">)</span></code>, even if the same DFE
 object is added more than once.</p>
-<p>For instance, if we do
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">a1</span> <span class="pre">=</span> <span class="pre">np.array([[0,</span> <span class="pre">100]])</span>
-<span class="pre">a2</span> <span class="pre">=</span> <span class="pre">np.array([[50,</span> <span class="pre">120]])</span>
-<span class="pre">contig.add_dfe(a1,</span> <span class="pre">dfe1)</span>
-<span class="pre">contig.add_dfe(a2,</span> <span class="pre">dfe2)</span>
-<span class="pre">`</span></code>
-then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies
-to the region from 50 to 120.</p>
+<p>For instance, if we do</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">]])</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">120</span><span class="p">]])</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">dfe1</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="n">dfe2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 (including 0 but not
+50) and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies to the region from 50 to 120 (including 50 but
+not 120).</p>
 <p>Any of the <code class="docutils literal notranslate"><span class="pre">intervals</span></code> that fall outside of the contig will be
 clipped to the contig boundaries. If no <code class="docutils literal notranslate"><span class="pre">intervals</span></code> overlap the
 contig, an “empty” DFE will be added with a warning.</p>

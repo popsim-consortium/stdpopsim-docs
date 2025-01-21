@@ -821,14 +821,17 @@
 <span class="sd">        object is added more than once.</span>
 
 <span class="sd">        For instance, if we do</span>
-<span class="sd">        ```</span>
-<span class="sd">        a1 = np.array([[0, 100]])</span>
-<span class="sd">        a2 = np.array([[50, 120]])</span>
-<span class="sd">        contig.add_dfe(a1, dfe1)</span>
-<span class="sd">        contig.add_dfe(a2, dfe2)</span>
-<span class="sd">        ```</span>
-<span class="sd">        then ``dfe1`` applies to the region from 0 to 50 and ``dfe2`` applies</span>
-<span class="sd">        to the region from 50 to 120.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            a1 = np.array([[0, 100]])</span>
+<span class="sd">            a2 = np.array([[50, 120]])</span>
+<span class="sd">            contig.add_dfe(a1, dfe1)</span>
+<span class="sd">            contig.add_dfe(a2, dfe2)</span>
+
+<span class="sd">        then ``dfe1`` applies to the region from 0 to 50 (including 0 but not</span>
+<span class="sd">        50) and ``dfe2`` applies to the region from 50 to 120 (including 50 but</span>
+<span class="sd">        not 120).</span>
 
 <span class="sd">        Any of the ``intervals`` that fall outside of the contig will be</span>
 <span class="sd">        clipped to the contig boundaries. If no ``intervals`` overlap the</span>
