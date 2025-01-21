@@ -714,6 +714,14 @@
                 <span class="n">ploidy</span><span class="o">=</span><span class="n">ploidy</span><span class="p">,</span>
             <span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot simulate a contig whose length is shorter &quot;</span>
+                    <span class="s2">&quot;than the gene conversion length &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="si">}</span><span class="s2">bp).&quot;</span>
+                <span class="p">)</span>
+
         <span class="k">return</span> <span class="n">contig</span></div>
 
 
