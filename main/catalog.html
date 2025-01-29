@@ -247,6 +247,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_dfes_gamma_h17">Gamma_H17</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_dfes_lognormal_h17">LogNormal_H17</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_dfes_mixed_k23">Mixed_K23</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sec_catalog_homsap_dfes_posneg_r24">PosNeg_R24</a></li>
 </ul>
 </li>
 </ul>
@@ -8730,6 +8731,10 @@ Then, if you feel ready, make an issue on our
 <td><p>2023</p></td>
 <td><p>Deleterious Gamma DFE with additional lethals</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sec_catalog_homsap_dfes_posneg_r24">PosNeg_R24</a></p></td>
+<td><p>2024</p></td>
+<td><p>Deleterious Gamma and Beneficial Exponential DFE</p></td>
+</tr>
 </tbody>
 </table>
 <section id="sec_catalog_homsap_dfes_gamma_k17">
@@ -8876,6 +8881,52 @@ Then, if you feel ready, make an issue on our
 <td><p>Fixed s</p></td>
 <td><p>s = -1.000</p></td>
 <td><p>h = 0.000</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec_catalog_homsap_dfes_posneg_r24">
+<span id="sec_catalog_homsap_dfes_posneg_r24"></span><h4>PosNeg_R24<a class="headerlink" href="#sec_catalog_homsap_dfes_posneg_r24" title="Link to this heading"></a></h4>
+<p>Deleterious Gamma and Beneficial Exponential DFE</p>
+<p>
+    The best-fitting DFE simulated by Rodrigues et al (2024),
+    from among 57 simulated scenarios with varying amounts of positive
+    and negative selection. Fit was based on similarity of diversity
+    and divergence across the great ape clade in simulations; the shape
+    of the DFE was not inferred, only the proportion of positive and
+    negative mutations; the shape of the deleterious portion of the DFE
+    was obtained from Castellano et al (2019),
+    https://doi.org/10.1534/genetics.119.302494.
+    </p>
+<p class="rubric">Citations</p>
+<ul class="simple">
+<li><p>Rodrigues et al., 2024. <a class="reference external" href="https://doi.org/10.1093/genetics/iyae006">https://doi.org/10.1093/genetics/iyae006</a></p></li>
+<li><p>Castellano et al., 2019. <a class="reference external" href="https://doi.org/10.1534/genetics.119.302494">https://doi.org/10.1534/genetics.119.302494</a></p></li>
+</ul>
+<p class="rubric">DFE parameters</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Proportion of mutations</p></th>
+<th class="head"><p>Distribution type</p></th>
+<th class="head"><p>Parameters</p></th>
+<th class="head"><p>Dominance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>40.0%</p></td>
+<td><p>Fixed s</p></td>
+<td><p>s = 0.000</p></td>
+<td><p>h = 0.500</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.0%</p></td>
+<td><p>Gamma</p></td>
+<td><p>mean = -0.030, shape = 0.160</p></td>
+<td><p>h = 0.500</p></td>
+</tr>
+<tr class="row-even"><td><p>60.0%</p></td>
+<td><p>Exponential</p></td>
+<td><p>mean = 0.010</p></td>
+<td><p>h = 0.500</p></td>
 </tr>
 </tbody>
 </table>
