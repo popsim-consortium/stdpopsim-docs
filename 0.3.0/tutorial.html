@@ -1,0 +1,1975 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorials &mdash; stdpopsim 0.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e259d695"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command-line options" href="cli_arguments.html" />
+    <link rel="prev" title="Catalog" href="catalog.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            stdpopsim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-stdpopsim-with-the-command-line-interface-cli">Running stdpopsim with the command-line interface (CLI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-first-simulation">A first simulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-species-and-a-contig">Choose a species and a contig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-model-and-a-sampling-scheme">Choose a model and a sampling scheme</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convert-output-to-vcf">Convert output to VCF</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-slim-simulation-engine">Using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> simulation engine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-the-engine">Specifying the engine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#slim-scaling-factor"><code class="docutils literal notranslate"><span class="pre">SLiM</span></code> scaling factor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simulating-genomes-with-selection">Simulating genomes with selection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-output-from-slim">Debugging output from <code class="docutils literal notranslate"><span class="pre">SLiM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-species-drosophila-melanogaster">Choose a species: Drosophila melanogaster</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-stdpopsim-with-the-python-interface-api">Running stdpopsim with the Python interface (API)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-a-published-model">Running a published model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pick-a-species-and-demographic-model">Pick a species and demographic model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-up-the-contig">Set up the contig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-sampling-scheme-and-simulate">Choose a sampling scheme and simulate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-a-generic-model">Running a generic model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-species">Choose a species</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-up-the-generic-model">Set up the generic model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#choose-a-contig-and-genetic-map">Choose a contig and genetic map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Choose a sampling scheme, and simulate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sanity-check-the-tree-sequence-output">Sanity check the tree sequence output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output-to-vcf">Output to VCF</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-slim-engine">Using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#an-example-simulation">An example simulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-slim-options">Other <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#incorporating-selection">Incorporating selection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulating-with-a-genome-wide-dfe">1. Simulating with a genome-wide DFE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simulating-selection-in-a-single-gene">2. Simulating selection in a single gene</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simulating-selection-on-exons">3. Simulating selection on exons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selective-sweeps">4.  Selective sweeps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-a-dfe-from-one-species-in-another-species">5.  Using a DFE from one species in another species</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tips-tricks-and-gotchas">Tips, tricks, and gotchas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#missing-data-and-coordinates">Missing data and coordinates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-analyses-with-stdpopsim">Example analyses with stdpopsim</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calculating-genetic-divergence">Calculating genetic divergence</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simulating-the-dataset">1. Simulating the dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calculating-divergences">2. Calculating divergences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plotting-the-divergences">3. Plotting the divergences</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#calculating-the-allele-frequency-spectrum">Calculating the allele frequency spectrum</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1. Simulating the dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calculating-the-afs">2. Calculating the AFS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plotting-the-afs">3. Plotting the AFS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stdpopsim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorials</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com///blob/tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorials">
+<span id="sec-tutorial"></span><h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading"></a></h1>
+<p>There are two main ways of accessing the resources of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package
+that will be detailed in this tutorial. The first is via the command line
+interface (CLI). This is useful if you want to do a straightforward run of the
+models in the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>. The other way to
+access the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> resources is via the Python API. This is a bit more
+complicated, but allows for more advanced tasks. This tutorial will walk
+through both ways of using the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package as well as a few examples
+of producing and processing output.</p>
+<p>To simulate genomes using <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>,
+we need to make several choices about what will be simulated:</p>
+<ol class="arabic simple">
+<li><p>which species</p></li>
+<li><p>which contig (i.e., how much of what chromosome)</p></li>
+<li><p>which recombination/genetic map</p></li>
+<li><p>which demographic model</p></li>
+<li><p>how many samples from each population of the model</p></li>
+<li><p>whether to simulate selection (via a distribution of fitness effects),
+and if so <strong>where</strong> to introduce selected mutations (i.e. in an exon annotation track)</p></li>
+<li><p>which simulation engine to use</p></li>
+</ol>
+<p>These choices are nested:
+the species determines what contigs, recombination/genetic maps, and demographic models are available,
+and the demographic model determines how many populations can be sampled from.
+Currently, the two choices of simulation engine are <code class="docutils literal notranslate"><span class="pre">msprime</span></code> and <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>,
+and incorporating selection into simulations is only possible using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine.
+Below are examples of making these choices in various contexts,
+using both CLI and Python interfaces.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Recombination map and genetic map are terms used to describe
+maps of recombination rates that vary across and along chromosomes.
+In the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> code and documentation, we use the term
+<strong>genetic map</strong> to refer specifically to a “crossing-over rate map” and
+<strong>recombination map</strong> to refer to a “crossing-over and gene conversion rate map.””
+See <a class="reference internal" href="api.html#sec-api-gene-conversion"><span class="std std-ref">further details</span></a> on this distinction.</p>
+</div>
+<section id="running-stdpopsim-with-the-command-line-interface-cli">
+<span id="sec-cli-tute"></span><h2>Running stdpopsim with the command-line interface (CLI)<a class="headerlink" href="#running-stdpopsim-with-the-command-line-interface-cli" title="Link to this heading"></a></h2>
+<p>In order to use the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> CLI the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package must be
+installed (see <a class="reference internal" href="installation.html#sec-installation"><span class="std std-ref">Installation</span></a>). The CLI provides access
+to the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> of models that have already been implemented
+by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>.</p>
+<section id="a-first-simulation">
+<h3>A first simulation<a class="headerlink" href="#a-first-simulation" title="Link to this heading"></a></h3>
+<p>As a first step, we’ll use the CLI built-in help
+to build up to a realistic coalescent simulation of some copies of
+human chromosome 22 with the HapMap genetic map,
+and a published demographic model.</p>
+<section id="choose-a-species-and-a-contig">
+<h4>Choose a species and a contig<a class="headerlink" href="#choose-a-species-and-a-contig" title="Link to this heading"></a></h4>
+<p>The first step for using the CLI is to select the species that
+you are interested in simulating data for. In order to see which species are
+available run</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim --help
+usage: stdpopsim [-h] [-V] [-v | -q] [-c CACHE_DIR] [-e {msprime,slim}]
+                 [--msprime-model {hudson,dtwf,smc,smc_prime}]
+                 [--msprime-change-model T MODEL] [--slim-path PATH]
+                 [--slim-script] [--slim-scaling-factor Q] [--slim-burn-in X]
+                 {AedAeg,AnaPla,AnoCar,AnoGam,ApiMel,AraTha,BosTau,CaeEle,CanFam,ChlRei,DroMel,DroSec,EscCol,GasAcu,GorGor,HelAnn,HelMel,HomSap,MusMus,OrySat,PanTro,PapAnu,PhoSin,PonAbe,RatNor,StrAga,SusScr,download-genetic-maps}
+                 ...
+
+Command line interface for stdpopsim.
+
+positional arguments:
+  {AedAeg,AnaPla,AnoCar,AnoGam,ApiMel,AraTha,BosTau,CaeEle,CanFam,ChlRei,DroMel,DroSec,EscCol,GasAcu,GorGor,HelAnn,HelMel,HomSap,MusMus,OrySat,PanTro,PapAnu,PhoSin,PonAbe,RatNor,StrAga,SusScr,download-genetic-maps}
+    AedAeg              Run simulations for Aedes aegypti.
+    AnaPla              Run simulations for Anas platyrhynchos.
+    AnoCar              Run simulations for Anolis carolinensis.
+    AnoGam              Run simulations for Anopheles gambiae.
+    ApiMel              Run simulations for Apis mellifera.
+    AraTha              Run simulations for Arabidopsis thaliana.
+    BosTau              Run simulations for Bos taurus.
+    CaeEle              Run simulations for Caenorhabditis elegans.
+    CanFam              Run simulations for Canis familiaris.
+    ChlRei              Run simulations for Chlamydomonas reinhardtii.
+    DroMel              Run simulations for Drosophila melanogaster.
+    DroSec              Run simulations for Drosophila sechellia.
+    EscCol              Run simulations for Escherichia coli.
+    GasAcu              Run simulations for Gasterosteus aculeatus.
+    GorGor              Run simulations for Gorilla gorilla.
+    HelAnn              Run simulations for Helianthus annuus.
+    HelMel              Run simulations for Heliconius melpomene.
+    HomSap              Run simulations for Homo sapiens.
+    MusMus              Run simulations for Mus musculus.
+...
+</pre></div>
+</div>
+<p>This shows the species currently supported by <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>. This means that
+<code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> knows various traits of these species, including chromosome size,
+recombination rate(s), etc. Once we’ve selected a species, in this case humans, we
+can look at the help again as follows.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help
+usage: stdpopsim HomSap [-h] [--help-models [HELP_MODELS]] [-b BIBTEX_FILE]
+                        [--help-genetic-maps [HELP_GENETIC_MAPS]] [-D] [-g]
+                        [--help-dfes [HELP_DFES]] [-c] [-L LENGTH]
+                        [-i INCLUSION_MASK] [-e EXCLUSION_MASK]
+                        [-l LENGTH_MULTIPLIER] [--left LEFT] [--right RIGHT]
+                        [-s SEED] [--keep-mutation-ids-as-alleles] [-d]
+                        [--dfe] [--dfe-interval] [--dfe-bed-file]
+                        [--help-annotations [HELP_ANNOTATIONS]]
+                        [--dfe-annotation] [-o OUTPUT]
+                        samples [samples ...]
+
+Run simulations for Homo sapiens using up-to-date genome information,
+genetic maps and simulation models from the literature. NOTE: By
+default, the tskit &#39;.trees&#39; binary file is written to stdout,so you
+should either redirect this to a file or use the &#39;--output&#39; option to
+specify a filename.
+
+Default population parameters for Homo sapiens:
+Generation time: 30
+Population size: 10000
+...
+</pre></div>
+</div>
+<p>For conciseness we do not show all the output here but this time you should see
+a different output which shows options for performing the simulation itself and
+the species default parameters. This includes selecting the demographic model,
+chromosome, genetic map, distribution of fitness effects, and number of
+samples.</p>
+<p>The most basic simulation we can run is to simulate a diploid genome
+- i.e., a single individual -
+using the species’ defaults as seen in the species help (<code class="docutils literal notranslate"><span class="pre">stdpopsim</span> <span class="pre">HomSap</span> <span class="pre">--help</span></code>).
+These defaults include constant size population named <code class="docutils literal notranslate"><span class="pre">pop_0</span></code>, a uniform genetic map based
+on the average recombination rate (either genome-wide or within a chromosome, if
+specified), and the mutation rate shown above.
+To save time we will specify that the simulation use
+chromosome 22, using the <code class="docutils literal notranslate"><span class="pre">-c</span></code> option. We also specify that the resulting
+tree-sequence formatted output should be written to the file <code class="docutils literal notranslate"><span class="pre">foo.ts</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">-o</span></code> option. For more information on how to use tree-sequence files see
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/introduction.html">tskit</a>. Finally, we
+specify that a single (diploid) sample should be simulated for population
+<code class="docutils literal notranslate"><span class="pre">pop_0</span></code> using the syntax <code class="docutils literal notranslate"><span class="pre">&lt;population_name&gt;:&lt;number_of_samples&gt;</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>pop_0:1
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It’s important to remember to either redirect the output of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>
+to file or to use the <code class="docutils literal notranslate"><span class="pre">-o/--output</span></code> option. If you do not, the
+binary output may mess up your terminal session.</p>
+</div>
+</section>
+<section id="choose-a-model-and-a-sampling-scheme">
+<h4>Choose a model and a sampling scheme<a class="headerlink" href="#choose-a-model-and-a-sampling-scheme" title="Link to this heading"></a></h4>
+<p>Next, suppose we want to use a specific demographic model. We look up the available models
+using the <code class="docutils literal notranslate"><span class="pre">--help-models</span></code> flag (here, truncated for space):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help-models
+
+All simulation models for Homo sapiens
+
+Africa_1B08: African-americans population
+     African-American two-epoch instantaneous growth model from Boyko
+    et al 2008, fit to the synonymous SFS for the 11 of 15 African
+    Americans showing the least European ancestry, using coalescent
+    simulations with recombination with the maximum likelihood method
+    of Williamson et al 2005; times were calibrated assuming 3e5
+    generations since human-chimp divergence and fitting the number of
+    synonymous human-chimp differences. Mutation and recombination
+    rates were assumed to be the same (1.8e-8).
+
+    Populations:
+        African_Americans: African-Americans from Boyko et al 2008
+
+Africa_1T12: African population
+     The model is a simplification of the two population Tennesen et
+    al. model with the European-American population removed so that we
+    are modeling the African population in isolation.
+
+    Populations:
+        AFR: African
+
+AmericanAdmixture_4B18: American admixture
+     Demographic model for American admixture, taken from Browning et
+    al. 2018. This model extends the Gravel et al. (2011) model of
+    African/European/Asian demographic history to simulate an admixed
+    population with admixture occurring 12 generations ago. The
+    admixed population had an initial size of 30,000 and grew at a
+...
+</pre></div>
+</div>
+<p>This gives all of the possible demographic models we could simulate. We choose
+the <a class="reference internal" href="catalog.html#sec_catalog_homsap_models_outofafrica_2t12"><span class="std std-ref">two-population out-of-Africa model</span></a>
+from <a class="reference external" href="https://doi.org/10.1126/science.1219240">Tennesen et al. (2012)</a> .
+By looking at the output from <code class="docutils literal notranslate"><span class="pre">--help-models</span></code> we find that the name for this model is
+<code class="docutils literal notranslate"><span class="pre">OutOfAfrica_2T12</span></code> and that we can specify it using
+the <code class="docutils literal notranslate"><span class="pre">--demographic-model</span></code>/<code class="docutils literal notranslate"><span class="pre">-d</span></code> option.
+We choose to draw two diploid sample from the <code class="docutils literal notranslate"><span class="pre">AFR</span></code> (“African American”) population,
+and three diploids from the <code class="docutils literal notranslate"><span class="pre">EUR</span></code> (“European American”) population.
+To increase simulation speed we can also choose to simulate a subset of the chromosome
+via the <code class="docutils literal notranslate"><span class="pre">--left</span></code> and <code class="docutils literal notranslate"><span class="pre">--right</span></code> options.
+If we were using a genetic map and/or annotation track,
+these would be clipped to the contig boundaries.
+The command now looks like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:2<span class="w"> </span>EUR:3
+</pre></div>
+</div>
+<p>Note that the number of samples from each population are simply specified as
+<code class="docutils literal notranslate"><span class="pre">&lt;population_name&gt;:&lt;number_of_samples&gt;</span></code> at the end of the command.
+Omitted populations will have no samples in the resulting tree sequence.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Many demographic models were inferred or calibrated using a mutation rate
+or recombination rate that differs from the cataloged species’ rate.
+Simulations using the CLI now automatically use the <em>model’s</em> specified
+mutation rate or recombination rate instead of the species rate,
+so that expected levels of diversity more closely match those observed in
+the data that were used to infer the demographic model.
+For generic demographic models or those without associated mutation or
+recombination rates, the species rates are used.</p>
+</div>
+<p>Now we want to add an empirical genetic map to make the simulation more
+realistic. We can look up the available genetic maps using the
+<code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> flag (here, truncated for space):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help-genetic-maps
+
+All genetic maps for Homo sapiens
+
+DeCodeSexAveraged_GRCh36
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details.
+
+DeCodeSexAveraged_GRCh38
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details. This
+    map is further lifted over from the original GRCh36 to GRCh38
+    using liftover. Liftover was performed using the
+...
+</pre></div>
+</div>
+<p>In this case we choose the
+<a class="reference internal" href="catalog.html#sec_catalog_homsap_genetic_maps_hapmapii_grch38"><span class="std std-ref">HapMapII_GRCh38</span></a> map and simulate the entire chromosome.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:2<span class="w"> </span>EUR:3
+</pre></div>
+</div>
+<p>For reproducibility we can also choose set the seed for the simulator using the
+<code class="docutils literal notranslate"><span class="pre">-s</span></code> flag.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-s<span class="w"> </span><span class="m">1046</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:2<span class="w"> </span>EUR:3
+</pre></div>
+</div>
+<p>On running these commands, the CLI also outputs the relevant citations for both
+the simulator used and the resources used for simulation scenario.</p>
+</section>
+<section id="convert-output-to-vcf">
+<span id="sec-cli-vcf-output"></span><h4>Convert output to VCF<a class="headerlink" href="#convert-output-to-vcf" title="Link to this heading"></a></h4>
+<p>The output from a <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> simulation is a <em>tree sequence</em>,
+a compact and efficient format for storing both genealogies and genome sequence.
+Some examples of analyzing tree sequences are given
+<a class="reference internal" href="#sec-tute-analyses"><span class="std std-ref">below</span></a>.
+If desired, these can be converted to VCF on the command line if the
+<a class="reference external" href="https://tskit.dev/software/tskit.html">tskit</a> package is installed,
+with the <code class="docutils literal notranslate"><span class="pre">tskit</span> <span class="pre">vcf</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit<span class="w"> </span>vcf<span class="w"> </span>foo.ts<span class="w"> </span>&gt;<span class="w"> </span>foo.vcf
+</pre></div>
+</div>
+<p>For this small example (only five diploid samples), the file sizes are similar,
+but the tree sequence is slightly larger than the VCF
+(it does carry a good bit more information about the trees, after all).
+However, if we up the sample sizes to 1000 and 1500
+(the simulation is still pretty quick)
+the tree sequence is fifty-two times smaller:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-s<span class="w"> </span><span class="m">1046</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1000<span class="w"> </span>EUR:1500
+<span class="gp">$ </span>tskit<span class="w"> </span>vcf<span class="w"> </span>foo.ts<span class="w"> </span>&gt;<span class="w"> </span>foo.vcf
+<span class="gp">$ </span>ls<span class="w"> </span>-lth<span class="w"> </span>foo.*
+<span class="go">-rw-rw-r-- 1 natep natep 8.6G Oct  4 12:03 foo.vcf</span>
+<span class="go">-rw-rw-r-- 1 natep natep 163M Oct  4 12:02 foo.ts</span>
+</pre></div>
+</div>
+<p>Zipping the files (using the <a class="reference external" href="https://tszip.readthedocs.io/en/latest/">tszip</a>
+package) reduces this difference quite a lot,
+but increases time required for processing:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tskit<span class="w"> </span>vcf<span class="w"> </span>foo.ts<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>-c<span class="w"> </span>&gt;<span class="w"> </span>foo.vcf.gz
+<span class="gp">$ </span>tszip<span class="w"> </span>foo.ts
+<span class="gp">$ </span>ls<span class="w"> </span>-lth<span class="w"> </span>foo.*
+<span class="go">-rw-rw-r-- 1 natep natep  49M Oct  4 12:06 foo.ts.tsz</span>
+<span class="go">-rw-rw-r-- 1 natep natep 103M Oct  4 12:05 foo.vcf.gz</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-the-slim-simulation-engine">
+<h3>Using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> simulation engine<a class="headerlink" href="#using-the-slim-simulation-engine" title="Link to this heading"></a></h3>
+<p>The default “simulation engine” -
+i.e., the program that actually does the simulating -
+is <a class="reference external" href="https://tskit.dev/software/msprime.html">msprime</a>,
+a coalescent simulator.
+However, it is also possible to swap this out for
+<a class="reference external" href="https://messerlab.org/slim/">SLiM</a>,
+a forwards-time, individual-based simulator.</p>
+<section id="specifying-the-engine">
+<h4>Specifying the engine<a class="headerlink" href="#specifying-the-engine" title="Link to this heading"></a></h4>
+<p>Using <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> is as easy as passing the <code class="docutils literal notranslate"><span class="pre">--engine/-e</span></code> flag
+(we didn’t do this above, so it used the default engine, <code class="docutils literal notranslate"><span class="pre">msprime</span></code>).
+For instance, to use <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> to simulate the same chunk of chromosome 22
+under the <code class="docutils literal notranslate"><span class="pre">OutOfAfrica_2T12</span></code> model as above,
+we would just run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
+</pre></div>
+</div>
+<p><strong>But:</strong> this simulation can take quite a while to run,
+so before you try that command out, <strong>read on!</strong></p>
+</section>
+<section id="slim-scaling-factor">
+<span id="sec-slim-scaling-factor"></span><h4><code class="docutils literal notranslate"><span class="pre">SLiM</span></code> scaling factor<a class="headerlink" href="#slim-scaling-factor" title="Link to this heading"></a></h4>
+<p>The previous example is a pretty big simulation, even with only a portion of a chromosome, due to the large number of individuals
+(unlike <code class="docutils literal notranslate"><span class="pre">msprime</span></code>, <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> must actually simulate all the individuals in the population, regardless of the number of samples).
+To make it run fast enough for a tutorial,
+we can specify a <em>scaling factor</em> (<span class="math notranslate nohighlight">\(Q\)</span>) using the <code class="docutils literal notranslate"><span class="pre">--slim-scaling-factor</span></code> option.
+Unlike the previous command, this one should run very fast:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">10</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
+</pre></div>
+</div>
+<p>This example runs in less than a minute, wheras without setting the
+scaling factor it takes the same computer upwards of 20 minutes.
+Briefly, this speedup is accomplished by reducing all of the population sizes by a “scaling factor”
+(here set to 10), and rescaling time by the same factor
+(thus increasing mutation, recombination, and population growth rates).
+A model with selection would also need to rescale selection coefficients by the same factor.
+This results in simulations that are equivalent in many senses –
+the same rate of genetic drift, the same expected decay of linkage disequilibrium –
+but generally run much faster because there are fewer individuals to keep track of.
+In practice, rescaling seems to produce indistinguishable results in much shorter times
+at many parameter values.
+However, the user should be aware that in principle, the results are <strong>not</strong> equivalent,
+possibly in subtle and hard-to-understand ways.
+This is particularly true in simulations with large amounts of selection.
+See the <a class="reference external" href="https://messerlab.org/slim/">SLiM manual</a> and/or
+<a class="reference external" href="https://www.genetics.org/content/197/1/221.short">Urrichio &amp; Hernandez (2014)</a>
+for more discussion.</p>
+</section>
+<section id="simulating-genomes-with-selection">
+<span id="sec-simulating-sel"></span><h4>Simulating genomes with selection<a class="headerlink" href="#simulating-genomes-with-selection" title="Link to this heading"></a></h4>
+<p>The examples above simulate contigs given a species, a genetic map, and a demographic model;
+but assume that all genetic variation is neutral (has no impact on fitness).
+It is possible to incorporate selection in the
+simulations by (1) specifying the Distribution of Fitness Effects (DFE) for all new mutations
+across the entire contig or a subset of it; or by (2) adding a single mutation under selection,
+as for instance in a selective sweep.</p>
+<p>If a DFE is already described in the catalog, one can incorporate it into the simulation
+with the flag <code class="docutils literal notranslate"><span class="pre">--dfe</span></code>. For instance, HomSap has a DFE named <code class="docutils literal notranslate"><span class="pre">Gamma_K17</span></code>.
+To add it the example above, we can use the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
+</pre></div>
+</div>
+<p>which will introduce selected and neutral mutations following the proportions described in
+<a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/main/catalog.html#sec_catalog_homsap_dfes_gamma_k17">Gamma_K17</a>.</p>
+<p>Instead of simulating a DFE that convers the entire contig,
+one can simulate only coding sequence (CDS) by using the flag <code class="docutils literal notranslate"><span class="pre">--dfe-annotation</span></code>
+and specifying a CDS annotation:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--dfe-annotation<span class="w"> </span>ensembl_havana_104_CDS<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
+</pre></div>
+</div>
+<p>If instead of an bundled annotation, one has a bed file (e.g. <cite>ex.bed</cite>) like the one below:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>ex.bed
+<span class="go">chr1  10000000  14500000</span>
+<span class="go">chr1  15000000  30002425</span>
+<span class="go">chr1  30002430  30003000</span>
+</pre></div>
+</div>
+<p>then a DFE may be applied to all intervals in the bed file by using the option
+<code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--dfe-bed-file<span class="w"> </span>ex.bed<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
+</pre></div>
+</div>
+<p>To apply a DFE to a small portion of a contig, the option <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span> <span class="pre">&lt;start&gt;,&lt;end&gt;</span></code>
+may be used:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">20</span><span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr22<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--left<span class="w"> </span><span class="m">10000000</span><span class="w"> </span>--right<span class="w"> </span><span class="m">20000000</span><span class="w"> </span>--dfe<span class="w"> </span>Gamma_K17<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--dfe-interval<span class="w"> </span><span class="m">14001000</span>,14005000<span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>OutOfAfrica_2T12<span class="w"> </span>AFR:1<span class="w"> </span>EUR:2
+</pre></div>
+</div>
+<p>The examples above (using <code class="docutils literal notranslate"><span class="pre">--dfe-bed-file</span></code> and <code class="docutils literal notranslate"><span class="pre">--dfe-interval</span></code>)
+model selection on specified genomic intervals that <strong>also</strong> fall within
+the region being simulated (10 Mb to 20 Mb on chr22). In other words, the supplied DFE
+intervals are clipped to the contig endpoints on the chromosome.
+For example, the third interval in <cite>ex.bed</cite> above will be silently omitted from the simulation.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Simulating a region under selection is <strong>not</strong> the same as simulating a
+chromosome under selection and clipping to the region. This is because
+selected mutations outside of the region can influence ancestry within
+the region, due to linkage.</p>
+</div>
+<p>See also the Python API to incorporate <a class="reference external" href="https://popsim-consortium.github.io/stdpopsim-docs/latest/tutorial.html#incorporating-selection">selection</a>.</p>
+</section>
+</section>
+<section id="debugging-output-from-slim">
+<h3>Debugging output from <code class="docutils literal notranslate"><span class="pre">SLiM</span></code><a class="headerlink" href="#debugging-output-from-slim" title="Link to this heading"></a></h3>
+<p>Next we’ll look at running a different model with <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>,
+but with some sanity checks along the way.</p>
+<section id="choose-a-species-drosophila-melanogaster">
+<h4>Choose a species: Drosophila melanogaster<a class="headerlink" href="#choose-a-species-drosophila-melanogaster" title="Link to this heading"></a></h4>
+<p>Perusing the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>,
+we see that to simulate copies of chromosome arm 2L
+from <em>Drosophila melanogaster</em> individuals with the demographic model
+inferred by <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004845">Sheehan &amp; Song (2016)</a>,
+using <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> with a (very extreme) scaling factor of 1000, we could run</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">1000</span><span class="w"> </span>DroMel<span class="w"> </span>-c<span class="w"> </span>chr2L<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--right<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>African3Epoch_1S16<span class="w"> </span>AFR:50
+</pre></div>
+</div>
+<p>The scaling factor of 1000 makes this model run very quickly,
+but should also make you <strong>very</strong> nervous.
+What actually <em>is</em> being simulated here?
+We can at least find out what the actual population sizes are in the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> simulation
+by asking the simulation to be more verbose.
+Prepending the <code class="docutils literal notranslate"><span class="pre">-vv</span></code> flag will request that <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> print out information
+every time a demographic event occurs
+(helpfully, this also gives us an idea of how quickly the simulation is going):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>-vv<span class="w"> </span>-e<span class="w"> </span>slim<span class="w"> </span>--slim-scaling-factor<span class="w"> </span><span class="m">1000</span><span class="w"> </span>DroMel<span class="w"> </span>-c<span class="w"> </span>chr2L<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>--right<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>-o<span class="w"> </span>foo.ts<span class="w"> </span>-d<span class="w"> </span>African3Epoch_1S16<span class="w"> </span>AFR:50<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^DEBUG:&quot;</span>
+<span class="go">DEBUG: Making flat contig of length 1000000 from 2L</span>
+<span class="go">DEBUG: // Initial random seed:</span>
+<span class="go">DEBUG: 2214454132353</span>
+<span class="go">DEBUG:</span>
+<span class="go">DEBUG: // RunInitializeCallbacks():</span>
+<span class="go">DEBUG: initializeMutationType(0, 0.5, &quot;f&quot;, 0);</span>
+<span class="go">DEBUG: initializeGenomicElementType(0, m0, 1);</span>
+<span class="go">DEBUG: initializeGenomicElement(g0, 0, 999999);</span>
+<span class="go">DEBUG: initializeMutationRate(0, 999999);</span>
+<span class="go">DEBUG: initializeTreeSeq();</span>
+<span class="go">DEBUG: initializeRecombinationRate(2.40457e-05, 999999);</span>
+<span class="go">DEBUG:</span>
+<span class="go">DEBUG: // Starting run at tick &lt;start&gt;:</span>
+<span class="go">DEBUG: 1</span>
+<span class="go">DEBUG:</span>
+<span class="go">DEBUG: 1: p = sim.addSubpop(0, 652);</span>
+<span class="go">DEBUG: 1: p.name = &#39;AFR&#39;;</span>
+<span class="go">DEBUG: 1: Starting burn-in...</span>
+<span class="go">DEBUG: 6521: {p0.setSubpopulationSize(145);}</span>
+<span class="go">DEBUG: 8521: {p0.setSubpopulationSize(544);}</span>
+<span class="go">DEBUG: 8721: {inds=p0.sampleIndividuals(50); sim.treeSeqRememberIndividuals(inds);}</span>
+<span class="go">DEBUG: 8721: {end();}</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>This tells us that after rescaling by a factor of 1000,
+the population sizes in the three epochs are 652, 145, and 544 individuals,
+respectively.
+No wonder it runs so quickly!
+At the end, fifty (diploid) individuals are sampled.
+These numbers are not obviously completely wrong,
+as would be for instance if we had population sizes of 1 or 2 individuals.
+However, extensive testing would need to be done to find out
+if data produced with such an extreme scaling factor
+actually resembles the data that would be produced without rescaling.</p>
+</section>
+</section>
+</section>
+<section id="running-stdpopsim-with-the-python-interface-api">
+<span id="sec-python-tute"></span><h2>Running stdpopsim with the Python interface (API)<a class="headerlink" href="#running-stdpopsim-with-the-python-interface-api" title="Link to this heading"></a></h2>
+<p>Nearly all the functionality of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is available through the CLI,
+but for complex situations it may be desirable to use Python.
+Furthermore, downstream analysis may happen in Python,
+using the <a class="reference external" href="https://tskit.dev/software/tskit.html">tskit</a> tools for working
+with tree sequences.
+In order to use the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> API the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> package must be
+installed (see <a class="reference internal" href="installation.html#sec-installation"><span class="std std-ref">Installation</span></a>).</p>
+<section id="running-a-published-model">
+<span id="sec-tutorial-existing-models"></span><h3>Running a published model<a class="headerlink" href="#running-a-published-model" title="Link to this heading"></a></h3>
+<p>The first example uses a mostly default genome
+with a published demographic model.</p>
+<section id="pick-a-species-and-demographic-model">
+<h4>Pick a species and demographic model<a class="headerlink" href="#pick-a-species-and-demographic-model" title="Link to this heading"></a></h4>
+<p>First, we will pick a species (here, humans) and the published demographic
+model to simulated under. In <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> there are two types of model: ones
+taken to match the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">demographic history reported in published papers</span></a>, and <a class="reference internal" href="api.html#sec-api-generic-models"><span class="std std-ref">“generic” models</span></a>. We’ll
+first simulate using a published model from the catalog. Let’s see what
+demographic models are available for humans:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+<span class="c1"># OutOfAfricaExtendedNeandertalAdmixturePulse_3I21</span>
+<span class="c1"># OutOfAfrica_3G09</span>
+<span class="c1"># OutOfAfrica_2T12</span>
+<span class="c1"># Africa_1T12</span>
+<span class="c1"># AmericanAdmixture_4B18</span>
+<span class="c1"># OutOfAfricaArchaicAdmixture_5R19</span>
+<span class="c1"># Zigzag_1S14</span>
+<span class="c1"># AncientEurasia_9K19</span>
+<span class="c1"># PapuansOutOfAfrica_10J19</span>
+<span class="c1"># AshkSub_7G19</span>
+<span class="c1"># OutOfAfrica_4J17</span>
+<span class="c1"># Africa_1B08</span>
+<span class="c1"># AncientEurope_4A21</span>
+</pre></div>
+</div>
+<p>These models are described in detail in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
+We’ll look at the first model, <code class="docutils literal notranslate"><span class="pre">OutOfAfrica_3G09</span></code>, from
+<a class="reference external" href="https://doi.org/10.1371/journal.pgen.1000695">Gutenkunst et al (2009)</a>.
+We can check how many populations exist in this model, and what they are:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">num_populations</span><span class="p">)</span>
+<span class="c1"># 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">num_sampling_populations</span><span class="p">)</span>
+<span class="c1"># 3</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">pop</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">populations</span><span class="p">])</span>
+<span class="c1"># [&#39;YRI&#39;, &#39;CEU&#39;, &#39;CHB&#39;]</span>
+</pre></div>
+</div>
+<p>This model has 3 populations, named YRI, CEU, CHB, and all three can be sampled from.
+The number of “sampling” populations could be smaller than the number of populations,
+since some models have ancient populations which are currently not allowed to be
+sampled from – but that is not the case in this model.</p>
+<p>If working in a notebook, it’s also possible to plot a schematic of your chosen model
+using the <a class="reference external" href="https://grahamgower.github.io/demesdraw/">demesdraw</a> python library.
+This provides both a <code class="docutils literal notranslate"><span class="pre">size_history</span></code> plot and a <code class="docutils literal notranslate"><span class="pre">tubes</span></code> visualization. E.g.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">demesdraw</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">()</span>
+<span class="n">demesdraw</span><span class="o">.</span><span class="n">tubes</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_demes</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Equivalent plots for all the available demographic models are also
+shown in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+</section>
+<section id="set-up-the-contig">
+<h4>Set up the contig<a class="headerlink" href="#set-up-the-contig" title="Link to this heading"></a></h4>
+<p>We’ll next define the contig, which contains information about the genome length we
+want to simulate and recombination and mutation rates. Here, we use the human
+chromosome 22. If no genetic map is specified, we assume a
+uniform recombination rate set to the average recombination rate for that chromosome.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">)</span>
+
+<span class="c1"># default is a uniform genetic map</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean recombination rate:&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="si">:</span><span class="s2">.3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># mean recombination rate: 2.11e-08</span>
+
+<span class="c1"># and the default mutation rate is based on the species default</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean mutation rate:&quot;</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># mean mutation rate: 1.29e-08</span>
+
+<span class="c1"># but note that the mutation rate differs from the model&#39;s assumed rate</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model mutation rate:&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># model mutation rate: 2.35e-08</span>
+</pre></div>
+</div>
+<p>The Gutenkunst OOA model was inferred using a mutation rate much larger than the
+default mutation rate for humans in the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> catalog. As such,
+simulating using this model and default rate will result in levels of diversity
+substantially lower than expected for the human population data that this model
+was inferred from. To match observed diversity in humans, we should instead use
+the mutation rate associated with the demographic model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">==</span> <span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># True</span>
+</pre></div>
+</div>
+<p>Similar functionality exists for the recombination rate, if a model specifies one.</p>
+</section>
+<section id="choose-a-sampling-scheme-and-simulate">
+<h4>Choose a sampling scheme and simulate<a class="headerlink" href="#choose-a-sampling-scheme-and-simulate" title="Link to this heading"></a></h4>
+<p>The final ingredient we need before simulating
+is a specification of the number of samples from each population.
+We’ll simulate 5 diploids each from YRI and CHB, and zero from CEU,
+using <code class="docutils literal notranslate"><span class="pre">msprime</span></code> as the simulation engine:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_sites</span><span class="p">)</span>
+<span class="c1"># 152582</span>
+</pre></div>
+</div>
+<p>And that’s it! It’s that easy! We now have a tree sequence
+describing the history and genotypes of 20 haploid genomes,
+between which there are 152,582 variant sites.
+(We didn’t set the random seed, though, so you’ll get a somewhat
+different number.)</p>
+<p>Let’s look at the metadata for the resulting simulation,
+to make sure that we’ve got what we want.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">.</span><span class="n">num_samples</span>
+<span class="c1"># 20</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">pop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">populations</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;The tree sequence has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">samples</span><span class="p">(</span><span class="n">k</span><span class="p">))</span><span class="si">}</span><span class="s2"> samples from &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;population </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">, which is </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+    <span class="p">)</span>
+<span class="c1"># The tree sequence has 10 samples from population 0, which is YRI.</span>
+<span class="c1"># The tree sequence has 0 samples from population 1, which is CEU.</span>
+<span class="c1"># The tree sequence has 10 samples from population 2, which is CHB.</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="running-a-generic-model">
+<span id="sec-tutorial-generic-models"></span><h3>Running a generic model<a class="headerlink" href="#running-a-generic-model" title="Link to this heading"></a></h3>
+<p>Next, we will simulate using a “generic” model, with piecewise constant
+population size. This time, we will simulate a given genome length under
+a uniform genetic map, using an estimate of the
+human effective population size from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
+<section id="choose-a-species">
+<h4>Choose a species<a class="headerlink" href="#choose-a-species" title="Link to this heading"></a></h4>
+<p>Although the model is generic, we still need a species in order
+to get the contig information.
+Again, we’ll use <cite>Homo sapiens</cite>, which has the id “HomSap”.
+(But, you could use any species from the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>!)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-the-generic-model">
+<h4>Set up the generic model<a class="headerlink" href="#set-up-the-generic-model" title="Link to this heading"></a></h4>
+<p>Next, we set the model to be the generic piecewise constant size model, using the
+predefined human effective population size (see <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>).
+Since we are providing only one effective population size, the model is a
+single population of constant over all time.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">PiecewiseConstantSize</span><span class="p">(</span><span class="n">species</span><span class="o">.</span><span class="n">population_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each species has a “default” population size, <code class="docutils literal notranslate"><span class="pre">species.population_size</span></code>,
+which for humans is 10,000.</p>
+</section>
+<section id="choose-a-contig-and-genetic-map">
+<h4>Choose a contig and genetic map<a class="headerlink" href="#choose-a-contig-and-genetic-map" title="Link to this heading"></a></h4>
+<p>Next, we set the contig information. Again, we could use any of the chromosomes
+listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> (or a fraction of a chromosome, using the
+<code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> arguments), keeping in mind that larger contigs will take
+longer to simulate. We could also specify a “generic” contig, which provides
+a segment of a given length with constant recombination rate, taken to be the
+average rate over all chromosomes for that species. Here, we define a contig
+of length 1 Mb:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">)</span>
+<span class="c1"># 1000000.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="p">)</span>
+<span class="c1"># 1.2820402396300886e-08</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">)</span>
+<span class="c1"># 1.29e-8</span>
+</pre></div>
+</div>
+<p>The “sequence length” is the length in base pairs. Since we are using a generic
+contig, we cannot specify a genetic map so we get a uniform map with a
+constant recombination rate. The mutation rate defaults to the species average
+mutation rate, as no mutation rate was provided when defining the contig.</p>
+</section>
+<section id="id1">
+<h4>Choose a sampling scheme, and simulate<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<p>Next, we set the number of samples and set the simulation engine.  In this case
+we will simulate genomes of 5 diploids using the simulation engine <code class="docutils literal notranslate"><span class="pre">msprime</span></code>
+(note that the generic <cite>PiecewiseConstantSize</cite> model has a single population
+named <cite>pop_0</cite>).  But, you can go crazy with the sample size!  <code class="docutils literal notranslate"><span class="pre">msprime</span></code> is
+great at simulating large samples!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop_0&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, we simulate the model with the contig length and number of samples we
+defined above. The simulation results are recorded in a tree sequence object
+(<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tskit.TreeSequence</span></code></a>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">msprime_model</span><span class="o">=</span><span class="s2">&quot;dtwf&quot;</span><span class="p">,</span> <span class="n">msprime_change_model</span><span class="o">=</span><span class="p">[(</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;hudson&quot;</span><span class="p">)]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The <cite>msprime_model</cite> argument is optional; it specifies that the most recent 20
+generations be simulated with the discrete time Wright-Fisher (“dtwf”) model
+(followed by a switch to the more efficient “hudson” coalescent model). This is
+good practice for large samples, for which the Hudson model can be an
+<a class="reference external" href="https://doi.org/10.1371/journal.pgen.1008619">inaccurate approximation</a>
+for the most recent few generations.</p>
+</section>
+<section id="sanity-check-the-tree-sequence-output">
+<h4>Sanity check the tree sequence output<a class="headerlink" href="#sanity-check-the-tree-sequence-output" title="Link to this heading"></a></h4>
+<p>Now, we do some simple checks that our simulation worked with
+<a class="reference external" href="https://tskit.dev/software/tskit.html">tskit</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="c1"># 10</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">)</span>
+<span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_mutations</span><span class="p">)</span>
+<span class="c1"># 1322</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">num_trees</span><span class="p">)</span>
+<span class="c1"># 1021</span>
+</pre></div>
+</div>
+<p>As expected, there are 10 haploids in one population. We can also see that it
+contains 1021 distinct genealogical trees across this 1Mb of sequence, on which
+there were 1322 mutations (since we are not using a seed here, the number of
+mutations and trees will be slightly different for you). Try running the
+simulation again, and notice that the number of samples and populations stays
+the same, while the number of mutations and trees changes.</p>
+</section>
+<section id="output-to-vcf">
+<h4>Output to VCF<a class="headerlink" href="#output-to-vcf" title="Link to this heading"></a></h4>
+<p>In addition to working directly with the simulated tree sequence, we can also output
+other common formats used for population genetics analyses.
+We can use <code class="docutils literal notranslate"><span class="pre">tskit</span></code> to convert the tree sequence to a vcf file called “foo.vcf”.
+See the tskit documentation (<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.write_vcf" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.write_vcf()</span></code></a>) for more information.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;foo.vcf&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">vcf_file</span><span class="p">:</span>
+    <span class="n">ts</span><span class="o">.</span><span class="n">write_vcf</span><span class="p">(</span><span class="n">vcf_file</span><span class="p">,</span> <span class="n">contig_id</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Taking a look at the vcf file, we see something like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>##fileformat=VCFv4.2
+##source=tskit 0.5.0
+##FILTER=&lt;ID=PASS,Description=&quot;All filters passed&quot;&gt;
+##contig=&lt;ID=0,length=1000000&gt;
+##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&quot;Genotype&quot;&gt;
+#CHROM      POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  tsk_0   tsk_1   tsk_2   tsk_3   tsk_4
+0   511     0       G       A       .       PASS    .       GT      0|0     0|0     0|0     1|1     0|0
+0   930     1       A       C       .       PASS    .       GT      0|0     0|0     0|0     0|0     0|1
+0   1209    2       T       A       .       PASS    .       GT      0|0     0|0     0|0     0|1     0|0
+0   1308    3       T       G       .       PASS    .       GT      0|0     0|1     0|0     0|0     0|0
+0   2271    4       A       C       .       PASS    .       GT      1|0     0|1     1|0     0|0     0|0
+0   2637    5       C       T       .       PASS    .       GT      1|0     0|1     1|1     0|0     0|0
+0   3615    6       G       A       .       PASS    .       GT      0|0     0|0     0|0     0|0     1|0
+0   4391    7       G       T       .       PASS    .       GT      0|1     1|0     0|0     1|1     1|1
+...
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-the-slim-engine">
+<h3>Using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine<a class="headerlink" href="#using-the-slim-engine" title="Link to this heading"></a></h3>
+<p>Above, we used the coalescent simulator <code class="docutils literal notranslate"><span class="pre">msprime</span></code>
+as the simulation engine, which is in fact the default.
+However, <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> also has the ability to produce
+simulations with <a class="reference external" href="https://messerlab.org/slim/">SLiM</a>, a forwards-time, individual-based simulator.
+Using <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> provides us with a few more options.
+You may also want to install the
+<a class="reference external" href="https://tskit.dev/pyslim/docs/stable/installation.html">pyslim</a> package
+to extract the additional <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>-specific information
+in the tree sequences that are produced.</p>
+<section id="an-example-simulation">
+<h4>An example simulation<a class="headerlink" href="#an-example-simulation" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> tool is designed so that different simulation engines
+are more or less exchangeable, so that to run an equivalent
+simulation with <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> instead of <code class="docutils literal notranslate"><span class="pre">msprime</span></code> only requires specifying
+<code class="docutils literal notranslate"><span class="pre">SLiM</span></code> as the <em>simulation engine</em>.
+Here is a simple example.</p>
+<section id="choose-the-species-contig-and-genetic-map">
+<h5>Choose the species, contig, and genetic map<a class="headerlink" href="#choose-the-species-contig-and-genetic-map" title="Link to this heading"></a></h5>
+<p>First, let’s set up a simulation of 10 Mb of human chromosome 22 with a uniform
+genetic map, drawing 100 diploids from the Tennesen et al (2012) model of
+African history, <code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code> (which has a single population named <cite>AFR</cite>).
+Since <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> must simulate the entire population, sample size does not affect the
+run time of the simulation, only the size of the output tree sequence (and,
+since the tree sequence format scales well with sample size, it doesn’t affect
+this very much either).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Africa_1T12&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
+    <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">10e6</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">20e6</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
+<span class="p">)</span>
+<span class="c1"># default is a uniform genetic map with average rate across chr22</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AFR&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="choose-the-simulation-engine">
+<h5>Choose the simulation engine<a class="headerlink" href="#choose-the-simulation-engine" title="Link to this heading"></a></h5>
+<p>This time, we choose the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine,
+but otherwise, things work pretty much just as before.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(Note: you have to have <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> installed for this to work,
+and if it isn’t installed in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>,
+so that you can run it by just typing <code class="docutils literal notranslate"><span class="pre">slim</span></code> on the command line,
+then you will need to specify the <code class="docutils literal notranslate"><span class="pre">slim_path</span></code> argument to <code class="docutils literal notranslate"><span class="pre">simulate</span></code>.)
+To get an example that runs quickly,
+we have set the <em>scaling factor</em>,
+described in more detail below (<a class="reference internal" href="#sec-slim-scaling-factor"><span class="std std-ref">SLiM scaling factor</span></a>),</p>
+</section>
+</section>
+<section id="other-slim-options">
+<h4>Other <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> options<a class="headerlink" href="#other-slim-options" title="Link to this heading"></a></h4>
+<p>Besides rescaling, there are a few additional options
+specific to the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine, discussed here.</p>
+<section id="the-slim-burn-in">
+<h5>The <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> burn-in<a class="headerlink" href="#the-slim-burn-in" title="Link to this heading"></a></h5>
+<p>Another option specific to the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine is <code class="docutils literal notranslate"><span class="pre">slim_burn_in</span></code>:
+the amount of time before the first demographic model change that <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> begins simulating for,
+in units of <span class="math notranslate nohighlight">\(N\)</span> generations, where <span class="math notranslate nohighlight">\(N\)</span> is the population size at the first demographic model change.
+By default, this is set to 10, which is fairly safe.
+History before this period is simulated with an <code class="docutils literal notranslate"><span class="pre">msprime</span></code> coalescent simulation,
+called <a class="reference external" href="https://tskit.dev/pyslim/docs/stable/tutorial.html#sec-tutorial-recapitation">“recapitation”</a>
+because it attaches tops to any trees that have not yet coalesced.
+For instance, the <code class="docutils literal notranslate"><span class="pre">Africa_1T12</span></code> model
+<a class="reference external" href="https://doi.org/10.1126/science.1219240">(Tennesen et al 2012)</a>
+we used above has three distinct epochs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">demography</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Africa_1T12&quot;</span><span class="p">)</span>
+<span class="n">demography</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">debug</span><span class="p">()</span><span class="o">.</span><span class="n">print_history</span><span class="p">()</span>
+
+<span class="c1"># DemographyDebugger</span>
+<span class="c1"># ╠════════════════════════════════╗</span>
+<span class="c1"># ║ Epoch[0]: [0, 205) generations ║</span>
+<span class="c1"># ╠════════════════════════════════╝</span>
+<span class="c1"># ╟    Populations (total=1 active=1)</span>
+<span class="c1"># ║    ┌──────────────────────────────────────────┐</span>
+<span class="c1"># ║    │     │      start│       end│growth_rate  │</span>
+<span class="c1"># ║    ├──────────────────────────────────────────┤</span>
+<span class="c1"># ║    │  AFR│   432124.6│   14474.0│ 0.0166      │</span>
+<span class="c1"># ║    └──────────────────────────────────────────┘</span>
+<span class="c1"># ╟    Events @ generation 205</span>
+<span class="c1"># ║    ┌───────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c1"># ║    │   time│type        │parameters           │effect                                  │</span>
+<span class="c1"># ║    ├───────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="c1"># ║    │  204.6│Population  │population=0,        │initial_size → 1.4e+04 and growth_rate  │</span>
+<span class="c1"># ║    │       │parameter   │initial_size=14474,  │→ 0 for population 0                    │</span>
+<span class="c1"># ║    │       │change      │growth_rate=0        │                                        │</span>
+<span class="c1"># ║    └───────────────────────────────────────────────────────────────────────────────────┘</span>
+<span class="c1"># ╠═══════════════════════════════════════╗</span>
+<span class="c1"># ║ Epoch[1]: [205, 5.92e+03) generations ║</span>
+<span class="c1"># ╠═══════════════════════════════════════╝</span>
+<span class="c1"># ╟    Populations (total=1 active=1)</span>
+<span class="c1"># ║    ┌─────────────────────────────────────────┐</span>
+<span class="c1"># ║    │     │     start│       end│growth_rate  │</span>
+<span class="c1"># ║    ├─────────────────────────────────────────┤</span>
+<span class="c1"># ║    │  AFR│   14474.0│   14474.0│ 0           │</span>
+<span class="c1"># ║    └─────────────────────────────────────────┘</span>
+<span class="c1"># ╟    Events @ generation 5.92e+03</span>
+<span class="c1"># ║    ┌───────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c1"># ║    │  time│type        │parameters         │effect                                 │</span>
+<span class="c1"># ║    ├───────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="c1"># ║    │  5920│Population  │population=0,      │initial_size → 7.3e+03 for population  │</span>
+<span class="c1"># ║    │      │parameter   │initial_size=7310  │0                                      │</span>
+<span class="c1"># ║    │      │change      │                   │                                       │</span>
+<span class="c1"># ║    └───────────────────────────────────────────────────────────────────────────────┘</span>
+<span class="c1"># ╠═══════════════════════════════════════╗</span>
+<span class="c1"># ║ Epoch[2]: [5.92e+03, inf) generations ║</span>
+<span class="c1"># ╠═══════════════════════════════════════╝</span>
+<span class="c1"># ╟    Populations (total=1 active=1)</span>
+<span class="c1"># ║    ┌───────────────────────────────────────┐</span>
+<span class="c1"># ║    │     │    start│      end│growth_rate  │</span>
+<span class="c1"># ║    ├───────────────────────────────────────┤</span>
+<span class="c1"># ║    │  AFR│   7310.0│   7310.0│ 0           │</span>
+<span class="c1"># ║    └───────────────────────────────────────┘</span>
+</pre></div>
+</div>
+<p>Since the longest-ago epoch begins at <span class="math notranslate nohighlight">\(5,920\)</span> generations ago
+with a population size of <span class="math notranslate nohighlight">\(7,310\)</span>, if we set <code class="docutils literal notranslate"><span class="pre">slim_burn_in=0.1</span></code>,
+then we’d run the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> simulation starting at <span class="math notranslate nohighlight">\(5,920 + 731 = 6,651\)</span> generations ago,
+and anything <em>longer ago</em> than that would be simulated
+with a <code class="docutils literal notranslate"><span class="pre">msprime</span></code> coalescent simulation.</p>
+<p>To simulate 100 diploid samples of all of human chromosome 22 in this way,
+with the <code class="docutils literal notranslate"><span class="pre">HapMapII_GRCh38</span></code> genetic map,
+we’d do the following
+(again setting <code class="docutils literal notranslate"><span class="pre">slim_scaling_factor</span></code> to keep this example reasonably-sized):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
+    <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="s2">&quot;HapMapII_GRCh38&quot;</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">demography</span><span class="o">.</span><span class="n">mutation_rate</span>
+<span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AFR&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">demography</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="outputting-the-slim-script">
+<h5>Outputting the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> script<a class="headerlink" href="#outputting-the-slim-script" title="Link to this heading"></a></h5>
+<p>One final option that could be useful
+is that you can ask <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to output the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> model code directly,
+without actually running the model.
+You could then edit the code, to add other features not implemented in stdpopsim.
+To do this, set <code class="docutils literal notranslate"><span class="pre">slim_script=True</span></code> (which prints the script to stdout;
+here we capture it in a file):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect_stdout</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;script.slim&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">redirect_stdout</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">demography</span><span class="p">,</span>
+            <span class="n">contig</span><span class="p">,</span>
+            <span class="n">samples</span><span class="p">,</span>
+            <span class="n">slim_script</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting script is <em>big</em> – 22,250 lines –
+because it has the actual <code class="docutils literal notranslate"><span class="pre">HapMapII_GRCh38</span></code> genetic map for chromosome 22
+included, as text.
+To use it, you will at least want to edit it to save the tree sequence
+to a reasonable location – searching for the string <code class="docutils literal notranslate"><span class="pre">trees_file</span></code>
+you’ll find that the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> script currently saves the output to a
+temporary file. So, for instance, after changing</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">defineConstant(&quot;trees_file&quot;, &quot;/tmp/tmp4hyf8ugn.ts&quot;);</span>
+</pre></div>
+</div>
+<p>to</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">defineConstant(&quot;trees_file&quot;, &quot;foo.trees&quot;);</span>
+</pre></div>
+</div>
+<p>we could then run the simulation in <code class="docutils literal notranslate"><span class="pre">SLiM</span></code>’s GUI,
+to do more detailed investigation,
+or we could just run it on the command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>slim<span class="w"> </span>script.slim
+</pre></div>
+</div>
+<p>If you go this route, you need to do a few postprocessing steps
+to the tree sequence that <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> usually does.
+Happily, these are made available through a single Python function,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">engine.recap_and_rescale</span></code>.
+Back in Python, we could do this by</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tskit</span>
+
+<span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;foo.trees&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">recap_and_rescale</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">demography</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;foo_recap.trees&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The final line saves the tree sequence, now ready for analysis,
+out again as <code class="docutils literal notranslate"><span class="pre">foo_recap.trees</span></code>.</p>
+<p>The function
+<code class="xref py py-func docutils literal notranslate"><span class="pre">engine.recap_and_rescale</span></code>
+is doing three things.
+The first, and most essential step, is undoing the rescaling of time
+that the <code class="docutils literal notranslate"><span class="pre">slim_scaling_factor</span></code> has introduced.
+Next is “recapitation”,
+for which the rationale and method is described in detail in the
+<a class="reference external" href="https://tskit.dev/pyslim/docs/stable/tutorial.html#sec-tutorial-recapitation">pyslim documentation</a>.
+The third (and least crucial) step is to <em>simplify</em> the tree sequence.
+If as above we ask for 100 sampled individuals from a population whose final size is
+1,450 individuals (after rescaling),
+then in fact the tree sequence returned by <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> contains the entire genomes
+and genealogies of all 1,450 individuals,
+but <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> throws away all the information that is extraneous
+to the requested 100 (diploid) individuals,
+using a procedure called
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.simplify">simplification</a>.
+Having the extra individuals is not as wasteful as you might think,
+because the size of the tree sequence grows very slowly with the number of samples.
+However, for many analyses you will probably want to extract samples
+of realistic size for real data.
+Again, methods to do this are discussed in the
+<a class="reference external" href="https://tskit.dev/pyslim/docs/stable/tutorial.html#simplification">pyslim documentation</a>.</p>
+</section>
+</section>
+</section>
+<section id="incorporating-selection">
+<span id="sec-tute-selection"></span><h3>Incorporating selection<a class="headerlink" href="#incorporating-selection" title="Link to this heading"></a></h3>
+<p>There are two general ways to incorporate selection into a simulation:
+Currently, both ways only work using the <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> engine.
+The first way is by specifying a
+<a class="reference internal" href="api.html#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">distribution</span> <span class="pre">of</span> <span class="pre">fitness</span> <span class="pre">effects</span></code></a> for all new mutations
+across the genome or in some subset of it.
+This is demonstrated below on
+<a class="reference external" href="sec_tute_genome_wide_dfe">the whole genome</a>,
+on a given <a class="reference external" href="sec_tute_selection_single_gene">subset of the genome</a>,
+and on <a class="reference external" href="sec_tute_selection_annotation">many subsets of the genome</a>
+obtained from an <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a>.
+The second way is suitable for studying the effects of single
+selective sweeps: we add a single mutation under selection,
+as for instance in a <a class="reference external" href="sec_tute_selective_sweep">selective sweep</a>.</p>
+<p>To make it so that new mutation added during the course of a simulation
+can affect fitness,
+we need to tell the contig where to put the mutations,
+and what distribution of selection coefficients they will have.
+To do this, we need to</p>
+<ul class="simple">
+<li><p>choose a distribution of fitness effects (a <a class="reference internal" href="api.html#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a>),</p></li>
+<li><p>choose which part(s) of the Contig to apply the DFE to (e.g., by choosing an <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a>), and</p></li>
+<li><p>add these to the <a class="reference internal" href="api.html#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig</span></code></a>, with the <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> saying which portions of the genome the DFE applies to.</p></li>
+</ul>
+<p>The next three examples demonstrate how to do this.</p>
+<section id="simulating-with-a-genome-wide-dfe">
+<span id="sec-tute-genome-wide-dfe"></span><h4>1. Simulating with a genome-wide DFE<a class="headerlink" href="#simulating-with-a-genome-wide-dfe" title="Link to this heading"></a></h4>
+<p>In this example, we’ll add the Kim et al. <code class="docutils literal notranslate"><span class="pre">HomSap/Gamma_K17</span></code> DFE to the
+Gutenkunst et al. <code class="docutils literal notranslate"><span class="pre">HomSap/OutOfAfrica_3G09</span></code> model.
+We can see the DFEs available for a species in the catalog,
+and get one using the <a class="reference internal" href="api.html#stdpopsim.Species.get_dfe" title="stdpopsim.Species.get_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Species.get_dfe()</span></code></a> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+
+<span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dfe</span><span class="p">)</span>
+
+<span class="c1"># DFE:</span>
+<span class="c1"># ║  id               = Gamma_K17</span>
+<span class="c1"># ║  description      = Deleterious Gamma DFE</span>
+<span class="c1"># ║  long_description = Return neutral and negative MutationType()s representing a human DFE.</span>
+<span class="c1"># ║                     Kim et al. (2017), https://doi.org/10.1534/genetics.116.197145 The DFE</span>
+<span class="c1"># ║                     was inferred assuming synonymous variants are neutral and a relative</span>
+<span class="c1"># ║                     mutation rate ratio of 2.31 nonsynonymous to 1 synonymous mutation</span>
+<span class="c1"># ║  ...</span>
+</pre></div>
+</div>
+<p>Once we have the DFE, we can add it to the Contig,
+specifying the set of <code class="docutils literal notranslate"><span class="pre">intervals</span></code> that it will apply to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">length</span><span class="p">)]]),</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, we can simulate as usual:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s verify that we have both neutral and deleterious mutations in the
+resulting simulation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">selection_coeffs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">stdpopsim</span><span class="o">.</span><span class="n">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mut</span><span class="p">)</span> <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">mutations</span><span class="p">()</span>
+<span class="p">]</span>
+<span class="n">num_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">s</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">selection_coeffs</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> neutral mutations, and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selection_coeffs</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> nonneutral mutations.&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># There are 110 neutral mutations, and 167 nonneutral mutations.</span>
+</pre></div>
+</div>
+</section>
+<section id="simulating-selection-in-a-single-gene">
+<span id="sec-tute-selection-single-gene"></span><h4>2. Simulating selection in a single gene<a class="headerlink" href="#simulating-selection-in-a-single-gene" title="Link to this heading"></a></h4>
+<p>Next, we’ll simulate a 10kb gene flanked by 10kb neutral regions,
+by specifying a particular interval to apply the <code class="docutils literal notranslate"><span class="pre">HomSap/Gamma_K17</span></code> DFE to.
+Contigs come by default covered by a neutral DFE,
+so all we need to do is apply the DFE to the middle region
+(which we’ll imagine is the coding region of a gene).
+This works because
+when a newly added DFE covers a portion of a Contig already covered by
+previous DFEs, the new DFE takes precedence:
+concretely, the intervals to which the new DFE apply
+are removed from the intervals associated with previous DFEs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">30000</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+
+<span class="n">gene_interval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">]])</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">gene_interval</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">236</span><span class="p">,</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>We’ll count up the number of neutral and deleterious mutations in the three regions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">selection_coeffs</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">sites</span><span class="p">():</span>
+    <span class="n">region</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">gene_interval</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">mut</span> <span class="ow">in</span> <span class="n">site</span><span class="o">.</span><span class="n">mutations</span><span class="p">:</span>
+        <span class="n">selection_coeffs</span><span class="p">[</span><span class="n">region</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">selection_coeff_from_mutation</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">mut</span><span class="p">)</span>
+        <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">region</span><span class="p">,</span> <span class="n">coeffs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selection_coeffs</span><span class="p">):</span>
+    <span class="n">num_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;From </span><span class="si">{</span><span class="n">region</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10000</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="p">(</span><span class="n">region</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10000</span><span class="si">}</span><span class="s2">: &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> neutral mutations and &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">num_neutral</span><span class="si">}</span><span class="s2"> deleterious mutations.&quot;</span>
+    <span class="p">)</span>
+
+<span class="c1"># From 0 to 1000: 37 neutral mutations and 0 deleterious mutations.</span>
+<span class="c1"># From 1000 to 2000: 13 neutral mutations and 18 deleterious mutations.</span>
+<span class="c1"># From 2000 to 3000: 33 neutral mutations and 0 deleterious mutations.</span>
+</pre></div>
+</div>
+<p>This verifies that the only deleterious mutations are in the interval
+where the DFE was applied, and that within this region there are both
+deleterious and neutral mutations, as expected under the <code class="docutils literal notranslate"><span class="pre">Gamma_K17</span></code>
+DFE model.</p>
+</section>
+<section id="simulating-selection-on-exons">
+<span id="sec-tute-selection-annotation"></span><h4>3. Simulating selection on exons<a class="headerlink" href="#simulating-selection-on-exons" title="Link to this heading"></a></h4>
+<p>The catalog also has a certain number of <em>annotations</em> available,
+obtained from Ensembl.
+For instance, for humans we have:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ensembl_havana_104_exons: Ensembl Havana exon annotations on GRCh38</span>
+<span class="c1"># ensembl_havana_104_CDS: Ensembl Havana CDS annotations on GRCh38</span>
+</pre></div>
+</div>
+<p>We’ll simulate with the <code class="docutils literal notranslate"><span class="pre">HomSap/Gamma_K17</span></code> DFE, applied
+to <em>all</em> exons in the region of chromosome 20 that spans from 10 to 30 Mb.
+Parts of this chromosomal region that aren’t exons will have only neutral mutations.
+To do so, we extract the intervals from the <a class="reference internal" href="api.html#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> object
+and use this in <a class="reference internal" href="api.html#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_dfe()</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">dfe</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Gamma_K17&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">10e6</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">30e6</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;OutOfAfrica_3G09&quot;</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;YRI&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CEU&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;CHB&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+
+<span class="n">exons</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">(</span><span class="s2">&quot;ensembl_havana_104_exons&quot;</span><span class="p">)</span>
+<span class="n">exon_intervals</span> <span class="o">=</span> <span class="n">exons</span><span class="o">.</span><span class="n">get_chromosome_annotations</span><span class="p">(</span><span class="s2">&quot;chr20&quot;</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="n">exon_intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">236</span><span class="p">,</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the large scaling factor (<span class="math notranslate nohighlight">\(Q=20\)</span>) that we’ve used here to get this
+to run fast enough to be used for a quick example!
+This is <em>not</em> expected to be a good example because of the magnitude of this
+scaling factor relative to the population sizes in the demographic model,
+but nonetheless there is lower diversity in exons than outside of them:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">breaks</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>
+
+<span class="n">diffs</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">diversity</span><span class="p">(</span><span class="n">windows</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span> <span class="n">span_normalise</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pi</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diffs</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">breaks</span><span class="p">)[</span><span class="n">labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diffs</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">breaks</span><span class="p">)[</span><span class="n">labels</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Mean sequence diversity in exons is </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> differences per Kb,</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;and outside of exons it is </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> differences per Kb.&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Mean sequence diversity in exons is 0.215 differences per Kb,</span>
+<span class="c1"># and outside of exons it is 0.380 differences per Kb.</span>
+</pre></div>
+</div>
+<p>To make this example run faster, we only simulated a particular region
+rather than the entire annotated chromosome, by supplying
+<code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">Species.get_contig()</span></code>.
+In this case, the annotation will be automatically clipped to
+the region of interest.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Simulating a region under selection is <strong>not</strong> the same as simulating a
+chromosome under selection and clipping to the region. This is because
+selected mutations outside of the region can influence ancestry within
+the region, due to linkage.</p>
+</div>
+</section>
+<section id="selective-sweeps">
+<span id="sec-tute-selective-sweep"></span><h4>4.  Selective sweeps<a class="headerlink" href="#selective-sweeps" title="Link to this heading"></a></h4>
+<p>You may be interested in simulating and tracking a single beneficial mutation.
+To illustrate this scenario, let’s simulate a selective sweep until it reaches
+an arbitrary allele frequency.</p>
+<p>First, let’s define a contig and a demographic model; here, we are simulating a
+small part of chromosome 2L of <em>Drosophila melanogaster</em> (<code class="docutils literal notranslate"><span class="pre">DroMel</span></code>) with a generic,
+constant size demography.
+The contig will be fully neutral, with the exception of the sweeping mutation
+which we will insert later.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;DroMel&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">PiecewiseConstantSize</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop_0&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;2L&quot;</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next, we need to set things up to add a selected mutation to a randomly chosen
+chromosome in the population of our choice at a specific position in the contig.
+We must also decide the time the mutation will be added, when selection will
+start and at what frequency we want our selected mutation to be at the end of
+the simulation.</p>
+<p>First, we need to add the site at which the selected mutation will occur.  This
+is like adding a DFE, except to a single site – we’re saying that there is a
+potential mutation at a particular site with defined fitness consequences. So
+that we can refer to the single site later, we give it a unique string ID.
+Here, we’ll add the site in the middle of the contig with ID “hard sweep”,
+so named because we will imagine this beneficial mutation originates at
+frequency <span class="math notranslate nohighlight">\(1 / 2N\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">locus_id</span> <span class="o">=</span> <span class="s2">&quot;hard sweep&quot;</span>
+<span class="n">coordinate</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_single_site</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="n">locus_id</span><span class="p">,</span>
+    <span class="n">coordinate</span><span class="o">=</span><span class="n">coordinate</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that single site mutations are internally stored as DFEs, and more
+than one DFE cannot apply to the same segment of genome. As a consequence,
+if another DFE is added to the contig over an interval that already
+contains a single site mutation, the single site mutation will be
+“overwritten” and an error will be raised in simulation.</p>
+</div>
+<p>Next, we will set up the “extended events” which will modify the demography.
+This is done through <a class="reference internal" href="api.html#stdpopsim.selective_sweep" title="stdpopsim.selective_sweep"><code class="xref py py-func docutils literal notranslate"><span class="pre">stdpopsim.selective_sweep()</span></code></a>, which represents a
+general model for a mutation that is beneficial within a single population.  We
+specify that the mutation should originate 1000 generations ago in a random
+individual from the first population (named “pop_0” by default); that the
+selection coefficient for the mutation should be 0.5; and that the frequency of
+the mutation in the present day (e.g. at the end of the sweep) should be
+greater than 0.8.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extended_events</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">selective_sweep</span><span class="p">(</span>
+    <span class="n">single_site_id</span><span class="o">=</span><span class="n">locus_id</span><span class="p">,</span>
+    <span class="n">population</span><span class="o">=</span><span class="s2">&quot;pop_0&quot;</span><span class="p">,</span>
+    <span class="n">selection_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">mutation_generation_ago</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">min_freq_at_end</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that because we are doing a forward-in-time simulation, you should be
+careful with your conditioning. For example, even a strongly selected mutation
+would not be able to reach 80% frequency in just a few generations. Since
+this conditioning works by re-running the simulation until the condition is
+achieved, a nearly impossible condition will result in very long run times.</p>
+</div>
+<p>Now we can simulate, using <code class="docutils literal notranslate"><span class="pre">SLiM</span></code> of course.  For comparison, we will run the
+same simulation without selection – i.e., without the “extended events”:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts_sweep</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
+    <span class="n">extended_events</span><span class="o">=</span><span class="n">extended_events</span><span class="p">,</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ts_neutral</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
+    <span class="c1"># no extended events</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Lastly, we can directly compute nucleotide diversity in 10Kb windows for both the
+neutral and sweep simulations and plot them side by side.
+Note that the scaling factor (<span class="math notranslate nohighlight">\(Q=10\)</span>) is quite large, to make the
+simulation complete in a reasonable amount of time despite the large
+population size of <em>Drosophila melanogaster</em>.
+In actual applications, it would be necessary to check that this choice of
+scaling factor produces data that are similar to those from unscaled simulations (where <span class="math notranslate nohighlight">\(Q=1\)</span>; see <a class="reference internal" href="#sec-slim-scaling-factor"><span class="std std-ref">SLiM scaling factor</span></a>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">windows</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">ts_neutral</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">),</span> <span class="mi">10000</span><span class="p">)]</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ts_neutral</span><span class="o">.</span><span class="n">sequence_length</span><span class="p">))</span>
+<span class="n">neutral_pi</span> <span class="o">=</span> <span class="n">ts_neutral</span><span class="o">.</span><span class="n">diversity</span><span class="p">(</span><span class="n">windows</span><span class="o">=</span><span class="n">windows</span><span class="p">)</span>
+<span class="n">sweep_pi</span> <span class="o">=</span> <span class="n">ts_sweep</span><span class="o">.</span><span class="n">diversity</span><span class="p">(</span><span class="n">windows</span><span class="o">=</span><span class="n">windows</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">neutral_pi</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;neutral&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sweep_pi</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sweep&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neutral_pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Genomic window&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Diversity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tute-sweep.png"><img alt="Plot with nucleotide diversity along the chromosome for simulations with a without a selective sweep." class="align-center" src="_images/tute-sweep.png" style="width: 500px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>We can see that diversity is substantially reduced around the beneficial
+mutation (vertical dashed line), relative to what would be expected under
+neutrality.</p>
+</section>
+<section id="using-a-dfe-from-one-species-in-another-species">
+<span id="sec-tute-moving-dfes"></span><h4>5.  Using a DFE from one species in another species<a class="headerlink" href="#using-a-dfe-from-one-species-in-another-species" title="Link to this heading"></a></h4>
+<p>There are not very many empirically estimated DFEs in the literature
+(certainly not as many as demographic models!).
+How, then, to add selection to your simulation of a species without a published DFE?
+By diving into <a class="reference internal" href="api.html#sec-api-dfes"><span class="std std-ref">the API</span></a> you could build one yourself.
+However, it’s easier to borrow one from another species,
+and arguably biologically more plausible.
+(At least some aspects of the DFE should be shared at least by some species,
+such as the swath of deleterious mutations due to breakages in cellular machinery.)
+For some discussion of this,
+see <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.08.12.503792v1">Kyriazis et al 2022</a>,
+which proposes a “generic” DFE for use in a variety of contexts.
+This DFE was estimated from human data, so it’s under HomSap:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">homsap</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">dfe</span> <span class="o">=</span> <span class="n">homsap</span><span class="o">.</span><span class="n">get_dfe</span><span class="p">(</span><span class="s2">&quot;Mixed_K23&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dfe</span><span class="o">.</span><span class="n">long_description</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Even though the DFE is stored under HomSap in the catalogue,
+we can apply it to a contig from any species.
+For instance, we could apply it to the first 100Kb
+of the <a class="reference internal" href="catalog.html#sec_catalog_phosin"><span class="std std-ref">Vaquita</span></a> chromosome 1:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vaquita</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;PhoSin&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">vaquita</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">1e5</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">intervals</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">]],</span> <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">vaquita</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Vaquita2Epoch_1R22&quot;</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Vaquita&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">contig</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">159</span><span class="p">,</span>
+    <span class="n">slim_scaling_factor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">slim_burn_in</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To make the example quick, we’ve only simulated the first 100Kb;
+a more realistic example would apply it to the exons, available
+as a <a class="reference internal" href="catalog.html#sec_catalog_phosin_annotations"><span class="std std-ref">annotation</span></a>.</p>
+</section>
+</section>
+<section id="tips-tricks-and-gotchas">
+<span id="sec-tute-recapitation"></span><h3>Tips, tricks, and gotchas<a class="headerlink" href="#tips-tricks-and-gotchas" title="Link to this heading"></a></h3>
+<p>Here are a few things about the whole process that it might be useful to know.
+Maybe this will save you some time,
+or let you do new things!</p>
+<section id="missing-data-and-coordinates">
+<span id="sec-tute-missing-data"></span><h4>Missing data and coordinates<a class="headerlink" href="#missing-data-and-coordinates" title="Link to this heading"></a></h4>
+<p>Suppose as above that we’ve simulated just a portion of a chromosome,
+using the <cite>left</cite> and <cite>right</cite> arguments to <cite>species.get_contig( )</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;HomSap&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_demographic_model</span><span class="p">(</span><span class="s2">&quot;Africa_1T12&quot;</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span>
+    <span class="s2">&quot;chr22&quot;</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">10e6</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">20e6</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mutation_rate</span>
+<span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AFR&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Sequence length: </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">sequence_length</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;  First variant: </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">sites_position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;   Last variant: </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">sites_position</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="c1"># Sequence length: 50818468.0</span>
+<span class="c1">#   First variant: 10000142.0</span>
+<span class="c1">#    Last variant: 19999926.0</span>
+</pre></div>
+</div>
+<p>We would like the output to preserve the coordinate system,
+so all variants we’d see in a VCF file (for instance) are between
+10Mb and 20Mb. (And, if you’re just getting a VCF, then no need to read
+the rest of this!) However, for the tree sequence to
+retain the same coordinates, it must start at position 0,
+and end at the sequence length of human chromosome 22.
+So, the rest of the tree sequence contains “misssing data”,
+which is encoded as, basically, a big “tree” where no-one is
+related to anyone else on those segments (in other words,
+before 10Mb and after 20Mb).</p>
+<p>This can lead to surprising things.
+For instance, the first tree (the tree describing relationships
+at position 0 along the sequence) has 200 roots:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">num_roots</span>
+<span class="c1"># 200</span>
+</pre></div>
+</div>
+<p>Of course, that’s just one root per sample: in other words,
+there’s actually no trees on this portion of the genome.
+If we check all the trees using the <cite>root_threshold</cite> argument
+to <a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.trees" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.trees()</span></code></a>, then we’ll correctly see
+that in fact all trees have fully coalesced (as they should have,
+because as discussed above, we have recapitated them):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">num_roots</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ts</span><span class="o">.</span><span class="n">trees</span><span class="p">(</span><span class="n">root_threshold</span><span class="o">=</span><span class="mi">2</span><span class="p">)])</span>
+<span class="c1"># 1</span>
+</pre></div>
+</div>
+<p>To read more about using tree sequences,
+see <a class="reference external" href="https://tskit.dev/tskit/docs/latest/data-model.html">tskit’s documentation</a>.</p>
+</section>
+</section>
+</section>
+<section id="example-analyses-with-stdpopsim">
+<span id="sec-tute-analyses"></span><h2>Example analyses with stdpopsim<a class="headerlink" href="#example-analyses-with-stdpopsim" title="Link to this heading"></a></h2>
+<section id="calculating-genetic-divergence">
+<span id="sec-tute-divergence"></span><h3>Calculating genetic divergence<a class="headerlink" href="#calculating-genetic-divergence" title="Link to this heading"></a></h3>
+<p>Next we’ll give an example of computing some summaries of the simulation output.
+The <a class="reference external" href="https://tskit.dev/tskit/docs/stable/">tskit</a>  documentation
+has details on many more statistics that you can compute using the tree sequences.
+We will simulate some samples of human chromosomes
+from different populations,
+and then estimate the genetic divergence between each population pair.</p>
+<section id="simulating-the-dataset">
+<h4>1. Simulating the dataset<a class="headerlink" href="#simulating-the-dataset" title="Link to this heading"></a></h4>
+<p>First, let’s use the <code class="docutils literal notranslate"><span class="pre">--help-models</span></code> option to see the selection of demographic
+models available to us:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help-models
+
+All simulation models for Homo sapiens
+
+Africa_1B08: African-americans population
+     African-American two-epoch instantaneous growth model from Boyko
+    et al 2008, fit to the synonymous SFS for the 11 of 15 African
+    Americans showing the least European ancestry, using coalescent
+    simulations with recombination with the maximum likelihood method
+    of Williamson et al 2005; times were calibrated assuming 3e5
+    generations since human-chimp divergence and fitting the number of
+    synonymous human-chimp differences. Mutation and recombination
+    rates were assumed to be the same (1.8e-8).
+
+    Populations:
+        African_Americans: African-Americans from Boyko et al 2008
+
+Africa_1T12: African population
+     The model is a simplification of the two population Tennesen et
+    al. model with the European-American population removed so that we
+    are modeling the African population in isolation.
+...
+</pre></div>
+</div>
+<p>This prints detailed information about all of the available models to
+the terminal.
+In this tutorial, we will use the model of African-American admixture from
+<a class="reference external" href="http://dx.doi.org/10.1371/journal.pgen.1007385">Browning et al. (2018)</a>.
+From the help output (or the <a class="reference internal" href="catalog.html#sec_catalog_homsap_models_americanadmixture_4b18"><span class="std std-ref">Catalog</span></a>),
+we can see that this model has id <code class="docutils literal notranslate"><span class="pre">AmericanAdmixture_4B18</span></code>,
+and allows samples to be drawn from 4 contemporary populations representing African,
+European, Asian and African-American groups.</p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">--help-genetic-maps</span></code> option, we can also see what genetic maps
+are available:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap --help-genetic-maps
+
+All genetic maps for Homo sapiens
+
+DeCodeSexAveraged_GRCh36
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details.
+
+DeCodeSexAveraged_GRCh38
+     This genetic map is from the deCode study of recombination events
+    in 15,257 parent-offspring pairs from Iceland. 289,658 phased
+    autosomal SNPs were used to call recombinations within these
+    families, and recombination rates computed from the density of
+    these events. This is the combined male and female (sex averaged)
+    map. See https://www.decode.com/addendum/ for more details. This
+    map is further lifted over from the original GRCh36 to GRCh38
+    using liftover. Liftover was performed using the
+...
+</pre></div>
+</div>
+<p>Let’s go with <code class="docutils literal notranslate"><span class="pre">HapMapII_GRCh38</span></code>.
+The next command simulates 2 diploid samples of chromosome 1 from each of the four
+populations, and saves the output to a file called <code class="docutils literal notranslate"><span class="pre">afr-america-chr1.trees</span></code>.
+For the purposes of this tutorial, we’ll also specify a random seed using the
+<code class="docutils literal notranslate"><span class="pre">-s</span></code> option.
+To check that we have set up the simulation correctly, we may first wish to perform a
+dry run using the <code class="docutils literal notranslate"><span class="pre">-D</span></code> option.
+This will print information about the simulation to the terminal:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ stdpopsim HomSap -c chr1 -o afr-america-chr1.trees -s 13 -g HapMapII_GRCh38 -d AmericanAdmixture_4B18 AFR:2 EUR:2 ASIA:2 ADMIX:2 -D
+Simulation information:
+    Engine: msprime (1.3.3)
+    Model id: AmericanAdmixture_4B18
+    Model description: American admixture
+    Seed: 13
+    Population: number_samples (sampling_time_generations):
+        AFR: 2 (0)
+        EUR: 2 (0)
+        ASIA: 2 (0)
+        ADMIX: 2 (0)
+Contig Description:
+    Contig origin: chr1:0-248956422
+    Contig length: 248956422.0
+    Contig ploidy: 2
+    Mutation rate: 2.36e-08
+    Recombination rate: 1.1523470111585671e-08
+    Genetic map: HapMapII_GRCh38
+
+...
+</pre></div>
+</div>
+<p>Once we’re sure, we can remove the <code class="docutils literal notranslate"><span class="pre">-D</span></code> flag to run the simulation
+(this took around 8 minutes to run on a laptop).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>stdpopsim<span class="w"> </span>HomSap<span class="w"> </span>-c<span class="w"> </span>chr1<span class="w"> </span>-o<span class="w"> </span>afr-america-chr1.trees<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-g<span class="w"> </span>HapMapII_GRCh38<span class="w"> </span><span class="se">\</span>
+<span class="gp">$    </span>-d<span class="w"> </span>AmericanAdmixture_4B18<span class="w"> </span>AFR:2<span class="w"> </span>EUR:2<span class="w"> </span>ASIA:2<span class="w"> </span>ADMIX:2
+</pre></div>
+</div>
+</section>
+<section id="calculating-divergences">
+<h4>2. Calculating divergences<a class="headerlink" href="#calculating-divergences" title="Link to this heading"></a></h4>
+<p>We should now have a file called <code class="docutils literal notranslate"><span class="pre">afr-america-chr1.trees</span></code>.
+Our work with <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> is done; we’ll now switch to a Python console and import
+the <code class="docutils literal notranslate"><span class="pre">tskit</span></code> package to load and analyse this simulated tree sequence file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tskit</span>
+
+<span class="n">ts</span> <span class="o">=</span> <span class="n">tskit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;afr-america-chr1.trees&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Recall that <cite>genetic divergence</cite> (often denoted <span class="math notranslate nohighlight">\(d_{xy}\)</span>)
+between two populations is the mean density per nucleotide
+of sequence differences between two randomly sampled chromosomes,
+one from each population
+(and averaged over pairs of chromosomes).
+<cite>Genetic diversity</cite> of a population (often denoted <span class="math notranslate nohighlight">\(\pi\)</span>) is the same quantity,
+but with both chromosomes sampled from the same population.
+These quantities can be computed directly from our sample using tskit’s
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.divergence" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.divergence()</span></code></a>.</p>
+<p>By looking at
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.divergence" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">the</span> <span class="pre">documentation</span></code></a>
+for this method, we can see that we’ll need two inputs: <code class="docutils literal notranslate"><span class="pre">sample_sets</span></code> and
+<code class="docutils literal notranslate"><span class="pre">indexes</span></code>.
+In our case, we want <code class="docutils literal notranslate"><span class="pre">sample_sets</span></code> to give the list
+of sample chromosomes (nodes) from each separate population.
+We can obtain the necessary list of lists like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sample_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">):</span>
+    <span class="n">sample_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">samples</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sample_list</span><span class="p">)</span>
+
+<span class="c1"># [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]</span>
+</pre></div>
+</div>
+<p>Note that the samples with node IDs 0 - 3 are from population 0,
+samples with node IDs 4 - 7 are from population 1 and so on.
+(Also, the <code class="docutils literal notranslate"><span class="pre">.tolist()</span></code> in the code above is not necessary;
+it is only there to make the output simpler.)</p>
+<p>The next argument, <code class="docutils literal notranslate"><span class="pre">indexes</span></code> should give the pairs of integer indexes
+corresponding to the sample sets that we wish to compute divergence between.
+For instance, the tuple <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">2)</span></code> will compute the divergence between
+sample set 0 and sample set 2 (so, in our case, population 0 and population 2).
+We can quickly get all the pairs of indexes as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inds</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">):</span>
+        <span class="n">inds</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+<span class="c1"># [(0, 0), (0, 1), (0, 2), (0, 3), (1, 1), (1, 2), (1, 3), (2, 2), (2, 3), (3, 3)]</span>
+</pre></div>
+</div>
+<p>We are now ready to calculate the genetic divergences.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">divs</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">divergence</span><span class="p">(</span><span class="n">sample_sets</span><span class="o">=</span><span class="n">sample_list</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="n">inds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">divs</span><span class="p">)</span>
+<span class="c1"># [0.00078192 0.00080099 0.00080262 0.00079789 0.00056527 0.00063978</span>
+<span class="c1">#  0.00063219 0.00057068 0.00062214 0.00064897]</span>
+</pre></div>
+</div>
+<p>As a sanity check, this demographic model has population sizes of around <span class="math notranslate nohighlight">\(N_e = 10^4\)</span>,
+and the mutation rate that was used to infer parameters for this model was <span class="math notranslate nohighlight">\(\mu = 2.36 \times 10^{-8}\)</span>
+(shown in the output of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code>, or found in python with <code class="docutils literal notranslate"><span class="pre">model.mutation_rate</span></code>),
+so we expect divergence values to be of order of magnitude <span class="math notranslate nohighlight">\(2 N_e \mu = 0.000472\)</span>,
+but slightly higher because of population structure.</p>
+</section>
+<section id="plotting-the-divergences">
+<h4>3. Plotting the divergences<a class="headerlink" href="#plotting-the-divergences" title="Link to this heading"></a></h4>
+<p>The output lists the divergences of all population pairs that are specified in
+<code class="docutils literal notranslate"><span class="pre">indexes</span></code>, in the same order.
+However, instead of simply printing these values to the console, it might be nicer
+to create a heatmap of the values.
+Here is some (more advanced) code that does this.
+It relies on the <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> packages.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">div_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_populations</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)):</span>
+    <span class="n">pop0</span><span class="p">,</span> <span class="n">pop1</span> <span class="o">=</span> <span class="n">inds</span><span class="p">[</span><span class="n">pair</span><span class="p">]</span>
+    <span class="n">div_matrix</span><span class="p">[</span><span class="n">pop0</span><span class="p">,</span> <span class="n">pop1</span><span class="p">]</span> <span class="o">=</span> <span class="n">divs</span><span class="p">[</span><span class="n">pair</span><span class="p">]</span>
+    <span class="n">div_matrix</span><span class="p">[</span><span class="n">pop1</span><span class="p">,</span> <span class="n">pop0</span><span class="p">]</span> <span class="o">=</span> <span class="n">divs</span><span class="p">[</span><span class="n">pair</span><span class="p">]</span>
+
+<span class="n">seaborn</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">div_matrix</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Genetic divergence&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Populations&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Populations&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;AFR&quot;</span><span class="p">,</span> <span class="s2">&quot;EUR&quot;</span><span class="p">,</span> <span class="s2">&quot;ASI&quot;</span><span class="p">,</span> <span class="s2">&quot;ADM&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;AFR&quot;</span><span class="p">,</span> <span class="s2">&quot;EUR&quot;</span><span class="p">,</span> <span class="s2">&quot;ASI&quot;</span><span class="p">,</span> <span class="s2">&quot;ADM&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tute-divergence.png"><img alt="Heatmap of divergence values." class="align-center" src="_images/tute-divergence.png" style="width: 500px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>These values make sense given the model of demography we have specified:
+the highest divergence estimates were obtained when African samples (AFR) were
+compared with samples from other populations, and the lowest divergence
+estimates were obtained when Asian (ASI) samples were compared with themselves.
+However, the overwhelming sameness of the sample chromosomes is also evident:
+on average, any two sample chromosomes differ at less than 0.07% of positions,
+regardless of the populations they come from.</p>
+</section>
+</section>
+<section id="calculating-the-allele-frequency-spectrum">
+<span id="sec-tute-sfs"></span><h3>Calculating the allele frequency spectrum<a class="headerlink" href="#calculating-the-allele-frequency-spectrum" title="Link to this heading"></a></h3>
+<p>Next, we will simulate some samples of chromosomes from different populations of
+a non-human (finally!), <em>Arabidopsis thaliana</em>,
+and analyse the allele frequency spectrum (AFS) for each population
+(also called the “site frequency spectrum, or SFS).</p>
+<section id="id2">
+<h4>1. Simulating the dataset<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<p>This time, we will use the <a class="reference internal" href="api.html#stdpopsim.IsolationWithMigration" title="stdpopsim.IsolationWithMigration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stdpopsim.IsolationWithMigration()</span></code></a> model.
+Since this is a generic model that can be used for any species, we must use the Python
+interface for this simulation.
+See our <a class="reference internal" href="#sec-python-tute"><span class="std std-ref">Python tutorial</span></a> for an introduction to this interface.</p>
+<p>We begin by importing <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> into a Python environment and specifying our desired
+species, <em>Arabidopsis thaliana</em>. From the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>, we can see that this
+species has the ID <code class="docutils literal notranslate"><span class="pre">AraTha</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
+
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;AraTha&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After skimming the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a> to see our options, we’ll specify our
+desired chromosome <code class="docutils literal notranslate"><span class="pre">chr4</span></code> and genetic map <code class="docutils literal notranslate"><span class="pre">SalomeAveraged_TAIR10</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;chr4&quot;</span><span class="p">,</span> <span class="n">genetic_map</span><span class="o">=</span><span class="s2">&quot;SalomeAveraged_TAIR10&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>From the API description, we can see that the <a class="reference internal" href="api.html#stdpopsim.IsolationWithMigration" title="stdpopsim.IsolationWithMigration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stdpopsim.IsolationWithMigration()</span></code></a>
+model allows us to sample from a pair of populations that diverged from a common
+ancestral population. We’ll specify that the effective population size of the ancestral
+population was 5000, that the population sizes of the two modern populations are 4000
+and 1000, that the populations diverged 1000 generations ago,
+and that rates of migration since the split between the populations are both zero.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">IsolationWithMigration</span><span class="p">(</span>
+    <span class="n">NA</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">N1</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">N2</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">M12</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">M21</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>We’ll simulate 5 diploids from each of the populations using the
+<code class="docutils literal notranslate"><span class="pre">msprime</span></code> engine (the populations in this generic model are named
+<code class="docutils literal notranslate"><span class="pre">pop1</span></code> and <code class="docutils literal notranslate"><span class="pre">pop2</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop1&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;pop2&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, we’ll run a simulation using the objects we’ve created and store the outputted
+dataset in an object called <code class="docutils literal notranslate"><span class="pre">ts</span></code>. For the purposes of this tutorial, we’ll also run this
+simulation using a random seed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="calculating-the-afs">
+<h4>2. Calculating the AFS<a class="headerlink" href="#calculating-the-afs" title="Link to this heading"></a></h4>
+<p>Recall that the <em>allele frequency spectrum</em> (AFS) summarises the distribution of allele
+frequencies in a given sample.
+At each site, there is an ancestral and (sometimes more than one) derived allele,
+and each allele is observed in the sample with some frequency.
+Each entry in the AFS corresponds to a particular sample frequency,
+and records the total number of derived alleles with that frequency.
+We can calculate the AFS directly from our tree sequence using the
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.allele_frequency_spectrum" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.allele_frequency_spectrum()</span></code></a> method.</p>
+<p>Since we wish to find the AFS separately for each of our two populations, we will
+first need to know which samples correspond to each population.
+The <a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.samples" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.samples()</span></code></a>
+method in tskit allows us to find the IDs of samples from each population:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pop_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">ts</span><span class="o">.</span><span class="n">samples</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">ts</span><span class="o">.</span><span class="n">samples</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pop_samples</span><span class="p">)</span>
+<span class="c1"># [array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=int32),</span>
+<span class="c1">#  array([10, 11, 12, 13, 14, 15, 16, 17, 18, 19], dtype=int32)]</span>
+</pre></div>
+</div>
+<p>We are now ready to calculate the AFS.
+Since our dataset was generated using the default <code class="docutils literal notranslate"><span class="pre">msprime</span></code> simulation engine,
+we know that it has exactly one derived allele at any polymorphic site.
+We also know what the derived and ancestral states are.
+We can therefore calculate the <em>polarised</em> AFS using tskit’s
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/python-api.html#tskit.TreeSequence.allele_frequency_spectrum" title="(in Project name not set)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tskit.TreeSequence.allele_frequency_spectrum()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sfs0</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">allele_frequency_spectrum</span><span class="p">(</span>
+    <span class="n">sample_sets</span><span class="o">=</span><span class="p">[</span><span class="n">pop_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">polarised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">span_normalise</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sfs0</span><span class="p">)</span>
+<span class="c1"># [1686. 2496. 1232.  850.  614.  566.  456.  396.  309.  322.  123.]</span>
+</pre></div>
+</div>
+<p>The output lists the number of derived alleles that are found in 0, 1, 2, …
+of the given samples. Since each of our populations have 10 samples each,
+there are 11 numbers.
+The first number, 1686, is the number of derived alleles found in the tree sequence
+but not found in that population at all (they are present because they are found in the
+<em>other</em> population).
+The second, 2496, is the number of singletons, and so forth.
+The final number, 123, is the number of derived alleles in the tree sequence found in <em>all</em>
+ten samples from this population.
+Since an <code class="docutils literal notranslate"><span class="pre">msprime</span></code> simulation only contains information about polymorphic alleles,
+these must be alleles fixed in this population but still polymorphic in the other.</p>
+<p>Here is the AFS for the other population:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sfs1</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">allele_frequency_spectrum</span><span class="p">(</span>
+    <span class="n">sample_sets</span><span class="o">=</span><span class="p">[</span><span class="n">pop_samples</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">polarised</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">span_normalise</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sfs1</span><span class="p">)</span>
+<span class="c1"># [3790. 1021.  729.  583.  522.  455.  386.  335.  285.  264.  680.]</span>
+</pre></div>
+</div>
+<p>The somewhat mysterious <code class="docutils literal notranslate"><span class="pre">polarised=True</span></code> option indicates that we wish to
+calculate the AFS for derived alleles only, without “folding” the spectrum,
+and the <code class="docutils literal notranslate"><span class="pre">span_normalise=False</span></code> option disables tskit’s
+default behaviour of dividing by the sequence length. See
+<a class="reference external" href="https://tskit.dev/tskit/docs/stable/stats.html#interface">tskit’s documentation</a>
+for more information on these options.</p>
+<p>We will do further analysis in the next section, but you might first wish to convince
+yourself that this output makes sense to you.
+You might also wish to check that the total number of mutations is the sum of the AFS entries:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">sfs0</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sfs1</span><span class="p">),</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_mutations</span>
+<span class="c1"># (9050.0, 9050.0, 9050)</span>
+</pre></div>
+</div>
+</section>
+<section id="plotting-the-afs">
+<h4>3. Plotting the AFS<a class="headerlink" href="#plotting-the-afs" title="Link to this heading"></a></h4>
+<p>Here is some more advanced code that compares the estimated AFS from each population.
+It relies on the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> packages.
+We will scale each AFS by the number of mutated sites in the corresponding sample set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.2</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">r1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">r1</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">sfs0</span> <span class="o">/</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_sites</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;pop0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">r2</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">sfs1</span> <span class="o">/</span> <span class="n">ts</span><span class="o">.</span><span class="n">num_sites</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;pop1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Allele count&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Proportion of mutated sites in sample&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tute-sfs.png"><img alt="AFS plots." class="align-center" src="_images/tute-sfs.png" style="width: 500px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This figure shows substantial differences in the allele frequency spectrum
+between the two populations,
+most notably a larger number of singletons in population 0
+and a larger number of fixed and absent alleles in population 1.
+This makes sense given the demography we have specified:
+population 1 has had a much more extreme population size reduction.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="catalog.html" class="btn btn-neutral float-left" title="Catalog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cli_arguments.html" class="btn btn-neutral float-right" title="Command-line options" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2025, PopSim Consortium.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+     
+    <div class="footer">Version: 0.3 (0.3.0)</div>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
