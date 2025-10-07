@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; stdpopsim 0.3.1.dev12+g6959e149b documentation</title>
+  <title>API &mdash; stdpopsim 0.3.1.dev13+gfb407d3d5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=4f365243"></script>
+      <script src="_static/documentation_options.js?v=1af5c8b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -263,7 +263,7 @@ accessed through the main entry point, <a class="reference internal" href="#stdp
 <dd><p>Returns a <a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> object for the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string identifier for the requested species. E.g. “HomSap”.
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string identifier for the requested species. E.g. “HomSap”.
 A complete list of species, and their IDs, can be found in the
 <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 </dd>
@@ -283,40 +283,40 @@ A complete list of species, and their IDs, can be found in the
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier for this species. The species ID is
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique identifier for this species. The species ID is
 the three first letters of the genus name followed by the first
 three letters of the species name, and does not
 contain any spaces or punctuation. The usual scheme is to
 use the first three letters of the genus and species (similar to the
 approach used in the UCSC genome browser), e.g., “HomSap”
 is the ID for Homo Sapiens.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The full name of this species in binominal nomenclature as
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The full name of this species in binominal nomenclature as
 it would be used in written text, e.g., “Homo sapiens”.</p></li>
-<li><p><strong>common_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of this species as it would most often be
+<li><p><strong>common_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of this species as it would most often be
 used informally in written text, e.g., “human”, or “Orang-utan”.
 Where no common name for the species exist, use the most common
 abbreviation, e.g., “E. Coli”.</p></li>
 <li><p><strong>genome</strong> (<a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><em>stdpopsim.Genome</em></a>) – The <a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> instance describing the details
 of this species’ genome.</p></li>
-<li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The current best estimate for the generation
+<li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The current best estimate for the generation
 time of this species in years. Note that individual demographic
 models in the catalog may or may not use this estimate: each
 model uses the generation time that was used in the original
 publication(s).</p></li>
-<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The ploidy of the organism.</p></li>
-<li><p><strong>population_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The current best estimate for the population
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The ploidy of the organism.</p></li>
+<li><p><strong>population_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The current best estimate for the population
 size of this species. Note that individual demographic
 models in the catalog may or may not use this estimate: each
 model uses the population sizes defined in the original
 publication(s).</p></li>
-<li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+<li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
 providing the source for the generation time and
 population size estimates.</p></li>
-<li><p><strong>demographic_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>
+<li><p><strong>demographic_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemographicModel</span></code></a>
 instances in the catalog for this species.</p></li>
-<li><p><strong>dfes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a>
+<li><p><strong>dfes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – This list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a>
 instances in the catalog for this species.</p></li>
-<li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ensembl id for the species which is used by
+<li><p><strong>ensembl_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The ensembl id for the species which is used by
 maintenance scripts to query ensembl’s database.</p></li>
 </ul>
 </dd>
@@ -327,7 +327,7 @@ maintenance scripts to query ensembl’s database.</p></li>
 <dd><p>Returns a set of annotations with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string identifier for the set of annotations
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string identifier for the set of annotations
 A complete list of IDs for each species can be found in the
 “Annotations” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 </dd>
@@ -360,27 +360,27 @@ output coordinates relative to <cite>left</cite>, use the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chromosome</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the chromosome to simulate.
+<li><p><strong>chromosome</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The ID of the chromosome to simulate.
 A complete list of chromosome IDs for each species can be found in the
 “Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.
 If the chromosome is not given, we specify a “generic” contig with given
 <code class="docutils literal notranslate"><span class="pre">length</span></code>.</p></li>
-<li><p><strong>genetic_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If specified, obtain recombination rate information
+<li><p><strong>genetic_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If specified, obtain recombination rate information
 from the genetic map with the specified ID. If None, simulate
 using a default uniform recombination rate on a region with the length of
 the specified chromosome. The default rates are species- and chromosome-
 specific, and can be found in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>. (Default: None)</p></li>
-<li><p><strong>length_multiplier</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Deprecated, use <cite>left</cite> and <cite>right</cite>
+<li><p><strong>length_multiplier</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Deprecated, use <cite>left</cite> and <cite>right</cite>
 instead. If specified, simulate a region of length <cite>length_multiplier</cite>
 times the length of the specified chromosome with the same
 chromosome-specific mutation and recombination rates.  This option
 cannot be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument.</p></li>
-<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The per-base mutation rate. If none is given,
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The per-base mutation rate. If none is given,
 the mutation rate defaults to the rate specified by species chromosomes.</p></li>
-<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The per-base recombination rate. If none is
+<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The per-base recombination rate. If none is
 given, the recombination rate defaults to the rate specified by species
 chromosomes. Ignored when <code class="docutils literal notranslate"><span class="pre">genetic_map</span></code> argument is specified.</p></li>
-<li><p><strong>use_species_gene_conversion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If set to True the parameters for gene
+<li><p><strong>use_species_gene_conversion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set to True the parameters for gene
 conversion of the species chromosome are used if available. For “generic”
 contigs the gene conversion fraction and length are given by the mean
 values across all chromosomes.</p></li>
@@ -392,14 +392,14 @@ given by the left and right end points of the intervals.</p></li>
 regions given by the mask. The mask can be specified by the
 path and file name of a bed file or as a list or array of intervals
 given by the left and right end points of the intervals.</p></li>
-<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Used with a “generic” contig, specifies the
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Used with a “generic” contig, specifies the
 length of genome sequence for this contig. For a generic contig, mutation
 and recombination rates are equal to the genome-wide average across all
 autosomal chromosomes.</p></li>
-<li><p><strong>left</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The left coordinate (inclusive) of the region to
+<li><p><strong>left</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The left coordinate (inclusive) of the region to
 keep on the chromosome. Defaults to 0. Remaining regions will have
 missing data when simulated.</p></li>
-<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The right coordinate (exclusive) of the region to
+<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The right coordinate (exclusive) of the region to
 keep on the chromosome. Defaults to the length of the chromosome.
 Remaining regions will have missing data when simulated.</p></li>
 </ul>
@@ -419,7 +419,7 @@ Remaining regions will have missing data when simulated.</p></li>
 <dd><p>Returns a demographic model with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string identifier for the demographic model.
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string identifier for the demographic model.
 A complete list of IDs for each species can be found in the
 “Demographic Models” subsection for the species in the
 <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
@@ -439,7 +439,7 @@ A complete list of IDs for each species can be found in the
 <dd><p>Returns a DFE with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string identifier for the DFE.
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string identifier for the DFE.
 A complete list of IDs for each species can be found in the
 # TODO add that section to the species catalog
 “DFE” subsection for the species in the
@@ -463,20 +463,20 @@ A complete list of IDs for each species can be found in the
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chromosomes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> objects.</p></li>
-<li><p><strong>assembly_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the genome assembly.</p></li>
-<li><p><strong>assembly_accession</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the genome assembly accession.</p></li>
-<li><p><strong>assembly_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The source of the genome assembly data.
+<li><p><strong>chromosomes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Chromosome" title="stdpopsim.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> objects.</p></li>
+<li><p><strong>assembly_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the genome assembly.</p></li>
+<li><p><strong>assembly_accession</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The ID of the genome assembly accession.</p></li>
+<li><p><strong>assembly_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The source of the genome assembly data.
 (for instance “ensembl”). Use “manual” if manually entered.</p></li>
-<li><p><strong>assembly_build_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The version of the genome assembly build,
+<li><p><strong>assembly_build_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The version of the genome assembly build,
 or “None” if manually entered.</p></li>
-<li><p><strong>bacterial_recombination</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether recombination is via horizontal gene
+<li><p><strong>bacterial_recombination</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether recombination is via horizontal gene
 transfer (if this is True) or via crossing-over and possibly gene
 conversion (if this is False). Default: False.</p></li>
-<li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
+<li><p><strong>citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a> objects
 providing the source for the genome assembly,
 mutation rate, recombination rate, and gene conversion estimates.</p></li>
-<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The total length of the genome.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total length of the genome.</p></li>
 </ul>
 </dd>
 </dl>
@@ -495,7 +495,7 @@ mutation_rate, and ploidy dictionaries.</p>
 <dd><p>Returns the chromosome with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string ID of the chromosome.
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string ID of the chromosome.
 A complete list of chromosome IDs for each species can be found in the
 “Genome” subsection for the species in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>.</p>
 </dd>
@@ -547,19 +547,19 @@ and gene conversion, so will differ if the gene conversion fraction is nonzero.<
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string identifier for the chromosome.</p></li>
-<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The length of the chromosome.</p></li>
-<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The mutation rate used when simulating this
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string identifier for the chromosome.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The length of the chromosome.</p></li>
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The mutation rate used when simulating this
 chromosome.</p></li>
-<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The rate of crossing-over used when simulating
+<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The rate of crossing-over used when simulating
 this chromosome (if not using a genetic map).</p></li>
-<li><p><strong>gene_conversion_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The gene conversion fraction used when
+<li><p><strong>gene_conversion_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The gene conversion fraction used when
 simulating this chromosome.</p></li>
-<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The mean tract length of gene
+<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The mean tract length of gene
 conversion events used when simulating this chromosome.</p></li>
-<li><p><strong>synonyms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – List of synonyms that may be used when requesting this
+<li><p><strong>synonyms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – List of synonyms that may be used when requesting this
 chromosome by ID, e.g. from the command line interface.</p></li>
-<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The ploidy used when simulating this chromosome.</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The ploidy used when simulating this chromosome.</p></li>
 </ul>
 </dd>
 </dl>
@@ -578,8 +578,8 @@ applies to the k-th interval; see <a class="reference internal" href="#stdpopsim
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
-<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The ploidy of the contig. Defaults to 2 (diploid).</p></li>
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The rate of mutation per base per generation.</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The ploidy of the contig. Defaults to 2 (diploid).</p></li>
 <li><p><strong>genetic_map</strong> (<em>.GeneticMap</em>) – The genetic map for the region, that gives
 the rates of crossing-over. A <code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticMap</span></code> object.</p></li>
 <li><p><strong>recombination_map</strong> (<a class="reference external" href="https://tskit.dev/msprime/docs/stable/api.html#msprime.RateMap" title="(in Project name not set)"><em>msprime.RateMap</em></a>) – The recombination map for the region, that gives
@@ -590,13 +590,13 @@ rate describes only crossing-over. A <a class="reference external" href="https:/
 <li><p><strong>bacterial_recombination</strong> – Whether the model of recombination is
 by horizontal gene transfer or not (default is False, i.e.,
 recombination is by crossing-over and possibly gene conversion).</p></li>
-<li><p><strong>gene_conversion_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The fraction of recombinations that resolve
+<li><p><strong>gene_conversion_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The fraction of recombinations that resolve
 as gene conversion events. The recombination map gives the rates of
 <em>both</em> crossing-over and gene conversion, with a fraction of gene
 conversions given by this value. Defaults to None, i.e., no gene
 conversion. Must be None or between 0 and 1. Must be None if
 bacterial_recombination is True.</p></li>
-<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The mean tract length of gene conversions (if
+<li><p><strong>gene_conversion_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The mean tract length of gene conversions (if
 bacterial_recombination is False), or horizontally tranferred segments (if
 it is True). Must be present, and above 1 if either gene_conversion_fraction
 is given or bacterial_recombination is True.</p></li>
@@ -604,14 +604,14 @@ is given or bacterial_recombination is True.</p></li>
 of (left_position, right_position), such that intervals are non-overlapping
 and in ascending order. Should have shape Nx2, where N is the number of
 intervals.</p></li>
-<li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
+<li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
 <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
-<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects.
+<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects.
 By default, the only DFE is completely neutral.</p></li>
 <li><p><strong>interval_list</strong> – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects containing integers.
 By default, the inital interval list spans the whole chromosome with the
 neutral DFE.</p></li>
-<li><p><strong>coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a>) – The location of the contig on a named chromosome,
+<li><p><strong>coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – The location of the contig on a named chromosome,
 as a tuple of the form <cite>(chromosome, left, right)</cite>. If <cite>None</cite>, the contig
 is assumed to be generic (i.e. it does not inherit a coordinate system
 from a larger chromosome).</p></li>
@@ -694,12 +694,12 @@ starting at 1000 generations in the past:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique identifier for the single site.</p></li>
-<li><p><strong>coordinate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The coordinate of the site on the contig.</p></li>
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A short description of the single site mutation
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique identifier for the single site.</p></li>
+<li><p><strong>coordinate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The coordinate of the site on the contig.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A short description of the single site mutation
 model as it would be used in written text, e.g., “Strong selective
 sweep”.</p></li>
-<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If necessary, a more detailed summary.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If necessary, a more detailed summary.</p></li>
 </ul>
 </dd>
 </dl>
@@ -796,9 +796,9 @@ stdpopsim.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>doi</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The DOI for the publication providing the definitive reference.</p></li>
-<li><p><strong>author</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Short author list, .e.g, “Author 1 et. al”.</p></li>
-<li><p><strong>year</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Year of publication as a 4 digit integer, e.g. 2008.</p></li>
+<li><p><strong>doi</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The DOI for the publication providing the definitive reference.</p></li>
+<li><p><strong>author</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Short author list, .e.g, “Author 1 et. al”.</p></li>
+<li><p><strong>year</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Year of publication as a 4 digit integer, e.g. 2008.</p></li>
 </ul>
 </dd>
 </dl>
@@ -836,12 +836,12 @@ of the instance variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – String that uniquely identifies the annotation.</p></li>
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – String that uniquely identifies the annotation.</p></li>
 <li><p><strong>species</strong> (<a class="reference internal" href="#stdpopsim.Species" title="stdpopsim.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a>) – The species to which this annotation applies.</p></li>
-<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The URL where the packed and compressed GFF3 can be found.</p></li>
-<li><p><strong>intervals_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The URL of the intervals cache of the annotations.</p></li>
-<li><p><strong>intervals_sha256</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The SHA256 checksum of the annotations cache.</p></li>
-<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – One line description of the annotation.</p></li>
+<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The URL where the packed and compressed GFF3 can be found.</p></li>
+<li><p><strong>intervals_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The URL of the intervals cache of the annotations.</p></li>
+<li><p><strong>intervals_sha256</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SHA256 checksum of the annotations cache.</p></li>
+<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – One line description of the annotation.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – List of citations for the annotation.</p></li>
 <li><p><strong>file_pattern</strong> – The pattern used to map individual chromosome id strings
 to files</p></li>
@@ -882,20 +882,20 @@ see <a class="reference internal" href="#stdpopsim.Species.get_demographic_model
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier for this model. DemographicModel IDs should be
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique identifier for this model. DemographicModel IDs should be
 short and memorable, and conform to the stdpopsim
 <a class="reference internal" href="development.html#sec-development-naming-conventions"><span class="std std-ref">naming conventions</span></a>
 for demographic models.</p></li>
-<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A short description of this model as it would be used in
+<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A short description of this model as it would be used in
 written text, e.g., “Three population Out-of-Africa”. This should
 describe the model itself and not contain author or year information.</p></li>
-<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A concise, but detailed, summary of the model.</p></li>
-<li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Mean inter-generation interval, in years.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A concise, but detailed, summary of the model.</p></li>
+<li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Mean inter-generation interval, in years.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>, that describe the primary
 reference(s) for the model.</p></li>
-<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The mutation rate associated with the demographic model.
+<li><p><strong>mutation_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The mutation rate associated with the demographic model.
 If no mutation rate is given, the species’ default mutation rate is used.</p></li>
-<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The recombination rate associated with the demographic
+<li><p><strong>recombination_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The recombination rate associated with the demographic
 model. If no recombination rate is given, the species’ default recombination
 rate is used.</p></li>
 </ul>
@@ -914,10 +914,10 @@ zero samples.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>individuals_per_population</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dict of the form
+<li><p><strong>individuals_per_population</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – A dict of the form
 <cite>{population_name:number_of_samples}</cite> giving sample counts per
 population.</p></li>
-<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The ploidy of the samples.</p></li>
+<li><p><strong>ploidy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The ploidy of the samples.</p></li>
 </ul>
 </dd>
 </dl>
@@ -954,9 +954,9 @@ treated as zero.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The id of the population.</p></li>
-<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – a short description of the population</p></li>
-<li><p><strong>sampling_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – an integer value which indicates how many
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The id of the population.</p></li>
+<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – a short description of the population</p></li>
+<li><p><strong>sampling_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – an integer value which indicates how many
 generations prior to the present individuals should samples should
 be drawn from this population. If <cite>None</cite>, sampling not allowed from this
 population (default = 0).</p></li>
@@ -1053,18 +1053,18 @@ and <code class="docutils literal notranslate"><span class="pre">proportions</sp
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.mutation_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutationType</span></code></a> objects associated
+<li><p><strong>~.mutation_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutationType</span></code></a> objects associated
 with the DFE. Defaults to an empty list.</p></li>
-<li><p><strong>~.proportions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of the proportions of new mutations that
+<li><p><strong>~.proportions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of the proportions of new mutations that
 fall in to each of the mutation types (must sum to 1).</p></li>
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier for this model. DFE IDs should be
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique identifier for this model. DFE IDs should be
 short and memorable, and conform to the stdpopsim
 <a class="reference internal" href="development.html#sec-development-naming-conventions"><span class="std std-ref">naming conventions</span></a>
 for DFE models.</p></li>
-<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A short description of this model as it would be used in
+<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A short description of this model as it would be used in
 written text, e.g., “Lognormal DFE”. This should
 describe the DFE itself and not contain author or year information.</p></li>
-<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A concise, but detailed, summary of the DFE model.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A concise, but detailed, summary of the DFE model.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citations</span></code></a>, that describe the primary
 reference(s) for the DFE model.</p></li>
 </ul>
@@ -1115,19 +1115,19 @@ list of dominance coefficients.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A one-letter abbreviation for the distribution of
+<li><p><strong>distribution_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A one-letter abbreviation for the distribution of
 fitness effects that each new mutation of this type draws from (see below).</p></li>
 <li><p><strong>distribution_args</strong> – Arguments for the distribution type.</p></li>
-<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The dominance coefficient (negative = underdominance,
+<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The dominance coefficient (negative = underdominance,
 0 = recessive, 0.5 = additive, 1.0 = completely dominant, &gt; 1.0 = overdominant)
 Default: 0.5.</p></li>
-<li><p><strong>convert_to_substitution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to retain any fixed mutations in the
+<li><p><strong>convert_to_substitution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to retain any fixed mutations in the
 simulation: if not, we cannot ask about their frequency once fixed.
 (Either way, they will remain in the tree sequence).</p></li>
-<li><p><strong>dominance_coeff_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><em>floats</em>) – Either None (the default) or a list of floats describing
+<li><p><strong>dominance_coeff_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Either None (the default) or a list of floats describing
 a list of dominance coefficients, to apply to different selection coefficients
 (see details). Cannot be specified along with dominance_coeff.</p></li>
-<li><p><strong>dominance_coeff_breaks</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><em>floats</em>) – Either None (the default) or a list of floats
+<li><p><strong>dominance_coeff_breaks</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Either None (the default) or a list of floats
 describing the intervals of selection coefficient over which each of the entries
 of dominance_coeff_list applies (see details). Must be of length one shorter than
 dominance_coeff_list.</p></li>
@@ -1196,27 +1196,27 @@ complete.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>single_site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string ID of the single site at which to introduce
+<li><p><strong>single_site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string ID of the single site at which to introduce
 the mutation, see <a class="reference internal" href="#stdpopsim.Contig.add_single_site" title="stdpopsim.Contig.add_single_site"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a>.</p></li>
-<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The name of the population in which the mutation is
+<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The name of the population in which the mutation is
 introduced and the sweep occurs.</p></li>
-<li><p><strong>mutation_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The number of generations in the past at which
+<li><p><strong>mutation_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The number of generations in the past at which
 to introduce the mutation.</p></li>
-<li><p><strong>selection_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The selection coefficient of the beneficial
+<li><p><strong>selection_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The selection coefficient of the beneficial
 mutation during the sweep.  Must be greater than or equal to zero.</p></li>
-<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The dominance coefficient of the beneficial
+<li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The dominance coefficient of the beneficial
 mutation during the sweep.  Defaults to <cite>0.5</cite>.</p></li>
-<li><p><strong>start_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The number of generations in the past at which the
+<li><p><strong>start_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The number of generations in the past at which the
 sweep starts and the mutation switches from neutral to beneficial. Defaults to
 <cite>mutation_generation_ago</cite> (i.e. a “hard” sweep).</p></li>
-<li><p><strong>end_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The number of generations in the past at which the
+<li><p><strong>end_generation_ago</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The number of generations in the past at which the
 sweep ends and the mutation switches from beneficial to neutral. Defaults to
 <cite>0</cite> (i.e. the end of the simulation).</p></li>
-<li><p><strong>min_freq_at_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The minimum allowed frequency for the
+<li><p><strong>min_freq_at_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The minimum allowed frequency for the
 mutation in <cite>population</cite> at the start of the sweep (optional).</p></li>
-<li><p><strong>min_freq_at_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The minimum allowed frequency for the
+<li><p><strong>min_freq_at_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The minimum allowed frequency for the
 mutation in <cite>population</cite> at the end of the sweep (optional).</p></li>
-<li><p><strong>globally_adaptive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <cite>True</cite> (default), the mutation is beneficial in all
+<li><p><strong>globally_adaptive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite> (default), the mutation is beneficial in all
 populations. If <cite>False</cite>, the mutation is beneficial only in the population of
 origin.</p></li>
 </ul>
@@ -1241,7 +1241,7 @@ instantaneous population size change over multiple epochs in a single population
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The initial effective population size</p></li>
+<li><p><strong>N0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The initial effective population size</p></li>
 <li><p><strong>args</strong> – Each subsequent argument is a tuple (t, N) which gives the
 time at which the size change takes place and the population size.</p></li>
 </ul>
@@ -1266,12 +1266,12 @@ as this is the ancestral population.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>NA</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The initial ancestral effective population size</p></li>
-<li><p><strong>N1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The effective population size of population 1</p></li>
-<li><p><strong>N2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The effective population size of population 2</p></li>
-<li><p><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Time of split between populations 1 and 2 (in generations)</p></li>
-<li><p><strong>M12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Migration rate from population 1 to 2</p></li>
-<li><p><strong>M21</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Migration rate from population 2 to 1</p></li>
+<li><p><strong>NA</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The initial ancestral effective population size</p></li>
+<li><p><strong>N1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The effective population size of population 1</p></li>
+<li><p><strong>N2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The effective population size of population 2</p></li>
+<li><p><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time of split between populations 1 and 2 (in generations)</p></li>
+<li><p><strong>M12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Migration rate from population 1 to 2</p></li>
+<li><p><strong>M21</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Migration rate from population 2 to 1</p></li>
 </ul>
 </dd>
 </dl>
@@ -1295,7 +1295,7 @@ accessed through the main entry point, <a class="reference internal" href="#stdp
 <dd><p>Returns the simulation engine with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The string identifier for the requested engine.
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The string identifier for the requested engine.
 The currently supported engines are “msprime” and “slim”.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1341,8 +1341,8 @@ be implemented. See msprime example in <code class="docutils literal notranslate
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier for the simulation engine.</p></li>
-<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A short description of this engine.</p></li>
+<li><p><strong>~.id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique identifier for the simulation engine.</p></li>
+<li><p><strong>~.description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A short description of this engine.</p></li>
 <li><p><strong>citations</strong> (list of <a class="reference internal" href="#stdpopsim.Citation" title="stdpopsim.Citation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Citation</span></code></a>) – A list of citations for the simulation engine.</p></li>
 </ul>
 </dd>
@@ -1353,7 +1353,7 @@ be implemented. See msprime example in <code class="docutils literal notranslate
 <dd><p>Returns the version of the engine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1370,8 +1370,8 @@ be implemented. See msprime example in <code class="docutils literal notranslate
 <li><p><strong>contig</strong> (<a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Contig"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contig</span></code></a>) – The contig, defining the length, mutation rate,
 and recombination rate(s).</p></li>
 <li><p><strong>samples</strong> (<em>dict containing number</em><em> of </em><em>individuals per population</em>) – The samples to be obtained from the simulation.</p></li>
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The seed for the random number generator.</p></li>
-<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the simulation engine will return None without
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The seed for the random number generator.</p></li>
+<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, the simulation engine will return None without
 running the simulation.</p></li>
 </ul>
 </dd>
@@ -1409,12 +1409,12 @@ for all engines.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msprime_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The msprime simulation model to be used.
+<li><p><strong>msprime_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The msprime simulation model to be used.
 One of <code class="docutils literal notranslate"><span class="pre">hudson</span></code>, <code class="docutils literal notranslate"><span class="pre">dtwf</span></code>, <code class="docutils literal notranslate"><span class="pre">smc</span></code>, or <code class="docutils literal notranslate"><span class="pre">smc_prime</span></code>.
 See msprime API documentation for details.</p></li>
-<li><p><strong>msprime_change_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em> of </em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>) </em><em>tuples</em>) – A list of (time, model) tuples, which
+<li><p><strong>msprime_change_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>) </em><em>tuples</em>) – A list of (time, model) tuples, which
 changes the simulation model to the new model at the time specified.</p></li>
-<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">end_time=0</span></code> is passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.simulate()</span></code>
+<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">end_time=0</span></code> is passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.simulate()</span></code>
 to initialise the simulation and then immediately return.</p></li>
 <li><p><strong>**kwargs</strong> – Further arguments passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">msprime.sim_ancestry()</span></code></p></li>
 </ul>
@@ -1475,27 +1475,27 @@ See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpo
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The seed for the random number generator.</p></li>
-<li><p><strong>extended_events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ExtendedEvents</span></code> to be
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The seed for the random number generator.</p></li>
+<li><p><strong>extended_events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ExtendedEvents</span></code> to be
 passed to SLiM, e.g. produced by <code class="xref py py-func docutils literal notranslate"><span class="pre">selective_sweep()</span></code>.</p></li>
-<li><p><strong>slim_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The full path to the slim executable, or the name of
+<li><p><strong>slim_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The full path to the slim executable, or the name of
 a command in the current PATH.</p></li>
-<li><p><strong>slim_script</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, the simulation will not be executed.
+<li><p><strong>slim_script</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, the simulation will not be executed.
 Instead the generated SLiM script will be printed to stdout.</p></li>
-<li><p><strong>slim_scaling_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Rescale model parameters by the given value,
+<li><p><strong>slim_scaling_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rescale model parameters by the given value,
 to speed up simulation. Population sizes and generation times are
 divided by this factor, whereas the mutation rate, recombination
 rate, and growth rates are multiplied by the factor.
 See SLiM manual: <cite>5.5 Rescaling population sizes to improve
 simulation performance.</cite></p></li>
-<li><p><strong>slim_burn_in</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Length of the burn-in phase, in units of N
+<li><p><strong>slim_burn_in</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Length of the burn-in phase, in units of N
 generations.</p></li>
-<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, run the setup and then end the simulation.</p></li>
+<li><p><strong>dry_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, run the setup and then end the simulation.</p></li>
 <li><p><strong>logfile</strong> – Name of file to write a log of summary statistics
 (currently, only mean and SD of fitness values per population).
 Defaults to None, meaning “do not log”.</p></li>
 <li><p><strong>logfile_interval</strong> – How often to write to the log file, in generations.</p></li>
-<li><p><strong>keep_mutation_ids_as_alleles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, alleles will be coded by integer
+<li><p><strong>keep_mutation_ids_as_alleles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, alleles will be coded by integer
 mutation ids (assigned by SLiM) rather than by randomly-generated
 nucleotides.</p></li>
 </ul>
@@ -1527,7 +1527,7 @@ nucleotides.</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev12+g6959e149b)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev13+gfb407d3d5)</div>
 
 
 </footer>
