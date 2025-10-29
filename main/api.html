@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; stdpopsim 0.3.1.dev17+g0510a45f9 documentation</title>
+  <title>API &mdash; stdpopsim 0.3.1.dev18+g2470fb413 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=cb87cd83"></script>
+      <script src="_static/documentation_options.js?v=13ec5247"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -296,6 +296,9 @@ it would be used in written text, e.g., “Homo sapiens”.</p></li>
 used informally in written text, e.g., “human”, or “Orang-utan”.
 Where no common name for the species exist, use the most common
 abbreviation, e.g., “E. Coli”.</p></li>
+<li><p><strong>separate_sexes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the species has two separate sexes or
+not (if not, it is hermaphroditic). Note that at present,
+haplodiploid species have this set to False.</p></li>
 <li><p><strong>genome</strong> (<a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><em>stdpopsim.Genome</em></a>) – The <a class="reference internal" href="#stdpopsim.Genome" title="stdpopsim.Genome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Genome</span></code></a> instance describing the details
 of this species’ genome.</p></li>
 <li><p><strong>generation_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The current best estimate for the generation
@@ -575,6 +578,11 @@ that are needed to simulate this region.</p>
 <p>Information about targets of selection are contained in the <code class="docutils literal notranslate"><span class="pre">dfe_list</span></code>
 and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DFE
 applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> for more information.</p>
+<p>One attribute of the Contig is <code class="docutils literal notranslate"><span class="pre">species</span></code>, which is necessary to pass
+on aspects of life history important for simulation. However, generic
+contigs not associated with any specific species can be created, in
+which case a default <code class="docutils literal notranslate"><span class="pre">species</span></code> will be assigned (see
+<code class="docutils literal notranslate"><span class="pre">contig.species</span></code> for defaults in this case).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -615,6 +623,7 @@ neutral DFE.</p></li>
 as a tuple of the form <cite>(chromosome, left, right)</cite>. If <cite>None</cite>, the contig
 is assumed to be generic (i.e. it does not inherit a coordinate system
 from a larger chromosome).</p></li>
+<li><p><strong>species</strong> (<em>.Species</em>) – The species this contig represents a portion of the genome of.</p></li>
 </ul>
 </dd>
 </dl>
@@ -629,6 +638,7 @@ of the <code class="docutils literal notranslate"><span class="pre">old_contig</
     <span class="n">mutation_rate</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">mutation_rate</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">recombination_map</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="p">,</span>
     <span class="n">genetic_map</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">genetic_map</span><span class="p">,</span>
+    <span class="n">species</span><span class="o">=</span><span class="n">old_contig</span><span class="o">.</span><span class="n">species</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1472,6 +1482,16 @@ for your case.</p>
 <dd><p>Simulate the demographic model using SLiM.
 See <a class="reference internal" href="#stdpopsim.Engine.simulate" title="stdpopsim.Engine.simulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.simulate()</span></code></a> for definitions of the
 <code class="docutils literal notranslate"><span class="pre">demographic_model</span></code>, <code class="docutils literal notranslate"><span class="pre">contig</span></code>, and <code class="docutils literal notranslate"><span class="pre">samples</span></code> parameters.</p>
+<p>The SLiM engine can also adjust aspects of the simulation to match
+the life history of the species. At present, this is only:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">separate_sexes</span></code>: if the species has separate sexes, SLiM</dt><dd><p>will use a two-sex Wright-Fisher model (instead of the default
+hermaphroditic WF model)</p>
+</dd>
+</dl>
+</li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1527,7 +1547,7 @@ nucleotides.</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev17+g0510a45f9)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev18+g2470fb413)</div>
 
 
 </footer>

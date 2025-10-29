@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.3.1.dev17+g0510a45f9 documentation</title>
+  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.3.1.dev18+g2470fb413 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=cb87cd83"></script>
+      <script src="../../_static/documentation_options.js?v=13ec5247"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -147,8 +147,9 @@
     <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">))</span>
 
 
+<span class="c1"># this is the start of the initialize() block,</span>
+<span class="c1"># right after optional initialization calls that must come first</span>
 <span class="n">_slim_upper</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">initialize() {</span>
 <span class="s2">    if (!exists(&quot;dry_run&quot;))</span>
 <span class="s2">        defineConstant(&quot;dry_run&quot;, F);</span>
 <span class="s2">    if (!exists(&quot;verbosity&quot;))</span>
@@ -1276,6 +1277,9 @@
 
     <span class="n">pop_names_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">pop_names</span><span class="p">))</span>
 
+    <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;initialize() {</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">separate_sexes</span><span class="p">:</span>
+        <span class="n">printsc</span><span class="p">(</span><span class="s2">&quot;    initializeSex();</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">printsc</span><span class="p">(</span>
         <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">_slim_upper</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
             <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">,</span>
@@ -1674,6 +1678,13 @@
 <span class="sd">        Simulate the demographic model using SLiM.</span>
 <span class="sd">        See :meth:`.Engine.simulate()` for definitions of the</span>
 <span class="sd">        ``demographic_model``, ``contig``, and ``samples`` parameters.</span>
+
+<span class="sd">        The SLiM engine can also adjust aspects of the simulation to match</span>
+<span class="sd">        the life history of the species. At present, this is only:</span>
+
+<span class="sd">        * ``separate_sexes``: if the species has separate sexes, SLiM</span>
+<span class="sd">            will use a two-sex Wright-Fisher model (instead of the default</span>
+<span class="sd">            hermaphroditic WF model)</span>
 
 <span class="sd">        :param seed: The seed for the random number generator.</span>
 <span class="sd">        :type seed: int</span>
@@ -2164,7 +2175,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev17+g0510a45f9)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev18+g2470fb413)</div>
 
 
 </footer>
