@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>stdpopsim.traits &mdash; stdpopsim 0.3.1.dev33+gc96504f30 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=713e20e3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            stdpopsim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../catalog.html">Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli_arguments.html">Command-line options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">stdpopsim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">stdpopsim.traits</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for stdpopsim.traits</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Methods related to traits and effects of mutations on them,</span>
+<span class="sd">including environment and fitness (so, this includes DFE machinery).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">attr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections.abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_copy_converter</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_trait_ids</span><span class="p">(</span><span class="n">trait_ids</span><span class="p">):</span>
+    <span class="c1"># this might be too strict but we want to avoid things like trait_ids=&quot;foo&quot;</span>
+    <span class="c1"># which might then be interpreted as three trait IDs: &quot;f&quot;, &quot;o&quot;, and &quot;o&quot;</span>
+    <span class="c1"># if we just iterate over it</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trait_ids</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Trait IDs must be a list.&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">trait_ids</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">tid</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Each trait ID must be a nonempty string; found </span><span class="si">{</span><span class="n">tid</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">trait_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">trait_ids</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">trait_ids</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Trait IDs must be a nonempty list of unique strings.&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TraitsModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traits</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A list of genetically determined ``traits``,</span>
+<span class="sd">        linked together by possibly shared effects of ``environments``</span>
+<span class="sd">        and by ``fitness_functions`` that depend on their values.</span>
+
+<span class="sd">        On initialization ``environments`` and ``fitness_functions``</span>
+<span class="sd">        are empty and can be added with :meth:`.add_environment`</span>
+<span class="sd">        and :meth:`.add_fitness_function`.</span>
+<span class="sd">        These must all have unique IDs.</span>
+
+<span class="sd">        :ivar traits: List of :class:`Trait` objects, with unique IDs.</span>
+<span class="sd">        :vartype traits: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pids</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">traits</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">pids</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pids</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Trait IDs must be unique.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">traits</span> <span class="o">=</span> <span class="n">traits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_functions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># We *could* take in Environment and FitnessFunction objects</span>
+        <span class="c1"># to the construtor here, but no need;</span>
+        <span class="c1"># we&#39;ll just add them with the add_X functions.</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_traits_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trait_ids</span><span class="p">):</span>
+        <span class="n">tids</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traits</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">trait_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tids</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown trait ID `</span><span class="si">{</span><span class="n">tid</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_fitness_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a :class:`.FitnessFunction` to the :class:`TraitsModel`.</span>
+<span class="sd">        The arguments are passed directly to :class:`FitnessFunction`;</span>
+<span class="sd">        see that documentation for more information.</span>
+<span class="sd">        The IDs of all traits referred to by this fitness function</span>
+<span class="sd">        must be present in the :class:`TraitsModel`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ff</span> <span class="o">=</span> <span class="n">FitnessFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_traits_defined</span><span class="p">(</span><span class="n">ff</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="n">fids</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_functions</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">ff</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">fids</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;FitnessFunction IDs must be unique; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; fitness function with ID `</span><span class="si">{</span><span class="n">ff</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">` already exists.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_environment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add random &quot;environmental&quot; (i.e., non-genetic) effects to the specified</span>
+<span class="sd">        traits. The arguments are passed directly to :class:`Environment`;</span>
+<span class="sd">        see that documentation for more information.</span>
+<span class="sd">        The IDs of all traits referred to by this environment</span>
+<span class="sd">        must be present in the :class:`TraitsModel`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_traits_defined</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="n">eids</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">environments</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">eids</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Environment IDs must be unique; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; environment with ID `</span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">` already exists.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+
+<span class="c1">#     def check_model_params(self, model, params):</span>
+<span class="c1">#         # Check for consistency with a given demographic model.</span>
+<span class="c1">#         # TODO: is this where we want to do this?</span>
+<span class="c1">#         #</span>
+<span class="c1">#         # sort elements by epoch start time</span>
+<span class="c1">#         # (which is the backwards-in-time generation time)</span>
+<span class="c1">#         # tuples should look like</span>
+<span class="c1">#         # (epoch_start, [list of applicable pops], distribution params...)</span>
+<span class="c1">#         # check populations and generation times make sense?</span>
+<span class="c1">#         # distributions should propagate backwards in time</span>
+<span class="c1">#         # so to apply the same distribution everywhere, use the tuple</span>
+<span class="c1">#         # (0, &quot;all&quot;, ...)</span>
+<span class="c1">#         # also check that num_traits matches distribution params</span>
+<span class="c1">#         pass</span>
+<span class="c1">#</span>
+<span class="c1">#     def print(model):</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Prints how the TraitsModel maps on a demographic model.</span>
+<span class="c1">#</span>
+<span class="c1">#         Note: this is why environments and fitness functions have IDs:</span>
+<span class="c1">#         both need to be uniquely specified so we can show things like</span>
+<span class="c1">#         &quot;this environment applies to these populations for this time period&quot;.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         # TODO</span>
+<span class="c1">#         pass</span>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Trait</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a single trait, something that we measure or observe.</span>
+<span class="sd">    This class defines how the underlying (latent) value,</span>
+<span class="sd">    which is a sum of genetic value and environmental deviation(s),</span>
+<span class="sd">    is &quot;transformed&quot; to the observed value (the phenotype).</span>
+<span class="sd">    The `transform` is thus analogous to an inverse link function</span>
+<span class="sd">    from generalized linear models.</span>
+
+<span class="sd">    The ``type`` can be either &quot;additive&quot; or &quot;multiplicative&quot;,</span>
+<span class="sd">    and determines whether the per-site genetic effects are added together</span>
+<span class="sd">    or multiplied to produce the genetic value</span>
+<span class="sd">    (in other words, the genetic component of the latent value):</span>
+<span class="sd">    for additive traits, the genetic value is the sum of :math:`s_i`,</span>
+<span class="sd">    where :math:`s_i` is the effect at site :math:`i` (including effects</span>
+<span class="sd">    of dominance); for multiplicative traits, the genetic value</span>
+<span class="sd">    is the product of :math:`1+s_i`.</span>
+
+<span class="sd">    The genetic effects themselves, including dominance, are specified through</span>
+<span class="sd">    :class:`DistributionOfMutationEffects`,</span>
+<span class="sd">    while environmental deviations are specified through</span>
+<span class="sd">    :class:`Environment`s.</span>
+
+<span class="sd">    Options for &quot;transform&quot; are:</span>
+
+<span class="sd">    &quot;identity&quot;: the observed value is equal to the latent value.</span>
+
+<span class="sd">    &quot;threshold&quot; (parameters: t): the observed value is equal to 1 if the latent</span>
+<span class="sd">        value is less than t, and is equal to 0 otherwise.</span>
+
+<span class="sd">    &quot;liability&quot; (parameters center, slope): the observed value is equal to 1</span>
+<span class="sd">        with probability 1 / (1 + exp((x - center) * slope)) for the latent value x,</span>
+<span class="sd">        and is equal to 0 otherwise.</span>
+
+<span class="sd">    TODO: Add &quot;exponential&quot; transform to get log-normal traits?</span>
+
+<span class="sd">    TODO: Add Poisson (count) traits?</span>
+
+<span class="sd">    TODO: Add &quot;logistic&quot; traits?</span>
+
+<span class="sd">    :ivar id: ID of the trait (think of this as the &#39;name&#39;).</span>
+<span class="sd">    :vartype id: str</span>
+<span class="sd">    :ivar type: Type of the trait (&quot;additive&quot; or &quot;multiplicative&quot;).</span>
+<span class="sd">    :vartype type: str</span>
+<span class="sd">    :ivar transform: Type of transformation. (default: &quot;identity&quot;)</span>
+<span class="sd">    :vartype transform: str</span>
+<span class="sd">    :ivar transform_args: A list of parameters given to the transformation.</span>
+<span class="sd">    :vartype transform_args: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">transform_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;id must be a nonempty string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;multiplicative&quot;</span><span class="p">,</span> <span class="s2">&quot;additive&quot;</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown trait type &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;transform_args must be a list&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">==</span> <span class="s2">&quot;identity&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;identity transform takes no parameters.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">==</span> <span class="s2">&quot;threshold&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;threshold transform requires one parameter (the threshold)&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">==</span> <span class="s2">&quot;liability&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;liability transform requires two parameters (center and slope)&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slope for liability transform must be positive&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transform &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="si">}</span><span class="s2">&#39; unknown.&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Environment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents random &quot;environmental&quot; (i.e., non-genetic) effects on traits.</span>
+<span class="sd">    These are added to genetic values to produce the latent values</span>
+<span class="sd">    for a :class:`Trait`.</span>
+<span class="sd">    The Environment may be restricted to apply only to a given</span>
+<span class="sd">    span of time and/or set of populations.</span>
+
+<span class="sd">    Each environment has an ``id``; this is for debugging purposes, and so each</span>
+<span class="sd">    environment used in the same :class:`.TraitsModel` should have a unique name.</span>
+
+<span class="sd">    TODO: does this accept all of the distribution types? Right now it shares code</span>
+<span class="sd">    with MutationType so it does.</span>
+
+<span class="sd">    :ivar id: An ID (i.e., a name) for this environment.</span>
+<span class="sd">    :vartype id: str</span>
+<span class="sd">    :ivar trait_ids: List of trait IDs.</span>
+<span class="sd">    :vartype trait_ids: list</span>
+<span class="sd">    :ivar distribution_type: A str abbreviation for the distribution</span>
+<span class="sd">        of environmental efffects (see TODO WHERE).</span>
+<span class="sd">    :vartype distribution_type: str</span>
+<span class="sd">    :ivar distribution_args: Arguments to the distribution.</span>
+<span class="sd">    :vartype distribution_args: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">trait_ids</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>  <span class="c1"># list of trait IDs</span>
+    <span class="n">distribution_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">distribution_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="c1"># TODO: add later</span>
+    <span class="c1"># start_time = attr.ib(default=None)</span>
+    <span class="c1"># end_time = attr.ib(default=None)</span>
+    <span class="c1"># populations = attr.ib(default=None)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;id must be a nonempty string&quot;</span><span class="p">)</span>
+        <span class="n">_check_trait_ids</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="n">_check_distribution</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="p">)</span>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FitnessFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that computes a component of fitness:</span>
+<span class="sd">    the total fitness is obtained by multiplying together</span>
+<span class="sd">    all fitness functions in the :class:`TraitsModel`.</span>
+<span class="sd">    Each fitness function operates on a collection of traits</span>
+<span class="sd">    (the ``trait_ids``), and returns a value that multiplies the fitness.</span>
+<span class="sd">    The Fitness Function may be restricted to apply only to a given</span>
+<span class="sd">    span of time and/or set of populations.</span>
+
+<span class="sd">    Options for ``function_type``, and corresponding ``function_args``, are:</span>
+
+<span class="sd">    &quot;gaussian&quot;, arguments (m, s): fitness is given by the Gaussian density</span>
+<span class="sd">        with mean m and (co)variance s; so if there is a single trait in ``trait_id``,</span>
+<span class="sd">        then this is f(x) = exp((x - m)**2 / s) / sqrt(2*pi*s),</span>
+<span class="sd">        while if there is more than one trait then it is the multivariate</span>
+<span class="sd">        Gaussian density.</span>
+
+<span class="sd">    &quot;threshold&quot;, arguments (q, a, b): fitness is one of two values, either</span>
+<span class="sd">        :math:`f(x) = a` if the quantile of :math:`x` among the values in the</span>
+<span class="sd">        population is less than :math:`q`, and :math:`f(x) = b` otherwise.</span>
+
+
+<span class="sd">    Each fitness function has an ``id``; this is for debugging purposes, and so each</span>
+<span class="sd">    fitness function used in the same :class:`.TraitsModel` should have a unique name.</span>
+
+<span class="sd">    :ivar id: An ID (i.e., a name) for this fitness function.</span>
+<span class="sd">    :vartype id: str</span>
+<span class="sd">    :ivar trait_ids: List of trait IDs.</span>
+<span class="sd">    :vartype trait_ids: list</span>
+<span class="sd">    :ivar function_type: String corresponding to fitness function type</span>
+<span class="sd">    :vartype function_type: str</span>
+<span class="sd">    :ivar function_args: Tuple containing parameters for the fitness function</span>
+<span class="sd">    :vartype function_args: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># :ivar spacetime: Generations and populations</span>
+    <span class="c1">#    for which this fitness function applies</span>
+    <span class="c1"># :vartype spacetime: list of tuples (?)</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">trait_ids</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="n">function_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">function_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="c1"># spacetime = attr.ib(type=list)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;id must be a nonempty string&quot;</span><span class="p">)</span>
+        <span class="n">_check_trait_ids</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="n">num_traits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;function_type must be a str&quot;</span><span class="p">)</span>
+        <span class="n">_check_args_list</span><span class="p">(</span>
+            <span class="s2">&quot;function_args&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">,</span>
+            <span class="n">num_traits</span><span class="p">,</span>
+            <span class="n">arrays</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_type</span> <span class="o">==</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_type</span> <span class="o">==</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">:</span>
+            <span class="n">_check_gaussian_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">,</span> <span class="n">num_traits</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_type</span> <span class="o">==</span> <span class="s2">&quot;threshold&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;threshold function takes three arguments: &quot;</span>
+                    <span class="s2">&quot;(quantile, low_fitness, high_fitness)&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;quantile argument to threshold function &quot;</span>
+                    <span class="s2">&quot;must be between 0 and 1.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;fitness arguments to threshold function must be nonnegative&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown function type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">function_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MutationType">
+<a class="viewcode-back" href="../../api.html#stdpopsim.MutationType">[docs]</a>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MutationType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a &quot;type&quot; of mutation, that affects fitness and/or</span>
+<span class="sd">    a collection of other traits.</span>
+
+<span class="sd">    The main thing that mutation types carry is a way of drawing an *effect*</span>
+<span class="sd">    for each new mutation from a distribution. This ``distribution_type`` should</span>
+<span class="sd">    be one of:</span>
+
+<span class="sd">    - ``f``: fixed, one parameter per trait (a single value for each)</span>
+<span class="sd">    - ``e``: exponential, one parameter (mean)</span>
+<span class="sd">    - ``g``: gamma, two parameters (mean, shape)</span>
+<span class="sd">    - ``n``: normal, two parameters (mean, sd)</span>
+<span class="sd">    - ``w``: Weibull, two parameters (scale, shape)</span>
+<span class="sd">    - ``u``: Uniform, two parameters (min, max)</span>
+<span class="sd">    - ``lp``: positive logNormal, two parameters (mean and sd on log scale; see rlnorm)</span>
+<span class="sd">    - ``ln``: negative logNormal, two parameters (mean and sd on log scale; see rlnorm)</span>
+<span class="sd">    - ``mvn``: TODO</span>
+
+<span class="sd">    Currently, only &quot;fixed&quot; and &quot;mvn&quot; can apply to more than one trait.</span>
+
+<span class="sd">    Type &quot;lp&quot; is always positive, and type &quot;ln&quot; is always negative: both use</span>
+<span class="sd">    the same log-normal distribution, but &quot;ln&quot; is multiplied by -1.  For</span>
+<span class="sd">    exponential and gamma, a negative mean can be provided, obtaining always</span>
+<span class="sd">    negative values.</span>
+
+<span class="sd">    Instead of a single dominance coefficient (which would be specified with</span>
+<span class="sd">    `dominance_coeff`), a discretized relationship between dominance and</span>
+<span class="sd">    effect can be implemented: if dominance_coeff_list is</span>
+<span class="sd">    provided, mutations with effect ``s`` for which</span>
+<span class="sd">    ``dominance_coeff_breaks[k-1] &lt;= s &lt;= dominance_coeff_breaks[k]`` will have</span>
+<span class="sd">    ``dominance coefficient dominance_coeff[k]``. In other words, the first entry</span>
+<span class="sd">    of ``dominance_coeff_list`` applies to any mutations with effect</span>
+<span class="sd">    below the first entry of ``dominance_coeff_breaks``; the second entry of</span>
+<span class="sd">    ``dominance_coeff_list`` applies to mutations with effect</span>
+<span class="sd">    between the first and second entries of ``dominance_coeff_breaks``, and so</span>
+<span class="sd">    forth. The list of breaks must therefore be of length one less than the</span>
+<span class="sd">    list of dominance coefficients.</span>
+
+<span class="sd">    :ivar trait_ids: A list of trait IDs this mutation type affects.</span>
+<span class="sd">        (default: [&quot;fitness&quot;])</span>
+<span class="sd">    :vartype trait_ids: list</span>
+<span class="sd">    :ivar distribution_type: A str abbreviation for the distribution of</span>
+<span class="sd">        effects that each new mutation of this type draws from (see above).</span>
+<span class="sd">    :vartype distribution_type: str</span>
+<span class="sd">    :ivar distribution_args: Arguments for the distribution type.</span>
+<span class="sd">    :vartype distribution_type: list</span>
+<span class="sd">    :ivar dominance_coeff: The dominance coefficient (negative = underdominance,</span>
+<span class="sd">        0 = recessive, 0.5 = additive, 1.0 = completely dominant, &gt; 1.0 = overdominant)</span>
+<span class="sd">        Default: 0.5.</span>
+<span class="sd">    :vartype dominance_coeff: float</span>
+<span class="sd">    :ivar convert_to_substitution: Whether to retain any fixed mutations in the</span>
+<span class="sd">        simulation: if not, we cannot ask about their frequency once fixed.</span>
+<span class="sd">        (Either way, they will remain in the tree sequence).  Default: True.</span>
+<span class="sd">    :vartype convert_to_substitution: bool</span>
+<span class="sd">    :ivar dominance_coeff_list: Either None (the default) or a list of floats describing</span>
+<span class="sd">        a list of dominance coefficients, to apply to different effects</span>
+<span class="sd">        (see details). Cannot be specified along with dominance_coeff.</span>
+<span class="sd">    :vartype dominance_coeff_list: list of floats</span>
+<span class="sd">    :ivar dominance_coeff_breaks: Either None (the default) or a list of floats</span>
+<span class="sd">        describing the intervals of selection coefficient over which each of the entries</span>
+<span class="sd">        of dominance_coeff_list applies (see details). Must be of length one shorter than</span>
+<span class="sd">        dominance_coeff_list.</span>
+<span class="sd">    :vartype dominance_coeff_breaks: list of floats</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">trait_ids</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="n">distribution_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">distribution_args</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="n">dominance_coeff</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">convert_to_substitution</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">dominance_coeff_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+    <span class="n">dominance_coeff_breaks</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">_copy_converter</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fitness&quot;</span><span class="p">]</span>
+        <span class="n">_check_trait_ids</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot specify both dominance_coeff and dominance_coeff_list.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff must be a number.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># disallow the inefficient and annoying length-one case</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff_list must have at least 2 elements.&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff_list must be a list of numbers.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;A list of dominance coefficients provided but no breaks.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;len(dominance_coeff_list) must be equal &quot;</span>
+                    <span class="s2">&quot;to len(dominance_coeff_breaks) + 1&quot;</span>
+                <span class="p">)</span>
+            <span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dominance_coeff_breaks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;dominance_coeff_breaks must be a list of numbers.&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dominance coefficient break </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">lb</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dominance_coeff_breaks must be nondecreasing.&quot;</span><span class="p">)</span>
+                <span class="n">lb</span> <span class="o">=</span> <span class="n">b</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_to_substitution</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;convert_to_substitution must be bool.&quot;</span><span class="p">)</span>
+
+        <span class="n">_check_distribution</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># rewrite some of these for Eidos</span>
+        <span class="c1"># TODO: this should probably happen downstream, in slim_engine.py?</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;lp&quot;</span><span class="p">,</span> <span class="s2">&quot;ln&quot;</span><span class="p">):</span>
+            <span class="c1"># lognormal distribution:</span>
+            <span class="n">logmean</span><span class="p">,</span> <span class="n">logsd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span>
+            <span class="n">sign</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;lp&quot;</span> <span class="k">else</span> <span class="s2">&quot;-1 *&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;return </span><span class="si">{</span><span class="n">sign</span><span class="si">}</span><span class="s2">rlnorm(1, </span><span class="si">{</span><span class="n">logmean</span><span class="si">}</span><span class="s2"> + log(Q), </span><span class="si">{</span><span class="n">logsd</span><span class="si">}</span><span class="s2">);&quot;</span>
+            <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;u&quot;</span><span class="p">:</span>
+            <span class="n">umin</span><span class="p">,</span> <span class="n">umax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;return runif(1, Q * </span><span class="si">{</span><span class="n">umin</span><span class="si">}</span><span class="s2">, Q * </span><span class="si">{</span><span class="n">umax</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
+
+        <span class="c1"># The index(s) of the param in the distribution_args list that should be</span>
+        <span class="c1"># multiplied by Q when using --slim-scaling-factor Q.</span>
+        <span class="c1"># Note that &quot;u&quot;, &quot;lp&quot;, and &quot;ln&quot; got remapped to &quot;s&quot; above,</span>
+        <span class="c1"># which is why they do not appear here.</span>
+        <span class="n">scaling_factor_index_lookup</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># fixed value</span>
+            <span class="s2">&quot;g&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># mean</span>
+            <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># mean</span>
+            <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># mean and sd</span>
+            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># scale</span>
+            <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># script types should just printout arguments</span>
+        <span class="p">}</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="ow">in</span> <span class="n">scaling_factor_index_lookup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q_scaled_index</span> <span class="o">=</span> <span class="n">scaling_factor_index_lookup</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the mutation type is strictly neutral. This is defined here to</span>
+<span class="sd">        be:</span>
+<span class="sd">        - only affecting &quot;fitness&quot;;</span>
+<span class="sd">        - of type &quot;f&quot;;</span>
+<span class="sd">        - and with fitness effect 0.0,</span>
+<span class="sd">        and so excludes other situations that also produce only neutral</span>
+<span class="sd">        mutations (e.g., exponential with mean 0, or affecting some other trait</span>
+<span class="sd">        with no effect on fitness).</span>
+
+<span class="sd">        TODO: make a TraitsModel method that looks at whether a trait affects</span>
+<span class="sd">        fitness and so can decide whether additional mutation types are neutral.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">neutral</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fitness&quot;</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">neutral</span></div>
+
+
+
+<span class="c1"># at least conceptually a superclass of DFE, so we call it DME</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DistributionOfMutationEffects</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing all mutations that affect a given segment of genome,</span>
+<span class="sd">    and hence contains a list of :class:`.MutationType`</span>
+<span class="sd">    and corresponding list of proportions,</span>
+<span class="sd">    that gives the proportions of mutations falling in this region</span>
+<span class="sd">    that are of the corresponding mutation type.</span>
+
+<span class="sd">    ``proportions`` and ``mutation_types`` must be lists of the same length,</span>
+<span class="sd">    and ``proportions`` should be nonnegative numbers summing to 1.</span>
+
+<span class="sd">    :ivar ~.mutation_types: A list of :class:`.MutationType`</span>
+<span class="sd">        objects associated with the DME. Defaults to an empty list.</span>
+<span class="sd">    :vartype ~.mutation_types: list</span>
+<span class="sd">    :ivar ~.proportions: A list of the proportions of new mutations that</span>
+<span class="sd">        fall in to each of the mutation types (must sum to 1).</span>
+<span class="sd">    :vartype ~.proportions: list</span>
+<span class="sd">    :ivar ~.id: The unique identifier for this model. DME IDs should be</span>
+<span class="sd">        short and memorable, and conform to the stdpopsim</span>
+<span class="sd">        :ref:`naming conventions &lt;sec_development_naming_conventions&gt;`</span>
+<span class="sd">        for DME models.</span>
+<span class="sd">    :vartype ~.id: str</span>
+<span class="sd">    :ivar ~.description: A short description of this model as it would be used in</span>
+<span class="sd">        written text, e.g., &quot;Lognormal DME&quot;. This should</span>
+<span class="sd">        describe the DME itself and not contain author or year information.</span>
+<span class="sd">    :vartype ~.description: str</span>
+<span class="sd">    :ivar long_description: A concise, but detailed, summary of the DME model.</span>
+<span class="sd">    :vartype long_description: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mutation_types</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">proportions</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># will error below if this doesn&#39;t make sense</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">,</span> <span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proportions must be a list or numpy array.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mutation_types must be a list.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;proportions and mutation_types must be lists of the same length.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proportions must be nonnegative numbers.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sum_p</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">sum_p</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proportions must sum to 1.0.&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">MutationType</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;mutation_types must be a list of MutationType objects.&quot;</span>
+                <span class="p">)</span>
+
+
+<div class="viewcode-block" id="DFE">
+<a class="viewcode-back" href="../../api.html#stdpopsim.DFE">[docs]</a>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DFE</span><span class="p">(</span><span class="n">DistributionOfMutationEffects</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a &quot;Distribution of Fitness Effects&quot;, i.e., a DFE.</span>
+<span class="sd">    The class records the different *mutation types*, and the *proportions*</span>
+<span class="sd">    with which they occur. The overall rate of mutations will be determined</span>
+<span class="sd">    by the Contig to which the DFE is applied (see :meth:`.Contig.add_dfe`).</span>
+
+<span class="sd">    This is a specialization of :class:`.DistributionOfMutationEffects`</span>
+<span class="sd">    to distributions that only affect fitness, and have associated publications</span>
+<span class="sd">    (and hence citations).</span>
+
+<span class="sd">    Instances of this class are constructed by DFE implementors, following the</span>
+<span class="sd">    :ref:`developer documentation &lt;sec_development_dfe_model&gt;`. To instead</span>
+<span class="sd">    obtain a pre-specified model as listed in the :ref:`sec_catalog`,</span>
+<span class="sd">    see :meth:`Species.get_dfe`.</span>
+
+<span class="sd">    ``proportions`` and ``mutation_types`` must be lists of the same length,</span>
+<span class="sd">    and ``proportions`` should be nonnegative numbers summing to 1.</span>
+
+<span class="sd">    :ivar ~.mutation_types: A list of :class:`.MutationType` objects associated</span>
+<span class="sd">        with the DFE. Defaults to an empty list.</span>
+<span class="sd">    :vartype ~.mutation_types: list</span>
+<span class="sd">    :ivar ~.proportions: A list of the proportions of new mutations that</span>
+<span class="sd">        fall in to each of the mutation types (must sum to 1).</span>
+<span class="sd">    :vartype ~.proportions: list</span>
+<span class="sd">    :ivar ~.id: The unique identifier for this model. DFE IDs should be</span>
+<span class="sd">        short and memorable, and conform to the stdpopsim</span>
+<span class="sd">        :ref:`naming conventions &lt;sec_development_naming_conventions&gt;`</span>
+<span class="sd">        for DFE models.</span>
+<span class="sd">    :vartype ~.id: str</span>
+<span class="sd">    :ivar ~.description: A short description of this model as it would be used in</span>
+<span class="sd">        written text, e.g., &quot;Lognormal DFE&quot;. This should</span>
+<span class="sd">        describe the DFE itself and not contain author or year information.</span>
+<span class="sd">    :vartype ~.description: str</span>
+<span class="sd">    :ivar long_description: A concise, but detailed, summary of the DFE model.</span>
+<span class="sd">    :vartype long_description: str</span>
+<span class="sd">    :ivar citations: A list of :class:`Citations &lt;.Citation&gt;`, that describe the primary</span>
+<span class="sd">        reference(s) for the DFE model.</span>
+<span class="sd">    :vartype citations: list of :class:`Citation`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">citations</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">qc_dfe</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">long_desc_lines</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">long_description</span><span class="p">))</span>
+        <span class="p">]</span>
+        <span class="n">long_desc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">║                     &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">long_desc_lines</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;DFE:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  id               = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  description      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  long_description = </span><span class="si">{</span><span class="n">long_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;║  citations        = </span><span class="si">{</span><span class="p">[</span><span class="n">cite</span><span class="o">.</span><span class="n">doi</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cite</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+<div class="viewcode-block" id="DFE.register_qc">
+<a class="viewcode-back" href="../../api.html#stdpopsim.DFE.register_qc">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_qc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc_dfe</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a QC model implementation for this DFE.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">qc_dfe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot register non-DFE &#39;</span><span class="si">{</span><span class="n">qc_dfe</span><span class="si">}</span><span class="s2">&#39; as QC DFE.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qc_dfe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QC DFE already registered for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qc_dfe</span> <span class="o">=</span> <span class="n">qc_dfe</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">neutral_dfe</span><span class="p">(</span><span class="n">convert_to_substitution</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;neutral&quot;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;neutral DFE&quot;</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="s2">&quot;strictly neutral mutations&quot;</span>
+    <span class="n">neutral</span> <span class="o">=</span> <span class="n">MutationType</span><span class="p">(</span><span class="n">convert_to_substitution</span><span class="o">=</span><span class="n">convert_to_substitution</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">DFE</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
+        <span class="n">mutation_types</span><span class="o">=</span><span class="p">[</span><span class="n">neutral</span><span class="p">],</span>
+        <span class="n">proportions</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_args_list</span><span class="p">(</span><span class="n">argname</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">arrays</span><span class="p">):</span>
+    <span class="c1"># TODO: do we really want to require arrays?</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">argname</span><span class="si">}</span><span class="s2"> must be list.&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arrays</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">argname</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] is not a number.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">argname</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] is an invalid parameter.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">argname</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] is not a numpy array.&quot;</span><span class="p">)</span>
+            <span class="c1"># TODO: check that entries are finite numbers</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_gaussian_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Normal distribution requires two parameters: &quot;</span>
+            <span class="s2">&quot;a mean (or mean vector) and a variance (or covariance matrix).&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dim</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Multivariate normal mean vector must be 1 dimensional of length </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Multivariate normal covariance matrix must be 2 dimensional.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Multivariate normal covariance matrix must be square, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;with dimensions (</span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">).&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Multivariate normal covariance matrix must be symmetric.&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Problem with multivariate normal covariance matrix: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">)</span>
+        <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_distribution</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">,</span> <span class="n">distribution_args</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;distribution_type must be str.&quot;</span><span class="p">)</span>
+
+    <span class="n">_check_args_list</span><span class="p">(</span>
+        <span class="s2">&quot;distribution_args&quot;</span><span class="p">,</span> <span class="n">distribution_args</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">arrays</span><span class="o">=</span><span class="p">(</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;mvn&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># shortcut, so we don&#39;t have to validate dim in all sub-cases below</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">distribution_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;mvn&quot;</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Distribution type &#39;</span><span class="si">{</span><span class="n">distribution_type</span><span class="si">}</span><span class="s2">&#39; is not &quot;</span>
+            <span class="s2">&quot;implemented as a multivariate distribution.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># To add a new distribution type: validate the</span>
+    <span class="c1"># distribution_args here, and add unit tests.</span>
+    <span class="k">if</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span>
+        <span class="c1"># Fixed-value (non-random)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="n">dim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Fixed-value mutation type argument must be a list of &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;length </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">, the number of traits.&quot;</span>
+            <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;g&quot;</span><span class="p">:</span>
+        <span class="c1"># Gamma distribution with (mean, shape)</span>
+        <span class="c1"># parameterization. A negative value for the mean is permitted,</span>
+        <span class="c1"># and indicates a reflection of the horizontal axis.</span>
+        <span class="c1"># See Eidos documentation for rgamma().</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Gamma distribution (distribution_type=&#39;g&#39;) &quot;</span>
+                <span class="s2">&quot;uses a (mean, shape) parameterisation.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The shape parameter must be positive.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+        <span class="c1"># An exponential distribution(mean).</span>
+        <span class="c1"># See Eidos documentation for rexp().</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Exponential distribution (distribution_type=&#39;e&#39;) &quot;</span>
+                <span class="s2">&quot;uses a (mean) parameterisation.&quot;</span>
+            <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span>
+        <span class="c1"># A normal distribution (mean, standard deviation).</span>
+        <span class="c1"># See Eidos documentation for rnorm().</span>
+        <span class="c1"># TODO: combine with _check_gaussian_args?</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Normal distribution (distribution_type=&#39;n&#39;) &quot;</span>
+                <span class="s2">&quot;uses a (mean, sd) parameterisation.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The sd parameter must be nonnegative.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span>
+        <span class="c1"># A Weibull-distributed fitness effect (scale, shape).</span>
+        <span class="c1"># See Eidos documentation for rweibull().</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Weibull distribution (distribution_type=&#39;w&#39;) &quot;</span>
+                <span class="s2">&quot;uses a (scale, shape) parameterisation.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The scale parameter must be positive.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The shape parameter must be positive.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;lp&quot;</span><span class="p">,</span> <span class="s2">&quot;ln&quot;</span><span class="p">):</span>
+        <span class="c1"># A lognormal distribution (meanlog, sdlog),</span>
+        <span class="c1"># either positive or negative.</span>
+        <span class="c1"># See Eidos documentation for rlnorm().</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Lognormal distribution (distribution_type=&#39;lp&#39;/&#39;ln&#39;) &quot;</span>
+                <span class="s2">&quot;uses a (meanlog, sdlog) parameterisation, requiring sdlog &gt; 0.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The sdlog parameter must be nonnegative.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;u&quot;</span><span class="p">:</span>
+        <span class="c1"># Uniform</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">distribution_args</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Uniform distribution (distribution_type=&#39;u&#39;) &quot;</span>
+                <span class="s2">&quot;uses a (min, max) parameterisation, with min &lt;= max.&quot;</span>
+            <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;mvn&quot;</span><span class="p">:</span>
+        <span class="c1"># Multivariate Normal distribution with</span>
+        <span class="c1">#   (mean, covariance, indices) parameterization.</span>
+        <span class="n">_check_gaussian_args</span><span class="p">(</span><span class="n">distribution_args</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">distribution_type</span><span class="si">}</span><span class="s2"> is not a supported distribution type.&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026, PopSim Consortium.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+     
+    <div class="footer">Version: 0.3 (0.3.1.dev33+gc96504f30)</div>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

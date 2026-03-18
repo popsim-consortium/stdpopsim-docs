@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; stdpopsim 0.3.1.dev32+ge23d2554a documentation</title>
+  <title>API &mdash; stdpopsim 0.3.1.dev33+gc96504f30 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=781e8e36"></script>
+      <script src="_static/documentation_options.js?v=713e20e3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -236,11 +236,11 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Annotation" title="stdpopsim.Annotation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Annotation</span></code></a>(*, id, species, url, ...)</p></td>
 <td><p>Class representing an annotation track.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.DFE</span></code></a>(*, id, description, ...[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.DFE</span></code></a>(*[, mutation_types, ...])</p></td>
 <td><p>Class representing a &quot;Distribution of Fitness Effects&quot;, i.e., a DFE.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.MutationType</span></code></a>(*[, dominance_coeff, ...])</p></td>
-<td><p>Class representing a &quot;type&quot; of mutation.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.MutationType" title="stdpopsim.MutationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.MutationType</span></code></a>(*[, trait_ids, ...])</p></td>
+<td><p>Class representing a &quot;type&quot; of mutation, that affects fitness and/or a collection of other traits.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.DemographicModel" title="stdpopsim.DemographicModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.DemographicModel</span></code></a>(*, id, ...[, ...])</p></td>
 <td><p>Class representing a demographic model.</p></td>
@@ -1049,11 +1049,14 @@ Each <a class="reference internal" href="#stdpopsim.Contig" title="stdpopsim.Con
 that applies to the entire Contig.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="stdpopsim.DFE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">DFE</span></span><a class="reference internal" href="_modules/stdpopsim/dfe.html#DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DFE" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">DFE</span></span><a class="reference internal" href="_modules/stdpopsim/traits.html#DFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DFE" title="Link to this definition"></a></dt>
 <dd><p>Class representing a “Distribution of Fitness Effects”, i.e., a DFE.
 The class records the different <em>mutation types</em>, and the <em>proportions</em>
 with which they occur. The overall rate of mutations will be determined
 by the Contig to which the DFE is applied (see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_dfe()</span></code></a>).</p>
+<p>This is a specialization of <code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionOfMutationEffects</span></code>
+to distributions that only affect fitness, and have associated publications
+(and hence citations).</p>
 <p>Instances of this class are constructed by DFE implementors, following the
 <a class="reference internal" href="development.html#sec-development-dfe-model"><span class="std std-ref">developer documentation</span></a>. To instead
 obtain a pre-specified model as listed in the <a class="reference internal" href="catalog.html#sec-catalog"><span class="std std-ref">Catalog</span></a>,
@@ -1082,7 +1085,7 @@ reference(s) for the DFE model.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.DFE.register_qc">
-<span class="sig-name descname"><span class="pre">register_qc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc_dfe</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/dfe.html#DFE.register_qc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DFE.register_qc" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">register_qc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc_dfe</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/traits.html#DFE.register_qc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.DFE.register_qc" title="Link to this definition"></a></dt>
 <dd><p>Register a QC model implementation for this DFE.</p>
 </dd></dl>
 
@@ -1090,52 +1093,56 @@ reference(s) for the DFE model.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="stdpopsim.MutationType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">MutationType</span></span><a class="reference internal" href="_modules/stdpopsim/dfe.html#MutationType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.MutationType" title="Link to this definition"></a></dt>
-<dd><p>Class representing a “type” of mutation.  The design closely mirrors SLiM’s
-MutationType class.</p>
-<p>The main thing that mutation types carry is a way of drawing a selection
-coefficient for each new mutation. This <code class="docutils literal notranslate"><span class="pre">distribution_type</span></code> should be one
-of (see the SLiM manual for more information on these):</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">MutationType</span></span><a class="reference internal" href="_modules/stdpopsim/traits.html#MutationType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.MutationType" title="Link to this definition"></a></dt>
+<dd><p>Class representing a “type” of mutation, that affects fitness and/or
+a collection of other traits.</p>
+<p>The main thing that mutation types carry is a way of drawing an <em>effect</em>
+for each new mutation from a distribution. This <code class="docutils literal notranslate"><span class="pre">distribution_type</span></code> should
+be one of:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: fixed, one parameter (the selection coefficient)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: fixed, one parameter per trait (a single value for each)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: exponential, one parameter (mean)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">g</span></code>: gamma, two parameters (mean, shape)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: normal, two parameters (mean, SD)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: normal, two parameters (mean, sd)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: Weibull, two parameters (scale, shape)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">u</span></code>: Uniform, two parameters (min, max)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">lp</span></code>: positive logNormal, two parameters (mean and sd on log scale; see rlnorm)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ln</span></code>: negative logNormal, two parameters (mean and sd on log scale; see rlnorm)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mvn</span></code>: TODO</p></li>
 </ul>
+<p>Currently, only “fixed” and “mvn” can apply to more than one trait.</p>
 <p>Type “lp” is always positive, and type “ln” is always negative: both use
 the same log-normal distribution, but “ln” is multiplied by -1.  For
 exponential and gamma, a negative mean can be provided, obtaining always
 negative values.</p>
 <p>Instead of a single dominance coefficient (which would be specified with
 <cite>dominance_coeff</cite>), a discretized relationship between dominance and
-selection coefficient can be implemented: if dominance_coeff_list is
-provided, mutations with selection coefficient s for which
-dominance_coeff_breaks[k-1] &lt;= s &lt;= dominance_coeff_breaks[k] will have
-dominance coefficient dominance_coeff[k]. In other words, the first entry
-of dominance_coeff_list applies to any mutations with selection coefficient
-below the first entry of dominance_coeff_breaks; the second entry of
-dominance_coeff_list applies to mutations with selection coefficient
-between the first and second entries of dominance_coeff_breaks, and so
+effect can be implemented: if dominance_coeff_list is
+provided, mutations with effect <code class="docutils literal notranslate"><span class="pre">s</span></code> for which
+<code class="docutils literal notranslate"><span class="pre">dominance_coeff_breaks[k-1]</span> <span class="pre">&lt;=</span> <span class="pre">s</span> <span class="pre">&lt;=</span> <span class="pre">dominance_coeff_breaks[k]</span></code> will have
+<code class="docutils literal notranslate"><span class="pre">dominance</span> <span class="pre">coefficient</span> <span class="pre">dominance_coeff[k]</span></code>. In other words, the first entry
+of <code class="docutils literal notranslate"><span class="pre">dominance_coeff_list</span></code> applies to any mutations with effect
+below the first entry of <code class="docutils literal notranslate"><span class="pre">dominance_coeff_breaks</span></code>; the second entry of
+<code class="docutils literal notranslate"><span class="pre">dominance_coeff_list</span></code> applies to mutations with effect
+between the first and second entries of <code class="docutils literal notranslate"><span class="pre">dominance_coeff_breaks</span></code>, and so
 forth. The list of breaks must therefore be of length one less than the
 list of dominance coefficients.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A one-letter abbreviation for the distribution of
-fitness effects that each new mutation of this type draws from (see below).</p></li>
+<li><p><strong>trait_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of trait IDs this mutation type affects.
+(default: [“fitness”])</p></li>
+<li><p><strong>distribution_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A str abbreviation for the distribution of
+effects that each new mutation of this type draws from (see above).</p></li>
 <li><p><strong>distribution_args</strong> – Arguments for the distribution type.</p></li>
 <li><p><strong>dominance_coeff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The dominance coefficient (negative = underdominance,
 0 = recessive, 0.5 = additive, 1.0 = completely dominant, &gt; 1.0 = overdominant)
 Default: 0.5.</p></li>
 <li><p><strong>convert_to_substitution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to retain any fixed mutations in the
 simulation: if not, we cannot ask about their frequency once fixed.
-(Either way, they will remain in the tree sequence).</p></li>
+(Either way, they will remain in the tree sequence).  Default: True.</p></li>
 <li><p><strong>dominance_coeff_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Either None (the default) or a list of floats describing
-a list of dominance coefficients, to apply to different selection coefficients
+a list of dominance coefficients, to apply to different effects
 (see details). Cannot be specified along with dominance_coeff.</p></li>
 <li><p><strong>dominance_coeff_breaks</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Either None (the default) or a list of floats
 describing the intervals of selection coefficient over which each of the entries
@@ -1148,8 +1155,15 @@ dominance_coeff_list.</p></li>
 <dt class="sig sig-object py" id="stdpopsim.MutationType.is_neutral">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_neutral</span></span><a class="headerlink" href="#stdpopsim.MutationType.is_neutral" title="Link to this definition"></a></dt>
 <dd><p>Tests whether the mutation type is strictly neutral. This is defined here to
-be of type “f” and with fitness effect 0.0, and so excludes other situations
-that also produce only neutral mutations (e.g., exponential with mean 0).</p>
+be:
+- only affecting “fitness”;
+- of type “f”;
+- and with fitness effect 0.0,
+and so excludes other situations that also produce only neutral
+mutations (e.g., exponential with mean 0, or affecting some other trait
+with no effect on fitness).</p>
+<p>TODO: make a TraitsModel method that looks at whether a trait affects
+fitness and so can decide whether additional mutation types are neutral.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1547,7 +1561,7 @@ nucleotides.</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev32+ge23d2554a)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev33+gc96504f30)</div>
 
 
 </footer>
