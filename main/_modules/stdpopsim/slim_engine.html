@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.3.1.dev33+gc96504f30 documentation</title>
+  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.3.1.dev34+g6adaa356f documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=713e20e3"></script>
+      <script src="../../_static/documentation_options.js?v=70180dce"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -840,7 +840,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a tuple with the breakpoints and rates of mutations for SLiM.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
+    <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dme_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
     <span class="n">slim_fractions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="nb">sum</span><span class="p">(</span>
@@ -850,7 +850,7 @@
                     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">)</span>
                 <span class="p">]</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">contig</span><span class="o">.</span><span class="n">dme_list</span>
         <span class="p">]</span>
         <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span>  <span class="c1"># append 0 for the -1 labels</span>
@@ -884,16 +884,16 @@
 <span class="sd">    function we can ensure these two steps assigns numeric ids to the DFEs in the</span>
 <span class="sd">    same way.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ints</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">)):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dme_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ints</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dme_list</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">interval_list</span><span class="p">)):</span>
         <span class="k">yield</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Assigns mutation type ids to each of the mutation types contained in this</span>
-<span class="sd">    `Contig`. This function will return a dictionary with `len(contig.dfe_list)`</span>
-<span class="sd">    elements, in which the position of the DFE in `contig.dfe_list` is the key.</span>
+<span class="sd">    `Contig`. This function will return a dictionary with `len(contig.dme_list)`</span>
+<span class="sd">    elements, in which the position of the DFE in `contig.dme_list` is the key.</span>
 <span class="sd">    For each DFE, the dictionary holds a list of tuples that contain the</span>
 <span class="sd">    assigned mutation type ids (used in SLiM) and the `MutationType` object.</span>
 <span class="sd">    This is necessary so that we use the same numeric ids to the mutation types</span>
@@ -942,7 +942,7 @@
     <span class="n">schema</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata_schema</span><span class="o">.</span><span class="n">asdict</span><span class="p">()</span>
     <span class="n">metadata</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">metadata</span>
     <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_raw_stdpopsim_top_level_schema</span><span class="p">)</span>
-    <span class="n">dfes</span> <span class="o">=</span> <span class="n">_get_json</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span>
+    <span class="n">dfes</span> <span class="o">=</span> <span class="n">_get_json</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dme_list</span><span class="p">)</span>
     <span class="n">dfe_to_mtypes</span> <span class="o">=</span> <span class="n">_dfe_to_mtypes</span><span class="p">(</span><span class="n">contig</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="n">_enum_dfe_and_intervals</span><span class="p">(</span><span class="n">contig</span><span class="p">):</span>
         <span class="n">dfes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;intervals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ints</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -1127,7 +1127,7 @@
         <span class="n">coordinate</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ee</span><span class="p">,</span> <span class="s2">&quot;single_site_id&quot;</span><span class="p">):</span>
             <span class="n">dfe_index</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span>
+                <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dme_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">ee</span><span class="o">.</span><span class="n">single_site_id</span>
             <span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe_index</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1723,7 +1723,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slim_scaling_factor must be positive&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">slim_burn_in</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;slim_burn_in must be non-negative&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contig</span><span class="o">.</span><span class="n">dme_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;SLiM requires at least one DFE.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">slim_scaling_factor</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
@@ -2007,7 +2007,7 @@
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simplify_remembered</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
 
         <span class="c1"># Adding neutral mutations to simulation and recapitation periods</span>
-        <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dfe_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
+        <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">dme_breakpoints</span><span class="p">()</span>  <span class="c1"># beware -1 labels</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dfe</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;stdpopsim&quot;</span><span class="p">][</span><span class="s2">&quot;DFEs&quot;</span><span class="p">]):</span>
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;proportions&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;proportions&quot;</span><span class="p">],</span> <span class="n">dfe</span><span class="p">[</span><span class="s2">&quot;mutation_types&quot;</span><span class="p">]):</span>
@@ -2175,7 +2175,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev33+gc96504f30)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev34+g6adaa356f)</div>
 
 
 </footer>

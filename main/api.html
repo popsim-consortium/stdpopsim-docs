@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; stdpopsim 0.3.1.dev33+gc96504f30 documentation</title>
+  <title>API &mdash; stdpopsim 0.3.1.dev34+g6adaa356f documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=713e20e3"></script>
+      <script src="_static/documentation_options.js?v=70180dce"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -73,9 +73,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#stdpopsim.Chromosome"><code class="docutils literal notranslate"><span class="pre">Chromosome</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stdpopsim.Contig"><code class="docutils literal notranslate"><span class="pre">Contig</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.add_dfe"><code class="docutils literal notranslate"><span class="pre">Contig.add_dfe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.add_dme"><code class="docutils literal notranslate"><span class="pre">Contig.add_dme()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.add_single_site"><code class="docutils literal notranslate"><span class="pre">Contig.add_single_site()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.clear_dfes"><code class="docutils literal notranslate"><span class="pre">Contig.clear_dfes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.clear_dmes"><code class="docutils literal notranslate"><span class="pre">Contig.clear_dmes()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.dfe_breakpoints"><code class="docutils literal notranslate"><span class="pre">Contig.dfe_breakpoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.dme_breakpoints"><code class="docutils literal notranslate"><span class="pre">Contig.dme_breakpoints()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.is_neutral"><code class="docutils literal notranslate"><span class="pre">Contig.is_neutral</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.mutation_types"><code class="docutils literal notranslate"><span class="pre">Contig.mutation_types()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stdpopsim.Contig.origin"><code class="docutils literal notranslate"><span class="pre">Contig.origin</span></code></a></li>
@@ -208,7 +211,7 @@
 <td><p>Returns a set of annotations with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.Contig.add_dfe</span></code></a>(intervals, DFE)</p></td>
-<td><p>Adds the provided DFE to the contig, applying to the regions of the contig specified in <code class="docutils literal notranslate"><span class="pre">intervals</span></code>.</p></td>
+<td><p>Alias for <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dme()</span></code>, see there for more details.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#stdpopsim.get_engine" title="stdpopsim.get_engine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stdpopsim.get_engine</span></code></a>(id)</p></td>
 <td><p>Returns the simulation engine with the specified <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p></td>
@@ -573,11 +576,19 @@ chromosome by ID, e.g. from the command line interface.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stdpopsim.</span></span><span class="sig-name descname"><span class="pre">Contig</span></span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig" title="Link to this definition"></a></dt>
 <dd><p>Class representing a contiguous region of genome that is to be simulated.
 This contains the information about mutation rates, distributions of
-fitness effects (DFEs), gene conversion rates and recombination rates
+mutational effects (DMEs), gene conversion rates and recombination rates
 that are needed to simulate this region.</p>
-<p>Information about targets of selection are contained in the <code class="docutils literal notranslate"><span class="pre">dfe_list</span></code>
-and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DFE
-applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> for more information.</p>
+<p>Note that distributions of fitness effects (DFEs) are a special case
+of DMEs, and so DFEs are supported and can be can be used anywhere that
+calls for a DME. Additionally, all functions and attributes based on DMEs
+have an aliased version with <cite>dfe</cite> instead of <cite>dme</cite>. For example,
+<code class="docutils literal notranslate"><span class="pre">dfe_list</span></code> is an alias of <code class="docutils literal notranslate"><span class="pre">dme_list</span></code>, <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dfe()</span></code></a> is an alias of
+<a class="reference internal" href="#stdpopsim.Contig.add_dme" title="stdpopsim.Contig.add_dme"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dme()</span></code></a>, and so on.
+We encourage new code to use <cite>dme</cite> rather than <cite>dfe</cite>, however.</p>
+<p>Information about variants that affect traits
+or fitness are contained in the <code class="docutils literal notranslate"><span class="pre">dme_list</span></code>
+and <code class="docutils literal notranslate"><span class="pre">interval_list</span></code>. These must be of the same length, and the k-th DME
+applies to the k-th interval; see <a class="reference internal" href="#stdpopsim.Contig.add_dme" title="stdpopsim.Contig.add_dme"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dme()</span></code></a> for more information.</p>
 <p>One attribute of the Contig is <code class="docutils literal notranslate"><span class="pre">species</span></code>, which is necessary to pass
 on aspects of life history important for simulation. However, generic
 contigs not associated with any specific species can be created, in
@@ -614,11 +625,14 @@ and in ascending order. Should have shape Nx2, where N is the number of
 intervals.</p></li>
 <li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions to exclude. If False,
 <code class="docutils literal notranslate"><span class="pre">mask_intervals</span></code> specify regions in keep.</p></li>
-<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFE</span></code></a> objects.
-By default, the only DFE is completely neutral.</p></li>
 <li><p><strong>interval_list</strong> – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.array</span></code> objects containing integers.
-By default, the inital interval list spans the whole chromosome with the
-neutral DFE.</p></li>
+These specify where each DME provided in dme_list is applied.
+By default, the initial interval list spans the whole chromosome with
+a DME whose variants have no effects on traits or fitness.</p></li>
+<li><p><strong>dme_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">DME</span></code> objects.
+By default, the only DME is completely neutral and affects no traits.</p></li>
+<li><p><strong>dfe_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Alias of the <cite>dme_list</cite> keyword argument. Only
+one of <cite>dme_list</cite> or <cite>dfe_list</cite> may be specified.</p></li>
 <li><p><strong>coordinates</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – The location of the contig on a named chromosome,
 as a tuple of the form <cite>(chromosome, left, right)</cite>. If <cite>None</cite>, the contig
 is assumed to be generic (i.e. it does not inherit a coordinate system
@@ -646,31 +660,37 @@ of the <code class="docutils literal notranslate"><span class="pre">old_contig</
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.add_dfe">
 <span class="sig-name descname"><span class="pre">add_dfe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_dfe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_dfe" title="Link to this definition"></a></dt>
-<dd><p>Adds the provided DFE to the contig, applying to the regions of the
+<dd><p>Alias for <a class="reference internal" href="#stdpopsim.Contig.add_dme" title="stdpopsim.Contig.add_dme"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_dme()</span></code></a>, see there for more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.add_dme">
+<span class="sig-name descname"><span class="pre">add_dme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DME</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.add_dme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.add_dme" title="Link to this definition"></a></dt>
+<dd><p>Adds the provided DME to the contig, applying to the regions of the
 contig specified in <code class="docutils literal notranslate"><span class="pre">intervals</span></code>. These intervals are also <em>removed</em>
-from the intervals of any previously-present DFEs - in other words,
-more recently-added DFEs take precedence. Each DFE added in this way
+from the intervals of any previously-present DMEs - in other words,
+more recently-added DMEs take precedence. Each DME added in this way
 carries its own MutationTypes: no mutation types are shared between
-DFEs added by different calls to <code class="docutils literal notranslate"><span class="pre">add_dfe(</span> <span class="pre">)</span></code>, even if the same DFE
+DMEs added by different calls to <code class="docutils literal notranslate"><span class="pre">add_dme(</span> <span class="pre">)</span></code>, even if the same DME
 object is added more than once.</p>
 <p>For instance, if we do</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">]])</span>
 <span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">120</span><span class="p">]])</span>
-<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">dfe1</span><span class="p">)</span>
-<span class="n">contig</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="n">dfe2</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">dme1</span><span class="p">)</span>
+<span class="n">contig</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="n">dme2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>then <code class="docutils literal notranslate"><span class="pre">dfe1</span></code> applies to the region from 0 to 50 (including 0 but not
-50) and <code class="docutils literal notranslate"><span class="pre">dfe2</span></code> applies to the region from 50 to 120 (including 50 but
+<p>then <code class="docutils literal notranslate"><span class="pre">dme1</span></code> applies to the region from 0 to 50 (including 0 but not
+50) and <code class="docutils literal notranslate"><span class="pre">dme2</span></code> applies to the region from 50 to 120 (including 50 but
 not 120).</p>
 <p>Any of the <code class="docutils literal notranslate"><span class="pre">intervals</span></code> that fall outside of the contig will be
 clipped to the contig boundaries. If no <code class="docutils literal notranslate"><span class="pre">intervals</span></code> overlap the
-contig, an “empty” DFE will be added with a warning.</p>
+contig, an “empty” DME will be added with a warning.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>intervals</strong> (<em>array</em>) – A valid set of intervals.</p></li>
-<li><p><strong>dfe</strong> (<a class="reference internal" href="#stdpopsim.DFE" title="stdpopsim.DFE"><em>DFE</em></a>) – A DFE object.</p></li>
+<li><p><strong>dme</strong> (<em>DME</em>) – A DME object.</p></li>
 </ul>
 </dd>
 </dl>
@@ -718,35 +738,47 @@ sweep”.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.clear_dfes">
 <span class="sig-name descname"><span class="pre">clear_dfes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.clear_dfes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.clear_dfes" title="Link to this definition"></a></dt>
-<dd><p>Removes all DFEs from the contig (as well as the corresponding list of
+<dd><p>Alias for <a class="reference internal" href="#stdpopsim.Contig.clear_dmes" title="stdpopsim.Contig.clear_dmes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clear_dmes()</span></code></a>, see there for more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.clear_dmes">
+<span class="sig-name descname"><span class="pre">clear_dmes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.clear_dmes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.clear_dmes" title="Link to this definition"></a></dt>
+<dd><p>Removes all DMEs from the contig (as well as the corresponding list of
 intervals).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="stdpopsim.Contig.dfe_breakpoints">
 <span class="sig-name descname"><span class="pre">dfe_breakpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dfe_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dfe_breakpoints" title="Link to this definition"></a></dt>
+<dd><p>Alias for <a class="reference internal" href="#stdpopsim.Contig.dme_breakpoints" title="stdpopsim.Contig.dme_breakpoints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dme_breakpoints()</span></code></a>, see there for more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stdpopsim.Contig.dme_breakpoints">
+<span class="sig-name descname"><span class="pre">dme_breakpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.dme_breakpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.dme_breakpoints" title="Link to this definition"></a></dt>
 <dd><p>Returns two things: the sorted vector of endpoints of all intervals across
-all DFEs in the contig, and a vector of integer labels for these intervals,
-saying which DFE goes with which interval.
+all DMEs in the contig, and a vector of integer labels for these intervals,
+saying which DME goes with which interval.
 This provides a complementary method to tell which bit of the contig
-has which DFE attached, which may be more convenient than the list of two-column
+has which DME attached, which may be more convenient than the list of two-column
 arrays provided by interval_list.</p>
-<p>Suppose there are n+1 unique interval endpoints across all the DFE intervals
+<p>Suppose there are n+1 unique interval endpoints across all the DME intervals
 in <code class="xref py py-attr docutils literal notranslate"><span class="pre">interval_list</span></code>.  (If the intervals in that list
 cover the whole genome, the number of intervals is n.)
-This method returns a tuple of two things: <code class="docutils literal notranslate"><span class="pre">breaks,</span> <span class="pre">dfe_labels</span></code>.
+This method returns a tuple of two things: <code class="docutils literal notranslate"><span class="pre">breaks,</span> <span class="pre">dme_labels</span></code>.
 “breaks” is the array containing those n+1 unique endpoints, in increasing order,
-and “dfe” is the array of length n containing the index of the DFE
+and “dme” is the array of length n containing the index of the DME
 the applies to that interval. So, <code class="docutils literal notranslate"><span class="pre">breaks[0]</span></code> is always 0, and
 <code class="docutils literal notranslate"><span class="pre">breaks[n+1]</span></code> is always the length of the contig, and
-<code class="docutils literal notranslate"><span class="pre">dfe_labels[k]</span> <span class="pre">=</span> <span class="pre">j</span></code> if
+<code class="docutils literal notranslate"><span class="pre">dme_labels[k]</span> <span class="pre">=</span> <span class="pre">j</span></code> if
 <code class="docutils literal notranslate"><span class="pre">[breaks[k],</span> <span class="pre">breaks[k+1]]</span></code> is an interval in <code class="docutils literal notranslate"><span class="pre">contig.interval_list[j]</span></code>,
-i.e., if <code class="docutils literal notranslate"><span class="pre">contig.dfe_list[j]</span></code> applies to the interval starting at
-<code class="docutils literal notranslate"><span class="pre">breaks[k]</span></code>.  Some intervals may not be covered by a DFE, in which
+i.e., if <code class="docutils literal notranslate"><span class="pre">contig.dme_list[j]</span></code> applies to the interval starting at
+<code class="docutils literal notranslate"><span class="pre">breaks[k]</span></code>.  Some intervals may not be covered by a DME, in which
 case they will have the label <code class="docutils literal notranslate"><span class="pre">-1</span></code> (beware of python indexing!).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple (breaks, dfe_labels).</p>
+<dd class="field-odd"><p>A tuple (breaks, dme_labels).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -761,24 +793,24 @@ case they will have the label <code class="docutils literal notranslate"><span c
 <dt class="sig sig-object py" id="stdpopsim.Contig.mutation_types">
 <span class="sig-name descname"><span class="pre">mutation_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stdpopsim/genomes.html#Contig.mutation_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stdpopsim.Contig.mutation_types" title="Link to this definition"></a></dt>
 <dd><p>Provides information about the MutationTypes assigned to this Contig,
-along with information about which DFE they correspond to. This is
+along with information about which DME they correspond to. This is
 useful because when simulating with SLiM, the mutation types are
 assigned numeric IDs in the order provided here (e.g., in the order
-encountered when iterating over the DFEs); this method provides an easy
-way to map back from their numeric ID to the DFE that each MutationType
+encountered when iterating over the DMEs); this method provides an easy
+way to map back from their numeric ID to the DME that each MutationType
 corresponds to.</p>
 <p>This method returns a list of dictionaries of length equal to the
-number of MutationTypes in all DFEs of the contig, each dictionary
-containing three things: <code class="docutils literal notranslate"><span class="pre">&quot;dfe_id&quot;</span></code>: the ID of the DFE this
+number of MutationTypes in all DMEs of the contig, each dictionary
+containing three things: <code class="docutils literal notranslate"><span class="pre">&quot;dme_id&quot;</span></code>: the ID of the DME this
 MutationType comes from; <code class="docutils literal notranslate"><span class="pre">mutation_type</span></code>: the mutation type; and
 <code class="docutils literal notranslate"><span class="pre">id</span></code>: the index in the list.</p>
 <p>For instance, if <code class="docutils literal notranslate"><span class="pre">muts</span></code> is a list of mutation objects in a SLiM tree
-sequence, then the following code will print the IDs of the DFEs that
+sequence, then the following code will print the IDs of the DMEs that
 each comes from:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mut_types</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">muts</span><span class="p">:</span>
-    <span class="n">dfe_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mut_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;dfe_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">md</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;muation_list&quot;</span><span class="p">]]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mutation </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> has mutations from DFE(s) </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dfe_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">dme_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mut_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;dme_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">md</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;muation_list&quot;</span><span class="p">]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mutation </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> has mutations from DME(s) </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dme_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1053,7 +1085,7 @@ that applies to the entire Contig.</p>
 <dd><p>Class representing a “Distribution of Fitness Effects”, i.e., a DFE.
 The class records the different <em>mutation types</em>, and the <em>proportions</em>
 with which they occur. The overall rate of mutations will be determined
-by the Contig to which the DFE is applied (see <a class="reference internal" href="#stdpopsim.Contig.add_dfe" title="stdpopsim.Contig.add_dfe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_dfe()</span></code></a>).</p>
+by the Contig to which the DFE is applied (see <a class="reference internal" href="#stdpopsim.Contig.add_dme" title="stdpopsim.Contig.add_dme"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Contig.add_dme()</span></code></a>).</p>
 <p>This is a specialization of <code class="xref py py-class docutils literal notranslate"><span class="pre">DistributionOfMutationEffects</span></code>
 to distributions that only affect fitness, and have associated publications
 (and hence citations).</p>
@@ -1561,7 +1593,7 @@ nucleotides.</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev33+gc96504f30)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev34+g6adaa356f)</div>
 
 
 </footer>

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.genomes &mdash; stdpopsim 0.3.1.dev33+gc96504f30 documentation</title>
+  <title>stdpopsim.genomes &mdash; stdpopsim 0.3.1.dev34+g6adaa356f documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=713e20e3"></script>
+      <script src="../../_static/documentation_options.js?v=70180dce"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -343,12 +343,21 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a contiguous region of genome that is to be simulated.</span>
 <span class="sd">    This contains the information about mutation rates, distributions of</span>
-<span class="sd">    fitness effects (DFEs), gene conversion rates and recombination rates</span>
+<span class="sd">    mutational effects (DMEs), gene conversion rates and recombination rates</span>
 <span class="sd">    that are needed to simulate this region.</span>
 
-<span class="sd">    Information about targets of selection are contained in the ``dfe_list``</span>
-<span class="sd">    and ``interval_list``. These must be of the same length, and the k-th DFE</span>
-<span class="sd">    applies to the k-th interval; see :meth:`.add_dfe` for more information.</span>
+<span class="sd">    Note that distributions of fitness effects (DFEs) are a special case</span>
+<span class="sd">    of DMEs, and so DFEs are supported and can be can be used anywhere that</span>
+<span class="sd">    calls for a DME. Additionally, all functions and attributes based on DMEs</span>
+<span class="sd">    have an aliased version with `dfe` instead of `dme`. For example,</span>
+<span class="sd">    ``dfe_list`` is an alias of ``dme_list``, :meth:`.add_dfe` is an alias of</span>
+<span class="sd">    :meth:`.add_dme`, and so on.</span>
+<span class="sd">    We encourage new code to use `dme` rather than `dfe`, however.</span>
+
+<span class="sd">    Information about variants that affect traits</span>
+<span class="sd">    or fitness are contained in the ``dme_list``</span>
+<span class="sd">    and ``interval_list``. These must be of the same length, and the k-th DME</span>
+<span class="sd">    applies to the k-th interval; see :meth:`.add_dme` for more information.</span>
 
 <span class="sd">    One attribute of the Contig is ``species``, which is necessary to pass</span>
 <span class="sd">    on aspects of life history important for simulation. However, generic</span>
@@ -392,12 +401,16 @@
 <span class="sd">    :ivar exclude: If True, ``mask_intervals`` specify regions to exclude. If False,</span>
 <span class="sd">        ``mask_intervals`` specify regions in keep.</span>
 <span class="sd">    :vartype exclude: bool</span>
-<span class="sd">    :ivar dfe_list: A list of :class:`.DFE` objects.</span>
-<span class="sd">        By default, the only DFE is completely neutral.</span>
-<span class="sd">    :vartype dfe_list: list</span>
 <span class="sd">    :ivar interval_list: A list of :class:`np.array` objects containing integers.</span>
-<span class="sd">        By default, the inital interval list spans the whole chromosome with the</span>
-<span class="sd">        neutral DFE.</span>
+<span class="sd">        These specify where each DME provided in dme_list is applied.</span>
+<span class="sd">        By default, the initial interval list spans the whole chromosome with</span>
+<span class="sd">        a DME whose variants have no effects on traits or fitness.</span>
+<span class="sd">    :ivar dme_list: A list of :class:`.DME` objects.</span>
+<span class="sd">        By default, the only DME is completely neutral and affects no traits.</span>
+<span class="sd">    :vartype dme_list: list</span>
+<span class="sd">    :ivar dfe_list: Alias of the `dme_list` keyword argument. Only</span>
+<span class="sd">        one of `dme_list` or `dfe_list` may be specified.</span>
+<span class="sd">    :vartype dfe_list: list</span>
 <span class="sd">    :ivar coordinates: The location of the contig on a named chromosome,</span>
 <span class="sd">        as a tuple of the form `(chromosome, left, right)`. If `None`, the contig</span>
 <span class="sd">        is assumed to be generic (i.e. it does not inherit a coordinate system</span>
@@ -432,18 +445,27 @@
     <span class="n">genetic_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">inclusion_mask</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">exclusion_mask</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">dfe_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">dme_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">interval_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">coordinates</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">tuple</span><span class="p">)</span>
     <span class="n">species</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># _dfe_list only gets used in the initialization and subsequently</span>
+    <span class="c1"># gets deleted. It should not be used anywhere else.</span>
+    <span class="n">_dfe_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;dfe_list&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dfe_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify both dme_list and dfe_list.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfe_list</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfe_list</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">]]),</span>
-            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">dfe</span><span class="o">.</span><span class="n">neutral_dfe</span><span class="p">(),</span>
+            <span class="n">stdpopsim</span><span class="o">.</span><span class="n">traits</span><span class="o">.</span><span class="n">neutral_dfe</span><span class="p">(),</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
@@ -780,28 +802,37 @@
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dfe_breakpoints">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dfe_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for :meth:`dme_breakpoints`, see there for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_breakpoints</span><span class="p">(</span><span class="n">relative_coordinates</span><span class="o">=</span><span class="n">relative_coordinates</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Contig.dme_breakpoints">
+<a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dme_breakpoints">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dme_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns two things: the sorted vector of endpoints of all intervals across</span>
-<span class="sd">        all DFEs in the contig, and a vector of integer labels for these intervals,</span>
-<span class="sd">        saying which DFE goes with which interval.</span>
+<span class="sd">        all DMEs in the contig, and a vector of integer labels for these intervals,</span>
+<span class="sd">        saying which DME goes with which interval.</span>
 <span class="sd">        This provides a complementary method to tell which bit of the contig</span>
-<span class="sd">        has which DFE attached, which may be more convenient than the list of two-column</span>
+<span class="sd">        has which DME attached, which may be more convenient than the list of two-column</span>
 <span class="sd">        arrays provided by interval_list.</span>
 
-<span class="sd">        Suppose there are n+1 unique interval endpoints across all the DFE intervals</span>
+<span class="sd">        Suppose there are n+1 unique interval endpoints across all the DME intervals</span>
 <span class="sd">        in :attr:`.interval_list`.  (If the intervals in that list</span>
 <span class="sd">        cover the whole genome, the number of intervals is n.)</span>
-<span class="sd">        This method returns a tuple of two things: ``breaks, dfe_labels``.</span>
+<span class="sd">        This method returns a tuple of two things: ``breaks, dme_labels``.</span>
 <span class="sd">        &quot;breaks&quot; is the array containing those n+1 unique endpoints, in increasing order,</span>
-<span class="sd">        and &quot;dfe&quot; is the array of length n containing the index of the DFE</span>
+<span class="sd">        and &quot;dme&quot; is the array of length n containing the index of the DME</span>
 <span class="sd">        the applies to that interval. So, ``breaks[0]`` is always 0, and</span>
 <span class="sd">        ``breaks[n+1]`` is always the length of the contig, and</span>
-<span class="sd">        ``dfe_labels[k] = j`` if</span>
+<span class="sd">        ``dme_labels[k] = j`` if</span>
 <span class="sd">        ``[breaks[k], breaks[k+1]]`` is an interval in ``contig.interval_list[j]``,</span>
-<span class="sd">        i.e., if ``contig.dfe_list[j]`` applies to the interval starting at</span>
-<span class="sd">        ``breaks[k]``.  Some intervals may not be covered by a DFE, in which</span>
+<span class="sd">        i.e., if ``contig.dme_list[j]`` applies to the interval starting at</span>
+<span class="sd">        ``breaks[k]``.  Some intervals may not be covered by a DME, in which</span>
 <span class="sd">        case they will have the label ``-1`` (beware of python indexing!).</span>
 
-<span class="sd">        :return: A tuple (breaks, dfe_labels).</span>
+<span class="sd">        :return: A tuple (breaks, dme_labels).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">relative_coordinates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
@@ -815,33 +846,59 @@
         <span class="n">breaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">+</span> <span class="p">[[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]]])</span>  <span class="c1"># also sorted</span>
         <span class="p">)</span>
-        <span class="n">dfe_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+        <span class="n">dme_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">intervals</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">):</span>
-            <span class="n">dfe_labels</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">breaks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="o">=</span> <span class="n">j</span>
-        <span class="k">return</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">dfe_labels</span></div>
+            <span class="n">dme_labels</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">breaks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="k">return</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">dme_labels</span></div>
 
 
 <div class="viewcode-block" id="Contig.clear_dfes">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dfes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear_dfes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Removes all DFEs from the contig (as well as the corresponding list of</span>
+<span class="sd">        Alias for :meth:`clear_dmes`, see there for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_dmes</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Contig.clear_dmes">
+<a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dmes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_dmes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all DMEs from the contig (as well as the corresponding list of</span>
 <span class="sd">        intervals).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">=</span> <span class="p">[]</span></div>
 
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dfe_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span>
+
+    <span class="nd">@dfe_list</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dfe_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="Contig.add_dfe">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dfe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds the provided DFE to the contig, applying to the regions of the</span>
+<span class="sd">        Alias for :meth:`add_dme`, see there for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Contig.add_dme">
+<a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dme">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_dme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DME</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the provided DME to the contig, applying to the regions of the</span>
 <span class="sd">        contig specified in ``intervals``. These intervals are also *removed*</span>
-<span class="sd">        from the intervals of any previously-present DFEs - in other words,</span>
-<span class="sd">        more recently-added DFEs take precedence. Each DFE added in this way</span>
+<span class="sd">        from the intervals of any previously-present DMEs - in other words,</span>
+<span class="sd">        more recently-added DMEs take precedence. Each DME added in this way</span>
 <span class="sd">        carries its own MutationTypes: no mutation types are shared between</span>
-<span class="sd">        DFEs added by different calls to ``add_dfe( )``, even if the same DFE</span>
+<span class="sd">        DMEs added by different calls to ``add_dme( )``, even if the same DME</span>
 <span class="sd">        object is added more than once.</span>
 
 <span class="sd">        For instance, if we do</span>
@@ -850,26 +907,26 @@
 
 <span class="sd">            a1 = np.array([[0, 100]])</span>
 <span class="sd">            a2 = np.array([[50, 120]])</span>
-<span class="sd">            contig.add_dfe(a1, dfe1)</span>
-<span class="sd">            contig.add_dfe(a2, dfe2)</span>
+<span class="sd">            contig.add_dme(a1, dme1)</span>
+<span class="sd">            contig.add_dme(a2, dme2)</span>
 
-<span class="sd">        then ``dfe1`` applies to the region from 0 to 50 (including 0 but not</span>
-<span class="sd">        50) and ``dfe2`` applies to the region from 50 to 120 (including 50 but</span>
+<span class="sd">        then ``dme1`` applies to the region from 0 to 50 (including 0 but not</span>
+<span class="sd">        50) and ``dme2`` applies to the region from 50 to 120 (including 50 but</span>
 <span class="sd">        not 120).</span>
 
 <span class="sd">        Any of the ``intervals`` that fall outside of the contig will be</span>
 <span class="sd">        clipped to the contig boundaries. If no ``intervals`` overlap the</span>
-<span class="sd">        contig, an &quot;empty&quot; DFE will be added with a warning.</span>
+<span class="sd">        contig, an &quot;empty&quot; DME will be added with a warning.</span>
 
 <span class="sd">        :param array intervals: A valid set of intervals.</span>
-<span class="sd">        :param DFE dfe: A DFE object.</span>
+<span class="sd">        :param DME dme: A DME object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
         <span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">_check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">left</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">right</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">ints</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mask_intervals</span><span class="p">(</span><span class="n">ints</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DFE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DME</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span></div>
 
 
@@ -935,9 +992,9 @@
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_dfe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span>
             <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">coordinate</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">),</span>
-            <span class="n">DFE</span><span class="o">=</span><span class="n">dfe</span><span class="p">,</span>
+            <span class="n">DME</span><span class="o">=</span><span class="n">dfe</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -946,45 +1003,45 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the contig has no non-neutral mutation types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Contig.mutation_types">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.mutation_types">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides information about the MutationTypes assigned to this Contig,</span>
-<span class="sd">        along with information about which DFE they correspond to. This is</span>
+<span class="sd">        along with information about which DME they correspond to. This is</span>
 <span class="sd">        useful because when simulating with SLiM, the mutation types are</span>
 <span class="sd">        assigned numeric IDs in the order provided here (e.g., in the order</span>
-<span class="sd">        encountered when iterating over the DFEs); this method provides an easy</span>
-<span class="sd">        way to map back from their numeric ID to the DFE that each MutationType</span>
+<span class="sd">        encountered when iterating over the DMEs); this method provides an easy</span>
+<span class="sd">        way to map back from their numeric ID to the DME that each MutationType</span>
 <span class="sd">        corresponds to.</span>
 
 <span class="sd">        This method returns a list of dictionaries of length equal to the</span>
-<span class="sd">        number of MutationTypes in all DFEs of the contig, each dictionary</span>
-<span class="sd">        containing three things: ``&quot;dfe_id&quot;``: the ID of the DFE this</span>
+<span class="sd">        number of MutationTypes in all DMEs of the contig, each dictionary</span>
+<span class="sd">        containing three things: ``&quot;dme_id&quot;``: the ID of the DME this</span>
 <span class="sd">        MutationType comes from; ``mutation_type``: the mutation type; and</span>
 <span class="sd">        ``id``: the index in the list.</span>
 
 <span class="sd">        For instance, if ``muts`` is a list of mutation objects in a SLiM tree</span>
-<span class="sd">        sequence, then the following code will print the IDs of the DFEs that</span>
+<span class="sd">        sequence, then the following code will print the IDs of the DMEs that</span>
 <span class="sd">        each comes from:</span>
 
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            mut_types = contig.mutation_types()</span>
 <span class="sd">            for m in muts:</span>
-<span class="sd">                dfe_ids = [mut_types[k][&quot;dfe_id&quot;] for md in m.metadata[&quot;muation_list&quot;]]</span>
-<span class="sd">                print(f&quot;Mutation {m.id} has mutations from DFE(s) {&#39;,&#39;.join(dfe_ids)}&quot;)</span>
+<span class="sd">                dme_ids = [mut_types[k][&quot;dme_id&quot;] for md in m.metadata[&quot;muation_list&quot;]]</span>
+<span class="sd">                print(f&quot;Mutation {m.id} has mutations from DME(s) {&#39;,&#39;.join(dme_ids)}&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">mut_types</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
                 <span class="n">mut_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="p">{</span>
-                        <span class="s2">&quot;dfe_id&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                        <span class="s2">&quot;dme_id&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                         <span class="s2">&quot;mutation_type&quot;</span><span class="p">:</span> <span class="n">mt</span><span class="p">,</span>
                         <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
                     <span class="p">}</span>
@@ -999,7 +1056,7 @@
             <span class="s2">&quot;Contig(length=</span><span class="si">{:.2G}</span><span class="s2">, mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, &quot;</span>
             <span class="s2">&quot;recombination_rate=</span><span class="si">{:.2G}</span><span class="s2">, bacterial_recombination=</span><span class="si">{}</span><span class="s2">, &quot;</span>
             <span class="s2">&quot;gene_conversion_fraction=</span><span class="si">{}</span><span class="s2">, gene_conversion_length=</span><span class="si">{}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;genetic_map=</span><span class="si">{}</span><span class="s2">, origin=</span><span class="si">{}</span><span class="s2">, dfe_list=</span><span class="si">{}</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;genetic_map=</span><span class="si">{}</span><span class="s2">, origin=</span><span class="si">{}</span><span class="s2">, dme_list=</span><span class="si">{}</span><span class="s2">, &quot;</span>
             <span class="s2">&quot;interval_list=</span><span class="si">{}</span><span class="s2">, species=</span><span class="si">{}</span><span class="s2">)&quot;</span>
         <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
@@ -1010,7 +1067,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="p">,</span>
             <span class="n">gmap</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dfe_list</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
         <span class="p">)</span>
@@ -1033,7 +1090,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev33+gc96504f30)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev34+g6adaa356f)</div>
 
 
 </footer>
