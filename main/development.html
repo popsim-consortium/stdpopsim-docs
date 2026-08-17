@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Development &mdash; stdpopsim 0.3.1.dev49+g05f33ad9c documentation</title>
+  <title>Development &mdash; stdpopsim 0.3.1.dev50+g5f8a61843 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=587d4807"></script>
+      <script src="_static/documentation_options.js?v=d6bea69c"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -371,7 +371,7 @@ pick 97a9458 DONE!!!
 # r, reword = use commit, but edit the commit message
 # e, edit = use commit, but stop for amending
 # s, squash = use commit, but meld into previous commit
-# f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+# f, fixup = like "squash", but discard this commit's log message
 # x, exec = run command (the rest of the line) using shell
 # d, drop = remove commit
 #
@@ -399,7 +399,7 @@ s 97a9458 DONE!!!
 # r, reword = use commit, but edit the commit message
 # e, edit = use commit, but stop for amending
 # s, squash = use commit, but meld into previous commit
-# f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+# f, fixup = like "squash", but discard this commit's log message
 # x, exec = run command (the rest of the line) using shell
 # d, drop = remove commit
 #
@@ -437,7 +437,7 @@ PLEASE work, CI!
 DONE!!!
 
 # Please enter the commit message for your changes. Lines starting
-# with &#39;#&#39; will be ignored, and an empty message aborts the commit.
+# with '#' will be ignored, and an empty message aborts the commit.
 #
 # Date:      Tue Mar 5 17:00:39 2019 +0000
 #
@@ -446,7 +446,7 @@ DONE!!!
 #    squash c9c4a28 PLEASE work, CI!
 #    squash 97a9458 DONE!!!
 # No commands remaining.
-# You are currently rebasing branch &#39;topic_branch_name&#39; on &#39;20fb835&#39;.
+# You are currently rebasing branch 'topic_branch_name' on '20fb835'.
 #
 # Changes to be committed:
 #       modified:   docs/development.rst
@@ -459,7 +459,7 @@ delete them and end up with:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Add documentation for rebasing.
 
 # Please enter the commit message for your changes. Lines starting
-# with &#39;#&#39; will be ignored, and an empty message aborts the commit.
+# with '#' will be ignored, and an empty message aborts the commit.
 #
 # Date:      Tue Mar 5 17:00:39 2019 +0000
 #
@@ -468,7 +468,7 @@ delete them and end up with:</p>
 #    squash c9c4a28 PLEASE work, CI!
 #    squash 97a9458 DONE!!!
 # No commands remaining.
-# You are currently rebasing branch &#39;topic_branch_name&#39; on &#39;20fb835&#39;.
+# You are currently rebasing branch 'topic_branch_name' on '20fb835'.
 #
 # Changes to be committed:
 #       modified:   docs/development.rst
@@ -487,11 +487,11 @@ message:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git push origin topic_branch_name
 To github.com:jeromekelleher/stdpopsim.git
 ! [rejected]        topic_branch_name -&gt; topic_branch_name (non-fast-forward)
-error: failed to push some refs to &#39;git@github.com:jeromekelleher/stdpopsim.git&#39;
+error: failed to push some refs to 'git@github.com:jeromekelleher/stdpopsim.git'
 hint: Updates were rejected because the tip of your current branch is behind
 hint: its remote counterpart. Integrate the remote changes (e.g.
-hint: &#39;git pull ...&#39;) before pushing again.
-hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 </pre></div>
 </div>
 <p><strong>DO NOT LISTEN TO GIT IN THIS CASE!</strong> Git is giving you <strong>terrible advice</strong>
@@ -548,7 +548,7 @@ use <code class="docutils literal notranslate"><span class="pre">git</span> <spa
 it may be easier to squash first then rebase after.</p>
 <p>We’ll be doing irreversible changes, so first we should make a backup copy of
 the branch:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout topic_branch  # make sure we&#39;re on the right branch
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout topic_branch  # make sure we're on the right branch
 $ git checkout -b topic_backup # make the backup
 $ git checkout topic_branch  # go back to the topic branch
 </pre></div>
@@ -779,21 +779,21 @@ The genome-wide mutation rate is associated with all chromosomes.</p>
 <span class="n">_Ne</span> <span class="o">=</span> <span class="mi">124000</span>
 <span class="n">_mean_recombination_rate</span> <span class="o">=</span> <span class="n">_rho</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">_Ne</span><span class="p">)</span>
 <span class="n">_recombination_rate</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">_mean_recombination_rate</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
-<span class="n">_recombination_rate</span><span class="p">[</span><span class="s2">&quot;Mt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">_recombination_rate</span><span class="p">[</span><span class="s2">&quot;Pt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">_recombination_rate</span><span class="p">[</span><span class="s2">"Mt"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">_recombination_rate</span><span class="p">[</span><span class="s2">"Pt"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="c1"># genome-wide average mutation rate from Ossowski 2010 Science</span>
 <span class="c1"># associated with all chromosomes</span>
 <span class="n">_mean_mutation_rate</span> <span class="o">=</span> <span class="mf">7e-9</span>
 <span class="n">_mutation_rate</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">_mean_mutation_rate</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
-<span class="n">_mutation_rate</span><span class="p">[</span><span class="s2">&quot;Mt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mean_mutation_rate</span>
-<span class="n">_mutation_rate</span><span class="p">[</span><span class="s2">&quot;Pt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mean_mutation_rate</span>
+<span class="n">_mutation_rate</span><span class="p">[</span><span class="s2">"Mt"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mean_mutation_rate</span>
+<span class="n">_mutation_rate</span><span class="p">[</span><span class="s2">"Pt"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mean_mutation_rate</span>
 
 <span class="c1"># species ploidy and chromosome-specific ploidy</span>
 <span class="n">_species_ploidy</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">_ploidy</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">_species_ploidy</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
-<span class="n">_ploidy</span><span class="p">[</span><span class="s2">&quot;Mt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">_ploidy</span><span class="p">[</span><span class="s2">&quot;Pt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">_ploidy</span><span class="p">[</span><span class="s2">"Mt"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">_ploidy</span><span class="p">[</span><span class="s2">"Pt"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">_genome</span></code> object is then defined by calling the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> function
@@ -809,21 +809,21 @@ and a list of <code class="docutils literal notranslate"><span class="pre">stdpo
     <span class="n">ploidy</span><span class="o">=</span><span class="n">_ploidy</span><span class="p">,</span>
     <span class="n">citations</span><span class="o">=</span><span class="p">[</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Ossowski et al.&quot;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">"Ossowski et al."</span><span class="p">,</span>
             <span class="n">year</span><span class="o">=</span><span class="mi">2010</span><span class="p">,</span>
-            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1126/science.1180677&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1126/science.1180677"</span><span class="p">,</span>
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">MUT_RATE</span><span class="p">},</span>
         <span class="p">),</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Huber et al.&quot;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">"Huber et al."</span><span class="p">,</span>
             <span class="n">year</span><span class="o">=</span><span class="mi">2014</span><span class="p">,</span>
-            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1093/molbev/msu247&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1093/molbev/msu247"</span><span class="p">,</span>
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">REC_RATE</span><span class="p">},</span>
         <span class="p">),</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1093/nar/gkm965&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1093/nar/gkm965"</span><span class="p">,</span>
             <span class="n">year</span><span class="o">=</span><span class="mi">2007</span><span class="p">,</span>
-            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Swarbreck et al.&quot;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">"Swarbreck et al."</span><span class="p">,</span>
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ASSEMBLY</span><span class="p">},</span>
         <span class="p">),</span>
     <span class="p">],</span>
@@ -835,25 +835,25 @@ the remaining information about the species,
 including the <strong>effective population size</strong> and <strong>average generation time</strong>,
 accompanied by the appropriate <code class="docutils literal notranslate"><span class="pre">stdpopsim.Citation</span></code> objects.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;AraTha&quot;</span><span class="p">,</span>
-    <span class="n">ensembl_id</span><span class="o">=</span><span class="s2">&quot;arabidopsis_thaliana&quot;</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Arabidopsis thaliana&quot;</span><span class="p">,</span>
-    <span class="n">common_name</span><span class="o">=</span><span class="s2">&quot;A. thaliana&quot;</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">"AraTha"</span><span class="p">,</span>
+    <span class="n">ensembl_id</span><span class="o">=</span><span class="s2">"arabidopsis_thaliana"</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"Arabidopsis thaliana"</span><span class="p">,</span>
+    <span class="n">common_name</span><span class="o">=</span><span class="s2">"A. thaliana"</span><span class="p">,</span>
     <span class="n">genome</span><span class="o">=</span><span class="n">_genome</span><span class="p">,</span>
     <span class="n">generation_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="n">population_size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span>
     <span class="n">ploidy</span><span class="o">=</span><span class="n">_species_ploidy</span><span class="p">,</span>
     <span class="n">citations</span><span class="o">=</span><span class="p">[</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1890/0012-9658(2002)083[1006:GTINSO]2.0.CO;2&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1890/0012-9658(2002)083[1006:GTINSO]2.0.CO;2"</span><span class="p">,</span>
             <span class="n">year</span><span class="o">=</span><span class="mi">2002</span><span class="p">,</span>
-            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Donohue&quot;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">"Donohue"</span><span class="p">,</span>
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_TIME</span><span class="p">},</span>
         <span class="p">),</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1016/j.cell.2016.05.063&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1016/j.cell.2016.05.063"</span><span class="p">,</span>
             <span class="n">year</span><span class="o">=</span><span class="mi">2016</span><span class="p">,</span>
-            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;1001GenomesConsortium&quot;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">"1001GenomesConsortium"</span><span class="p">,</span>
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">POP_SIZE</span><span class="p">},</span>
         <span class="p">),</span>
     <span class="p">],</span>
@@ -1002,8 +1002,8 @@ of the tests disabled.
 The reviewer should enable all the tests and implement them.
 For example, the test for the recombination rates is initialized by the
 <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> utility in the following form:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Recombination rate QC not done yet&quot;</span><span class="p">)</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">([</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span> <span class="p">{}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">"Recombination rate QC not done yet"</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">([</span><span class="s2">"name"</span><span class="p">,</span> <span class="s2">"rate"</span><span class="p">],</span> <span class="p">{}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">rate</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
 </pre></div>
@@ -1015,8 +1015,8 @@ a list of <code class="docutils literal notranslate"><span class="pre">key</span
 recombination rate for each chromosome.
 We provide an example below from <em>A. aegypti</em> (see <code class="docutils literal notranslate"><span class="pre">tests/test_AedAeg.py</span></code>):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">],</span>
-    <span class="p">{</span><span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="mf">0.306e-8</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="mf">0.249e-8</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="mf">0.291e-8</span><span class="p">,</span> <span class="s2">&quot;MT&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+    <span class="p">[</span><span class="s2">"name"</span><span class="p">,</span> <span class="s2">"rate"</span><span class="p">],</span>
+    <span class="p">{</span><span class="s2">"1"</span><span class="p">:</span> <span class="mf">0.306e-8</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">:</span> <span class="mf">0.249e-8</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">:</span> <span class="mf">0.291e-8</span><span class="p">,</span> <span class="s2">"MT"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
 <span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">rate</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">)</span>
@@ -1086,7 +1086,7 @@ with the following three lines of code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">msprime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
-<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
+<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">"&lt;SPECIES_ID&gt;"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Furthermore, to ensure that the demographic model(s) are fully incorporated to the
@@ -1222,7 +1222,7 @@ by executing the following Python code,
 where <code class="docutils literal notranslate"><span class="pre">&lt;SPECIES_ID&gt;</span></code> is the six-character species id (e.g., HomSap or AraTha):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
-<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
+<span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">"&lt;SPECIES_ID&gt;"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">demographic_models</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </pre></div>
@@ -1321,23 +1321,23 @@ object to the file named for your species in the <code class="docutils literal n
 (the one that contains all the simulation code for that species,
 see <a class="reference internal" href="#getting-set-up-to-add-a-new-species">Getting set up to add a new species</a>):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_genetic_map_citation</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_MAP</span><span class="p">}</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">"FILL_ME"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"FILL_ME"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">GEN_MAP</span><span class="p">}</span>
 <span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">The file_pattern argument is a pattern that matches the genetic map filenames,</span>
-<span class="sd">where &#39;{id}&#39; is replaced with the &#39;id&#39; field of a given chromosome.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">where '{id}' is replaced with the 'id' field of a given chromosome.</span>
+<span class="sd">"""</span>
 <span class="n">_gm</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">GeneticMap</span><span class="p">(</span>
     <span class="n">species</span><span class="o">=</span><span class="n">_species</span><span class="p">,</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>  <span class="c1"># ID for genetic map, see naming conventions</span>
-    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
-    <span class="n">long_description</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">"FILL_ME"</span><span class="p">,</span>  <span class="c1"># ID for genetic map, see naming conventions</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">"FILL_ME"</span><span class="p">,</span>
+    <span class="n">long_description</span><span class="o">=</span><span class="s2">"FILL_ME"</span><span class="p">,</span>
     <span class="n">url</span><span class="o">=</span><span class="p">(</span>
-        <span class="s2">&quot;https://stdpopsim.s3-us-west-2.amazonaws.com/&quot;</span>
-        <span class="s2">&quot;genetic_maps/dir/filename.tar.gz&quot;</span>
+        <span class="s2">"https://stdpopsim.s3-us-west-2.amazonaws.com/"</span>
+        <span class="s2">"genetic_maps/dir/filename.tar.gz"</span>
     <span class="p">),</span>
-    <span class="n">sha256</span><span class="o">=</span><span class="s2">&quot;FILL_ME&quot;</span><span class="p">,</span>
-    <span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;name_</span><span class="si">{id}</span><span class="s2">_more_name.txt&quot;</span><span class="p">,</span>
+    <span class="n">sha256</span><span class="o">=</span><span class="s2">"FILL_ME"</span><span class="p">,</span>
+    <span class="n">file_pattern</span><span class="o">=</span><span class="s2">"name_</span><span class="si">{id}</span><span class="s2">_more_name.txt"</span><span class="p">,</span>
     <span class="n">citations</span><span class="o">=</span><span class="p">[</span><span class="n">_genetic_map_citation</span><span class="p">],</span>
 <span class="p">)</span>
 
@@ -1347,7 +1347,7 @@ see <a class="reference internal" href="#getting-set-up-to-add-a-new-species">Ge
 <p>The SHA256 checksum of the the genetic map tarball can be obtained using the
 <code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
 system, the following can instead be used:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'from stdpopsim.utils import sha256; print(sha256("genetic_map.tgz"))'</span>
 </pre></div>
 </div>
 <p>Once all this is done, submit a PR containing the code changes and wait for directions
@@ -1416,7 +1416,7 @@ the SHA256 checksum.</p>
 <p>The SHA256 checksum of the new genetic map tarball can be obtained using the
 <code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> command from GNU coreutils. If this is not available on your
 system, the following can instead be used:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;from stdpopsim.utils import sha256; print(sha256(&quot;genetic_map.tgz&quot;))&#39;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'from stdpopsim.utils import sha256; print(sha256("genetic_map.tgz"))'</span>
 </pre></div>
 </div>
 <p>The newly lifted over maps will be formatted in a compressed archive and
@@ -1480,7 +1480,7 @@ then you should add this file to <code class="docutils literal notranslate"><spa
 with the following two lines of code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stdpopsim</span>
 
-<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;&lt;SPECIES_ID&gt;&quot;</span><span class="p">)</span>
+<span class="n">_species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">"&lt;SPECIES_ID&gt;"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Furthermore, to ensure that the DFE model is fully incorporated to the
@@ -1550,13 +1550,13 @@ but they have a fixed selection coefficient of <code class="docutils literal not
     <span class="c1"># Negative mutation type with gamma-distributed selection coefficients</span>
     <span class="n">negative</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
         <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>  <span class="c1"># gamma distribution</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">"g"</span><span class="p">,</span>  <span class="c1"># gamma distribution</span>
         <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.0004</span><span class="p">,</span> <span class="mf">0.27</span><span class="p">],</span>  <span class="c1"># mean and shape of distributoin</span>
     <span class="p">)</span>
     <span class="c1"># Positive mutation type with fixed selection coefficient of 0.01</span>
     <span class="n">positive</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
         <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>  <span class="c1"># fixed selection coefficient</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span>  <span class="c1"># fixed selection coefficient</span>
         <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">],</span>  <span class="c1"># fixed value</span>
     <span class="p">)</span>
 
@@ -1758,7 +1758,7 @@ repository</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev49+g05f33ad9c)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev50+g5f8a61843)</div>
 
 
 </footer>

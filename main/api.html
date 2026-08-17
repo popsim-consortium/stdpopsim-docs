@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; stdpopsim 0.3.1.dev49+g05f33ad9c documentation</title>
+  <title>API &mdash; stdpopsim 0.3.1.dev50+g5f8a61843 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=587d4807"></script>
+      <script src="_static/documentation_options.js?v=d6bea69c"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -705,15 +705,15 @@ events passed to the simulation engine.</p>
 <p>For instance, to simulate a selective sweep in population <cite>pop_0</cite>
 starting at 1000 generations in the past:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contig</span><span class="o">.</span><span class="n">add_single_site</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;hard_sweep&quot;</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">"hard_sweep"</span><span class="p">,</span>
     <span class="n">coordinate</span><span class="o">=</span><span class="n">mutation_coordinate</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">extended_events</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">selective_sweep</span><span class="p">(</span>
     <span class="n">mutation_generation_ago</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
     <span class="n">selection_coeff</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">population</span><span class="o">=</span><span class="s2">&quot;pop_0&quot;</span><span class="p">,</span>
+    <span class="n">population</span><span class="o">=</span><span class="s2">"pop_0"</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;slim&quot;</span><span class="p">)</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="s2">"slim"</span><span class="p">)</span>
 <span class="n">ts_sweep</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
     <span class="o">...</span><span class="p">,</span>
     <span class="n">extended_events</span><span class="o">=</span><span class="n">extended_events</span><span class="p">,</span>
@@ -809,8 +809,8 @@ sequence, then the following code will print the IDs of the DMEs that
 each comes from:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mut_types</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">muts</span><span class="p">:</span>
-    <span class="n">dme_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mut_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;dme_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">md</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;muation_list&quot;</span><span class="p">]]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mutation </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> has mutations from DME(s) </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dme_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">dme_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">mut_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">"dme_id"</span><span class="p">]</span> <span class="k">for</span> <span class="n">md</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"muation_list"</span><span class="p">]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mutation </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> has mutations from DME(s) </span><span class="si">{</span><span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dme_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1044,11 +1044,11 @@ a <code class="xref py py-class docutils literal notranslate"><span class="pre">
 a contig with <cite>use_species_gene_conversion=True</cite> will result in a Contig
 with larger “recombination rates” than otherwise, because these rates
 include gene conversion as well as crossing over:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">&quot;DroMel&quot;</span><span class="p">)</span>
-<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;2L&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">get_species</span><span class="p">(</span><span class="s2">"DroMel"</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">"2L"</span><span class="p">)</span>
 <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
 <span class="c1"># 2.40462600791e-08</span>
-<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">&quot;2L&quot;</span><span class="p">,</span> <span class="n">use_species_gene_conversion</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">contig</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_contig</span><span class="p">(</span><span class="s2">"2L"</span><span class="p">,</span> <span class="n">use_species_gene_conversion</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
 <span class="c1"># 1.414485887005882e-07</span>
 </pre></div>
@@ -1593,7 +1593,7 @@ nucleotides.</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev49+g05f33ad9c)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev50+g5f8a61843)</div>
 
 
 </footer>

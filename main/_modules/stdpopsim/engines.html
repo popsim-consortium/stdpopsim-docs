@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.engines &mdash; stdpopsim 0.3.1.dev49+g05f33ad9c documentation</title>
+  <title>stdpopsim.engines &mdash; stdpopsim 0.3.1.dev50+g5f8a61843 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=587d4807"></script>
+      <script src="../../_static/documentation_options.js?v=d6bea69c"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -94,15 +94,15 @@
 <div class="viewcode-block" id="register_engine">
 <a class="viewcode-back" href="../../api.html#stdpopsim.register_engine">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">register_engine</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Registers the specified simulation engine.</span>
 
 <span class="sd">    :param engine: The simulation engine object to register.</span>
 <span class="sd">    :type engine: :class:`.Engine`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">engine</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">_registered_engines</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulation engine &#39;</span><span class="si">{</span><span class="n">engine</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39; already registered.&quot;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Registering simulation engine &#39;</span><span class="si">{</span><span class="n">engine</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Simulation engine '</span><span class="si">{</span><span class="n">engine</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">' already registered."</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Registering simulation engine '</span><span class="si">{</span><span class="n">engine</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
     <span class="n">_registered_engines</span><span class="p">[</span><span class="n">engine</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">engine</span></div>
 
 
@@ -110,24 +110,24 @@
 <div class="viewcode-block" id="get_engine">
 <a class="viewcode-back" href="../../api.html#stdpopsim.get_engine">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_engine</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Returns the simulation engine with the specified ``id``.</span>
 
 <span class="sd">    :param str id: The string identifier for the requested engine.</span>
-<span class="sd">        The currently supported engines are &quot;msprime&quot; and &quot;slim&quot;.</span>
+<span class="sd">        The currently supported engines are "msprime" and "slim".</span>
 <span class="sd">    :return: A simulation engine object with a ``simulate()`` method.</span>
 <span class="sd">    :rtype: :class:`.Engine`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_registered_engines</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulation engine &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; not registered&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Simulation engine '</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">' not registered"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_registered_engines</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">all_engines</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Returns an iterator over all registered simulation engines.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">sim_engine</span> <span class="ow">in</span> <span class="n">_registered_engines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
         <span class="k">yield</span> <span class="n">sim_engine</span>
 
@@ -136,7 +136,7 @@
 <a class="viewcode-back" href="../../api.html#stdpopsim.Engine">[docs]</a>
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Abstract class representing a simulation engine.</span>
 
 <span class="sd">    To implement a new simulation engine, one should inherit from this</span>
@@ -151,7 +151,7 @@
 <span class="sd">    :vartype ~.description: str</span>
 <span class="sd">    :ivar citations: A list of citations for the simulation engine.</span>
 <span class="sd">    :vartype citations: list of :class:`.Citation`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="Engine.simulate">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Engine.simulate">[docs]</a>
@@ -164,7 +164,7 @@
         <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Simulates the model for the specified contig and samples. ``demographic_model``,</span>
 <span class="sd">        ``contig``, and ``samples`` must be specified.</span>
 
@@ -182,18 +182,18 @@
 <span class="sd">        :type dry_run: bool</span>
 <span class="sd">        :return: A succinct tree sequence.</span>
 <span class="sd">        :rtype: :class:`tskit.trees.TreeSequence` or None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Engine.get_version">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Engine.get_version">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns the version of the engine.</span>
 
 <span class="sd">        :rtype: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
 
@@ -202,13 +202,13 @@
             <span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span>
         <span class="p">):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;The demographic model has mutation rate &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">, but this simulation used the &quot;</span>
-                <span class="s2">&quot;contig&#39;s mutation rate &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="s2">&quot;Diversity levels may be different than expected for this species. &quot;</span>
-                <span class="s2">&quot;For details see documentation at &quot;</span>
-                <span class="s2">&quot;https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html&quot;</span>
+                <span class="s2">"The demographic model has mutation rate "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">, but this simulation used the "</span>
+                <span class="s2">"contig's mutation rate "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">mutation_rate</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="s2">"Diversity levels may be different than expected for this species. "</span>
+                <span class="s2">"For details see documentation at "</span>
+                <span class="s2">"https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html"</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_warn_recombination_rate_mismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">):</span>
@@ -216,13 +216,13 @@
             <span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span>
         <span class="p">):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;The demographic model has recombination rate &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span><span class="si">}</span><span class="s2">, but this simulation used the &quot;</span>
-                <span class="s2">&quot;contig&#39;s recombination rate &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="s2">&quot;Patterns of linkage may be different than expected for this species. &quot;</span>
-                <span class="s2">&quot;For details see documentation at &quot;</span>
-                <span class="s2">&quot;https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html&quot;</span>
+                <span class="s2">"The demographic model has recombination rate "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">demographic_model</span><span class="o">.</span><span class="n">recombination_rate</span><span class="si">}</span><span class="s2">, but this simulation used the "</span>
+                <span class="s2">"contig's recombination rate "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span><span class="o">.</span><span class="n">mean_rate</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="s2">"Patterns of linkage may be different than expected for this species. "</span>
+                <span class="s2">"For details see documentation at "</span>
+                <span class="s2">"https://popsim-consortium.github.io/stdpopsim-docs/stable/tutorial.html"</span>
             <span class="p">)</span></div>
 
 
@@ -230,31 +230,31 @@
 <div class="viewcode-block" id="_MsprimeEngine">
 <a class="viewcode-back" href="../../api.html#stdpopsim._MsprimeEngine">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">_MsprimeEngine</span><span class="p">(</span><span class="n">Engine</span><span class="p">):</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;msprime&quot;</span>  <span class="c1">#:</span>
-    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Msprime coalescent simulator&quot;</span>  <span class="c1">#:</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">"msprime"</span>  <span class="c1">#:</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">"Msprime coalescent simulator"</span>  <span class="c1">#:</span>
     <span class="n">citations</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-            <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1371/journal.pcbi.1004842&quot;</span><span class="p">,</span>
-            <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2016&quot;</span><span class="p">,</span>
-            <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Kelleher et al.&quot;</span><span class="p">,</span>
+            <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1371/journal.pcbi.1004842"</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="s2">"2016"</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s2">"Kelleher et al."</span><span class="p">,</span>
             <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">},</span>
         <span class="p">)</span>
     <span class="p">]</span>
 
     <span class="c1"># We default to the first model in the list.</span>
     <span class="n">model_class_map</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;hudson&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">StandardCoalescent</span><span class="p">,</span>
-        <span class="s2">&quot;dtwf&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">DiscreteTimeWrightFisher</span><span class="p">,</span>
-        <span class="s2">&quot;smc&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SmcApproxCoalescent</span><span class="p">,</span>
-        <span class="s2">&quot;smc_prime&quot;</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SmcPrimeApproxCoalescent</span><span class="p">,</span>
+        <span class="s2">"hudson"</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">StandardCoalescent</span><span class="p">,</span>
+        <span class="s2">"dtwf"</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">DiscreteTimeWrightFisher</span><span class="p">,</span>
+        <span class="s2">"smc"</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SmcApproxCoalescent</span><span class="p">,</span>
+        <span class="s2">"smc_prime"</span><span class="p">:</span> <span class="n">msprime</span><span class="o">.</span><span class="n">SmcPrimeApproxCoalescent</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">model_citations</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;dtwf&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"dtwf"</span><span class="p">:</span> <span class="p">[</span>
             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">Citation</span><span class="p">(</span>
-                <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.1371/journal.pgen.1008619&quot;</span><span class="p">,</span>
-                <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2020&quot;</span><span class="p">,</span>
-                <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Nelson et al.&quot;</span><span class="p">,</span>
+                <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.1371/journal.pgen.1008619"</span><span class="p">,</span>
+                <span class="n">year</span><span class="o">=</span><span class="s2">"2020"</span><span class="p">,</span>
+                <span class="n">author</span><span class="o">=</span><span class="s2">"Nelson et al."</span><span class="p">,</span>
                 <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">stdpopsim</span><span class="o">.</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">ENGINE</span><span class="p">},</span>
             <span class="p">)</span>
         <span class="p">]</span>
@@ -265,18 +265,18 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_convert_model_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_str</span><span class="p">,</span> <span class="n">model_changes</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Convert the specified model specification into a form suitable</span>
 <span class="sd">        for sim_ancestry. The model param is a string or None. The</span>
 <span class="sd">        model_changes is either None or list of (time, model_str) tuples.</span>
 <span class="sd">        Also return the appropriate extra citations.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">citations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">model_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">model_str</span> <span class="o">=</span> <span class="s2">&quot;hudson&quot;</span>
+            <span class="n">model_str</span> <span class="o">=</span> <span class="s2">"hudson"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">model_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_class_map</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">model_str</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unrecognised model '</span><span class="si">{</span><span class="n">model_str</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">model_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
                 <span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">model_str</span><span class="p">])</span>
 
@@ -288,7 +288,7 @@
             <span class="n">last_model</span> <span class="o">=</span> <span class="n">model_str</span>
             <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model_changes</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognised model &#39;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unrecognised model '</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">:</span>
                     <span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_citations</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
                 <span class="n">duration</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">last_t</span>
@@ -314,7 +314,7 @@
         <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Simulate the demographic model using msprime.</span>
 <span class="sd">        See :meth:`.Engine.simulate()` for definitions of parameters defined</span>
 <span class="sd">        for all engines.</span>
@@ -330,22 +330,22 @@
 <span class="sd">            to initialise the simulation and then immediately return.</span>
 <span class="sd">        :type dry_run: bool</span>
 <span class="sd">        :param \\**kwargs: Further arguments passed to :meth:`msprime.sim_ancestry()`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">model</span><span class="p">,</span> <span class="n">citations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_model_spec</span><span class="p">(</span><span class="n">msprime_model</span><span class="p">,</span> <span class="n">msprime_change_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">citations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">citations</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;random_seed&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s2">"random_seed"</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">seed</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;random_seed&quot;</span><span class="p">]</span>
-                <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;random_seed&quot;</span><span class="p">]</span>
+                <span class="n">seed</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"random_seed"</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"random_seed"</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot set both seed and random_seed&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot set both seed and random_seed"</span><span class="p">)</span>
         <span class="c1"># test to make sure contig is fully neutral</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">contig</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Contig had non neutral mutation types &quot;</span>
-                <span class="s2">&quot;but you are using the msprime engine&quot;</span>
+                <span class="s2">"Contig had non neutral mutation types "</span>
+                <span class="s2">"but you are using the msprime engine"</span>
             <span class="p">)</span>
 
         <span class="c1"># handle deprecated samples=[msprime.SampleSet] input</span>
@@ -357,7 +357,7 @@
             <span class="n">sample_sets</span> <span class="o">=</span> <span class="n">samples</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Samples must be a dict of the form {population_name:num_samples}.&quot;</span>
+                <span class="s2">"Samples must be a dict of the form {population_name:num_samples}."</span>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_mutation_rate_mismatch</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">demographic_model</span><span class="p">)</span>
@@ -366,7 +366,7 @@
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">seeds</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="c1"># if bacterial_recombination=True then &quot;recombination_rate&quot;</span>
+        <span class="c1"># if bacterial_recombination=True then "recombination_rate"</span>
         <span class="c1"># is implemented by msprime as gene conversion rate</span>
         <span class="c1"># (which must be constant)</span>
         <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">contig</span><span class="o">.</span><span class="n">recombination_map</span>
@@ -426,12 +426,12 @@
 <div class="viewcode-block" id="get_default_engine">
 <a class="viewcode-back" href="../../api.html#stdpopsim.get_default_engine">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_default_engine</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Returns the default simulation engine (msprime).</span>
 
 <span class="sd">    :rtype: :class:`.Engine`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">get_engine</span><span class="p">(</span><span class="s2">&quot;msprime&quot;</span><span class="p">)</span></div>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">get_engine</span><span class="p">(</span><span class="s2">"msprime"</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -450,7 +450,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev49+g05f33ad9c)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev50+g5f8a61843)</div>
 
 
 </footer>

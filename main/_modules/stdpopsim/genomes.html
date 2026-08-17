@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.genomes &mdash; stdpopsim 0.3.1.dev49+g05f33ad9c documentation</title>
+  <title>stdpopsim.genomes &mdash; stdpopsim 0.3.1.dev50+g5f8a61843 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=587d4807"></script>
+      <script src="../../_static/documentation_options.js?v=d6bea69c"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -77,10 +77,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for stdpopsim.genomes</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Infrastructure for defining information about species&#39; genomes and genomic</span>
+<span></span><span class="sd">"""</span>
+<span class="sd">Infrastructure for defining information about species' genomes and genomic</span>
 <span class="sd">regions to be simulated.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
@@ -95,9 +95,9 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_uniform_rate_map</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Makes a uniform RateMap</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span>
         <span class="mf">0.0</span><span class="p">,</span>
     <span class="p">]</span>
@@ -117,7 +117,7 @@
 <a class="viewcode-back" href="../../api.html#stdpopsim.Genome">[docs]</a>
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Genome</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class representing the genome for a species.</span>
 
 <span class="sd">    :ivar chromosomes: A list of :class:`.Chromosome` objects.</span>
@@ -127,10 +127,10 @@
 <span class="sd">    :ivar assembly_accession: The ID of the genome assembly accession.</span>
 <span class="sd">    :vartype assembly_accession: str</span>
 <span class="sd">    :ivar assembly_source: The source of the genome assembly data.</span>
-<span class="sd">        (for instance &quot;ensembl&quot;). Use &quot;manual&quot; if manually entered.</span>
+<span class="sd">        (for instance "ensembl"). Use "manual" if manually entered.</span>
 <span class="sd">    :vartype assembly_source: str</span>
 <span class="sd">    :ivar assembly_build_version: The version of the genome assembly build,</span>
-<span class="sd">        or &quot;None&quot; if manually entered.</span>
+<span class="sd">        or "None" if manually entered.</span>
 <span class="sd">    :vartype assembly_build_version: str</span>
 <span class="sd">    :ivar bacterial_recombination: Whether recombination is via horizontal gene</span>
 <span class="sd">        transfer (if this is True) or via crossing-over and possibly gene</span>
@@ -142,7 +142,7 @@
 <span class="sd">    :vartype citations: list</span>
 <span class="sd">    :ivar length: The total length of the genome.</span>
 <span class="sd">    :vartype length: int</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">chromosomes</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">assembly_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -166,14 +166,14 @@
         <span class="n">gene_conversion_fraction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">gene_conversion_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Construct a Genome object from the specified dictionary of</span>
 <span class="sd">        genome information from Ensembl, recombination_rate,</span>
 <span class="sd">        mutation_rate, and ploidy dictionaries.</span>
 
 <span class="sd">        This method is for internal use only.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">chr_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="sd">        """</span>
+        <span class="n">chr_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">"chromosomes"</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">recombination_rate</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">mutation_rate</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">ploidy</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
@@ -184,12 +184,12 @@
             <span class="n">gene_conversion_length</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">chr_names</span><span class="p">}</span>
         <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">gene_conversion_length</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="n">chr_names</span>
         <span class="n">chromosomes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;chromosomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">genome_data</span><span class="p">[</span><span class="s2">"chromosomes"</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">chromosomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="n">Chromosome</span><span class="p">(</span>
                     <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-                    <span class="n">length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
-                    <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;synonyms&quot;</span><span class="p">],</span>
+                    <span class="n">length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">"length"</span><span class="p">],</span>
+                    <span class="n">synonyms</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">"synonyms"</span><span class="p">],</span>
                     <span class="n">mutation_rate</span><span class="o">=</span><span class="n">mutation_rate</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                     <span class="n">recombination_rate</span><span class="o">=</span><span class="n">recombination_rate</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                     <span class="n">ploidy</span><span class="o">=</span><span class="n">ploidy</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
@@ -199,10 +199,10 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">Genome</span><span class="p">(</span>
             <span class="n">chromosomes</span><span class="o">=</span><span class="n">chromosomes</span><span class="p">,</span>
-            <span class="n">assembly_name</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;assembly_name&quot;</span><span class="p">],</span>
-            <span class="n">assembly_accession</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;assembly_accession&quot;</span><span class="p">],</span>
-            <span class="n">assembly_source</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;assembly_source&quot;</span><span class="p">],</span>
-            <span class="n">assembly_build_version</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">&quot;assembly_build_version&quot;</span><span class="p">],</span>
+            <span class="n">assembly_name</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">"assembly_name"</span><span class="p">],</span>
+            <span class="n">assembly_accession</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">"assembly_accession"</span><span class="p">],</span>
+            <span class="n">assembly_source</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">"assembly_source"</span><span class="p">],</span>
+            <span class="n">assembly_build_version</span><span class="o">=</span><span class="n">genome_data</span><span class="p">[</span><span class="s2">"assembly_build_version"</span><span class="p">],</span>
             <span class="n">bacterial_recombination</span><span class="o">=</span><span class="n">bacterial_recombination</span><span class="p">,</span>
             <span class="n">citations</span><span class="o">=</span><span class="n">citations</span><span class="p">,</span>
         <span class="p">)</span></div>
@@ -213,37 +213,37 @@
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Chromosomes:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">"Chromosomes:</span><span class="se">\n</span><span class="s2">"</span>
         <span class="n">length_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">length_sorted</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chrom</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chrom</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span>
 
 <div class="viewcode-block" id="Genome.get_chromosome">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Genome.get_chromosome">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns the chromosome with the specified ``id``.</span>
 
 <span class="sd">        :param str id: The string ID of the chromosome.</span>
 <span class="sd">            A complete list of chromosome IDs for each species can be found in the</span>
-<span class="sd">            &quot;Genome&quot; subsection for the species in the :ref:`sec_catalog`.</span>
+<span class="sd">            "Genome" subsection for the species in the :ref:`sec_catalog`.</span>
 <span class="sd">        :rtype: :class:`Chromosome`</span>
 <span class="sd">        :return: A :class:`Chromosome` that defines properties of the chromosome</span>
 <span class="sd">            such as length, mutation rate, and recombination rate.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">chrom</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span> <span class="ow">or</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">chrom</span><span class="o">.</span><span class="n">synonyms</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">chrom</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chromosome not found&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Chromosome not found"</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">mean_gene_conversion_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The genetic length-weighted mean gene conversion fraction across all</span>
 <span class="sd">        chromosomes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bacterial_recombination</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">else</span><span class="p">:</span>
@@ -261,21 +261,21 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">range_gene_conversion_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The range of gene conversion tract lengths across chromosomes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">prelim_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">chrom</span><span class="o">.</span><span class="n">gene_conversion_length</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">]</span>
         <span class="n">gc_tract_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">gctl</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">gctl</span> <span class="k">for</span> <span class="n">gctl</span> <span class="ow">in</span> <span class="n">prelim_lengths</span><span class="p">]</span>
         <span class="n">min_gctl</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">gc_tract_lengths</span><span class="p">)</span>
         <span class="n">max_gctl</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">gc_tract_lengths</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">min_gctl</span> <span class="o">==</span> <span class="n">max_gctl</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">max_gctl</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">min_gctl</span> <span class="o">==</span> <span class="n">max_gctl</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">min_gctl</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">max_gctl</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">mean_recombination_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The length-weighted mean recombination rate across all chromosomes.</span>
 <span class="sd">        (Note that this is the rate of crossing-over, not all double-stranded breaks.)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
         <span class="n">mean_recombination_rate</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
@@ -286,9 +286,9 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">mean_mutation_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The length-weighted mean mutation rate across all chromosomes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
         <span class="n">mean_mutation_rate</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromosomes</span><span class="p">:</span>
@@ -303,7 +303,7 @@
 <a class="viewcode-back" href="../../api.html#stdpopsim.Chromosome">[docs]</a>
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Chromosome</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class representing a single chromosome for a species. Note that although</span>
 <span class="sd">    the recombination rate for a Chromosome is the rate of crossing-over,</span>
 <span class="sd">    the recombination map for a Contig gives the rate of both crossing-over</span>
@@ -323,7 +323,7 @@
 <span class="sd">        chromosome by ID, e.g. from the command line interface.</span>
 <span class="sd">    :vartype synonyms: list of str</span>
 <span class="sd">    :ivar int ploidy: The ploidy used when simulating this chromosome.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -340,7 +340,7 @@
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig">[docs]</a>
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Contig</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class representing a contiguous region of genome that is to be simulated.</span>
 <span class="sd">    This contains the information about mutation rates, distributions of</span>
 <span class="sd">    mutational effects (DMEs), gene conversion rates and recombination rates</span>
@@ -375,7 +375,7 @@
 <span class="sd">    :ivar recombination_map: The recombination map for the region, that gives</span>
 <span class="sd">        the rates of double-stranded breaks. Note that if gene conversion</span>
 <span class="sd">        fraction is nonzero, then this map can have a larger rate than the</span>
-<span class="sd">        corresponding chromosome&#39;s recombination rate, since the chromosome&#39;s</span>
+<span class="sd">        corresponding chromosome's recombination rate, since the chromosome's</span>
 <span class="sd">        rate describes only crossing-over. A :class:`msprime.RateMap` object.</span>
 <span class="sd">    :vartype recombination_map: msprime.RateMap</span>
 <span class="sd">    :ivar bacterial_recombination: Whether the model of recombination is</span>
@@ -434,7 +434,7 @@
 <span class="sd">                genetic_map=old_contig.genetic_map,</span>
 <span class="sd">                species=old_contig.species,</span>
 <span class="sd">            )</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">recombination_map</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">mutation_rate</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -451,12 +451,12 @@
     <span class="n">species</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># _dfe_list only gets used in the initialization and subsequently</span>
     <span class="c1"># gets deleted. It should not be used anywhere else.</span>
-    <span class="n">_dfe_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;dfe_list&quot;</span><span class="p">)</span>
+    <span class="n">_dfe_list</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="s2">"dfe_list"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dfe_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify both dme_list and dfe_list.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot specify both dme_list and dfe_list."</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfe_list</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfe_list</span>
 
@@ -469,12 +469,12 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
-                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Generic default species&quot;</span><span class="p">,</span>
-                <span class="n">common_name</span><span class="o">=</span><span class="s2">&quot;Generic default species&quot;</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">"Generic default species"</span><span class="p">,</span>
+                <span class="n">common_name</span><span class="o">=</span><span class="s2">"Generic default species"</span><span class="p">,</span>
                 <span class="n">separate_sexes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                 <span class="n">genome</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">ensembl_id</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+                <span class="n">ensembl_id</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
@@ -492,32 +492,32 @@
         <span class="k">if</span> <span class="n">bacterial_recombination</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">gene_conversion_fraction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Cannot set gene conversion fraction for bacterial recombination.&quot;</span>
+                    <span class="s2">"Cannot set gene conversion fraction for bacterial recombination."</span>
                 <span class="p">)</span>
             <span class="k">if</span> <span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Must set gene conversion length for bacterial recombination.&quot;</span>
+                    <span class="s2">"Must set gene conversion length for bacterial recombination."</span>
                 <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">gene_conversion_fraction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;Cannot set gene conversion fraction without setting &quot;</span>
-                        <span class="s2">&quot;gene conversion length&quot;</span>
+                        <span class="s2">"Cannot set gene conversion fraction without setting "</span>
+                        <span class="s2">"gene conversion length"</span>
                     <span class="p">)</span>
             <span class="k">if</span> <span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">gene_conversion_fraction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;Cannot set gene conversion length without setting &quot;</span>
-                        <span class="s2">&quot;gene conversion fraction&quot;</span>
+                        <span class="s2">"Cannot set gene conversion length without setting "</span>
+                        <span class="s2">"gene conversion fraction"</span>
                     <span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">gene_conversion_fraction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
             <span class="n">gene_conversion_fraction</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">gene_conversion_fraction</span> <span class="o">&gt;</span> <span class="mi">1</span>
         <span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gene conversion fraction must be between 0 and 1.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Gene conversion fraction must be between 0 and 1."</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">gene_conversion_length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
             <span class="c1"># values of even 0 are OK for SLiM but not msprime</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gene conversion length must be greater than 1.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Gene conversion length must be greater than 1."</span><span class="p">)</span>
         <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">recombination_rate</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Contig</span><span class="p">(</span>
             <span class="n">recombination_map</span><span class="o">=</span><span class="n">recomb_map</span><span class="p">,</span>
@@ -547,17 +547,17 @@
         <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Build a Contig for a species.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># TODO: add non-autosomal support</span>
-        <span class="n">non_autosomal_lower</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;mt&quot;</span><span class="p">,</span> <span class="s2">&quot;chrx&quot;</span><span class="p">,</span> <span class="s2">&quot;chry&quot;</span><span class="p">,</span> <span class="s2">&quot;chrm&quot;</span><span class="p">]</span>
+        <span class="n">non_autosomal_lower</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">,</span> <span class="s2">"mt"</span><span class="p">,</span> <span class="s2">"chrx"</span><span class="p">,</span> <span class="s2">"chry"</span><span class="p">,</span> <span class="s2">"chrm"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">chromosome</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">non_autosomal_lower</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">NonAutosomalWarning</span><span class="p">(</span>
-                    <span class="s2">&quot;Non-autosomal simulations are not yet supported. See &quot;</span>
-                    <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/383 and &quot;</span>
-                    <span class="s2">&quot;https://github.com/popsim-consortium/stdpopsim/issues/406&quot;</span>
+                    <span class="s2">"Non-autosomal simulations are not yet supported. See "</span>
+                    <span class="s2">"https://github.com/popsim-consortium/stdpopsim/issues/383 and "</span>
+                    <span class="s2">"https://github.com/popsim-consortium/stdpopsim/issues/406"</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span>
@@ -565,7 +565,7 @@
             <span class="ow">and</span> <span class="n">use_species_gene_conversion</span> <span class="ow">is</span> <span class="kc">True</span>
         <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Cannot use species gene conversion with bacterial recombination.&quot;</span>
+                <span class="s2">"Cannot use species gene conversion with bacterial recombination."</span>
             <span class="p">)</span>
         <span class="c1"># TODO: remove deprecated argument in a release or two, see issue #1349.</span>
         <span class="k">if</span> <span class="n">length_multiplier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -573,8 +573,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DeprecatedFeatureWarning</span><span class="p">(</span>
-                    <span class="s2">&quot;The &#39;length_multiplier&#39; option is deprecated and will be removed &quot;</span>
-                    <span class="s2">&quot;in a future release. Use &#39;left&#39; and &#39;right&#39; instead.&quot;</span>
+                    <span class="s2">"The 'length_multiplier' option is deprecated and will be removed "</span>
+                    <span class="s2">"in a future release. Use 'left' and 'right' instead."</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="n">gene_conversion_fraction</span> <span class="o">=</span> <span class="kc">None</span>
@@ -582,16 +582,16 @@
         <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Cannot use left or right coordinates with generic contig&quot;</span>
+                    <span class="s2">"Cannot use left or right coordinates with generic contig"</span>
                 <span class="p">)</span>
             <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use genetic map with generic contig&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use genetic map with generic contig"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier for generic contig&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use length multiplier for generic contig"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use mask with generic contig&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use mask with generic contig"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify sequence length of generic contig&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Must specify sequence length of generic contig"</span><span class="p">)</span>
             <span class="n">L_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">r_tot</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">u_tot</span> <span class="o">=</span> <span class="mi">0</span>
@@ -641,13 +641,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Named contig:</span>
             <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify sequence length for named contig&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot specify sequence length for named contig"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot specify both inclusion and exclusion masks&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot specify both inclusion and exclusion masks"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="p">(</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Cannot use length multiplier when specifying left or &quot;</span>
-                    <span class="s2">&quot;right coordinates of the contig on a named chromosome.&quot;</span>
+                    <span class="s2">"Cannot use length multiplier when specifying left or "</span>
+                    <span class="s2">"right coordinates of the contig on a named chromosome."</span>
                 <span class="p">)</span>
 
             <span class="n">chrom</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">get_chromosome</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
@@ -657,8 +657,8 @@
                 <span class="n">left</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Left coordinate </span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2"> must be greater than or equal &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;to 0 and less than the length of </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">).&quot;</span>
+                        <span class="sa">f</span><span class="s2">"Left coordinate </span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2"> must be greater than or equal "</span>
+                        <span class="sa">f</span><span class="s2">"to 0 and less than the length of </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">)."</span>
                     <span class="p">)</span>
             <span class="k">if</span> <span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">right</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">length_multiplier</span><span class="p">)</span>
@@ -666,9 +666,9 @@
                 <span class="n">right</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Right coordinate </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2"> must be greater than the &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;left coordinate (</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">) and less than or equal to &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;the length of </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">).&quot;</span>
+                        <span class="sa">f</span><span class="s2">"Right coordinate </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2"> must be greater than the "</span>
+                        <span class="sa">f</span><span class="s2">"left coordinate (</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">) and less than or equal to "</span>
+                        <span class="sa">f</span><span class="s2">"the length of </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">)."</span>
                     <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -679,22 +679,22 @@
                     <span class="n">r</span> <span class="o">=</span> <span class="n">recombination_rate</span>
                 <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Making flat chromosome </span><span class="si">{</span><span class="n">length_multiplier</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"Making flat chromosome </span><span class="si">{</span><span class="n">length_multiplier</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span>
                     <span class="p">)</span>
                     <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">msprime</span><span class="o">.</span><span class="n">RateMap</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
                         <span class="nb">round</span><span class="p">(</span><span class="n">length_multiplier</span> <span class="o">*</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">),</span> <span class="n">r</span>
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Making flat contig from </span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">"Making flat contig from </span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span>
                     <span class="p">)</span>
                     <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">_uniform_rate_map</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">chrom</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with genetic map&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use length multiplier with genetic map"</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">recombination_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use recombination rate with genetic map&quot;</span><span class="p">)</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting genetic map for </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">genetic_map</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use recombination rate with genetic map"</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Getting genetic map for </span><span class="si">{</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">genetic_map</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="n">gm</span> <span class="o">=</span> <span class="n">species</span><span class="o">.</span><span class="n">get_genetic_map</span><span class="p">(</span><span class="n">genetic_map</span><span class="p">)</span>
                 <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">gm</span><span class="o">.</span><span class="n">get_chromosome_map</span><span class="p">(</span><span class="n">chrom</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
                 <span class="n">recomb_map</span> <span class="o">=</span> <span class="n">recomb_map</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="p">)</span>
@@ -703,7 +703,7 @@
             <span class="n">exclusion_intervals</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">inclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with mask&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use length multiplier with mask"</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inclusion_mask</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="n">inclusion_intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">read_bed</span><span class="p">(</span>
                         <span class="n">inclusion_mask</span><span class="p">,</span> <span class="n">chromosome</span>
@@ -715,7 +715,7 @@
                 <span class="p">)</span>
             <span class="k">if</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">length_multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot use length multiplier with mask&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Cannot use length multiplier with mask"</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exclusion_mask</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="n">exclusion_intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">read_bed</span><span class="p">(</span>
                         <span class="n">exclusion_mask</span><span class="p">,</span> <span class="n">chromosome</span>
@@ -763,9 +763,9 @@
         <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">contig</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Cannot simulate a contig whose length is shorter &quot;</span>
-                    <span class="s2">&quot;than the gene conversion length &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="si">}</span><span class="s2">bp).&quot;</span>
+                    <span class="s2">"Cannot simulate a contig whose length is shorter "</span>
+                    <span class="s2">"than the gene conversion length "</span>
+                    <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="n">contig</span><span class="o">.</span><span class="n">gene_conversion_length</span><span class="si">}</span><span class="s2">bp)."</span>
                 <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">contig</span></div>
@@ -779,38 +779,38 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">original_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DeprecatedFeatureWarning</span><span class="p">(</span>
-                <span class="s2">&quot;The original_coordinates property is deprecated, &quot;</span>
-                <span class="s2">&quot;since contigs are no longer shifted to be relative to their &quot;</span>
-                <span class="s2">&quot;left endpoint: use Contig.coordinates instead.&quot;</span>
+                <span class="s2">"The original_coordinates property is deprecated, "</span>
+                <span class="s2">"since contigs are no longer shifted to be relative to their "</span>
+                <span class="s2">"left endpoint: use Contig.coordinates instead."</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The location of the contig on a named chromosome as a string with format,</span>
-<span class="sd">        &quot;chromosome:left-right&quot;; or None if a generic contig.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        "chromosome:left-right"; or None if a generic contig.</span>
+<span class="sd">        """</span>
         <span class="n">chromosome</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
         <span class="k">if</span> <span class="n">chromosome</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chromosome</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">chromosome</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">"</span>
 
 <div class="viewcode-block" id="Contig.dfe_breakpoints">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dfe_breakpoints">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dfe_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Alias for :meth:`dme_breakpoints`, see there for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_breakpoints</span><span class="p">(</span><span class="n">relative_coordinates</span><span class="o">=</span><span class="n">relative_coordinates</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Contig.dme_breakpoints">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.dme_breakpoints">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dme_breakpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">relative_coordinates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns two things: the sorted vector of endpoints of all intervals across</span>
 <span class="sd">        all DMEs in the contig, and a vector of integer labels for these intervals,</span>
 <span class="sd">        saying which DME goes with which interval.</span>
@@ -822,8 +822,8 @@
 <span class="sd">        in :attr:`.interval_list`.  (If the intervals in that list</span>
 <span class="sd">        cover the whole genome, the number of intervals is n.)</span>
 <span class="sd">        This method returns a tuple of two things: ``breaks, dme_labels``.</span>
-<span class="sd">        &quot;breaks&quot; is the array containing those n+1 unique endpoints, in increasing order,</span>
-<span class="sd">        and &quot;dme&quot; is the array of length n containing the index of the DME</span>
+<span class="sd">        "breaks" is the array containing those n+1 unique endpoints, in increasing order,</span>
+<span class="sd">        and "dme" is the array of length n containing the index of the DME</span>
 <span class="sd">        the applies to that interval. So, ``breaks[0]`` is always 0, and</span>
 <span class="sd">        ``breaks[n+1]`` is always the length of the contig, and</span>
 <span class="sd">        ``dme_labels[k] = j`` if</span>
@@ -833,20 +833,20 @@
 <span class="sd">        case they will have the label ``-1`` (beware of python indexing!).</span>
 
 <span class="sd">        :return: A tuple (breaks, dme_labels).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">relative_coordinates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="n">stdpopsim</span><span class="o">.</span><span class="n">DeprecatedFeatureWarning</span><span class="p">(</span>
-                    <span class="s2">&quot;The relative_coordinates argument is deprecated &quot;</span>
-                    <span class="s2">&quot;(and no longer needed),&quot;</span>
-                    <span class="s2">&quot;because contigs are no longer shifted to be relative to their &quot;</span>
-                    <span class="s2">&quot;left endpoint.&quot;</span>
+                    <span class="s2">"The relative_coordinates argument is deprecated "</span>
+                    <span class="s2">"(and no longer needed),"</span>
+                    <span class="s2">"because contigs are no longer shifted to be relative to their "</span>
+                    <span class="s2">"left endpoint."</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="n">breaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">+</span> <span class="p">[[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]]])</span>  <span class="c1"># also sorted</span>
         <span class="p">)</span>
-        <span class="n">dme_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+        <span class="n">dme_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int"</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">intervals</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span><span class="p">):</span>
             <span class="n">dme_labels</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">breaks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">intervals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="o">=</span> <span class="n">j</span>
         <span class="k">return</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">dme_labels</span></div>
@@ -855,19 +855,19 @@
 <div class="viewcode-block" id="Contig.clear_dfes">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dfes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear_dfes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Alias for :meth:`clear_dmes`, see there for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_dmes</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Contig.clear_dmes">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.clear_dmes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear_dmes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Removes all DMEs from the contig (as well as the corresponding list of</span>
 <span class="sd">        intervals).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval_list</span> <span class="o">=</span> <span class="p">[]</span></div>
 
@@ -883,16 +883,16 @@
 <div class="viewcode-block" id="Contig.add_dfe">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dfe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_dfe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Alias for :meth:`add_dme`, see there for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">DFE</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Contig.add_dme">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.add_dme">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_dme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">DME</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Adds the provided DME to the contig, applying to the regions of the</span>
 <span class="sd">        contig specified in ``intervals``. These intervals are also *removed*</span>
 <span class="sd">        from the intervals of any previously-present DMEs - in other words,</span>
@@ -916,11 +916,11 @@
 
 <span class="sd">        Any of the ``intervals`` that fall outside of the contig will be</span>
 <span class="sd">        clipped to the contig boundaries. If no ``intervals`` overlap the</span>
-<span class="sd">        contig, an &quot;empty&quot; DME will be added with a warning.</span>
+<span class="sd">        contig, an "empty" DME will be added with a warning.</span>
 
 <span class="sd">        :param array intervals: A valid set of intervals.</span>
 <span class="sd">        :param DME dme: A DME object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
         <span class="n">intervals</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
         <span class="n">stdpopsim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">_check_intervals_validity</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">left</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">right</span><span class="p">)</span>
@@ -939,7 +939,7 @@
         <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">long_description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Adds a single site mutation class at the provided coordinate.</span>
 <span class="sd">        The string label of the single site may be referenced by extended</span>
 <span class="sd">        events passed to the simulation engine.</span>
@@ -950,15 +950,15 @@
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            contig.add_single_site(</span>
-<span class="sd">                id=&quot;hard_sweep&quot;,</span>
+<span class="sd">                id="hard_sweep",</span>
 <span class="sd">                coordinate=mutation_coordinate,</span>
 <span class="sd">            )</span>
 <span class="sd">            extended_events = ext.selective_sweep(</span>
 <span class="sd">                mutation_generation_ago=1000,</span>
 <span class="sd">                selection_coeff=0.1,</span>
-<span class="sd">                population=&quot;pop_0&quot;,</span>
+<span class="sd">                population="pop_0",</span>
 <span class="sd">            )</span>
-<span class="sd">            engine = stdpopsim.get_engine(&quot;slim&quot;)</span>
+<span class="sd">            engine = stdpopsim.get_engine("slim")</span>
 <span class="sd">            ts_sweep = engine.simulate(</span>
 <span class="sd">                ...,</span>
 <span class="sd">                extended_events=extended_events,</span>
@@ -969,17 +969,17 @@
 <span class="sd">        :param str id: A unique identifier for the single site.</span>
 <span class="sd">        :param int coordinate: The coordinate of the site on the contig.</span>
 <span class="sd">        :param str description: A short description of the single site mutation</span>
-<span class="sd">            model as it would be used in written text, e.g., &quot;Strong selective</span>
-<span class="sd">            sweep&quot;.</span>
+<span class="sd">            model as it would be used in written text, e.g., "Strong selective</span>
+<span class="sd">            sweep".</span>
 <span class="sd">        :param str long_description: If necessary, a more detailed summary.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Single site mutation&quot;</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="s2">"Single site mutation"</span>
         <span class="k">if</span> <span class="n">long_description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">long_description</span> <span class="o">=</span> <span class="s2">&quot;Added by Contig.add_single_site&quot;</span>
+            <span class="n">long_description</span> <span class="o">=</span> <span class="s2">"Added by Contig.add_single_site"</span>
 
         <span class="n">mut_type</span> <span class="o">=</span> <span class="n">stdpopsim</span><span class="o">.</span><span class="n">MutationType</span><span class="p">(</span>
-            <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;f&quot;</span><span class="p">,</span>
+            <span class="n">distribution_type</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span>
             <span class="n">dominance_coeff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
             <span class="n">distribution_args</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">],</span>
             <span class="n">convert_to_substitution</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -993,22 +993,22 @@
             <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_dme</span><span class="p">(</span>
-            <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">coordinate</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">),</span>
+            <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">coordinate</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int"</span><span class="p">),</span>
             <span class="n">DME</span><span class="o">=</span><span class="n">dfe</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns True if the contig has no non-neutral mutation types.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">is_neutral</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span> <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Contig.mutation_types">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Contig.mutation_types">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mutation_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Provides information about the MutationTypes assigned to this Contig,</span>
 <span class="sd">        along with information about which DME they correspond to. This is</span>
 <span class="sd">        useful because when simulating with SLiM, the mutation types are</span>
@@ -1019,7 +1019,7 @@
 
 <span class="sd">        This method returns a list of dictionaries of length equal to the</span>
 <span class="sd">        number of MutationTypes in all DMEs of the contig, each dictionary</span>
-<span class="sd">        containing three things: ``&quot;dme_id&quot;``: the ID of the DME this</span>
+<span class="sd">        containing three things: ``"dme_id"``: the ID of the DME this</span>
 <span class="sd">        MutationType comes from; ``mutation_type``: the mutation type; and</span>
 <span class="sd">        ``id``: the index in the list.</span>
 
@@ -1031,19 +1031,19 @@
 
 <span class="sd">            mut_types = contig.mutation_types()</span>
 <span class="sd">            for m in muts:</span>
-<span class="sd">                dme_ids = [mut_types[k][&quot;dme_id&quot;] for md in m.metadata[&quot;muation_list&quot;]]</span>
-<span class="sd">                print(f&quot;Mutation {m.id} has mutations from DME(s) {&#39;,&#39;.join(dme_ids)}&quot;)</span>
+<span class="sd">                dme_ids = [mut_types[k]["dme_id"] for md in m.metadata["muation_list"]]</span>
+<span class="sd">                print(f"Mutation {m.id} has mutations from DME(s) {','.join(dme_ids)}")</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">mut_types</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dme_list</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">mutation_types</span><span class="p">:</span>
                 <span class="n">mut_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="p">{</span>
-                        <span class="s2">&quot;dme_id&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                        <span class="s2">&quot;mutation_type&quot;</span><span class="p">:</span> <span class="n">mt</span><span class="p">,</span>
-                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
+                        <span class="s2">"dme_id"</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                        <span class="s2">"mutation_type"</span><span class="p">:</span> <span class="n">mt</span><span class="p">,</span>
+                        <span class="s2">"id"</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
                     <span class="p">}</span>
                 <span class="p">)</span>
                 <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -1051,13 +1051,13 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">gmap</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">gmap</span> <span class="o">=</span> <span class="s2">"None"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">genetic_map</span><span class="o">.</span><span class="n">id</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s2">&quot;Contig(length=</span><span class="si">{:.2G}</span><span class="s2">, mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;recombination_rate=</span><span class="si">{:.2G}</span><span class="s2">, bacterial_recombination=</span><span class="si">{}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;gene_conversion_fraction=</span><span class="si">{}</span><span class="s2">, gene_conversion_length=</span><span class="si">{}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;genetic_map=</span><span class="si">{}</span><span class="s2">, origin=</span><span class="si">{}</span><span class="s2">, dme_list=</span><span class="si">{}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;interval_list=</span><span class="si">{}</span><span class="s2">, species=</span><span class="si">{}</span><span class="s2">)&quot;</span>
+            <span class="s2">"Contig(length=</span><span class="si">{:.2G}</span><span class="s2">, mutation_rate=</span><span class="si">{:.2G}</span><span class="s2">, "</span>
+            <span class="s2">"recombination_rate=</span><span class="si">{:.2G}</span><span class="s2">, bacterial_recombination=</span><span class="si">{}</span><span class="s2">, "</span>
+            <span class="s2">"gene_conversion_fraction=</span><span class="si">{}</span><span class="s2">, gene_conversion_length=</span><span class="si">{}</span><span class="s2">, "</span>
+            <span class="s2">"genetic_map=</span><span class="si">{}</span><span class="s2">, origin=</span><span class="si">{}</span><span class="s2">, dme_list=</span><span class="si">{}</span><span class="s2">, "</span>
+            <span class="s2">"interval_list=</span><span class="si">{}</span><span class="s2">, species=</span><span class="si">{}</span><span class="s2">)"</span>
         <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span><span class="p">,</span>
@@ -1090,7 +1090,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev49+g05f33ad9c)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev50+g5f8a61843)</div>
 
 
 </footer>

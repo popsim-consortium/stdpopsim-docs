@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.citations &mdash; stdpopsim 0.3.1.dev49+g05f33ad9c documentation</title>
+  <title>stdpopsim.citations &mdash; stdpopsim 0.3.1.dev50+g5f8a61843 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=587d4807"></script>
+      <script src="../../_static/documentation_options.js?v=d6bea69c"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -77,11 +77,11 @@
            <div itemprop="articleBody">
              
   <h1>Source code for stdpopsim.citations</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Citation management for stdpopsim. Provides utilities for printing</span>
 <span class="sd">citation information associated with different entities derived from the</span>
 <span class="sd">literature that are used within a simulation.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">urllib.request</span>
@@ -93,35 +93,35 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">CiteReason</span><span class="p">:</span>
-    <span class="n">ENGINE</span> <span class="o">=</span> <span class="s2">&quot;simulation engine&quot;</span>
-    <span class="n">DEM_MODEL</span> <span class="o">=</span> <span class="s2">&quot;demographic model&quot;</span>
-    <span class="n">GEN_MAP</span> <span class="o">=</span> <span class="s2">&quot;genetic map&quot;</span>
-    <span class="n">POP_SIZE</span> <span class="o">=</span> <span class="s2">&quot;population size&quot;</span>
-    <span class="n">GEN_TIME</span> <span class="o">=</span> <span class="s2">&quot;generation time&quot;</span>
-    <span class="n">MUT_RATE</span> <span class="o">=</span> <span class="s2">&quot;mutation rate&quot;</span>
-    <span class="n">REC_RATE</span> <span class="o">=</span> <span class="s2">&quot;recombination rate&quot;</span>
-    <span class="n">GENE_CONVERSION</span> <span class="o">=</span> <span class="s2">&quot;gene conversion parameters&quot;</span>
-    <span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="s2">&quot;genome assembly&quot;</span>
-    <span class="n">ANNOTATION</span> <span class="o">=</span> <span class="s2">&quot;genome annotation&quot;</span>
-    <span class="n">DFE</span> <span class="o">=</span> <span class="s2">&quot;distribution of fitness effects&quot;</span>
-    <span class="n">STDPOPSIM</span> <span class="o">=</span> <span class="s2">&quot;stdpopsim&quot;</span>
+    <span class="n">ENGINE</span> <span class="o">=</span> <span class="s2">"simulation engine"</span>
+    <span class="n">DEM_MODEL</span> <span class="o">=</span> <span class="s2">"demographic model"</span>
+    <span class="n">GEN_MAP</span> <span class="o">=</span> <span class="s2">"genetic map"</span>
+    <span class="n">POP_SIZE</span> <span class="o">=</span> <span class="s2">"population size"</span>
+    <span class="n">GEN_TIME</span> <span class="o">=</span> <span class="s2">"generation time"</span>
+    <span class="n">MUT_RATE</span> <span class="o">=</span> <span class="s2">"mutation rate"</span>
+    <span class="n">REC_RATE</span> <span class="o">=</span> <span class="s2">"recombination rate"</span>
+    <span class="n">GENE_CONVERSION</span> <span class="o">=</span> <span class="s2">"gene conversion parameters"</span>
+    <span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="s2">"genome assembly"</span>
+    <span class="n">ANNOTATION</span> <span class="o">=</span> <span class="s2">"genome annotation"</span>
+    <span class="n">DFE</span> <span class="o">=</span> <span class="s2">"distribution of fitness effects"</span>
+    <span class="n">STDPOPSIM</span> <span class="o">=</span> <span class="s2">"stdpopsim"</span>
 
 
 <div class="viewcode-block" id="Citation">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Citation">[docs]</a>
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Citation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    A reference to the literature that should be acknowledged by users of</span>
 <span class="sd">    stdpopsim.</span>
 
 <span class="sd">    :ivar doi: The DOI for the publication providing the definitive reference.</span>
 <span class="sd">    :vartype doi: str</span>
-<span class="sd">    :ivar author: Short author list, .e.g, &quot;Author 1 et. al&quot;.</span>
+<span class="sd">    :ivar author: Short author list, .e.g, "Author 1 et. al".</span>
 <span class="sd">    :vartype author: str</span>
 <span class="sd">    :ivar year: Year of publication as a 4 digit integer, e.g. 2008.</span>
 <span class="sd">    :vartype year: int</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">doi</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">author</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -129,22 +129,22 @@
     <span class="n">reasons</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">set</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">displaystr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"["</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">reason</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reasons</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span>
             <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
-        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"]</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Citation.because">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Citation.because">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">because</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reasons</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a new Citation with the given reasons.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns a new Citation with the given reasons."""</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reasons</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
             <span class="n">reasons</span> <span class="o">=</span> <span class="p">{</span><span class="n">reasons</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
@@ -159,7 +159,7 @@
 <a class="viewcode-back" href="../../api.html#stdpopsim.Citation.merge">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">citations</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a deduplicated list of Citation objects.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns a deduplicated list of Citation objects."""</span>
         <span class="n">cset</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">citation</span> <span class="ow">in</span> <span class="n">citations</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">citation</span><span class="o">.</span><span class="n">doi</span> <span class="ow">in</span> <span class="n">cset</span><span class="p">:</span>
@@ -171,29 +171,29 @@
 <div class="viewcode-block" id="Citation.assert_valid">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Citation.assert_valid">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">assert_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Checks that this citation is valid by checking the types and values</span>
 <span class="sd">        of the instance variables.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="n">parsed</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"http"</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reasons</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reason</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span></div>
 
-            <span class="c1"># TODO check that it&#39;s in the set of accepted reasons.</span>
+            <span class="c1"># TODO check that it's in the set of accepted reasons.</span>
 
 <div class="viewcode-block" id="Citation.fetch_bibtex">
 <a class="viewcode-back" href="../../api.html#stdpopsim.Citation.fetch_bibtex">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fetch_bibtex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the bibtex of a citation from Crossref.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Retrieve the bibtex of a citation from Crossref."""</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
-        <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s2">&quot;Accept&quot;</span><span class="p">,</span> <span class="s2">&quot;text/bibliography; style=bibtex&quot;</span><span class="p">)</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s2">"Accept"</span><span class="p">,</span> <span class="s2">"text/bibliography; style=bibtex"</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span> <span class="k">as</span> <span class="n">con</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">con</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
 </div>
@@ -201,16 +201,16 @@
 
 
 <span class="n">_stdpopsim_citation</span> <span class="o">=</span> <span class="n">Citation</span><span class="p">(</span>
-    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.7554/eLife.54967&quot;</span><span class="p">,</span>
-    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2020&quot;</span><span class="p">,</span>
-    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Adrion et al.&quot;</span><span class="p">,</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.7554/eLife.54967"</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="s2">"2020"</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Adrion et al."</span><span class="p">,</span>
     <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">STDPOPSIM</span><span class="p">},</span>
 <span class="p">)</span>
 
 <span class="n">_catalog_citation</span> <span class="o">=</span> <span class="n">Citation</span><span class="p">(</span>
-    <span class="n">doi</span><span class="o">=</span><span class="s2">&quot;https://doi.org/10.7554/eLife.84874&quot;</span><span class="p">,</span>
-    <span class="n">year</span><span class="o">=</span><span class="s2">&quot;2023&quot;</span><span class="p">,</span>
-    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Lauterbur et al.&quot;</span><span class="p">,</span>
+    <span class="n">doi</span><span class="o">=</span><span class="s2">"https://doi.org/10.7554/eLife.84874"</span><span class="p">,</span>
+    <span class="n">year</span><span class="o">=</span><span class="s2">"2023"</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Lauterbur et al."</span><span class="p">,</span>
     <span class="n">reasons</span><span class="o">=</span><span class="p">{</span><span class="n">CiteReason</span><span class="o">.</span><span class="n">STDPOPSIM</span><span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
@@ -230,7 +230,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev49+g05f33ad9c)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev50+g5f8a61843)</div>
 
 
 </footer>
