@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.3.1.dev50+g5f8a61843 documentation</title>
+  <title>stdpopsim.slim_engine &mdash; stdpopsim 0.3.1.dev51+g1ac1ff246 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=dc93f7aa" />
@@ -13,7 +13,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=d6bea69c"></script>
+      <script src="../../_static/documentation_options.js?v=61c155e3"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -140,6 +140,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># clamp SLiM version to [SLIM_MIN_VERSION, SLIM_MAX_VERSION)</span>
+<span class="c1"># (note that the MAX is assumed to be *not* compatible)</span>
+<span class="n">SLIM_MIN_VERSION</span> <span class="o">=</span> <span class="s2">"5.0"</span>
+<span class="n">SLIM_MAX_VERSION</span> <span class="o">=</span> <span class="s2">"6.0"</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_escape_eidos</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -1642,16 +1648,23 @@
         <span class="n">s</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="n">slim_path</span><span class="p">,</span> <span class="s2">"-v"</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"ascii"</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_assert_min_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_required_version</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assert_version_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_version</span><span class="p">,</span> <span class="n">max_version</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">):</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">version_split</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)]</span>
 
         <span class="n">current_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">(</span><span class="n">slim_path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">version_split</span><span class="p">(</span><span class="n">current_version</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">version_split</span><span class="p">(</span><span class="n">min_required_version</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"Minimum supported SLiM version is </span><span class="si">{</span><span class="n">min_required_version</span><span class="si">}</span><span class="s2">, "</span>
-                <span class="sa">f</span><span class="s2">"but only found version </span><span class="si">{</span><span class="n">current_version</span><span class="si">}</span><span class="s2">"</span>
-            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">min_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">version_split</span><span class="p">(</span><span class="n">current_version</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">version_split</span><span class="p">(</span><span class="n">min_version</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Minimum supported SLiM version is </span><span class="si">{</span><span class="n">min_version</span><span class="si">}</span><span class="s2">, "</span>
+                    <span class="sa">f</span><span class="s2">"but only found version </span><span class="si">{</span><span class="n">current_version</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="n">max_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">version_split</span><span class="p">(</span><span class="n">current_version</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">version_split</span><span class="p">(</span><span class="n">max_version</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"SLiM version must be less than </span><span class="si">{</span><span class="n">max_version</span><span class="si">}</span><span class="s2">, "</span>
+                    <span class="sa">f</span><span class="s2">"but only found version </span><span class="si">{</span><span class="n">current_version</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span>
 
 <div class="viewcode-block" id="_SLiMEngine.simulate">
 <a class="viewcode-back" href="../../api.html#stdpopsim.slim_engine._SLiMEngine.simulate">[docs]</a>
@@ -1854,7 +1867,7 @@
         <span class="k">if</span> <span class="n">slim_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">slim_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slim_path</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_min_version</span><span class="p">(</span><span class="s2">"4.0"</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_version_bounds</span><span class="p">(</span><span class="n">SLIM_MIN_VERSION</span><span class="p">,</span> <span class="n">SLIM_MAX_VERSION</span><span class="p">,</span> <span class="n">slim_path</span><span class="p">)</span>
 
         <span class="n">slim_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">slim_path</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -2175,7 +2188,7 @@
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev50+g5f8a61843)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev51+g1ac1ff246)</div>
 
 
 </footer>
