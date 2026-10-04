@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Development &mdash; stdpopsim 0.3.1.dev55+g9368b2018 documentation</title>
+  <title>Development &mdash; stdpopsim 0.3.1.dev56+g3a163f49e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=c6b22bcd"></script>
+      <script src="_static/documentation_options.js?v=f67019ff"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -52,10 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cli_arguments.html">Command-line options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#using-a-virtual-environment">Using a Virtual Environment</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#github-workflow">GitHub workflow</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pre-commit-checks">Pre-commit checks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rebasing">Rebasing</a></li>
@@ -94,7 +91,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#making-a-new-release">Making a new release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-a-new-release">Making a new release</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#testing-the-release-on-testpypi">Testing the release on TestPyPI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#publishing-the-release">Publishing the release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#releasing-by-hand">Releasing by hand</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelogs.html">Changelogs</a></li>
@@ -173,55 +175,48 @@ And, importantly, please have a look at our
 <span id="sec-development-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>Before installing, be sure to make a fork of the repo and clone it locally
 following the instructions in the <a class="reference internal" href="#github-workflow">GitHub Workflow</a>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> library requires Python 3.4 or later.</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">pip</span></code> users, install the packages required for development using:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install -r requirements/development.txt
+<p>We use <a class="reference external" href="https://docs.astral.sh/uv/">uv</a> to manage the development
+environment. All dependencies are declared in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, and the
+exact versions used for development and testing are recorded in <code class="docutils literal notranslate"><span class="pre">uv.lock</span></code>.
+First <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">install uv</a>,
+then, from the root of your clone, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv sync
 </pre></div>
 </div>
-<p>You can then install the development version of <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 setup.py install
+<p>This creates a virtual environment in <code class="docutils literal notranslate"><span class="pre">.venv/</span></code>, installs <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> into
+it in editable mode, and installs all of the development tools (test, docs,
+lint and catalog maintenance dependencies). You do not need to activate the
+virtual environment: prefix any command with <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span></code> to run it inside the
+environment, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run pytest
+$ uv run stdpopsim --version
 </pre></div>
 </div>
-<p>For <code class="docutils literal notranslate"><span class="pre">conda</span></code> users, you will need to add the conda-forge channel to your conda
-environment and then should be able to install the development requirements using:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --add channels conda-forge
-$ conda install --file=requirements/development.txt
+<p>If you prefer to work in an activated environment, activate it in the usual
+way (<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">.venv/bin/activate</span></code> on Linux and macOS,
+<code class="docutils literal notranslate"><span class="pre">.venv\Scripts\activate</span></code> on Windows) and then run commands directly.</p>
+<p>The development tools are split into
+<a class="reference external" href="https://packaging.python.org/en/latest/specifications/dependency-groups/">dependency groups</a>
+named <code class="docutils literal notranslate"><span class="pre">test</span></code>, <code class="docutils literal notranslate"><span class="pre">docs</span></code>, <code class="docutils literal notranslate"><span class="pre">lint</span></code> and <code class="docutils literal notranslate"><span class="pre">maintenance</span></code>. <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">sync</span></code> installs
+all of them by default. To install only what is needed for one task, use for
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv sync --no-default-groups --group test
 </pre></div>
 </div>
-<p>We do require <code class="docutils literal notranslate"><span class="pre">msprime</span></code>, so please see the the <a class="reference external" href="https://tskit.dev/msprime/docs/stable/installation.html">installation notes</a> if you
-encounter problems with it.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you have trouble installing any of the requirements, your <code class="docutils literal notranslate"><span class="pre">pip</span></code> may be the wrong version.
-Try <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/development.txt</span></code></p>
-</div>
-<section id="using-a-virtual-environment">
-<h3>Using a Virtual Environment<a class="headerlink" href="#using-a-virtual-environment" title="Link to this heading"></a></h3>
-<p>We encourage the use of a virtual environment.</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">pip</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</p>
-<p>First, create the virtual environment (You only need to do this once):</p>
+<p>The dependency groups can also be installed with recent versions of <code class="docutils literal notranslate"><span class="pre">pip</span></code>
+(25.1 or later) if you do not want to use <code class="docutils literal notranslate"><span class="pre">uv</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m venv stdpopsim_env
+$ source stdpopsim_env/bin/activate
+(stdpopsim_env) $ python3 -m pip install -e . --group dev
 </pre></div>
 </div>
-<p>Next, activate the virtual environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source stdpopsim_env/bin/activate
-</pre></div>
-</div>
-<p>You will then see the virtual environment in your prompt. Like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $
-</pre></div>
-</div>
-<p>Once the virtual environment is activated, install the requirements:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $ python3 -m pip install -r requirements/development.txt
-</pre></div>
-</div>
-<p>You can then run any of the code in the virtual environment with the packages installed,
-without conflicting with other packages in your local environment.
-To deactivate the virtual environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(stdpopsim_env) $ deactivate
-</pre></div>
-</div>
-</section>
+<p>We do require <code class="docutils literal notranslate"><span class="pre">msprime</span></code>, so please see the <a class="reference external" href="https://tskit.dev/msprime/docs/stable/installation.html">installation notes</a> if you
+encounter problems with it.</p>
+<p>Many tests and examples also require <a class="reference external" href="https://messerlab.org/slim/">SLiM</a>.
+The test suite looks for a <code class="docutils literal notranslate"><span class="pre">slim</span></code> executable on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, or at the
+location given by the <code class="docutils literal notranslate"><span class="pre">SLIM</span></code> environment variable. SLiM can be installed
+with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">slim</span></code>, or built from source; see the
+SLiM manual for details.</p>
 </section>
 <section id="github-workflow">
 <h2>GitHub workflow<a class="headerlink" href="#github-workflow" title="Link to this heading"></a></h2>
@@ -232,7 +227,7 @@ of the <code class="docutils literal notranslate"><span class="pre">stdpopsim</s
 <a class="reference external" href="https://help.github.com/articles/cloning-a-repository/">clone</a>
 a local copy.</p></li>
 <li><p>Install the pre-commit hooks with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pre-commit install
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run pre-commit install
 </pre></div>
 </div>
 </li>
@@ -1665,29 +1660,25 @@ which generates reports about each pull request.</p>
 as part of unit tests.</p>
 <p>The unit test suite is in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> directory. Tests are run using the
 <a class="reference external" href="https://docs.pytest.org/en/stable/">pytest</a> module. Use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pytest
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run pytest
 </pre></div>
 </div>
 <p>from the project root to run the full test suite. Pytest is very powerful and
 has lots of options; please see the <a class="reference external" href="https://tskit.dev/tskit/docs/stable/development.html#tests">tskit documentation</a> for help on
 how to run pytest and some common options.</p>
-<p>It’s useful to run the <code class="docutils literal notranslate"><span class="pre">flake8</span></code> CI tests <em>locally</em> before pushing a commit.
-To set this up use either <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install <code class="docutils literal notranslate"><span class="pre">flake8</span></code></p>
-<p>To run the test simply use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ flake8 --max-line-length 89 stdpopsim tests
+<p>It’s useful to run the <code class="docutils literal notranslate"><span class="pre">flake8</span></code> and <code class="docutils literal notranslate"><span class="pre">black</span></code> CI checks <em>locally</em> before
+pushing a commit. Both are installed by <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">sync</span></code>, and their settings are
+read from <code class="docutils literal notranslate"><span class="pre">.flake8</span></code> and <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, so you can run them with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run flake8 stdpopsim tests
+$ uv run black --check stdpopsim tests
 </pre></div>
 </div>
-<p>If you would like to automatically run this test before a commit is permitted,
-add the following line in the file <code class="docutils literal notranslate"><span class="pre">stdpopsim/.git/hooks/pre-commit.sample</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exec</span> <span class="n">flake8</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">line</span><span class="o">-</span><span class="n">length</span> <span class="mi">89</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">stdpopsim</span> <span class="n">tests</span>
+<p>The same checks run automatically before each commit once you have installed
+the <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hooks (see <a class="reference internal" href="#github-workflow">GitHub workflow</a>).
+To run all of the hooks on every file, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run pre-commit run --all-files
 </pre></div>
 </div>
-<p>before:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># If there are whitespace errors, print the offending file names and fail.
-exec git diff-index --check --cached $against --
-</pre></div>
-</div>
-<p>Finally, rename <code class="docutils literal notranslate"><span class="pre">pre-commit.sample</span></code> to simply <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code></p>
 </section>
 <section id="code-coverage">
 <h2>Code Coverage<a class="headerlink" href="#code-coverage" title="Link to this heading"></a></h2>
@@ -1695,7 +1686,7 @@ exec git diff-index --check --cached $against --
 well the test units cover the source code. As a result it’s very helpful
 to check locally how well your tests are covering your code by asking
 <cite>pytest</cite> for coverage reports. This can be done with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest --cov-report html --cov=stdpopsim tests/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run pytest --cov-report html --cov=stdpopsim tests/
 </pre></div>
 </div>
 <p>this will output a directory of html files for you to browse test coverage
@@ -1709,33 +1700,95 @@ indicated that tests do not currently cover that bit of code.</p>
 <p>Documentation is written using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>
 markup and the <a class="reference external" href="http://www.sphinx-doc.org/en/master/">sphinx</a> documentation system.
 It is defined in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory.</p>
-<p>To build the documentation type <code class="docutils literal notranslate"><span class="pre">make</span></code> in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory. This should build
-HTML output in the <code class="docutils literal notranslate"><span class="pre">docs/_build/html/</span></code> directory.</p>
+<p>To build the documentation, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run make -C docs
+</pre></div>
+</div>
+<p>This should build HTML output in the <code class="docutils literal notranslate"><span class="pre">docs/_build/html/</span></code> directory.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You will need <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> to be installed for the build to work.</p>
+<p>The build runs the <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> command line interface to generate
+some of the output, so <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> must be installed in the
+environment. <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">sync</span></code> takes care of this.</p>
 </div>
 </section>
 <section id="making-a-new-release">
 <h2>Making a new release<a class="headerlink" href="#making-a-new-release" title="Link to this heading"></a></h2>
-<p>Here is a list of things to do when making a new release:</p>
-<ol class="arabic simple">
-<li><p>Update the changelog and commit</p></li>
-<li><p>Create a release using the GitHub UI</p></li>
-<li><dl class="simple">
-<dt><cite>git fetch upstream</cite> on your local branch.</dt><dd><p>Then check out <cite>upstream/main</cite> and create a release tarball
-(with <cite>python setup.py sdist</cite>).
-Setuptools_scm will detect the version appopriately.</p>
-</dd>
-</dl>
+<p>Releases are built and uploaded by the “Publish Python release” GitHub
+Actions workflow in <code class="docutils literal notranslate"><span class="pre">.github/workflows/wheels.yml</span></code>, following the
+<a class="reference external" href="https://github.com/tskit-dev/.github/blob/main/repo_administration.md#standard-python-release-process">tskit-dev release process</a>.
+The workflow runs in two situations:</p>
+<ul class="simple">
+<li><p>A push to a branch named <code class="docutils literal notranslate"><span class="pre">test-publish</span></code> on the upstream repository
+builds the sdist and wheel and uploads them to
+<a class="reference external" href="https://test.pypi.org/project/stdpopsim/">TestPyPI</a>.</p></li>
+<li><p>Publishing a release on GitHub builds the tagged version and uploads it
+to <a class="reference external" href="https://pypi.org/project/stdpopsim/">PyPI</a>.</p></li>
+</ul>
+<p>The workflow uses PyPI <a class="reference external" href="https://docs.pypi.org/trusted-publishers/">trusted publishing</a>, so no upload tokens are
+stored in the repository. This needs a one-time setup by a maintainer:
+create a GitHub Actions environment named <code class="docutils literal notranslate"><span class="pre">release</span></code> in the repository
+settings, and add a trusted publisher for this repository and that
+environment on both <a class="reference external" href="https://pypi.org/manage/account/publishing/">PyPI</a>
+and <a class="reference external" href="https://test.pypi.org/manage/account/publishing/">TestPyPI</a>.</p>
+<section id="testing-the-release-on-testpypi">
+<h3>Testing the release on TestPyPI<a class="headerlink" href="#testing-the-release-on-testpypi" title="Link to this heading"></a></h3>
+<p>Before tagging a release, check that the package builds and installs
+correctly by publishing a test build:</p>
+<ol class="arabic">
+<li><p>Update the changelog with the version number and date, and merge that PR.</p></li>
+<li><p>Push the current <code class="docutils literal notranslate"><span class="pre">upstream/main</span></code> to a branch named <code class="docutils literal notranslate"><span class="pre">test-publish</span></code>
+on the upstream repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git fetch upstream
+$ git push upstream upstream/main:test-publish
+</pre></div>
+</div>
 </li>
-<li><p>Upload to PyPI: <cite>twine upload dist/{version just tagged}.tar.gz</cite></p></li>
-<li><p>After the release, if everything looks OK,
-update the symlink for <code class="docutils literal notranslate"><span class="pre">stable</span></code> in the
+<li><p>Check that the “Publish Python release” action succeeds under the
+“Actions” tab, and that a new version appears at
+<a class="reference external" href="https://test.pypi.org/project/stdpopsim/#history">https://test.pypi.org/project/stdpopsim/#history</a>.
+The version is a development version derived from the last tag,
+such as <code class="docutils literal notranslate"><span class="pre">0.3.1.dev5</span></code>, because the release tag does not exist yet.</p></li>
+<li><p>Try it out in a fresh virtual environment. The dependencies come from
+PyPI, and only <code class="docutils literal notranslate"><span class="pre">stdpopsim</span></code> itself comes from TestPyPI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv venv /tmp/stdpopsim-test
+$ uv pip install --python /tmp/stdpopsim-test stdpopsim
+$ uv pip install --python /tmp/stdpopsim-test --no-deps \
+      --index-url https://test.pypi.org/simple/ stdpopsim==&lt;version&gt;
+$ /tmp/stdpopsim-test/bin/stdpopsim --version
+</pre></div>
+</div>
+</li>
+<li><p>Delete the <code class="docutils literal notranslate"><span class="pre">test-publish</span></code> branch.</p></li>
+</ol>
+</section>
+<section id="publishing-the-release">
+<h3>Publishing the release<a class="headerlink" href="#publishing-the-release" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Create a release using the GitHub UI. Enter the version number in the
+tag box and create the tag, then paste the changelog entry into the
+release body. Publishing the release triggers the workflow, which
+uploads the tagged version to PyPI. Setuptools_scm derives the version
+from the tag.</p></li>
+<li><p>Check that the “Publish Python release” action succeeds and that the
+release appears at <a class="reference external" href="https://pypi.org/project/stdpopsim/">https://pypi.org/project/stdpopsim/</a>.</p></li>
+<li><p>If everything looks OK, update the symlink for <code class="docutils literal notranslate"><span class="pre">stable</span></code> in the
 <a class="reference external" href="https://github.com/popsim-consortium/stdpopsim-docs">stdpopsim-docs</a>
-repository</p></li>
+repository.</p></li>
 <li><p>Check on the conda feedstock PR.</p></li>
 </ol>
+</section>
+<section id="releasing-by-hand">
+<h3>Releasing by hand<a class="headerlink" href="#releasing-by-hand" title="Link to this heading"></a></h3>
+<p>If the workflow cannot be used, a maintainer with upload rights can build
+and upload a release from a clean checkout of the tag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv build
+$ uv publish dist/*
+</pre></div>
+</div>
+<p>To upload to TestPyPI by hand instead, add
+<code class="docutils literal notranslate"><span class="pre">--publish-url</span> <span class="pre">https://test.pypi.org/legacy/</span></code> to the <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">publish</span></code> command.</p>
+</section>
 </section>
 </section>
 
@@ -1758,7 +1811,7 @@ repository</p></li>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev55+g9368b2018)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev56+g3a163f49e)</div>
 
 
 </footer>

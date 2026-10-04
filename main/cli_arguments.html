@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command-line options &mdash; stdpopsim 0.3.1.dev55+g9368b2018 documentation</title>
+  <title>Command-line options &mdash; stdpopsim 0.3.1.dev56+g3a163f49e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dc93f7aa" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=c6b22bcd"></script>
+      <script src="_static/documentation_options.js?v=f67019ff"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -50,148 +50,148 @@
 <li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Command-line options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-positional-arguments">Positional Arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-named-arguments">Named Arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters">msprime specific parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters">SLiM specific parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim-named-arguments">Named Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim-msprime-specific-parameters">msprime specific parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stdpopsim-slim-specific-parameters">SLiM specific parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Sub-commands">Sub-commands</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#AedAeg">AedAeg</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-AedAeg">AedAeg</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AedAeg-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AedAeg-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AnaPla">AnaPla</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat1">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat1">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-AnaPla">AnaPla</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AnaPla-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AnaPla-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AnoCar">AnoCar</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat2">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat2">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-AnoCar">AnoCar</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AnoCar-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AnoCar-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AnoGam">AnoGam</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat3">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat3">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-AnoGam">AnoGam</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AnoGam-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AnoGam-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#ApiMel">ApiMel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat4">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat4">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-ApiMel">ApiMel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-ApiMel-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-ApiMel-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#AraTha">AraTha</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat5">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat5">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-AraTha">AraTha</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AraTha-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-AraTha-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#BosTau">BosTau</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat6">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat6">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-BosTau">BosTau</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-BosTau-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-BosTau-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#CaeEle">CaeEle</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat7">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat7">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-CaeEle">CaeEle</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-CaeEle-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-CaeEle-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#CanFam">CanFam</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat8">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat8">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-CanFam">CanFam</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-CanFam-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-CanFam-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#ChlRei">ChlRei</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat9">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat9">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-ChlRei">ChlRei</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-ChlRei-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-ChlRei-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#DroMel">DroMel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat10">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat10">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-DroMel">DroMel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-DroMel-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-DroMel-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#DroSec">DroSec</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat11">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat11">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-DroSec">DroSec</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-DroSec-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-DroSec-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#EscCol">EscCol</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat12">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat12">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-EscCol">EscCol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-EscCol-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-EscCol-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#GasAcu">GasAcu</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat13">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat13">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-GasAcu">GasAcu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-GasAcu-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-GasAcu-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#GorGor">GorGor</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat14">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat14">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-GorGor">GorGor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-GorGor-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-GorGor-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#HelAnn">HelAnn</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat15">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat15">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-HelAnn">HelAnn</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-HelAnn-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-HelAnn-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#HelMel">HelMel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat16">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat16">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-HelMel">HelMel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-HelMel-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-HelMel-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#HomSap">HomSap</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat17">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat17">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-HomSap">HomSap</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-HomSap-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-HomSap-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#MusMus">MusMus</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat18">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat18">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-MusMus">MusMus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-MusMus-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-MusMus-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#OrySat">OrySat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat19">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat19">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-OrySat">OrySat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-OrySat-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-OrySat-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PanTro">PanTro</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat20">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat20">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-PanTro">PanTro</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PanTro-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PanTro-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PapAnu">PapAnu</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat21">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat21">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-PapAnu">PapAnu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PapAnu-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PapAnu-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PhoSin">PhoSin</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat22">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat22">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-PhoSin">PhoSin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PhoSin-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PhoSin-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#PonAbe">PonAbe</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat23">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat23">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-PonAbe">PonAbe</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PonAbe-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-PonAbe-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#RatNor">RatNor</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat24">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat24">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-RatNor">RatNor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-RatNor-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-RatNor-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#StrAga">StrAga</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat25">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat25">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-StrAga">StrAga</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-StrAga-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-StrAga-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#SusScr">SusScr</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat26">Positional Arguments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-arguments_repeat26">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-SusScr">SusScr</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-SusScr-positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-SusScr-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#download-genetic-maps">download-genetic-maps</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#positional-arguments_repeat27">Positional Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdpopsim-download-genetic-maps">download-genetic-maps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stdpopsim-download-genetic-maps-positional-arguments">Positional Arguments</a></li>
 </ul>
 </li>
 </ul>
@@ -231,7 +231,7 @@
 <span id="sec-cli-args"></span><h1>Command-line options<a class="headerlink" href="#command-line-options" title="Link to this heading"></a></h1>
 <p><p>Command line interface for stdpopsim.</p>
 </p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">stdpopsim</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">V</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">CACHE_DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="p">{</span><span class="n">msprime</span><span class="p">,</span><span class="n">slim</span><span class="p">}]</span>
+<div class="highlight-default notranslate" id="stdpopsim"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">stdpopsim</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">V</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">CACHE_DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="p">{</span><span class="n">msprime</span><span class="p">,</span><span class="n">slim</span><span class="p">}]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">msprime</span><span class="o">-</span><span class="n">model</span> <span class="p">{</span><span class="n">hudson</span><span class="p">,</span><span class="n">dtwf</span><span class="p">,</span><span class="n">smc</span><span class="p">,</span><span class="n">smc_prime</span><span class="p">}]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">msprime</span><span class="o">-</span><span class="n">change</span><span class="o">-</span><span class="n">model</span> <span class="n">T</span> <span class="n">MODEL</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">slim</span><span class="o">-</span><span class="n">path</span> <span class="n">PATH</span><span class="p">]</span>
                  <span class="p">[</span><span class="o">--</span><span class="n">slim</span><span class="o">-</span><span class="n">script</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">slim</span><span class="o">-</span><span class="n">scaling</span><span class="o">-</span><span class="n">factor</span> <span class="n">Q</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">slim</span><span class="o">-</span><span class="n">burn</span><span class="o">-</span><span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
@@ -239,16 +239,16 @@
                  <span class="o">...</span>
 </pre></div>
 </div>
-<section id="stdpopsim.cli-stdpopsim_cli_parser-positional-arguments">
-<h2>Positional Arguments<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-positional-arguments" title="Link to this heading"></a></h2>
+<section id="stdpopsim-positional-arguments">
+<span id="stdpopsim.cli-stdpopsim_cli_parser-positional-arguments"></span><h2>Positional Arguments<a class="headerlink" href="#stdpopsim-positional-arguments" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>subcommand</kbd></dt>
 <dd><p>Possible choices: AedAeg, AnaPla, AnoCar, AnoGam, ApiMel, AraTha, BosTau, CaeEle, CanFam, ChlRei, DroMel, DroSec, EscCol, GasAcu, GorGor, HelAnn, HelMel, HomSap, MusMus, OrySat, PanTro, PapAnu, PhoSin, PonAbe, RatNor, StrAga, SusScr, download-genetic-maps</p>
 </dd>
 </dl>
 </section>
-<section id="stdpopsim.cli-stdpopsim_cli_parser-named-arguments">
-<h2>Named Arguments<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-named-arguments" title="Link to this heading"></a></h2>
+<section id="stdpopsim-named-arguments">
+<span id="stdpopsim.cli-stdpopsim_cli_parser-named-arguments"></span><h2>Named Arguments<a class="headerlink" href="#stdpopsim-named-arguments" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>-V, --version</kbd></dt>
 <dd><p>show program’s version number and exit</p>
@@ -270,8 +270,8 @@
 </dd>
 </dl>
 </section>
-<section id="stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters">
-<h2>msprime specific parameters<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters" title="Link to this heading"></a></h2>
+<section id="stdpopsim-msprime-specific-parameters">
+<span id="stdpopsim.cli-stdpopsim_cli_parser-msprime-specific-parameters"></span><h2>msprime specific parameters<a class="headerlink" href="#stdpopsim-msprime-specific-parameters" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>--msprime-model</kbd></dt>
 <dd><p>Possible choices: hudson, dtwf, smc, smc_prime</p>
@@ -284,8 +284,8 @@
 </dd>
 </dl>
 </section>
-<section id="stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters">
-<h2>SLiM specific parameters<a class="headerlink" href="#stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters" title="Link to this heading"></a></h2>
+<section id="stdpopsim-slim-specific-parameters">
+<span id="stdpopsim.cli-stdpopsim_cli_parser-slim-specific-parameters"></span><h2>SLiM specific parameters<a class="headerlink" href="#stdpopsim-slim-specific-parameters" title="Link to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>--slim-path</kbd></dt>
 <dd><p>Full path to <a href="#id1"><span class="problematic" id="id2">`</span></a>slim’ executable.</p>
@@ -306,8 +306,8 @@
 </section>
 <section id="Sub-commands">
 <h2>Sub-commands<a class="headerlink" href="#Sub-commands" title="Link to this heading"></a></h2>
-<section id="AedAeg">
-<h3>AedAeg<a class="headerlink" href="#AedAeg" title="Link to this heading"></a></h3>
+<section id="stdpopsim-AedAeg">
+<span id="AedAeg"></span><h3>AedAeg<a class="headerlink" href="#stdpopsim-AedAeg" title="Link to this heading"></a></h3>
 <p>Run simulations for Aedes aegypti using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -326,16 +326,16 @@ Recombination rate: 2.782e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AedAeg-positional-arguments">
+<span id="-positional-arguments"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-AedAeg-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AedAeg-named-arguments">
+<span id="-named-arguments"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-AedAeg-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -394,8 +394,8 @@ Recombination rate: 2.782e-09</p>
 </dl>
 </section>
 </section>
-<section id="AnaPla">
-<h3>AnaPla<a class="headerlink" href="#AnaPla" title="Link to this heading"></a></h3>
+<section id="stdpopsim-AnaPla">
+<span id="AnaPla"></span><h3>AnaPla<a class="headerlink" href="#stdpopsim-AnaPla" title="Link to this heading"></a></h3>
 <p>Run simulations for Anas platyrhynchos using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -414,16 +414,16 @@ Recombination rate: 1.433e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat1">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat1" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AnaPla-positional-arguments">
+<span id="-positional-arguments_repeat1"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-AnaPla-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat1">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat1" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AnaPla-named-arguments">
+<span id="-named-arguments_repeat1"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-AnaPla-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -483,8 +483,8 @@ Recombination rate: 1.433e-08</p>
 </dl>
 </section>
 </section>
-<section id="AnoCar">
-<h3>AnoCar<a class="headerlink" href="#AnoCar" title="Link to this heading"></a></h3>
+<section id="stdpopsim-AnoCar">
+<span id="AnoCar"></span><h3>AnoCar<a class="headerlink" href="#stdpopsim-AnoCar" title="Link to this heading"></a></h3>
 <p>Run simulations for Anolis carolinensis using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -503,16 +503,16 @@ Recombination rate: 1.59e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat2">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat2" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AnoCar-positional-arguments">
+<span id="-positional-arguments_repeat2"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-AnoCar-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat2">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat2" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AnoCar-named-arguments">
+<span id="-named-arguments_repeat2"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-AnoCar-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -571,8 +571,8 @@ Recombination rate: 1.59e-08</p>
 </dl>
 </section>
 </section>
-<section id="AnoGam">
-<h3>AnoGam<a class="headerlink" href="#AnoGam" title="Link to this heading"></a></h3>
+<section id="stdpopsim-AnoGam">
+<span id="AnoGam"></span><h3>AnoGam<a class="headerlink" href="#stdpopsim-AnoGam" title="Link to this heading"></a></h3>
 <p>Run simulations for Anopheles gambiae using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -591,16 +591,16 @@ Recombination rate: 1.447e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat3">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat3" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AnoGam-positional-arguments">
+<span id="-positional-arguments_repeat3"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-AnoGam-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat3">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat3" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AnoGam-named-arguments">
+<span id="-named-arguments_repeat3"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-AnoGam-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -660,8 +660,8 @@ Recombination rate: 1.447e-08</p>
 </dl>
 </section>
 </section>
-<section id="ApiMel">
-<h3>ApiMel<a class="headerlink" href="#ApiMel" title="Link to this heading"></a></h3>
+<section id="stdpopsim-ApiMel">
+<span id="ApiMel"></span><h3>ApiMel<a class="headerlink" href="#stdpopsim-ApiMel" title="Link to this heading"></a></h3>
 <p>Run simulations for Apis mellifera using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -680,16 +680,16 @@ Recombination rate: 2.318e-07</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat4">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat4" title="Link to this heading"></a></h4>
+<section id="stdpopsim-ApiMel-positional-arguments">
+<span id="-positional-arguments_repeat4"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-ApiMel-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat4">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat4" title="Link to this heading"></a></h4>
+<section id="stdpopsim-ApiMel-named-arguments">
+<span id="-named-arguments_repeat4"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-ApiMel-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -702,7 +702,7 @@ Recombination rate: 2.318e-07</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>-c, --chromosome</kbd></dt>
-<dd><p>Possible choices: CM009931.2, 1, NC_037638.1, CM009932.2, NC_037639.1, 2, CM009933.2, 3, NC_037640.1, CM009934.2, NC_037641.1, 4, CM009935.2, NC_037642.1, 5, CM009936.2, NC_037643.1, 6, CM009937.2, NC_037644.1, 7, CM009938.2, NC_037645.1, 8, CM009939.2, 9, NC_037646.1, CM009940.2, NC_037647.1, 10, CM009941.2, NC_037648.1, 11, CM009942.2, NC_037649.1, 12, CM009943.2, 13, NC_037650.1, CM009944.2, 14, NC_037651.1, CM009945.2, NC_037652.1, 15, CM009946.2, 16, NC_037653.1, CM009947.2, NC_001566.1, MT</p>
+<dd><p>Possible choices: CM009931.2, NC_037638.1, 1, CM009932.2, 2, NC_037639.1, CM009933.2, 3, NC_037640.1, CM009934.2, 4, NC_037641.1, CM009935.2, 5, NC_037642.1, CM009936.2, 6, NC_037643.1, CM009937.2, NC_037644.1, 7, CM009938.2, 8, NC_037645.1, CM009939.2, 9, NC_037646.1, CM009940.2, 10, NC_037647.1, CM009941.2, 11, NC_037648.1, CM009942.2, NC_037649.1, 12, CM009943.2, NC_037650.1, 13, CM009944.2, 14, NC_037651.1, CM009945.2, NC_037652.1, 15, CM009946.2, 16, NC_037653.1, CM009947.2, NC_001566.1, MT</p>
 <p>Simulate a specific chromosome. If no chromosome is given, simulate a generic contig of given length, specified using –length. Options: CM009931.2, CM009932.2, CM009933.2, CM009934.2, CM009935.2, CM009936.2, CM009937.2, CM009938.2, CM009939.2, CM009940.2, CM009941.2, CM009942.2, CM009943.2, CM009944.2, CM009945.2, CM009946.2, CM009947.2. Default=None.</p>
 </dd>
 <dt><kbd>-L, --length</kbd></dt>
@@ -748,8 +748,8 @@ Recombination rate: 2.318e-07</p>
 </dl>
 </section>
 </section>
-<section id="AraTha">
-<h3>AraTha<a class="headerlink" href="#AraTha" title="Link to this heading"></a></h3>
+<section id="stdpopsim-AraTha">
+<span id="AraTha"></span><h3>AraTha<a class="headerlink" href="#stdpopsim-AraTha" title="Link to this heading"></a></h3>
 <p>Run simulations for Arabidopsis thaliana using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -772,16 +772,16 @@ Recombination rate: 2.157e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat5">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat5" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AraTha-positional-arguments">
+<span id="-positional-arguments_repeat5"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-AraTha-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat5">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat5" title="Link to this heading"></a></h4>
+<section id="stdpopsim-AraTha-named-arguments">
+<span id="-named-arguments_repeat5"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-AraTha-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -859,8 +859,8 @@ Recombination rate: 2.157e-09</p>
 </dl>
 </section>
 </section>
-<section id="BosTau">
-<h3>BosTau<a class="headerlink" href="#BosTau" title="Link to this heading"></a></h3>
+<section id="stdpopsim-BosTau">
+<span id="BosTau"></span><h3>BosTau<a class="headerlink" href="#stdpopsim-BosTau" title="Link to this heading"></a></h3>
 <p>Run simulations for Bos taurus using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -879,16 +879,16 @@ Recombination rate: 9.26e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat6">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat6" title="Link to this heading"></a></h4>
+<section id="stdpopsim-BosTau-positional-arguments">
+<span id="-positional-arguments_repeat6"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-BosTau-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat6">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat6" title="Link to this heading"></a></h4>
+<section id="stdpopsim-BosTau-named-arguments">
+<span id="-named-arguments_repeat6"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-BosTau-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -948,8 +948,8 @@ Recombination rate: 9.26e-09</p>
 </dl>
 </section>
 </section>
-<section id="CaeEle">
-<h3>CaeEle<a class="headerlink" href="#CaeEle" title="Link to this heading"></a></h3>
+<section id="stdpopsim-CaeEle">
+<span id="CaeEle"></span><h3>CaeEle<a class="headerlink" href="#stdpopsim-CaeEle" title="Link to this heading"></a></h3>
 <p>Run simulations for Caenorhabditis elegans using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -969,16 +969,16 @@ Recombination rate: 3.053e-11</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat7">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat7" title="Link to this heading"></a></h4>
+<section id="stdpopsim-CaeEle-positional-arguments">
+<span id="-positional-arguments_repeat7"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-CaeEle-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat7">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat7" title="Link to this heading"></a></h4>
+<section id="stdpopsim-CaeEle-named-arguments">
+<span id="-named-arguments_repeat7"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-CaeEle-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1044,8 +1044,8 @@ Recombination rate: 3.053e-11</p>
 </dl>
 </section>
 </section>
-<section id="CanFam">
-<h3>CanFam<a class="headerlink" href="#CanFam" title="Link to this heading"></a></h3>
+<section id="stdpopsim-CanFam">
+<span id="CanFam"></span><h3>CanFam<a class="headerlink" href="#stdpopsim-CanFam" title="Link to this heading"></a></h3>
 <p>Run simulations for Canis familiaris using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1065,16 +1065,16 @@ Recombination rate: 9.506e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat8">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat8" title="Link to this heading"></a></h4>
+<section id="stdpopsim-CanFam-positional-arguments">
+<span id="-positional-arguments_repeat8"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-CanFam-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat8">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat8" title="Link to this heading"></a></h4>
+<section id="stdpopsim-CanFam-named-arguments">
+<span id="-named-arguments_repeat8"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-CanFam-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1141,8 +1141,8 @@ Recombination rate: 9.506e-09</p>
 </dl>
 </section>
 </section>
-<section id="ChlRei">
-<h3>ChlRei<a class="headerlink" href="#ChlRei" title="Link to this heading"></a></h3>
+<section id="stdpopsim-ChlRei">
+<span id="ChlRei"></span><h3>ChlRei<a class="headerlink" href="#stdpopsim-ChlRei" title="Link to this heading"></a></h3>
 <p>Run simulations for Chlamydomonas reinhardtii using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1161,16 +1161,16 @@ Recombination rate: 1.459e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat9">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat9" title="Link to this heading"></a></h4>
+<section id="stdpopsim-ChlRei-positional-arguments">
+<span id="-positional-arguments_repeat9"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-ChlRei-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat9">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat9" title="Link to this heading"></a></h4>
+<section id="stdpopsim-ChlRei-named-arguments">
+<span id="-named-arguments_repeat9"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-ChlRei-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1229,8 +1229,8 @@ Recombination rate: 1.459e-10</p>
 </dl>
 </section>
 </section>
-<section id="DroMel">
-<h3>DroMel<a class="headerlink" href="#DroMel" title="Link to this heading"></a></h3>
+<section id="stdpopsim-DroMel">
+<span id="DroMel"></span><h3>DroMel<a class="headerlink" href="#stdpopsim-DroMel" title="Link to this heading"></a></h3>
 <p>Run simulations for Drosophila melanogaster using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1253,16 +1253,16 @@ Recombination rate: 2.085e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat10">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat10" title="Link to this heading"></a></h4>
+<section id="stdpopsim-DroMel-positional-arguments">
+<span id="-positional-arguments_repeat10"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-DroMel-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat10">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat10" title="Link to this heading"></a></h4>
+<section id="stdpopsim-DroMel-named-arguments">
+<span id="-named-arguments_repeat10"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-DroMel-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1340,8 +1340,8 @@ Recombination rate: 2.085e-08</p>
 </dl>
 </section>
 </section>
-<section id="DroSec">
-<h3>DroSec<a class="headerlink" href="#DroSec" title="Link to this heading"></a></h3>
+<section id="stdpopsim-DroSec">
+<span id="DroSec"></span><h3>DroSec<a class="headerlink" href="#stdpopsim-DroSec" title="Link to this heading"></a></h3>
 <p>Run simulations for Drosophila sechellia using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1360,16 +1360,16 @@ Recombination rate: 2.223e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat11">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat11" title="Link to this heading"></a></h4>
+<section id="stdpopsim-DroSec-positional-arguments">
+<span id="-positional-arguments_repeat11"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-DroSec-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat11">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat11" title="Link to this heading"></a></h4>
+<section id="stdpopsim-DroSec-named-arguments">
+<span id="-named-arguments_repeat11"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-DroSec-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1428,8 +1428,8 @@ Recombination rate: 2.223e-08</p>
 </dl>
 </section>
 </section>
-<section id="EscCol">
-<h3>EscCol<a class="headerlink" href="#EscCol" title="Link to this heading"></a></h3>
+<section id="stdpopsim-EscCol">
+<span id="EscCol"></span><h3>EscCol<a class="headerlink" href="#stdpopsim-EscCol" title="Link to this heading"></a></h3>
 <p>Run simulations for Escherichia coli using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1449,16 +1449,16 @@ Bacterial recombination with tract length: 542</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat12">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat12" title="Link to this heading"></a></h4>
+<section id="stdpopsim-EscCol-positional-arguments">
+<span id="-positional-arguments_repeat12"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-EscCol-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat12">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat12" title="Link to this heading"></a></h4>
+<section id="stdpopsim-EscCol-named-arguments">
+<span id="-named-arguments_repeat12"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-EscCol-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1517,8 +1517,8 @@ Bacterial recombination with tract length: 542</p>
 </dl>
 </section>
 </section>
-<section id="GasAcu">
-<h3>GasAcu<a class="headerlink" href="#GasAcu" title="Link to this heading"></a></h3>
+<section id="stdpopsim-GasAcu">
+<span id="GasAcu"></span><h3>GasAcu<a class="headerlink" href="#stdpopsim-GasAcu" title="Link to this heading"></a></h3>
 <p>Run simulations for Gasterosteus aculeatus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1537,16 +1537,16 @@ Recombination rate: 3.001e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat13">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat13" title="Link to this heading"></a></h4>
+<section id="stdpopsim-GasAcu-positional-arguments">
+<span id="-positional-arguments_repeat13"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-GasAcu-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat13">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat13" title="Link to this heading"></a></h4>
+<section id="stdpopsim-GasAcu-named-arguments">
+<span id="-named-arguments_repeat13"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-GasAcu-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1605,8 +1605,8 @@ Recombination rate: 3.001e-08</p>
 </dl>
 </section>
 </section>
-<section id="GorGor">
-<h3>GorGor<a class="headerlink" href="#GorGor" title="Link to this heading"></a></h3>
+<section id="stdpopsim-GorGor">
+<span id="GorGor"></span><h3>GorGor<a class="headerlink" href="#stdpopsim-GorGor" title="Link to this heading"></a></h3>
 <p>Run simulations for Gorilla gorilla using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1625,16 +1625,16 @@ Recombination rate: 1.193e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat14">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat14" title="Link to this heading"></a></h4>
+<section id="stdpopsim-GorGor-positional-arguments">
+<span id="-positional-arguments_repeat14"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-GorGor-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat14">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat14" title="Link to this heading"></a></h4>
+<section id="stdpopsim-GorGor-named-arguments">
+<span id="-named-arguments_repeat14"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-GorGor-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1694,8 +1694,8 @@ Recombination rate: 1.193e-08</p>
 </dl>
 </section>
 </section>
-<section id="HelAnn">
-<h3>HelAnn<a class="headerlink" href="#HelAnn" title="Link to this heading"></a></h3>
+<section id="stdpopsim-HelAnn">
+<span id="HelAnn"></span><h3>HelAnn<a class="headerlink" href="#stdpopsim-HelAnn" title="Link to this heading"></a></h3>
 <p>Run simulations for Helianthus annuus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1714,16 +1714,16 @@ Recombination rate: 4e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat15">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat15" title="Link to this heading"></a></h4>
+<section id="stdpopsim-HelAnn-positional-arguments">
+<span id="-positional-arguments_repeat15"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-HelAnn-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat15">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat15" title="Link to this heading"></a></h4>
+<section id="stdpopsim-HelAnn-named-arguments">
+<span id="-named-arguments_repeat15"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-HelAnn-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1782,8 +1782,8 @@ Recombination rate: 4e-09</p>
 </dl>
 </section>
 </section>
-<section id="HelMel">
-<h3>HelMel<a class="headerlink" href="#HelMel" title="Link to this heading"></a></h3>
+<section id="stdpopsim-HelMel">
+<span id="HelMel"></span><h3>HelMel<a class="headerlink" href="#stdpopsim-HelMel" title="Link to this heading"></a></h3>
 <p>Run simulations for Heliconius melpomene using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -1802,16 +1802,16 @@ Recombination rate: 3.966e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat16">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat16" title="Link to this heading"></a></h4>
+<section id="stdpopsim-HelMel-positional-arguments">
+<span id="-positional-arguments_repeat16"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-HelMel-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat16">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat16" title="Link to this heading"></a></h4>
+<section id="stdpopsim-HelMel-named-arguments">
+<span id="-named-arguments_repeat16"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-HelMel-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1870,8 +1870,8 @@ Recombination rate: 3.966e-08</p>
 </dl>
 </section>
 </section>
-<section id="HomSap">
-<h3>HomSap<a class="headerlink" href="#HomSap" title="Link to this heading"></a></h3>
+<section id="stdpopsim-HomSap">
+<span id="HomSap"></span><h3>HomSap<a class="headerlink" href="#stdpopsim-HomSap" title="Link to this heading"></a></h3>
 <p>Run simulations for Homo sapiens using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -1894,16 +1894,16 @@ Recombination rate: 1.253e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat17">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat17" title="Link to this heading"></a></h4>
+<section id="stdpopsim-HomSap-positional-arguments">
+<span id="-positional-arguments_repeat17"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-HomSap-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat17">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat17" title="Link to this heading"></a></h4>
+<section id="stdpopsim-HomSap-named-arguments">
+<span id="-named-arguments_repeat17"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-HomSap-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -1981,8 +1981,8 @@ Recombination rate: 1.253e-08</p>
 </dl>
 </section>
 </section>
-<section id="MusMus">
-<h3>MusMus<a class="headerlink" href="#MusMus" title="Link to this heading"></a></h3>
+<section id="stdpopsim-MusMus">
+<span id="MusMus"></span><h3>MusMus<a class="headerlink" href="#stdpopsim-MusMus" title="Link to this heading"></a></h3>
 <p>Run simulations for Mus musculus using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2002,16 +2002,16 @@ Recombination rate: 5.567e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat18">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat18" title="Link to this heading"></a></h4>
+<section id="stdpopsim-MusMus-positional-arguments">
+<span id="-positional-arguments_repeat18"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-MusMus-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat18">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat18" title="Link to this heading"></a></h4>
+<section id="stdpopsim-MusMus-named-arguments">
+<span id="-named-arguments_repeat18"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-MusMus-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2075,8 +2075,8 @@ Recombination rate: 5.567e-09</p>
 </dl>
 </section>
 </section>
-<section id="OrySat">
-<h3>OrySat<a class="headerlink" href="#OrySat" title="Link to this heading"></a></h3>
+<section id="stdpopsim-OrySat">
+<span id="OrySat"></span><h3>OrySat<a class="headerlink" href="#stdpopsim-OrySat" title="Link to this heading"></a></h3>
 <p>Run simulations for Oryza sativa using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2095,16 +2095,16 @@ Recombination rate: 8.955e-10</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat19">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat19" title="Link to this heading"></a></h4>
+<section id="stdpopsim-OrySat-positional-arguments">
+<span id="-positional-arguments_repeat19"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-OrySat-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat19">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat19" title="Link to this heading"></a></h4>
+<section id="stdpopsim-OrySat-named-arguments">
+<span id="-named-arguments_repeat19"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-OrySat-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2164,8 +2164,8 @@ Recombination rate: 8.955e-10</p>
 </dl>
 </section>
 </section>
-<section id="PanTro">
-<h3>PanTro<a class="headerlink" href="#PanTro" title="Link to this heading"></a></h3>
+<section id="stdpopsim-PanTro">
+<span id="PanTro"></span><h3>PanTro<a class="headerlink" href="#stdpopsim-PanTro" title="Link to this heading"></a></h3>
 <p>Run simulations for Pan troglodytes using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2184,16 +2184,16 @@ Recombination rate: 1.2e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat20">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat20" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PanTro-positional-arguments">
+<span id="-positional-arguments_repeat20"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-PanTro-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat20">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat20" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PanTro-named-arguments">
+<span id="-named-arguments_repeat20"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-PanTro-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2253,8 +2253,8 @@ Recombination rate: 1.2e-08</p>
 </dl>
 </section>
 </section>
-<section id="PapAnu">
-<h3>PapAnu<a class="headerlink" href="#PapAnu" title="Link to this heading"></a></h3>
+<section id="stdpopsim-PapAnu">
+<span id="PapAnu"></span><h3>PapAnu<a class="headerlink" href="#stdpopsim-PapAnu" title="Link to this heading"></a></h3>
 <p>Run simulations for Papio anubis using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2274,16 +2274,16 @@ Recombination rate: 1.124e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat21">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat21" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PapAnu-positional-arguments">
+<span id="-positional-arguments_repeat21"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-PapAnu-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat21">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat21" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PapAnu-named-arguments">
+<span id="-named-arguments_repeat21"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-PapAnu-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2350,8 +2350,8 @@ Recombination rate: 1.124e-08</p>
 </dl>
 </section>
 </section>
-<section id="PhoSin">
-<h3>PhoSin<a class="headerlink" href="#PhoSin" title="Link to this heading"></a></h3>
+<section id="stdpopsim-PhoSin">
+<span id="PhoSin"></span><h3>PhoSin<a class="headerlink" href="#stdpopsim-PhoSin" title="Link to this heading"></a></h3>
 <p>Run simulations for Phocoena sinus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2373,16 +2373,16 @@ Recombination rate: 1e-08</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat22">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat22" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PhoSin-positional-arguments">
+<span id="-positional-arguments_repeat22"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-PhoSin-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat22">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat22" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PhoSin-named-arguments">
+<span id="-named-arguments_repeat22"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-PhoSin-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2453,8 +2453,8 @@ Recombination rate: 1e-08</p>
 </dl>
 </section>
 </section>
-<section id="PonAbe">
-<h3>PonAbe<a class="headerlink" href="#PonAbe" title="Link to this heading"></a></h3>
+<section id="stdpopsim-PonAbe">
+<span id="PonAbe"></span><h3>PonAbe<a class="headerlink" href="#stdpopsim-PonAbe" title="Link to this heading"></a></h3>
 <p>Run simulations for Pongo abelii using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2474,16 +2474,16 @@ Recombination rate: 6.403e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat23">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat23" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PonAbe-positional-arguments">
+<span id="-positional-arguments_repeat23"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-PonAbe-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat23">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat23" title="Link to this heading"></a></h4>
+<section id="stdpopsim-PonAbe-named-arguments">
+<span id="-named-arguments_repeat23"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-PonAbe-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2550,8 +2550,8 @@ Recombination rate: 6.403e-09</p>
 </dl>
 </section>
 </section>
-<section id="RatNor">
-<h3>RatNor<a class="headerlink" href="#RatNor" title="Link to this heading"></a></h3>
+<section id="stdpopsim-RatNor">
+<span id="RatNor"></span><h3>RatNor<a class="headerlink" href="#stdpopsim-RatNor" title="Link to this heading"></a></h3>
 <p>Run simulations for Rattus norvegicus using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2570,16 +2570,16 @@ Recombination rate: 6.103e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat24">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat24" title="Link to this heading"></a></h4>
+<section id="stdpopsim-RatNor-positional-arguments">
+<span id="-positional-arguments_repeat24"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-RatNor-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat24">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat24" title="Link to this heading"></a></h4>
+<section id="stdpopsim-RatNor-named-arguments">
+<span id="-named-arguments_repeat24"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-RatNor-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2638,8 +2638,8 @@ Recombination rate: 6.103e-09</p>
 </dl>
 </section>
 </section>
-<section id="StrAga">
-<h3>StrAga<a class="headerlink" href="#StrAga" title="Link to this heading"></a></h3>
+<section id="stdpopsim-StrAga">
+<span id="StrAga"></span><h3>StrAga<a class="headerlink" href="#stdpopsim-StrAga" title="Link to this heading"></a></h3>
 <p>Run simulations for Streptococcus agalactiae using up-to-date genome
 information, genetic maps and simulation models from the literature.
 NOTE: By default, the tskit ‘.trees’ binary file is written to
@@ -2659,16 +2659,16 @@ Bacterial recombination with tract length: 120000</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat25">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat25" title="Link to this heading"></a></h4>
+<section id="stdpopsim-StrAga-positional-arguments">
+<span id="-positional-arguments_repeat25"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-StrAga-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat25">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat25" title="Link to this heading"></a></h4>
+<section id="stdpopsim-StrAga-named-arguments">
+<span id="-named-arguments_repeat25"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-StrAga-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2727,8 +2727,8 @@ Bacterial recombination with tract length: 120000</p>
 </dl>
 </section>
 </section>
-<section id="SusScr">
-<h3>SusScr<a class="headerlink" href="#SusScr" title="Link to this heading"></a></h3>
+<section id="stdpopsim-SusScr">
+<span id="SusScr"></span><h3>SusScr<a class="headerlink" href="#stdpopsim-SusScr" title="Link to this heading"></a></h3>
 <p>Run simulations for Sus scrofa using up-to-date genome information,
 genetic maps and simulation models from the literature. NOTE: By
 default, the tskit ‘.trees’ binary file is written to stdout,so you
@@ -2747,16 +2747,16 @@ Recombination rate: 9.248e-09</p>
                  <span class="n">samples</span> <span class="p">[</span><span class="n">samples</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat26">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat26" title="Link to this heading"></a></h4>
+<section id="stdpopsim-SusScr-positional-arguments">
+<span id="-positional-arguments_repeat26"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-SusScr-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>samples</kbd></dt>
 <dd><p>The number of samples to draw from each population. At least two genomes must be sampled, say, for one diploid individual. The number of arguments accepted depends on the specified simulation model: for a model that has n populations, we can specify the number of samples to draw from each of these populations.We do not need to provide sample numbers of each of the populations; those that are omitted are set to zero.</p>
 </dd>
 </dl>
 </section>
-<section id="named-arguments_repeat26">
-<h4>Named Arguments<a class="headerlink" href="#named-arguments_repeat26" title="Link to this heading"></a></h4>
+<section id="stdpopsim-SusScr-named-arguments">
+<span id="-named-arguments_repeat26"></span><h4>Named Arguments<a class="headerlink" href="#stdpopsim-SusScr-named-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>--help-models</kbd></dt>
 <dd><p>Print descriptions of simulation models and exit. If a model ID is provided as an argument show help for this model; otherwise show help for all available models</p>
@@ -2815,14 +2815,14 @@ Recombination rate: 9.248e-09</p>
 </dl>
 </section>
 </section>
-<section id="download-genetic-maps">
-<h3>download-genetic-maps<a class="headerlink" href="#download-genetic-maps" title="Link to this heading"></a></h3>
+<section id="stdpopsim-download-genetic-maps">
+<span id="download-genetic-maps"></span><h3>download-genetic-maps<a class="headerlink" href="#stdpopsim-download-genetic-maps" title="Link to this heading"></a></h3>
 <p>Download genetic maps and store them in the cache directory. Maps are downloaded regardless of whether they are already in the cache or not. Please use the –cache-dir option to download maps to a specific directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stdpopsim</span> <span class="n">download</span><span class="o">-</span><span class="n">genetic</span><span class="o">-</span><span class="n">maps</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="p">[</span><span class="n">genetic_maps</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
-<section id="positional-arguments_repeat27">
-<h4>Positional Arguments<a class="headerlink" href="#positional-arguments_repeat27" title="Link to this heading"></a></h4>
+<section id="stdpopsim-download-genetic-maps-positional-arguments">
+<span id="-positional-arguments_repeat27"></span><h4>Positional Arguments<a class="headerlink" href="#stdpopsim-download-genetic-maps-positional-arguments" title="Link to this heading"></a></h4>
 <dl class="option-list">
 <dt><kbd>species</kbd></dt>
 <dd><p>Download genetic maps for this species. If not specified download all known genetic maps.</p>
@@ -2855,7 +2855,7 @@ Recombination rate: 9.248e-09</p>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
      
-    <div class="footer">Version: 0.3 (0.3.1.dev55+g9368b2018)</div>
+    <div class="footer">Version: 0.3 (0.3.1.dev56+g3a163f49e)</div>
 
 
 </footer>
